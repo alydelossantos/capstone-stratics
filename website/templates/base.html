@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--========== BOX ICONS ==========-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+         <script src="https://kit.fontawesome.com/b60b9aa1ba.js" crossorigin="anonymous"></script>
+
+        <!--========== CSS ==========-->
+        <link rel="stylesheet" href="{{ url_for('static',  filename='css/sbase.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',  filename='css/scroll.css') }}">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+        <title>{% block title %}Stratics | Email Marketing {% endblock %}</title>
+		
+    </head>
+    <body>
+        <!--========== HEADER ==========-->
+        <header class="header">
+            <div class="header__container">
+				<a href="/" class="header__logo">Stratics</a>
+                <a href="/user-profile"><img src="{{ url_for('static', filename='images/user.png') }}" alt="" class="header__img"></a>
+
+                
+                <div class="header__toggle">
+                    <i class='bx bx-menu bx-md' id="header-toggle"></i>
+                </div>
+            </div>
+        </header>
+
+        <!--========== NAV ==========-->
+        <div class="side" id="sbar">
+            <nav class="sb__container">
+                <div>
+                    <a href="/" class="sb__link sb__logo" style="text-decoration: none;">
+                    <!---    <i class='bx bxs-disc sb__icon' ></i> -->
+                        <img src="{{ url_for('static', filename='images/slogo.png') }}" alt="">
+                        <span class="sb__logo-name">Stratics</span>
+                    </a>
+                    <div class="sb__list">
+                        <div class="sb__items">
+                            <h3 class="sb__subtitle">Menu</h3>
+    
+                            <a href="/home" class="sb__link active" style="text-decoration: none;"> 
+                                <i class='bx bxs-dashboard bx-md sb__icon'></i>
+                                <span class="sb__name">Dashboard</span>
+                            </a>
+                            
+                            <a href="/customer-management" class="sb__link" style="text-decoration: none;">
+                                <i class='bx bxs-group bx-md sb__icon' ></i>
+                                <span class="sb__name">Customer Management</span>
+                            </a>
+
+                            <a href="/strategies" class="sb__link" style="text-decoration: none;">
+                                <i class='bx bxs-megaphone bx-md sb__icon' ></i>
+                                <span class="sb__name">Strategies</span>
+                            </a>
+
+                            <a href="/email-marketing" class="sb__link" style="text-decoration: none;">
+                                <i class='fas fa-envelope-open-text bx-md sb__icon' ></i>
+                                <span class="sb__name">Email</span>
+                            </a>
+							
+							 <a href="/user-accounts" class="sb__link" style="text-decoration: none;">
+                                <i class='bx bxs-user-account bx-md sb__icon' ></i>
+                                <span class="sb__name">Accounts Management</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/sign-out" class="sb__link sb__logout" style="text-decoration: none;">
+                    <i class='bx bx-log-out bx-md sb__icon' ></i>
+                    <span class="sb__name">Sign Out</span>
+                </a>
+            </nav>
+        </div>
+        <!-- Scroll to Top -->
+        <button class="scrollToTopBtn"><i class="fas fa-angle-up"></i></button>
+        {% block content %}
+        {% endblock %}
+        
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/scroll.js') }}"></script>
+    </body>
+</html>

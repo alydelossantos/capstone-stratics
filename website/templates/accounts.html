@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	<!DOCTYPE html>
+		<head>
+		  <meta charset="utf-8">
+		  <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+		  <link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
+		  <!-- <link href ="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel = "stylesheet"/> -->
+		  <!-- <link href="{{ url_for('static',  filename='css/strategies.css') }}" rel="stylesheet"> -->
+		  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+		  {% block title %} Stratics | Account Management {% endblock %}
+		
+		</head>
+		
+		<body>
+		
+	<div class="strat-container-main">
+        <h3>Account Management</b></h3>
+        <div class="strat-stat-container">
+            <div class="strat-row">
+                <div class="strat-column-head">
+                <div class="strat-card-head">
+                    <h4>Users</h4>
+                    <p class='card-strat-large primary'>{{ users|length }}</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col md-12"> 
+                <!-- <div class="jumbotron p-3">  -->
+                    
+                    <!-- Flash Messages  -->
+    
+                    {% with messages = get_flashed_messages() %} 
+                    {% if messages %} 
+                    {% for message in messages %}
+
+                    <div class="alert alert-success alert-dismissable" role="alert"> 
+                        <button type="button" class="close" data-dismiss="alert" aria-label="close"> 
+                            <span aria-hidden="true">x</span> 
+                        </button>
+                    
+    
+                    {{message}}
+                    </div>
+    
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %} 
+
+                    <!-- Table -->
+    
+                    <form action="/user-accounts/delete-selected" method="POST">
+                    <table class="table table-hover table-light" style="text-align:center;" id="mytable"> 
+                        <tr>
+                            <th><input type="checkbox" id="checkAll"></th> 
+                            <th>Last Name</th>
+							<th>First Name</th>
+							<th>Email</th>
+							<th>Phone</th>
+							<th>Address</th>
+							<th>Data of Birth</th>
+                        </tr>
+
+                        <!-- Retrieving of Data -->            
+    
+                        {% for row in users %}
+						<tr>
+						<td><input type="checkbox" name="mycheckbox" class="checkthis" value="{{row.id}}"></td> 
+                        <td>{{row.lname}}</td>
+						<td>{{row.fname}}</td>
+                        <td>{{row.email}}</td>
+                        <td>{{row.cp}}</td>
+                        <td>{{row.address}}</td>
+                        <td>{{row.bday}}</td>
+ 
+                        <td>
+                            <a href="/user-accounts/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
+                            <a href="/user-accounts/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+ 
+                        </td>
+                        </tr> 
+    
+    
+                    <!-- Modal Edit User-->
+
+                        <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">                                      
+                            <div class="modal-content">                 
+                        
+                                <div class="modal-header">   
+                                    <h4 class="modal-title">Update User Records</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                <form action="/user-accounts/update/{{row.id}}" method="POST">
+								
+                                    <div class="form-group">
+                                        <label>Last Name:</label>
+                                        <input type="hidden"  name="id" value="{{row.id}}">                    
+                                        <input type="text" class="form-control" name="lname" value="{{row.lname}}">
+                                    </div>                    
+                
+                                    <div class="form-group">                
+                                        <label>Fist Name:</label>                    
+                                        <input type="text" class="form-control" name="fname" value="{{row.fname}}">
+                                    </div>                    
+                        
+                                    <div class="form-group">
+                                        <label>Address:</label>                    
+                                        <input type="text" class="form-control" name="address" value="{{row.address}}">
+                                    </div>
+									
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Update</button>
+                                    </div>    
+                                </form>
+                            </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>    
+                        </div>
+                        </div>
+    
+                        {% endfor %}
+					</table>
+                    <input type="submit" value="Delete All Selected" class="btn btn-primary">
+					</form>
+					<script>
+						$(document).ready(function(){
+						$("#mytable #checkall").click(function () {
+								if ($("#mytable #checkall").is(':checked')) {
+									$("#mytable input[type=checkbox]").each(function () {
+										$(this).prop("checked", true);
+									});
+						 
+								} else {
+									$("#mytable input[type=checkbox]").each(function () {
+										$(this).prop("checked", false);
+									});
+								}
+							});
+							 
+							$("[data-toggle=tooltip]").tooltip();
+						});
+						 
+					</script>  
+                <!-- </div> -->
+            </div>
+    
+           
+                </div>
+	 
+			</div> 
+		</div> 
+	</div>
+		
+		  <script type = "text/javascript" src ="{{url_for('static', filename = 'js/jquery-3.2.1.min.js')}}"></script>
+		  <script type = "text/javascript" src ="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
+		  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+		  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  
+		</body>
+	</html>
+
+{% endblock %}

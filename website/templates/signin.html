@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Sign In{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signin.css') }}">
+		<link
+		  rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		/>
+		<link
+		  rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+		  crossorigin="anonymous"
+		/>
+		<script
+		  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		  crossorigin="anonymous"
+		></script>
+		<script
+		  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		  crossorigin="anonymous"
+		></script>
+		<script
+		  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		  crossorigin="anonymous"
+		></script>
+    </head>
+    <body>
+        {% block content %}
+		
+			{% with messages = get_flashed_messages(with_categories = true) %}
+			{% if messages %}
+			  {% for category, messages in messages %}
+				  {% if category == "error" %}
+				  <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="True">&times;</span></button>
+				  </div>
+				  {% else %}
+				  <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+				  </div>
+				  {% endif %}
+			  {% endfor %}
+			{% endif %}
+			{% endwith %}
+			
+        <div class="sicontainer">  
+                    <form id="forms" method="POST">
+                        <a class="link" href="/"><img  id="logo"" src= 'static/images/Stratics_Logo.png'>
+                        <h1 id="title">Stratics</h1></a>
+                        <span style="font-weight: bold; margin-top: 10px;font-size: 30px;margin-bottom: -10px;">Sign In</span>
+                        <div class="formtext">
+                            <label class="silabel" for="email">Email Address</label>
+                            <input type="email" id="email" name="email"></input> 
+                            <label class="silabel" for="password">Password</label>
+                            <input type="password" id="password" name="password"></input> 
+                            <button class="formbtn" type="submit">Sign In</button>
+                            <div class="text"><span style='font-weight: bold; color: #f39519;'>Forgot your Password?</span><br>
+                                              Do not have an account yet? Click here to <span><a href="/sign-up" class="susmall">sign up</a></span></div>
+                        </div>
+                    </form>
+        </div>
+
+        {%endblock%}
+		
+    </body>
+</html>
