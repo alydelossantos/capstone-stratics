@@ -1,0 +1,116 @@
+{% extends 'landing_base.html' %}
+
+{% block content %}
+	
+	<!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+        <link href="{{ url_for('static',  filename='css/about.css') }}" rel="stylesheet">
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 
+	 <title>{% block title %}
+			Stratics | Our Team
+		{% endblock %}</title>
+		
+   </head>
+<div class="bg">
+   <div class="con">
+	<center>
+		
+			<h1 style=" margin-top: 40px; font-size: 50px;">MEET THE TEAM</h1><br>
+			<p class="desc">Horizon is compromised of undergraduate students pursuing Bachelor of Science in Information Technology with specialization
+			 in Service Management and Business Analytics in Far Eastern University - Alabang.<br><br>Their passion to expand their knowledge
+			 and expertise fuels their dedication to solving real-world business problems. Horizon, with the mission of engaging in critical thinking and problem solving,
+			 intends to open opportunities for the telecommunications sector to utilize big data analytics.</p>
+		</center>
+	</div>
+	
+<div class="ab">
+  <div class="containers">
+    <input type="radio" name="dot" id="one">
+    <input type="radio" name="dot" id="two">
+    <div class="main-card">
+      <div class="cards">
+        <div class="card">
+         <div class="content">
+           <div class="img">
+           <img src="{{url_for('static', filename='images/Stratics_Logo.png')}}">
+           </div>
+           <div class="details">
+             <div class="name">Deinielle Marie Sancon</div>
+             <div class="job">Project Manager/UI Designer</div>
+           </div>
+           <div class="media-icons">
+             <a href="#"><i class="fab fa-facebook-f"></i></a>
+             <a href="#"><i class="fab fa-twitter"></i></a>
+             <a href="#"><i class="fab fa-instagram"></i></a>
+           </div>
+         </div>
+        </div>
+        <div class="card">
+         <div class="content">
+           <div class="img">
+            <img src="{{url_for('static', filename='images/Stratics_Logo.png')}}">
+           </div>
+           <div class="details">
+             <div class="name">Alyssa Kirsten Delos Santos</div>
+             <div class="job">Database Programmer</div>
+           </div>
+           <div class="media-icons">
+             <a href="#"><i class="fab fa-facebook-f"></i></a>
+             <a href="#"><i class="fab fa-twitter"></i></a>
+             <a href="#"><i class="fab fa-instagram"></i></a>
+           </div>
+         </div>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="card">
+         <div class="content">
+           <div class="img">
+             <img src="{{url_for('static', filename='images/Stratics_Logo.png')}}">
+           </div>
+           <div class="details">
+             <div class="name">Amirah Faye Solis</div>
+             <div class="job">Lead Programmer</div>
+           </div>
+           <div class="media-icons">
+             <a href="#"><i class="fab fa-facebook-f"></i></a>
+             <a href="#"><i class="fab fa-twitter"></i></a>
+             <a href="#"><i class="fab fa-instagram"></i></a>
+           </div>
+         </div>
+        </div>
+        <div class="card">
+         <div class="content">
+           <div class="img">
+            <img src="{{url_for('static', filename='images/Stratics_Logo.png')}}">
+           </div>
+           <div class="details">
+             <div class="name">Shandon France Malapit</div>
+             <div class="job">Lead Tester</div>
+           </div>
+           <div class="media-icons">
+             <a href="#"><i class="fab fa-facebook-f"></i></a>
+             <a href="#"><i class="fab fa-twitter"></i></a>
+             <a href="#"><i class="fab fa-instagram"></i></a>
+           </div>
+         </div>
+        </div>
+      </div>
+    </div>
+    <div class="button">
+      <label for="one" class=" active one"></label>
+      <label for="two" class="two"></label>
+    </div>
+  </div>
+</div>
+</div>
+</html>
+
+	
+{% endblock %}
