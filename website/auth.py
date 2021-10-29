@@ -290,7 +290,8 @@ def edit():
 @auth.route('/user-profile',methods = ['GET', 'POST'])
 @login_required
 def profile():
-    return render_template("profile.html", user= current_user)
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template("profile.html", user= current_user, image_file = image_file)
         
         
 @login_required
