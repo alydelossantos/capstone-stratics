@@ -15,11 +15,12 @@
 }
 
 .atom{
-    width: 80%;
+    width: 95%;
     background-color: #f39519;
     color: white;
     padding: 5px;
-    margin-left:2.5%;
+    margin: auto;
+    margin-left: 3%;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -36,15 +37,14 @@ input[type=text], select {
   }
 textarea.aboutxt{
     outline:none;
-    width: 83%;
-
+    width: 100%;
     border: solid 2px;
     border-radius: 15px;
     border-color: rgb(226, 226, 226);
-    height:200px;
+    height:190px;
     resize: none;
     padding-left: 2rem;
-    padding-right: 2rem;
+    padding-right: 1.5rem;
 }
 input[type=text].socmed{
 
@@ -86,11 +86,16 @@ a.socmed:hover{
     background-color: #dce7f9;
 
   }
+  .image-upload:hover{
+	cursor:pointer;
+  }
+  .point:hover{
+    cursor:pointer;
+  }
 .prof-container{
-    background-color: #eeeeee;
-    margin: auto;	
+    background-color: #fff;
     margin-top: 50px;
-    background-image: url('/static/images/bg.png');
+    background-image: url('/static/images/pattern.svg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 910px;
@@ -115,7 +120,7 @@ a.socmed:hover{
 .cardx {
     position: relative;
     display: -ms-flexbox;
-    height: 32%;
+    height: 38%;
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
@@ -147,7 +152,20 @@ a.socmed:hover{
 
     
 }
-
+label{
+	font-weight: 600;
+}
+.col-sm-6{
+		width: auto;
+		max-width: 100%;
+		font-weight: 600;
+	}
+h4{
+	font-weight: 600;
+}
+p{
+	font-weight: 500;
+}
 
 @media (max-width:1450px) {
     .col-md-4{
@@ -165,7 +183,7 @@ a.socmed:hover{
     .cardx {
         position: relative;
         display: -ms-flexbox;
-        height: 395px;
+        height: 295px;
         display: flex;
         -ms-flex-direction: column;
         flex-direction: column;
@@ -201,7 +219,7 @@ a.socmed:hover{
       }
     
 }
-@media (max-width:1150px){
+@media(max-width:1150px){
     .col-md-4{
         flex-direction: column;
         flex: 0 0 63.333333%;
@@ -224,21 +242,36 @@ a.socmed:hover{
         width: 52px;
         height: 52px;
         border-radius: 100%;
-        background-color: #dce7f9;
     
       }
-
-
 }
-@media (max-width:600){
-      .col-md-8 {
-        padding-left:1.5rem;
-        -ms-flex: 0 0 65.666667%;
-        flex: 0 0 66.666667%;
-        max-width: 70.666667%;
-        height: 100%;
-        border-radius: .75rem;
-        background-color: #831111;
+@media(max-width:550px){
+	.col-sm-6{
+		width: 100%;
+	}
+    .col-md-4{
+		font-size: 16px;
+        flex-direction: column;
+        flex: 0 0 95.333333%;
+        max-width: 100%;
+        margin: auto;
+    }
+    .row-info{
+        flex-direction: row;
+    }
+    .cardx{
+        margin-left: 0;
+		width: 100%;
+		height: auto;
+		
+    }
+    .image-upload{
+        position: absolute;
+        top: 230px;
+        right: 30%;
+        width: 52px;
+        height: 52px;
+        border-radius: 100%;
+    
       }
-
 }
