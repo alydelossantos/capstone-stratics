@@ -11,5 +11,6 @@ def landing():
 @views.route('/home')
 @login_required
 def home():
-    return render_template("home.html", user= current_user)
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template("home.html", user= current_user, image_file = image_file)
     
