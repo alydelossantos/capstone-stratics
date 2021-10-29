@@ -91,6 +91,7 @@ def signup():
             flash("Password must contain 8 characters.\nPlease try again!", category="error")
         else:
             new_user = User(fname=fname, lname=lname, uname=uname, email=email, cname=cname, password=password)
+            new_user.image_file =  
             db.session.add(new_user)
             db.session.commit()
             flash("Account has been created.", category="success")
