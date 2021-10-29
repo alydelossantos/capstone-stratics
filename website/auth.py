@@ -99,6 +99,11 @@ def signup():
 
 # Home Page
 
+#SideBar
+def sidebarpic():
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template("base.html", user= current_user, image_file = image_file)
+
 # Customer Management
 @auth.route('/customer-management', methods=["GET", "POST"]) 
 @login_required
