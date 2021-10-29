@@ -12,13 +12,6 @@
 		<link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
         <link href="{{ url_for('static',  filename='css/theme.css') }}" rel="stylesheet">
         
-        <!-- Sort/Search Table CSS -->
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-
-        <!-- Export -->
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
-        
 		{% block title %} Stratics | Strategies {% endblock %}
 		
 		</head>
@@ -156,7 +149,6 @@
                 <div class="table-data__tool-right" style=padding-bottom:10px;>
                     <button data-toggle="modal" data-target="#mymodal" class="au-btn au-btn-icon au-btn--green au-btn--small">
                         <i class="zmdi zmdi-plus"></i>new strategy</button>
-        
                 </div>
 		</div>
             <div class="table-responsive table-responsive-data2">
