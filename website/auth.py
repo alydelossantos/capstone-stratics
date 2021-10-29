@@ -109,8 +109,9 @@ def sidebarpic():
 @login_required
 def custman():
     if current_user.cname == "Kalibo":
-        all_data = Data.query.all() 
-        return render_template("custman.html", user=current_user, datas=all_data)
+        all_data = Data.query.all()
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
     else:
         sd = Sampledata \
             .query \
@@ -127,7 +128,8 @@ def custman():
             sstatus = request.form['sstatus']
             amnt_paid = request.form['amnt_paid']
             ref_num = request.form['ref_num']
-        return render_template("scustman.html", user=current_user, sd=sd)
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
 
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
@@ -317,7 +319,8 @@ def save_picture(form_picture):
 @auth.route('/email-marketing')
 @login_required
 def email():
-    return render_template("email.html", user= current_user)
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template("email.html", user= current_user, image_file = image_file)
 
 @auth.route('/email-marketing', methods = ['GET','POST'])
 def send_message():
@@ -325,7 +328,8 @@ def send_message():
         email = request.form['Email']
         subject = request.form['Subject']
         msg = request.form['Body']
-        return render_template('email.html',user= current_user)
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("email.html", user= current_user, image_file = image_file)
     
 # Strategies
 @auth.route('/strategies', methods=["GET", "POST"])
@@ -340,8 +344,9 @@ def strat():
             .query \
             .filter(Strategies.status == "ongoing").count()
         print(statss)
-        all_data = Strategies.query.all() 
-        return render_template("strategies.html", user=current_user, strategiess=all_data, statss=statss, statc=statc)
+        all_data = Strategies.query.all()
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
     else:
         sd = Samplestrategies \
             .query \
@@ -369,7 +374,8 @@ def strat():
             status = request.form['status']
             description = request.form['description']
         
-        return render_template("sstrategies.html", user=current_user, statc=statc, statss=statss, sd=sd) 
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file)
             
 @auth.route('/strategies/insert', methods = ['POST'])
 @login_required
