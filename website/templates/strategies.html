@@ -12,6 +12,13 @@
 		<link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
         <link href="{{ url_for('static',  filename='css/theme.css') }}" rel="stylesheet">
         
+        <!-- Sort/Search Table CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+        <!-- Export -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+        
 		{% block title %} Stratics | Strategies {% endblock %}
 		
 		</head>
@@ -45,12 +52,20 @@
             </div>
         </div>
     </div>           
-            <!-- Flash Messages  -->
-    
-            {% with messages = get_flashed_messages() %} 
+            {% with messages = get_flashed_messages(with_categories = true) %} 
             {% if messages %} 
-            {% for message in messages %}
+            {% for category, message in messages %}
 
+			{% if category == "limit" %}
+			<div class="alert alert-primary alert-dismissable" role="alert"> 
+                <button type="button" class="close" data-dismiss="alert"> 
+                    &nbsp; <i class="zmdi zmdi-close"></i><br>
+                </button>            
+
+            {{message}}
+            </div>
+			{% else %}
+			
             <div class="alert alert-success alert-dismissable" role="alert"> 
                 <button type="button" class="close" data-dismiss="alert"> 
                     &nbsp; <i class="zmdi zmdi-close"></i><br>
@@ -58,12 +73,14 @@
 
             {{message}}
             </div>
-
+			
+			{% endif %}
+			
             {% endfor %}
             {% endif %}
-            {% endwith %} 
+            {% endwith %}
     
-                    <!-- Modal Create Strategies--> 
+			<!-- Modal Create Strategies--> 
  
             <div id="mymodal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
             aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -149,6 +166,20 @@
                 <div class="table-data__tool-right" style=padding-bottom:10px;>
                     <button data-toggle="modal" data-target="#mymodal" class="au-btn au-btn-icon au-btn--green au-btn--small">
                         <i class="zmdi zmdi-plus"></i>new strategy</button>
+                    
+                    <button class="au-btn-filter">
+                        <i class="zmdi zmdi-filter-list"></i>filters</button>
+
+                        <!-- <div class="dropdown" style=float:right>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Export
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" class="btn_excel">Excel</a>
+                              <a class="dropdown-item" class="btn_csv">CSV</a>
+                              <a class="dropdown-item" class="btn_pdf">PDF</a>
+                            </div>
+                          </div> -->
                 </div>
 		</div>
             <div class="table-responsive table-responsive-data2">
@@ -256,7 +287,7 @@
 
                                                 <div class="col-sm-6">
                                                     <label>Status</label>
-                                                    <select name="status" class="form-control" name="status" value="{{row.status}}">
+                                                    <select class="form-control" name="status" value="{{row.status}}">
                                                       <option value="0">Please Select Status</option>
                                                       <option class="yellowBg" value="ongoing">Ongoing</option>
                                                       <option class="greenBg" value="complete">Complete</option>
