@@ -10,15 +10,14 @@
       <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
       
       	<!-- Fontfaces CSS-->
-	<link href="css/font-face.css" rel="stylesheet" media="all">
-	<link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-	<link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
-	<link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+      <link href="css/font-face.css" rel="stylesheet" media="all">
+      <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+      <link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+      <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
-	<!-- Bootstrap CSS-->
-	<link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+      <!-- Bootstrap CSS-->
+      <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
 
-		
     </head>
 	<body>
 	
@@ -154,14 +153,25 @@
                     <h5 class="modal-title" id="mediumModalLabel">Edit Dashboard</h5>
                   </div>
 
-                  <div class="modal-body">
-                    <p>
-                      There are three species of zebras: the plains zebra, the mountain zebra and the Grévy's zebra. The plains zebra and the mountain
-                      zebra belong to the subgenus Hippotigris, but Grévy's zebra is the sole species of subgenus Dolichohippus. The latter
-                      resembles an ass, to which it is closely related, while the former two are more horse-like. All three belong to the
-                      genus Equus, along with other living equids.
-                    </p>
-                  </div>
+                  <div class="modal-body"> 
+                    <div class="col-md-14 mx-auto">
+                    <form action="/dashboard/insert" method="POST">
+
+                      <div class="form-group row">
+                        <div class="col-12">
+                        <label>Dashboard Name</label>
+                        <input type="text" class="form-control" name="name" required="1" placeholder="Strategy Name">     
+                        </div>
+                      </div>    
+
+                      <div class="form-group row">
+                        <div class="col-12">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control"
+                            id="description" class="input-field"
+                            cols="60" rows="4" placeholder="Add a short description about your dashboard here. ." style="resize: none;"></textarea>
+                        </div>
+                      </div>  
 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
