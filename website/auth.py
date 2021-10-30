@@ -279,10 +279,11 @@ def deletecheck():
 @auth.route('/user-profile/edit',methods = ['GET', 'POST']) # Edit User Profile
 @login_required
 def edit():
-        if request.files['image_file']:
+        if request.method == 'POST': 
+            if request.files['image_file']:
                 picture_file = save_picture(request.files['image_file'])
-        if request.method == 'POST':
-            current_user.image_file = picture_file
+                current_user.image_file = picture_file
+                db.session.commit()
             current_user.fname = request.form['fname']
             current_user.lname = request.form['lname']
             current_user.cp = request.form['cp']
