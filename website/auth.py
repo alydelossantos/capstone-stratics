@@ -293,6 +293,8 @@ def edit():
             current_user.ig = request.form['ig']
             current_user.tw = request.form['tw']
             current_user.linkedin = request.form['linkedin']
+            pic = User(image_file=current_user.image_file)
+            db.session.add(pic)
             db.session.commit()
             flash("User Updated Successfully")
             image_file = url_for('static', filename='images/' + current_user.image_file)
