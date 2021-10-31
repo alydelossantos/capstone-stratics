@@ -123,10 +123,10 @@ ul{
   color: #f39519;
 }
 
-.nav__links li a:active {
+/* .nav__links li a:active {
   color: red;
   font-weight: 500;
-}
+} */
 
 .cta {
   margin-left: 20px;
@@ -137,7 +137,7 @@ ul{
   transition: all 0.3s ease 0s;
 }
 
-.nav__links a:after {    
+/* .nav__links a:after {    
 
   bottom: 0;
   content: "";
@@ -148,12 +148,12 @@ ul{
   background: #f39519;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
-}
+} */
 
-.nav__links a:hover:after { 
+/* .nav__links a:hover:after { 
   width: 100%; 
   left: 0; 
-}
+} */
 
 .cta:hover {
   background-color: #f39519;
