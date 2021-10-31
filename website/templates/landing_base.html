@@ -71,7 +71,7 @@
          $('.icon').click(function(){
            $('span').toggleClass("cancel");
          });
-      </script> --> -->
+      </script> --> 
 
       <!-- End of New Navbar -->
       
@@ -82,10 +82,30 @@
                     <ul class="nav__links">
 					{% if user.is_authenticated %}
                         <li><a class="active" href="/" >Why Stratics</a></li>
+                        <li>
+                          <div class="dropdown">
+                            <a class="dropbtn">Features</a>
+                            <div class="dropdown-content">
+                              <a href="/">Dashboard</a>
+                              <a href="/">Customer Management</a>
+                              <a href="/">Strategies</a>
+                              <a href="/">Email Marketing</a>
+                            </div>
+                          </li>                        
                         <li><a href="/about">Our Team</a></li>
                         <li><a href="/contact">Contact</a></li>
 					{% else %}
-						<li><a href="/">Why Stratics</a></li>
+						            <li><a href="/">Why Stratics</a></li>
+                        <li>
+                          <div class="dropdown">
+                            <a class="dropbtn">Features</a>
+                            <div class="dropdown-content">
+                              <a href="/">Dashboard</a>
+                              <a href="/">Customer Management</a>
+                              <a href="/">Strategies</a>
+                              <a href="/">Email Marketing</a>
+                            </div>
+                          </li>
                         <li><a href="/about">Our Team</a></li>
                         <li><a href="/contact">Contact</a></li>
                         <li><a href="/sign-in">Sign In</a></li>
@@ -103,12 +123,30 @@
                 <a class="close">&times;</a>
                 <div class="overlay__content">
 				{% if user.is_authenticated %}
-                    <a href="/">Why Stratics</a> 
+          <a href="/">Why Stratics</a>
+          <div class="dropdown">
+            <a class="dropbtn">Features</a>
+             <ul>
+             <a href="/">Dashboard</a>
+             <a href="/">Customer Management</a>
+             <a href="/">Strategies</a>
+             <a href="/">Email Marketing</a>
+           </ul>
+         </div>
 					<a href="/about">Our Team</a>
 					<a href="/contact">Contact</a>
 					<a href="/home">Back</a>
 				{% else %}
 					<a href="/">Why Stratics</a>
+          <div class="dropdown">
+            <a class="dropbtn">Features</a>
+             <ul>
+             <a href="/">Dashboard</a>
+             <a href="/">Customer Management</a>
+             <a href="/">Strategies</a>
+             <a href="/">Email Marketing</a>
+           </ul>
+         </div>
 					<a href="/about">Our Team</a>
 					<a href="/contact">Contact</a>
                     <a href="/sign-in">Sign In</a>
