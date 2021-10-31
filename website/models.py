@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     bday = db.Column(db.String(50), nullable=False , default='N/A')
     about = db.Column(db.String(500), nullable=False , default='N/A')
     password = db.Column(db.String(50), nullable=False , default='N/A')
-    image_file = db.Column(db.String(20), nullable=False, default='user.png')
+    image_file = db.Column(db.String(20), nullable=False, default='default.png')
     data = db.relationship("Data")
     strategies = db.relationship("Strategies")
     sample_strat = db.relationship("Samplestrategies")
