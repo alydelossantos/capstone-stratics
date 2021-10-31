@@ -52,12 +52,8 @@ def signin():
         user = User.query.filter_by(email=email).first()
         if user:
             if user.password == password:
-                if user.cname == "Kalibo":
-                    login_user(user, remember=True)
-                    return redirect(url_for("auth.home"))
-                else:
-                    login_user(user, remember=True)
-                    return redirect(url_for("auth.home"))
+                login_user(user, remember=True)
+                return redirect(url_for("views.home"))
             else:
                 flash("Password Incorrect. Please try again", category="error")
         else:
@@ -98,12 +94,6 @@ def signup():
     return render_template("signup.html", user= current_user)
 
 # Home Page
-
-@auth.route('/home')
-@login_required
-def home():
-    image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("home.html", user= current_user, image_file = image_file)
 
 #SideBar
 def sidebarpic():
