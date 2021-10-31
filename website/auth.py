@@ -27,6 +27,22 @@ def about():
 @auth.route('/privacy-policy') #pripo page
 def pripo():
     return render_template("privacypolicy.html", user= current_user)
+
+@auth.route('/feature-dashboard') #feature dashboard
+def fdash():
+    return render_template("feature-dashboard.html", user= current_user)
+
+@auth.route('/feature-custman') #feature custman
+def fcustman():
+    return render_template("feature-custman.html", user= current_user)
+
+@auth.route('/feature-strategies') #feature strategies
+def fstrategies():
+    return render_template("feature-strategies.html", user= current_user)
+
+@auth.route('/feature-email') #feature email marketing
+def femail():
+    return render_template("feature-email.html", user= current_user)
     
 @auth.route('/contact', methods=["GET", "POST"]) #contact page
 def contact():
