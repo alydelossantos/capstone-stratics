@@ -494,14 +494,14 @@ section {
   }
 
   .au-btn--red {
-    background: #ff4b5a;
+    background: #ed5e68;
     font-family: 'Inter', sans-serif;
     line-height: 35px;
     padding: 0 6px;
     height: 25x;
     min-width: 140px;
     text-transform: capitalize;
-    color: black;
+    color: white;
     font-weight: 600;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
