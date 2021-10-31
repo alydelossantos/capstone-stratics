@@ -14,16 +14,69 @@
         <link href="{{ url_for('static',  filename='css/home.css') }}" rel="stylesheet">
         <link href="{{ url_for('static',  filename='css/button.css') }}" rel="stylesheet"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"> 
         <link href="{{ url_for('static',  filename='css/scroll.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
         <script src="https://kit.fontawesome.com/b60b9aa1ba.js" crossorigin="anonymous"></script>
 
-		
 		<title>{% block title %}Landing {% endblock %}</title>
 
     </head>
     <body>
+
+      <!-- New Navbar -->
+
+      <nav class="navbar">
+        <a class="logo" href="/"><img src="{{url_for('static', filename='images/stratics-black.png')}}"></a>
+         <label for="btn" class="icon">
+         <span class="fa fa-bars"></span>
+         </label>
+         <input type="checkbox" id="btn">
+         <ul>
+          {% if user.is_authenticated %}
+          <li><a class="active" href="/">Why Stratics</a></li>
+            <li>
+               <label for="btn-1" class="show">Features +</label>
+               <a href="#">Features</a>
+               <input type="checkbox" id="btn-1">
+               <ul>
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/">Customer Management</a></li>
+                <li><a href="/">Strategies</a></li>
+                <li><a href="/">Email Marketing</a></li>
+               </ul>
+                <li><a href="/about">Our Team</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a style = "font-weight:600" class ="cta2" href="/sign-in">Back</a></li>
+          {% else %}
+          <li><a class="active" href="/">Why Stratics</a></li>
+            <li>
+               <label for="btn-1" class="show">Features +</label>
+               <a href="#">Features</a>
+               <input type="checkbox" id="btn-1">
+               <ul>
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/">Customer Management</a></li>
+                <li><a href="/">Strategies</a></li>
+                <li><a href="/">Email Marketing</a></li>
+              </ul>
+                <li><a href="/about">Our Team</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/sign-in">Sign In</a></li>
+                <li><a style = "font-weight:600" href="/sign-up">Sign Up</a></li>
+          {% endif %}
+               </ul>
+            </li>
+      </nav>
+
+      <script>
+         $('.icon').click(function(){
+           $('span').toggleClass("cancel");
+         });
+      </script>
+
+      <!-- End of New Navbar -->
       
         <!-- Navbar -->
-        <nav id="navbar_top" class="navbar">
+        <!-- <nav id="navbar_top" class="navbar">
             <a class="logo" href="/"><img src="{{url_for('static', filename='images/stratics-black.png')}}"></a>
                 <nav>
                     <ul class="nav__links">
@@ -66,7 +119,9 @@
     </nav>
                 
         <script src="{{ url_for('static', filename='js/mobile.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/aos.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/aos.js') }}"></script> -->
+
+
         <!-- Content -->
         {% block content %}
 
