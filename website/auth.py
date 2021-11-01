@@ -5,48 +5,34 @@ import numpy as np
 import pandas as pd
 import sqlalchemy
 from PIL import Image
+from flask import Flask
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
 from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
-from website import db
+from website import db, mail
+from datetime import datetime
+from itsdangerous import URLSafeTimedSerializer
+from flask_mail import Mail, Message
 
 auth = Blueprint('auth', __name__)
-
+  
 # Landing Page
-@auth.route('/about') #about page
+#about page
+@auth.route('/about')
 def about():
     '''cnx = create_engine("sqlite:///website/db.db", echo=True)
     connn = cnx.connect()
     df = pd.read_sql_table('strategies', con=cnx)
     print(df)'''
     return render_template("about.html", user= current_user)
-
-@auth.route('/privacy-policy') #pripo page
+    
+#pripo page
+@auth.route('/privacy-policy') 
 def pripo():
     return render_template("privacypolicy.html", user= current_user)
-
-@auth.route('/terms-conditions') #t&c page
-def tc():
-    return render_template("termsconditions.html", user= current_user)
-
-@auth.route('/feature-dashboard') #feature dashboard
-def fdash():
-    return render_template("feature-dashboard.html", user= current_user)
-
-@auth.route('/feature-custman') #feature custman
-def fcustman():
-    return render_template("feature-custman.html", user= current_user)
-
-@auth.route('/feature-strategies') #feature strategies
-def fstrategies():
-    return render_template("feature-strategies.html", user= current_user)
-
-@auth.route('/feature-email') #feature email marketing
-def femail():
-    return render_template("feature-email.html", user= current_user)
     
 @auth.route('/contact', methods=["GET", "POST"]) #contact page
 def contact():
@@ -72,8 +58,10 @@ def signin():
         user = User.query.filter_by(email=email).first()
         if user:
             if user.password == password:
-                login_user(user, remember=True)
-                return redirect(url_for("views.home"))
+                if user.email_confirmed == True:
+                    login_user(user, remember=True)
+                    return redirect(url_for("views.home"))
+                else:flash("Please confirm your account!", category="error")
             else:
                 flash("Password Incorrect. Please try again", category="error")
         else:
@@ -109,24 +97,64 @@ def signup():
             new_user = User(fname=fname, lname=lname, uname=uname, email=email, cname=cname, password=password)
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for("views.home"))
+            send_confirmation_email(new_user.email)
+            flash("Thank you for registering!, Please check your email to confirm your account", category="success")
+            return redirect(url_for("auth.signin"))
     return render_template("signup.html", user= current_user)
+ 
+def send_email(subject, recipients, html_body):
+    msg = Message(subject, recipients=recipients)
+    msg.html = html_body
+    mail.send(msg)
+      
+def send_confirmation_email(user_email):
+    confirm_serializer = URLSafeTimedSerializer('asdfghjkl')
+    
+    confirm_url = url_for(
+        'auth.confirm_email', 
+        token=confirm_serializer.dumps(user_email, salt='email-confirmation-salt'), 
+        _external = True)
+    
+    html = render_template('confirmemail.html', confirm_url=confirm_url)
+    
+    send_email('STRATICS EMAIL CONFIRMATION', [user_email], html)
 
+@auth.route('/confirm-email')
+def ce():
+    return render_template("confirmemail.html", user= current_user)
+    
+@auth.route('/sign-up/confirm/<token>')
+def confirm_email(token):
+    try:
+        confirm_serializer = URLSafeTimedSerializer('asdfghjkl')
+        email = confirm_serializer.loads(token, salt='email-confirmation-salt', max_age=3600)
+    except:
+        flash('The confirmation link is invalid')
+        return redirect(url_for('auth.signin'))
+        
+    user = User.query.filter_by(email=email).first()
+    
+    if user.email_confirmed:
+        flash('Account confirmed')
+    else:
+        user.email_confirmed = True 
+        user.email_confirmed_on = datetime.now()
+        db.session.add(user)
+        db.session.commit()
+        flash('Thank your for confirming email')
+    login_user(user, remember=True)   
+    return redirect(url_for('views.home'))
+    return render_template(user= current_user)
+  
 # Home Page
-
-#SideBar
-def sidebarpic():
-    image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("base.html", user= current_user, image_file = image_file)
 
 # Customer Management
 @auth.route('/customer-management', methods=["GET", "POST"]) 
 @login_required
 def custman():
     if current_user.cname == "Kalibo":
-        all_data = Data.query.all()
-        image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
+        all_data = Data.query.all() 
+        return render_template("custman.html", user=current_user, datas=all_data)
     else:
         sd = Sampledata \
             .query \
@@ -143,8 +171,7 @@ def custman():
             sstatus = request.form['sstatus']
             amnt_paid = request.form['amnt_paid']
             ref_num = request.form['ref_num']
-        image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
+        return render_template("scustman.html", user=current_user, sd=sd)
 
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
@@ -288,11 +315,10 @@ def deletecheck():
 @auth.route('/user-profile/edit',methods = ['GET', 'POST']) # Edit User Profile
 @login_required
 def edit():
-        if request.method == 'POST': 
+        if request.method == 'POST':
             if request.files['image_file']:
                 picture_file = save_picture(request.files['image_file'])
                 current_user.image_file = picture_file
-                db.session.commit()
             current_user.fname = request.form['fname']
             current_user.lname = request.form['lname']
             current_user.cp = request.form['cp']
@@ -313,8 +339,7 @@ def edit():
 @auth.route('/user-profile',methods = ['GET', 'POST'])
 @login_required
 def profile():
-    image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("profile.html", user= current_user, image_file = image_file)
+    return render_template("profile.html", user= current_user)
         
         
 @login_required
@@ -335,8 +360,7 @@ def save_picture(form_picture):
 @auth.route('/email-marketing')
 @login_required
 def email():
-    image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("email.html", user= current_user, image_file = image_file)
+    return render_template("email.html", user= current_user)
 
 @auth.route('/email-marketing', methods = ['GET','POST'])
 def send_message():
@@ -344,8 +368,7 @@ def send_message():
         email = request.form['Email']
         subject = request.form['Subject']
         msg = request.form['Body']
-        image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("email.html", user= current_user, image_file = image_file)
+        return render_template('email.html',user= current_user)
     
 # Strategies
 @auth.route('/strategies', methods=["GET", "POST"])
@@ -360,9 +383,8 @@ def strat():
             .query \
             .filter(Strategies.status == "ongoing").count()
         print(statss)
-        all_data = Strategies.query.all()
-        image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
+        all_data = Strategies.query.all() 
+        return render_template("strategies.html", user=current_user, strategiess=all_data, statss=statss, statc=statc)
     else:
         sd = Samplestrategies \
             .query \
@@ -390,8 +412,7 @@ def strat():
             status = request.form['status']
             description = request.form['description']
         
-        image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file)
+        return render_template("sstrategies.html", user=current_user, statc=statc, statss=statss, sd=sd) 
             
 @auth.route('/strategies/insert', methods = ['POST'])
 @login_required
