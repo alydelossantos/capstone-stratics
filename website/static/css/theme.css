@@ -494,28 +494,11 @@ section {
   }
 
   .au-btn--red {
-    background: #ff4b5a;
-    font-family: 'Inter', sans-serif;
-    line-height: 35px;
-    padding: 0 6px;
-    height: 25x;
-    min-width: 140px;
-    text-transform: capitalize;
-    color: black;
-    font-weight: 600;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 4px;
-    font-size: 20px;
-    -webkit-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    cursor: pointer; 
+    background: #ed5e68;
   }
 
   .au-btn--red:hover{
-    background: #FF2A3C;
+    background: #ff4d4d;
   }
   
 .au-btn--block {

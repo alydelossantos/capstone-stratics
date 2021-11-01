@@ -14,14 +14,13 @@
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
         <title>{% block title %}Stratics | Email Marketing {% endblock %}</title>
-		
     </head>
     <body>
         <!--========== HEADER ==========-->
         <header class="header">
             <div class="header__container">
 				<a href="/" class="header__logo">Stratics</a>
-                <a href="/user-profile"><img src="{{ url_for('static', filename='images/user.png') }}" alt="" class="header__img"></a>
+                <a href="/user-profile"><img src="{{ image_file }}" alt="Admin" style="border-radius: 50%;border:2px solid #193662; width:50px; height:50px; object-fit: cover;"></a>
 
                 
                 <div class="header__toggle">

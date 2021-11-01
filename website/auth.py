@@ -27,6 +27,22 @@ def about():
 @auth.route('/privacy-policy') #pripo page
 def pripo():
     return render_template("privacypolicy.html", user= current_user)
+
+@auth.route('/feature-dashboard') #feature dashboard
+def fdash():
+    return render_template("feature-dashboard.html", user= current_user)
+
+@auth.route('/feature-custman') #feature custman
+def fcustman():
+    return render_template("feature-custman.html", user= current_user)
+
+@auth.route('/feature-strategies') #feature strategies
+def fstrategies():
+    return render_template("feature-strategies.html", user= current_user)
+
+@auth.route('/feature-email') #feature email marketing
+def femail():
+    return render_template("feature-email.html", user= current_user)
     
 @auth.route('/contact', methods=["GET", "POST"]) #contact page
 def contact():
@@ -52,12 +68,8 @@ def signin():
         user = User.query.filter_by(email=email).first()
         if user:
             if user.password == password:
-                if user.cname == "Kalibo":
-                    login_user(user, remember=True)
-                    return redirect(url_for("views.home"))
-                else:
-                    login_user(user, remember=True)
-                    return redirect(url_for("views.home"))
+                login_user(user, remember=True)
+                return redirect(url_for("views.home"))
             else:
                 flash("Password Incorrect. Please try again", category="error")
         else:
@@ -93,19 +105,24 @@ def signup():
             new_user = User(fname=fname, lname=lname, uname=uname, email=email, cname=cname, password=password)
             db.session.add(new_user)
             db.session.commit()
-            flash("Account has been created.", category="success")
             return redirect(url_for("views.home"))
     return render_template("signup.html", user= current_user)
 
 # Home Page
+
+#SideBar
+def sidebarpic():
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template("base.html", user= current_user, image_file = image_file)
 
 # Customer Management
 @auth.route('/customer-management', methods=["GET", "POST"]) 
 @login_required
 def custman():
     if current_user.cname == "Kalibo":
-        all_data = Data.query.all() 
-        return render_template("custman.html", user=current_user, datas=all_data)
+        all_data = Data.query.all()
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
     else:
         sd = Sampledata \
             .query \
@@ -122,7 +139,8 @@ def custman():
             sstatus = request.form['sstatus']
             amnt_paid = request.form['amnt_paid']
             ref_num = request.form['ref_num']
-        return render_template("scustman.html", user=current_user, sd=sd)
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
 
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
@@ -266,10 +284,11 @@ def deletecheck():
 @auth.route('/user-profile/edit',methods = ['GET', 'POST']) # Edit User Profile
 @login_required
 def edit():
-        if request.method == 'POST':
+        if request.method == 'POST': 
             if request.files['image_file']:
                 picture_file = save_picture(request.files['image_file'])
                 current_user.image_file = picture_file
+                db.session.commit()
             current_user.fname = request.form['fname']
             current_user.lname = request.form['lname']
             current_user.cp = request.form['cp']
@@ -290,7 +309,8 @@ def edit():
 @auth.route('/user-profile',methods = ['GET', 'POST'])
 @login_required
 def profile():
-    return render_template("profile.html", user= current_user)
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template("profile.html", user= current_user, image_file = image_file)
         
         
 @login_required
@@ -311,7 +331,8 @@ def save_picture(form_picture):
 @auth.route('/email-marketing')
 @login_required
 def email():
-    return render_template("email.html", user= current_user)
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template("email.html", user= current_user, image_file = image_file)
 
 @auth.route('/email-marketing', methods = ['GET','POST'])
 def send_message():
@@ -319,7 +340,8 @@ def send_message():
         email = request.form['Email']
         subject = request.form['Subject']
         msg = request.form['Body']
-        return render_template('email.html',user= current_user)
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("email.html", user= current_user, image_file = image_file)
     
 # Strategies
 @auth.route('/strategies', methods=["GET", "POST"])
@@ -334,8 +356,9 @@ def strat():
             .query \
             .filter(Strategies.status == "ongoing").count()
         print(statss)
-        all_data = Strategies.query.all() 
-        return render_template("strategies.html", user=current_user, strategiess=all_data, statss=statss, statc=statc)
+        all_data = Strategies.query.all()
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
     else:
         sd = Samplestrategies \
             .query \
@@ -363,7 +386,8 @@ def strat():
             status = request.form['status']
             description = request.form['description']
         
-        return render_template("sstrategies.html", user=current_user, statc=statc, statss=statss, sd=sd) 
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file)
             
 @auth.route('/strategies/insert', methods = ['POST'])
 @login_required
