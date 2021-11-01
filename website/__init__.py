@@ -37,8 +37,4 @@ def create_app(): #create database
         
     return app
 
-def create_database():
-    if not path.exists("website/" + DB_NAME):
-        db.create_all()
-        print("Created Database")
-        
+
