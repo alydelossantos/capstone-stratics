@@ -3,17 +3,73 @@
 {% block content %}
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-	<title>{% block title %}
-			Dashboard
-		{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   </head>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+		<title>{% block title %} Stratics {% endblock %}</title>
+        <link href="{{ url_for('static',  filename='css/aos.css') }}" rel="stylesheet">
+    </head>
+    <body id="page-top">
 
+        <!-- Main Header -->
+        <header>
+            <div class="container px-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+                <div class="row gx-5 align-items-center" data-aos="fadeup" data-aos-duration="1000" data-aos-once="true">
+                        <center>
+                            <h1 class="display-4">Smart Dashboard</h1>
+                            <p-5>Monitor, analyze, and manage multiple customer-centric points to understand your business.</p>
+                        </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End of Main Header -->
+          <div class="container px-4" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+            <div class="row gx-5 align-items-center" data-aos="fadeup" data-aos-duration="1000" data-aos-once="true">
+              <center>
+                <iframe width="820" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                </iframe>
+                    </center>
+                    </div>
+                </div>
+            </div>
 
+        <!-- Demo Video -->
+
+        <!-- End of Demo Video -->
+
+        <!-- Content section 3 -->
+        <section>
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-6 order-lg-2">
+                        <div class="p-5"><img class="img-fluid" src="{{url_for('static', filename='images/UI-23.png')}}"></div>
+                    </div>
+                    <div class="col-lg-6 order-lg-1">
+                        <div class="p-5">
+                            <h2 class="display-4">Anticipate and manage risks associated with customer churn</h2>
+                            <p>Add description here</p>
+                            <form action = "/sign-up">
+                            <button class = 'btn btn--outline btn--medium blue'>
+                                Start Now
+                            </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </section>
+        <!-- End of Content Section 3 -->
+
+        <script>
+            AOS.init({
+              duration: 3000,
+              once: true,
+            });
+          </script>
+          <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    </body>
 </html>
-
 
 {% endblock %}

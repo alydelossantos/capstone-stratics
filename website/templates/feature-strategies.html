@@ -3,17 +3,96 @@
 {% block content %}
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-	<title>{% block title %}
-			Dashboard
-		{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   </head>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+		<title>{% block title %} Stratics {% endblock %}</title>
+        <link href="{{ url_for('static',  filename='css/aos.css') }}" rel="stylesheet">
+    </head>
+    <body id="page-top">
 
+        <!-- Main Header -->
+        <header>
+            <div class="container px-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+                <div class="row gx-5 align-items-center" data-aos="fadeup" data-aos-duration="1000" data-aos-once="true">
+                        <center>
+                            <h1 class="display-4">Business Strategies</h1>
+                            <p-5>Have you defined the methods and tactics you need to take within your company? </p>
+                        </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End of Main Header -->
+          <div class="container px-4" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+            <div class="row gx-5 align-items-center" data-aos="fadeup" data-aos-duration="1000" data-aos-once="true">
+              <center>
+                <iframe width="820" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                </iframe>
+                    </center>
+                    </div>
+                </div>
+            </div>
 
+        <!-- Demo Video -->
+
+        <!-- End of Demo Video -->
+
+        <!-- Content section 3 -->
+        <section>
+            <div class="container px-4">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-6 order-lg-2">
+                        <div class="p-5"><img class="img-fluid" src="{{url_for('static', filename='images/UI-23.png')}}"></div>
+                    </div>
+                    <div class="col-lg-6 order-lg-1">
+                        <div class="p-5">
+                            <h2 class="display-4">Provide an exceptional customer service</h2>
+                            <p> Make it impossible for your customers to go to your competitors.</p>
+                            <form action = "/sign-up">
+                            <button class = 'btn btn--outline btn--medium blue'>
+                                Start Now
+                            </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </section>
+        <!-- End of Content Section 3 -->
+
+        <!-- Content section 2-->
+        <section>
+          <div class="container px-4">
+              <div class="row gx-5 align-items-center">
+                  <div class="col-lg-6">
+                      <div class="p-5"><img class="img-fluid" src="{{url_for('static', filename='images/UI-23.png')}}"></div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="p-5">
+                          <h2 class="display-4">Keep your loyal customers happy</h2>
+                          <p>Give loyal customers reasons to stick around with your service.</p>
+                          <form action = "/sign-up">
+                          <button class = 'btn btn--outline btn--medium blue'>
+                              Learn More
+                          </button>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <!-- End of Content Section 2 -->
+
+        <script>
+            AOS.init({
+              duration: 3000,
+              once: true,
+            });
+          </script>
+          <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    </body>
 </html>
-
 
 {% endblock %}
