@@ -8,9 +8,9 @@ db = SQLAlchemy()
 mail = Mail()
 DB_NAME = "db.db"
 
-def create_app(config_file="settings.py"): #create database
+def create_app(): #create database
     app = Flask(__name__)
-    app.config.from_pyfile('config_file')
+    app.config.from_pyfile('config.cfg')
     
     db.init_app(app)
     
