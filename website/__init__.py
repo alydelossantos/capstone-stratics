@@ -5,13 +5,16 @@ from flask_login import LoginManager
 from flask_mail import Mail
 
 db = SQLAlchemy()
+mail = Mail()
 DB_NAME = "db.db"
 
 def create_app(): #create database
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'asdfghjkl'
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
+    app.config.from_pyfile('config.cfg')
+    
     db.init_app(app)
+    
+    mail.init_app(app)
     
     from .views import views
     from .auth import auth
@@ -31,9 +34,11 @@ def create_app(): #create database
     def load_user(id):
         return User.query.get(int(id))
     
+        
     return app
 
 def create_database(app):
     if not path.exists("website/" + DB_NAME):
         db.create_all(app=app)
         print("Created Database")
+        
