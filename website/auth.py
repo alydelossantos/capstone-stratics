@@ -28,6 +28,10 @@ def about():
 def pripo():
     return render_template("privacypolicy.html", user= current_user)
 
+@auth.route('/terms-conditions') #t&c page
+def tc():
+    return render_template("termsconditions.html", user= current_user)
+
 @auth.route('/feature-dashboard') #feature dashboard
 def fdash():
     return render_template("feature-dashboard.html", user= current_user)
