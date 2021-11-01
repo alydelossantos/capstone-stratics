@@ -23,6 +23,8 @@ def create_app(): #create database
     app.register_blueprint(auth, url_prefix = '/')
 
     from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
+
+    create_database(app)
    
     login_manager = LoginManager() #user verification
     login_manager.login_view = "auth.signin"
@@ -32,4 +34,11 @@ def create_app(): #create database
     def load_user(id):
         return User.query.get(int(id))
     
-    return app 
+        
+    return app
+
+def create_database(app):
+    if not path.exists("website/" + DB_NAME):
+        db.create_all(app=app)
+        print("Created Database")
+        
