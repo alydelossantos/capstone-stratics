@@ -1,6 +1,6 @@
 import click
 from flask.cli import with_appcontext
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, db
 
 from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
 
