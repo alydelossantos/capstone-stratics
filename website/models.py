@@ -17,16 +17,19 @@ class User(db.Model, UserMixin):
     linkedin = db.Column(db.String(50), nullable=False , default='N/A')
     bday = db.Column(db.String(50), nullable=False , default='N/A')
     about = db.Column(db.String(500), nullable=False , default='N/A')
-    password = db.Column(db.String(50), nullable=False , default='N/A') 
+    password = db.Column(db.String(50), nullable=False , default='N/A')
+    image_file = db.Column(db.String(20), nullable=False, default='default.png') 
     dname = db.Column(db.String(100), nullable=False, default='N/A')
-    image_file = db.Column(db.String(20), nullable=False, default='default.png')
+    explore = db.Column(db.String(50), nullable=False, default='N/A')
+    email_confirmation_sent_on = db.Column(db.DateTime, nullable=True)
+    email_confirmed = db.Column(db.Boolean, nullable=True, default=False)
+    email_confirmed_on = db.Column(db.DateTime, nullable=True)
     data = db.relationship("Data")
     strategies = db.relationship("Strategies")
     sample_strat = db.relationship("Samplestrategies")
     contacts = db.relationship("Contact")
     sample_data = db.relationship("Sampledata")
-    
-        
+
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     duser_id = db.Column(db.Integer, db.ForeignKey("user.id"))
