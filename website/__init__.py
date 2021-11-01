@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_mail import Mail
-from .commands import create_tables
 
 db = SQLAlchemy()
 mail = Mail()
@@ -34,7 +33,6 @@ def create_app(): #create database
     def load_user(id):
         return User.query.get(int(id))
 
-    app.cli.add_command(create_tables)
     return app
 
 def create_database():
