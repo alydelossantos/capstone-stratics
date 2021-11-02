@@ -6,13 +6,15 @@ import pandas as pd
 import sqlalchemy
 from PIL import Image
 from flask import Flask
+
+from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
 from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
-from website import db, mail
+from website import mail
 from datetime import datetime
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
