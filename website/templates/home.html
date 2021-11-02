@@ -41,7 +41,7 @@
             <div class="card-container-main">
               <div class="container-fluid">
                 <div class="card-inv">
-                  <div class="dboard-card-body">
+                  <div class="card-body">
                     <div class="hello">
                     <img src="{{url_for('static', filename='images/hi_user.svg')}}" alt="hi user">
                     </div>
@@ -82,11 +82,11 @@
                     <div class="col-md-12">
 
                       <div class="dboard-overview-wrap">
-                        <h3>{{current_user.dname}}</h3>
-                        <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname-icon">
-                          <i class='bx bx-pencil'></i></button>
-                          <button type="button" data-toggle="modal" data-target="#medmodal" class="au-btn au-btn-icon au-btn--blue">
-                        <i class='bx bx-folder-open'></i>explore datasets</button>
+                      <h2>{{current_user.dname}}</h2>
+                      <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname dashname-icon">
+                        <i class='bx bx-pencil'></i></button>
+                        <button type="button" data-toggle="modal" data-target="#medmodal" class="au-btn au-btn-icon au-btn--blue">
+                       <i class='bx bx-folder-open'></i>explore datasets</button>
                       </div>
 
                       <section class="p-t-20">
@@ -109,7 +109,7 @@
                                   </div>
                               </div>
                             </div>
-                        </div>
+                          </div>
                       </div>
                     </div>
                   </div>  
@@ -139,8 +139,8 @@
                               <button class="plan-action">
                                 <img src="{{url_for('static', filename='images/explore-1.svg')}}" alt="customer">
                               </button>
-                              <button class="plan-name"><input type="submit" value="Customer Management" name="explore">
-                               <!-- <h2>Customer Management</h2> -->
+                              <button class="plan-name"><input type="submit" value="customer" name="explore">
+                                <h2>Customer Management</h2>
                               </button>
                             </div>
                           </div>
@@ -150,8 +150,8 @@
                               <button class="plan-action">
                                 <img src="{{url_for('static', filename='images/explore.svg')}}" alt="sample">
                               </button>
-                              <button class="plan-name"><input type="submit" value="Sample Dataset" name="explore">
-                              <!-- <h2>Sample<br>Data</h2> -->
+                              <button class="plan-name"><input type="submit" value="sample" name="explore">
+                                <h2>Sample<br>Data</h2>
                               </button>
                             </div>    
                            </div>
@@ -207,65 +207,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- SAMPLE EXPLORE DATASETS -
-           
-            <div id="dbmodal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-
-                        <div class="modal-header"> 
-                            <h4 class="modal-title">New Customer</h4>
-                        </div>
-    
-                        <div class="modal-body"> 
-                            <div class="col-md-14 mx-auto">
-                            <form action="/dashboard/insert" method="POST">
-
-                            <div class="form-group row">
-                              <div class="col-sm-6">
-                                <label>Account Number</label>
-                                <input type="text" class="form-control" name="accnt_num" required="1" placeholder="Account Number">     
-								              </div>
-                            </div>
-                          </form>
-                    </div>
-                </div>
-            </div> 
-
-            <!-- DASHBOARD CONTENT 
-          <div class="db-container">
-            <div class="section__content section__content--p30">
-              <div class="row">
-			  				<div class="col-md-12">
-                  <div class="overview-wrap">
-                   <button class="dashname dashname-icon">
-			  						dashboard name<i class='bx bx-pencil'></i></button>
-                    <button type="button" data-toggle="modal" data-target="#dbmodal" class="au-btn au-btn-icon au-btn--blue">
-                   <i class='bx bx-folder-open'></i>explore datasets</button>
-                   </div>
-                </div>
-              </div>
-						 
-						<div class="overview-wrap">
-							<div class="overview-item">
-								<div class="overview-box">
-                    <div class="photo">
-                      <img src="{{url_for('static', filename='images/empty_dashboard.png')}}" alt="empty">
-                    </div>
-                    <div class="text">
-                      <p>Your current dashboard is empty.</p><br>
-                      <span>Add or explore dataset to your dashboard.</span><br>
-                      <button class="au-btn2 au-btn2-icon au-btn--blue">
-                      <i class='bx bx-folder-open'></i>explore datasets</button>
-									  </div> 
-								</div>
-							</div>
-						</div>
-				</div>
-				</div>
-			</div>  
 
     <!--========== MAIN JS ==========-->
 
