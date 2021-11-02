@@ -15050,7 +15050,7 @@ textarea.form-control {
 
 /*=====CARD BANNER CSS=====*/
 
-.dboard-card-inv {
+.card-inv {
   display: flexbox;
   background-color: white;
   border-radius: 8px;
@@ -15070,13 +15070,13 @@ textarea.form-control {
   float: right;
 }
 
-.dboard-card-inv .text {
+.card-inv .text {
   margin-top: 5px;
   padding: 20px;
   text-align: left;
 }
 
-.dboard-card-inv h2 {
+.card-inv h2 {
   display: inline-flexbox;
   color: black;
   font-size: 38px;
@@ -15084,7 +15084,7 @@ textarea.form-control {
   margin-top: 5px;
 }
 
-.dboard-card-inv p {
+.card-inv p {
   display: inline-flexbox;
   font-size: 20px;
 }
