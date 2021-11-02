@@ -120,7 +120,7 @@
     
             <!-- EXPLORE DATASET MODAL -->
 
-			      {{current_user.dname}}	
+			      	
             <div class="modal fade" id="medmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -129,7 +129,7 @@
                   </div>
 
                   <div class="modal-body">
-				            <form action="/home/explore-dataset" method="POST">
+				           <form action="/home/explore-dataset" method="POST">
                     <div class="form-group row">
                       <div class="row-fluid">
                         <div class="pricing-table row-fluid text-center">
@@ -153,12 +153,12 @@
                                 <h2>Sample<br>Data</h2>
                               </button>
                             </div>    
-                           </div>
-                         </form>
-					    </div>
-                      </div>
+                          </div>
+					            </div>
+                    </form>
                     </div>
-                  </div>
+                </div>
+              </div>
 				
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -172,6 +172,7 @@
 
           <!-- EDIT DASHBOARD MODAL -->
 
+            {{current_user.dname}}
             <div class="modal fade" id="edmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">

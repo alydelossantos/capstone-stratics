@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for
+from flask import Blueprint, render_template, request, url_for, redirect
 from flask_login import login_user, login_required, logout_user, current_user
 
 from .extensions import db
@@ -27,5 +27,3 @@ def homeexp():
 @views.route('/')
 def landing():
     return render_template("landing.html", user= current_user)
-
-    
