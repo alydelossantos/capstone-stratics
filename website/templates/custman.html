@@ -80,8 +80,8 @@
                                     <label>Status</label>
                                     <select name="sstatus" class="custom-select">
                                         <option value="0">Please Select Status</option>
-                                        <option class="block-active" value="active">Active</option>
-                                        <option class="block-inactive" value="inactive">Inactive</option>
+                                        <option class="greenBg" value="active">Active</option>
+                                        <option class="redBg" value="inactive">Inactive</option>
                                       </select>
                                 </div>
                             </div> 
@@ -200,9 +200,9 @@
 							<td>Php {{row.monthly}}.00</td>
 							<td>{{row.collector}}</td>
 							<td> {% if row.sstatus == "active" %}
-								<li class="block-active" >Active</li>
+								<li class="btn btn-success btn-xs">Active</li>
 								{% else %}
-								<li class="block-inactive">Inactive</li>
+								<li class="btn btn-danger btn-xs">Inactive</li>
 								{% endif %}
 							</td>
 							<td>{{row.amnt_paid}}</td>
@@ -322,8 +322,12 @@
 					</div>							
                         {% endfor %} 
                     </tbody>
-					<button type="submit" class="au-btn au-btn-icon au-btn--green au-btn--small" style="position: relative;z-index:1;top:2.4rem;margin-left:53rem;">
-                        <i class="zmdi zmdi-delete"></i>Delete All Selected</button>
+			<div class="col-md-12">
+				<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
+					<button type="submit" class="au-btn au-btn-icon au-btn--red au-btn--small" style="width: 40px; font-size: 14px;color:white;padding: -1 0;">
+					<i class="bx bx-trash" style="margin-left: 5px;"></i>Delete</button>
+				</div>
+			</div>
                 </table>
 			</form>
             <!-- END TABLE -->	
