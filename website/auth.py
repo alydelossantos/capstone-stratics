@@ -87,10 +87,13 @@ def signin():
         user = User.query.filter_by(email=email).first()
         if user:
             if user.password == password:
-                if user.email_confirmed == True:
-                    login_user(user, remember=True)
-                    return redirect(url_for("views.home"))
-                else:flash("Please confirm your account!", category="error")
+                if user.user_type == "user":
+                    if user.email_confirmed == True:
+                        login_user(user, remember=True)
+                        return redirect(url_for("views.home"))
+                    else:flash("Please confirm your account!", category="error")
+                else:
+                    flash("You do not have an access to this webpage.", category="error")
             else:
                 flash("Password Incorrect. Please try again", category="error")
         else:
@@ -113,6 +116,7 @@ def signup():
         email = request.form.get("email")
         cname = request.form.get("cname")
         password = request.form.get("password")
+        user_type = request.form.get("user_type")
 
         user = User.query.filter_by(email=email).first()
         usern = User.query.filter_by(uname=uname).first()
@@ -123,7 +127,7 @@ def signup():
         elif len(password) < 8:
             flash("Password must contain 8 characters.\nPlease try again!", category="error")
         else:
-            new_user = User(fname=fname, lname=lname, uname=uname, email=email, cname=cname, password=password)
+            new_user = User(fname=fname, lname=lname, uname=uname, email=email, cname=cname, password=password, user_type=user_type)
             db.session.add(new_user)
             db.session.commit()
             send_confirmation_email(new_user.email)
@@ -627,70 +631,3 @@ def deletestratcheck():
             return redirect(url_for('auth.strat'))
     
 # End of Strategies
-    
-    
-    
-    
-    
-    
-    
-    
-# Account Management
-
-@auth.route('/user-accounts', methods = ['GET', 'POST'])
-@login_required
-def accounts():
-    if request.method == 'POST':
-
-        lname = request.form['name']
-        fname = request.form['act']
-        address = request.form['platform']
-        startdate = request.form['startdate']
-        enddate = request.form['enddate']
-        status = request.form['status']
-        
-    return render_template("accounts.html", user=current_user)
-
-
-@auth.route('/user-accounts/update/<id>', methods = ['GET', 'POST'])
-@login_required
-def updateaccnt(id):
- 
-    if request.method == 'POST':
-        my_data = User.query.get(request.form.get('id'))
-        my_data.lname = request.form['lname']
-        my_data.fname = request.form['fname']
-        my_data.address = request.form['address']
- 
-        db.session.commit()
-        flash("User Account Updated Successfully")
- 
-        return render_template("accounts.html", user=current_user)
- 
-
-#This route is for deleting our user
-@auth.route('/user-accounts/delete/<id>/', methods = ['GET', 'POST'])
-@login_required
-def deleteaccnt(id):
-    my_data = User.query.get(id)
-    db.session.delete(my_data)
-    db.session.commit()
-    flash("User Account Deleted Successfully")
- 
-    return render_template("accounts.html", user=current_user)
-
-#This route is for deleting our accnt in checkbox
-@auth.route('/user-accounts/delete-selected', methods = ['GET', 'POST'])
-@login_required
-def deletecheckaccnt():
-    if request.method == "POST":
-        for current_user.id in request.form.getlist("mycheckbox"):
-            print(current_user.id)
-            db.session.query(User).filter(User.id ==current_user.id).delete()
-        db.session.commit()
-        flash("User Account Deleted Successfully")
-                 
-        return render_template("accounts.html", user=current_user)
-    return render_template("accounts.html", user=current_user)
-    
-# End of Accounts  
