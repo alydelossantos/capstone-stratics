@@ -1,0 +1,150 @@
+/* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    font-family: "Inter";
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.link {
+	text-decoration: none;
+	color: #262626;
+}
+
+.link:hover {
+	text-decoration: none;
+	color: #262626;
+}
+
+
+#title {
+	font-size: 60px;
+    font-weight: 800;
+    margin-bottom: -5px;
+    margin-top: -72px;
+    margin-left: 80px;
+	 
+}
+
+.sicontainer {
+    background-image: url('/static/images/pattern.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #f5f5f7;
+    min-height: 60vh;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#logo {
+	width: 60px; height: 75px; margin-top: 0px; margin-left: -250px;
+}
+
+#forms {
+    background-color: #f5f5f7;
+    max-width: 550px;
+    max-height: 650px;
+    width: 100%;
+    z-index: 1;
+    display: grid;
+    margin: 0 auto;
+    padding: 40px 40px;
+    border-radius: 4px;
+    border: none;
+    font-size: 65px;
+	text-align: center;
+	
+}
+
+.formtext {
+    font-size: 20px;
+    font-weight: 400;
+    text-align: left;
+}
+
+.silabel {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    color:#262626;
+    font-size: 18px;
+    text-align: left;
+}
+
+#forms input {
+    padding: 10px 10px;
+    margin-bottom: 5px;
+    color:#262626;
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid #ededed;
+    border-radius: 15px;
+}
+
+.formbtn {
+    margin-top: 25px;
+    background-color: #f39519;
+    padding: 10px 10px;
+    width: 100%;
+    border: none;
+    border-radius: 15px;
+    color: #ededed;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.text {
+    text-align: center;
+    margin-top: 26px;
+    color: #262626;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.susmall {
+    font-weight: bold; color: #f39519;
+	text-decoration: none;
+}
+
+.susmall:hover {
+	text-decoration: none;
+	font-weight: bold; color: #f39519; 
+}
+
+@media screen and (min-width: 900px) {
+    .sicontainer{
+        flex-direction: row;
+        height: 100vh;
+    }
+	
+	#title {
+		font-size: 60px;
+		font-weight: 800;
+		margin-bottom: -15px;
+		margin-top: -85px;
+		margin-left: 80px;
+		 
+	}
+	
+	#forms {
+    background-color: #f5f5f7;
+    max-width: 550px;
+    height: 75%;
+    width: 100%;
+    z-index: 1;
+    display: grid;
+    margin: 0 auto;
+    padding: 40px 40px;
+    border-radius: 4px;
+    border: none;
+    font-size: 65px;
+	text-align: center;
+	
+	}
+} 
