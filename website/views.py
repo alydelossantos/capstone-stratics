@@ -13,7 +13,7 @@ def home():
         current_user.dname = "Customer Dataset"
     print(current_user.dname)
     image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("home.html", user= current_user)
+    return render_template("home.html", user= current_user, image_file=image_file)
 
 @views.route('/home/explore-dataset', methods=["GET", "POST"])    
 @login_required
