@@ -16,6 +16,8 @@ def create_app(config_file='configure.py'): #create database
     
     mail.init_app(app)
     
+    from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
+    
     from .views import views
     from .auth import auth
 
