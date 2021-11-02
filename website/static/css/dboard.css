@@ -15642,7 +15642,7 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
   font-size: 20px;
 }
 .pricing-table .plan-name h2 + p {
-  margin: 10px 15px 0;
+  margin: 5px 10px 0;
 }
 .pricing-table .plan-price {
   background: #fafafa;
