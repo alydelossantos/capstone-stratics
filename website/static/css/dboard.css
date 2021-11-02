@@ -3493,11 +3493,11 @@ textarea.form-control {
   margin-top: 60px;
 }
 
-.card-body {
+.dboard-card-body {
   margin-bottom: 8rem;
 }
 
-.card-body-left {
+.dboard-card-body-left {
   margin-bottom: 4rem;
 }
 
@@ -3512,7 +3512,7 @@ textarea.form-control {
   height: 50px;
 }
 
-.card-body .text-light {
+.dboard-card-body .text-light {
   font-size: 30px;
   color: black;
   font-weight: 600;
