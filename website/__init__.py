@@ -10,7 +10,7 @@ DB_NAME = "db.db"
 
 def create_app(): #create database
     app = Flask(__name__)
-    app.config.from_pyfile('config.cfg')
+    app.config.from_pyfile('configure.py')
     
     db.init_app(app)
     
