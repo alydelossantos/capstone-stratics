@@ -8,9 +8,9 @@ db = SQLAlchemy()
 mail = Mail()
 DB_NAME = "db.db"
 
-def create_app(config_file='configure.py'): #create database
+def create_app(): #create database
     app = Flask(__name__)
-    app.config.from_pyfile(config_file)
+    app.config.from_pyfile('configure.py')
     
     db.init_app(app)
     
@@ -24,8 +24,6 @@ def create_app(config_file='configure.py'): #create database
 
     from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
 
-    create_database(app)
-   
     login_manager = LoginManager() #user verification
     login_manager.login_view = "auth.signin"
     login_manager.init_app(app)
@@ -34,6 +32,7 @@ def create_app(config_file='configure.py'): #create database
     def load_user(id):
         return User.query.get(int(id))
     
+    create_database(app)
         
     return app
 
