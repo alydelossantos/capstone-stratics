@@ -42,7 +42,7 @@ body {
 }
 
 .info{
-    height: 650px;
+    height: 675px;
 }
 
 .sign-up, .info {
@@ -65,12 +65,12 @@ body {
 
 .picture {
 	margin: 0;
-	width: 300px;
-	height: 310px;
+	width: 700px; 
+	height: 340px;
 	background-color: orange;
 	text-align: center;
 	justify-content: center;
-	align-items: center;
+	align-items: center;margin-left: -100px;
 }
 
 .sign-up {
@@ -143,7 +143,7 @@ body {
 	font-weight: bold; color: #f39519; 
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 1025px) {
     .sucontainer{
         flex-direction: row;
         height: 100vh;
@@ -152,18 +152,18 @@ body {
     .info {
         display: flex;
         width: 55%;
-        height: auto;
+        height: 100vh;
     }
 
     .sign-up {
         display: flex;
         width: 45%;
-        height: auto;
+        height: 100vh;
     }
 	
 	.picture {
-		width: 350px;
-		height: 360px;
+		width: 630px;
+		height: 360px;margin-left: -70px;
 	}
 
 }
