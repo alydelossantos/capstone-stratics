@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Sign Up{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signup.css') }}">
+        <link
+		  rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		/>
+		<link
+		  rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+		  crossorigin="anonymous"
+		/>
+		<script
+		  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		  crossorigin="anonymous"
+		></script>
+		<script
+		  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		  crossorigin="anonymous"
+		></script>
+		<script
+		  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		  crossorigin="anonymous"
+		></script>
+    </head>
+    <body>
+        {% block content %}
+		
+			{% with messages = get_flashed_messages(with_categories = true) %}
+			{% if messages %}
+			  {% for category, messages in messages %}
+				  {% if category == "error" %}
+				  <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="True">&times;</span></button>
+				  </div>
+				  {% else %}
+				  <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+				  </div>
+				  {% endif %}
+			  {% endfor %}
+			{% endif %}
+			{% endwith %}
+
+        <div class="sucontainer">
+            <div class="info">
+                <section class="copy">
+                    <h1 id="title" style="width: 700px; margin-left: -100px; line-height: 1; margin-bottom: 50px; margin-top: -50px;"><span style="font-weight: 600;">Transform your</span><br>insights into actions.</h1>
+					<div class="picture" style="width: 700px; margin-left: -100px;"></div>
+                </section>
+            </div>
+            <div class="sign-up">
+                <form method="POST" id="forms">
+                <section class="copy">
+                    <a class="link" href="/"><img  style="width: 58px; height: 73px; margin-top: 20px; margin-left: -300px; " src= 'static/images/Stratics_Logo.png'>
+                    <h1 id="title" >Stratics</h1></a>
+                    <h2 class="title2" style="margin-left: -50px;">Sign Up</h2>
+                </section>
+                <div class="input-container fname">
+                    <label class="sulabel" "for="fname">First Name</label>
+                    <input id="fname" name="fname" type="text">
+                </div>
+                <div class="input-container lname">
+                    <label class="sulabel" for="lname">Last Name</label>
+                    <input id="lname" name="lname" type="text">
+                </div>
+                <div class="input-container uname">
+                    <label class="sulabel" for="uname">Username</label>
+                    <input id="uname" name="uname" type="text">
+                </div>
+                <div class="input-container email">
+                    <label class="sulabel" for="email">Email</label>
+                    <input id="email" name="email" type="email">
+                </div>
+                <div class="input-container cname">
+                    <label class="sulabel" for="cname">Company Name</label>
+                    <input id="cname" name="cname" type="text">
+                </div>
+                <div class="input-container password">
+                    <label class="sulabel" for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Must contain 8 characters">
+                </div>
+				<input id="user_type" name="user_type" type="hidden" value="admin">
+                <button class="subtn" type="submit">Let's Start</button>
+                <section class="copy legal">
+                    <p style="margin-left: -70px; margin-top: 13px; font-weight: 400; font-size: 16px;">By continuing to use our services.<br>You accept these <span style="color: #193662; font-weight: bold;">Terms of Service</span> and <span style="color: #193662; font-weight: bold;">Privacy Policy</span>.<br>Already have an account? Click here to <span><a href="/sign-in" class="susmall">sign in</a></span></p>
+                </section>
+                </form>   
+            </div>
+        </div>
+
+        {% endblock %}
+		
+    </body>
+</html>
