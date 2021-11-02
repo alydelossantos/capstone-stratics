@@ -118,26 +118,7 @@
 
             <!-- END OF DASHBOARD CONTAINER -->
     
-            {{current_user.dname}}	
-					<div class="section__content section__content--p30">
-                        		<div class="row">
-							<div class="col-md-12">
-							<form action="/home/explore-dataset" method="POST">
-								<div class="form-group">
-									<button>Customer Dataset
-									<input type="submit" value="customer" name="explore"></button>
-								</div>
-								<div class="form-group">
-									<button>Sample Dataset
-									<input type="submit" value="sample" name="explore"></button>
-								</div> 	
-							</form>
-        </div>
-						</div>	
-					</div>
-				</div>
-			</div>
-            <!-- EXPLORE DATASET MODAL 
+            <!-- EXPLORE DATASET MODAL -->
 
 			      	
             <div class="modal fade" id="medmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
@@ -154,10 +135,10 @@
                         <div class="pricing-table row-fluid text-center">
                           <div class="span4">
                             <div class="plan">
-                              <button class="plan-action"><input type="submit" value="customer" name="explore">
+                              <button class="plan-action">
                                 <img src="{{url_for('static', filename='images/explore-1.svg')}}" alt="customer">
                               </button>
-                              <button class="plan-name">
+                              <button class="plan-name"><input type="submit" value="customer" name="explore">
                                 <h2>Customer Management</h2>
                               </button>
                             </div>
@@ -165,19 +146,19 @@
                         
                           <div class="span4">
                             <div class="plan">
-                              <button class="plan-action"><input type="submit" value="sample" name="explore">
+                              <button class="plan-action">
                                 <img src="{{url_for('static', filename='images/explore.svg')}}" alt="sample">
                               </button>
-                              <button class="plan-name">
+                              <button class="plan-name"><input type="submit" value="sample" name="explore">
                                 <h2>Sample<br>Data</h2>
                               </button>
                             </div>    
-                          </div>
+                           </div>
                         </form>
 					            </div>
                     </div>
+                  </div>
                 </div>
-              </div>
 				
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
