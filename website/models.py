@@ -24,6 +24,8 @@ class User(db.Model, UserMixin):
     email_confirmation_sent_on = db.Column(db.DateTime, nullable=True)
     email_confirmed = db.Column(db.Boolean, nullable=True, default=False)
     email_confirmed_on = db.Column(db.DateTime, nullable=True)
+    user_type = db.Column(db.String(50), nullable=False)
+    position = db.Column(db.String(50), nullable=False, default="Position")
     data = db.relationship("Data")
     strategies = db.relationship("Strategies")
     sample_strat = db.relationship("Samplestrategies")
