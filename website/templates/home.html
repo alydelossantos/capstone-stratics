@@ -7,183 +7,278 @@
 		  <meta charset="utf-8">
 		  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		  <link href ="{{url_for('static', filename = 'css/dboard.css')}}" rel = "stylesheet"/>
-		  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-		  <link href="{{url_for('static', filename = 'bootstrap-4.1/bootstrap.min.css')}}" rel="stylesheet" media="all">
-		</head>
-		
+      <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+      
+      	<!-- Fontfaces CSS-->
+      <link href="css/font-face.css" rel="stylesheet" media="all">
+      <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+      <link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+      <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+      <!-- Bootstrap CSS-->
+      <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    </head>
 	<body>
 	
-			{% with messages = get_flashed_messages(with_categories = true) %}
-			{% if messages %}
-			  {% for category, messages in messages %}
-				  {% if category == "error" %}
-				  <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
-					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="True">&times;</span></button>
-				  </div>
-				  {% else %}
-				  <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
-					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-				  </div>
-				  {% endif %}
-			  {% endfor %}
-			{% endif %}
-			{% endwith %}
+    {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+          {% for category, messages in messages %}
+            {% if category == "error" %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="True">&times;</span></button>
+            </div>
+            {% else %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+            </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% endwith %}
 			
-			<!--FORM FOR DASHBOARD EXPLORE DATASET-->
-			
-					{{current_user.dname}}	
-					<div class="section__content section__content--p30">
-                        <div class="row">
-							<div class="col-md-12">
-							<form action="/home/explore-dataset" method="POST">
-								<div class="form-group">
-									<button>Customer Dataset
-									<input type="submit" value="customer" name="explore"></button>
-								</div>
-								<div class="form-group">
-									<button>Sample Dataset
-									<input type="submit" value="sample" name="explore"></button>
-								</div> 	
-							</form>
-							
+            <!-- HELLO CARD -->
+            <div class="card-container-main">
+              <div class="container-fluid">
+                <div class="card-inv">
+                  <div class="card-body">
+                    <div class="hello">
+                    <img src="{{url_for('static', filename='images/hi_user.svg')}}" alt="hi user">
+                    </div>
+                    <div class="text">
+                    <h2>Hi, {{current_user.fname}}!</h2>
+                    <p>Do you want to build a Dashboard?</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <!-- Flash Messages  -->
+    
+            {% with messages = get_flashed_messages() %} 
+            {% if messages %} 
+            {% for message in messages %}
+
+            <div class="alert alert-success alert-dismissable" role="alert"> 
+                <button type="button" class="close" data-dismiss="alert"> 
+                    &nbsp; <i class="zmdi zmdi-close"></i><br>
+                </button>            
+
+            {{message}}
+            </div>
+
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+             
+            <!-- DASHBOARD CONTENTS -->
+
+            <div class="main-content">
+              <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <div class="overview-wrap">
+                      <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname dashname-icon">
+                        dashboard name<i class='bx bx-pencil'></i></button>
+                        <button type="button" data-toggle="modal" data-target="#medmodal" class="au-btn au-btn-icon au-btn--blue">
+                       <i class='bx bx-folder-open'></i>explore datasets</button>
+                      </div>
+
+                      <section class="p-t-20">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="overview-wrap">
+                                <div class="overview-item">
+                                  <div class="overview-box">
+                                      <div class="photo">
+                                        <img src="{{url_for('static', filename='images/empty_dashboard.png')}}" alt="empty">
+                                      </div>
+                                      <div class="text">
+                                        <p>Your current dashboard is empty.</p><br>
+                                        <span>Add or explore dataset to your dashboard.</span><br>
+                                        <button type="button" data-toggle="modal" data-target="#medmodal" class="au-btn2 au-btn2-icon au-btn--blue">
+                                        <i class='bx bx-folder-open'></i>explore datasets</button>
+                                      </div> 
+                                    </div>
+                                  </div>
+                              </div>
                             </div>
-						</div>	
-					</div>
-				</div>
-			</div>
-			<!--END FORM-->
+                          </div>
+                      </div>
+                    </div>
+                  </div>  
+                </div>
+              </div>
+            </div>
 
-			<!--DASHBOARD-->
-			<div class="main-content">
-				<div class="container-fluid">
-				<div class="card">
-					<div class="card-body">
-					  <div class="hello">
-						<img src="{{url_for('static', filename='images/hi_user.svg')}}" alt="hi user">
-					  </div>
-					  <div class="text">
-						<h2>Hi, {{current_user.fname}}!</h2>
-						<p>Do you want to build a Dashboard?</p>
-					</div>
-				  </div>
-				</div>
+            <!-- END OF DASHBOARD CONTAINER -->
+    
+            <!-- EXPLORE DATASET MODAL -->
 
-				<!-- EDIT DASHBOARD
+            <div class="modal fade" id="medmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Explore Dataset</h5>
+                  </div>
 
-				<div id="mymodal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                  <div class="modal-body">
+                    <div class="form-group row">
+                      <div class="row-fluid">
+                        <div class="pricing-table row-fluid text-center">
+                          <div class="span4">
+                            <div class="plan">
+                              <button class="plan-action">
+                                <img src="{{url_for('static', filename='images/explore-1.svg')}}" alt="customer">
+                              </button>
+                              <button class="plan-name">
+                                <h2>Customer Management</h2>
+                              </button>
+                            </div>
+                          </div>
+                        
+                          <div class="span4">
+                            <div class="plan">
+                              <button class="plan-action">
+                                <img src="{{url_for('static', filename='images/explore.svg')}}" alt="sample">
+                              </button>
+                              <button class="plan-name">
+                                <h2>Sample<br>Data</h2>
+                              </button>
+                            </div>    
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          <!-- END OFEXPLORE DATASET MODAL -->
+
+          <!-- EDIT DASHBOARD MODAL -->
+
+            <div class="modal fade" id="edmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Edit Dashboard</h5>
+                  </div>
+
+                  <div class="modal-body"> 
+                    <div class="col-md-14 mx-auto">
+                    <form action="/dashboard/insert" method="POST">
+
+                      <div class="form-group row">
+                        <div class="col-12">
+                        <label>Dashboard Name</label>
+                        <input type="text" class="form-control" name="name" required="1" placeholder="Strategy Name">     
+                        </div>
+                      </div>    
+
+                      <div class="form-group row">
+                        <div class="col-12">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control"
+                            id="description" class="input-field"
+                            cols="60" rows="4" placeholder="Add a short description about your dashboard here. ." style="resize: none;"></textarea>
+                        </div>
+                      </div>  
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Confirm</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SAMPLE EXPLORE DATASETS -
+           
+            <div id="dbmodal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
             aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
+
                         <div class="modal-header"> 
-                            <h4 class="modal-title">New Strategy</h4>
+                            <h4 class="modal-title">New Customer</h4>
                         </div>
     
                         <div class="modal-body"> 
                             <div class="col-md-14 mx-auto">
-                            <form action="/strategies/insert" method="POST">
+                            <form action="/dashboard/insert" method="POST">
 
                             <div class="form-group row">
-                                <div class="col-sm-6">
-                                <label>Strategy Name</label>
-                                <input type="text" class="form-control" name="name" required="1" placeholder="Strategy Name">     
-                                </div>
-
-                                <div class="col-sm-6">
-                                <label>Start Date</label>
-                                <input type="date" class="form-control" name="startdate" required="1"> 
-                                </div>
-    
-                            </div>  
-
-                           <div class="form-group row">
-                                <div class="col-sm-6">
-                                <label>Activity Type</label>
-                                <select name="act" class="custom-select">
-                                    <option value="0">Please Select Activity Type</option>
-                                    <option class="blueBg" value="campaign">Campaign</option>
-                                    <option class="yellowBg" value="activity">Activity</option>
-                                    <option value="others">Others</option>
-                                </select>
-                                </div>
-                                
-                                <div class="col-sm-6">
-                                    <label>End Date</label>
-                                    <input type="date" class="form-control" name="enddate" required="1">
-                                </div>
+                              <div class="col-sm-6">
+                                <label>Account Number</label>
+                                <input type="text" class="form-control" name="accnt_num" required="1" placeholder="Account Number">     
+								              </div>
                             </div>
-                
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                <label>Platform</label>
-                                <input type="text" class="form-control" name="platform" required="1" placeholder="Platform"> 
-                                </div>
-                            
-                                <div class="col-sm-6">
-                                  <label>Status</label>
-                                  <select name="status" class="custom-select">
-                                    <option value="0">Please Select Status</option>
-                                    <option class="yellowBg" value="ongoing">Ongoing</option>
-                                    <option class="greenBg" value="complete">Complete</option>
-                                  </select>
-                                </div>
-                            </div> 
-                            
-                            <div class="form-group row">
-                                <div class="col-12">
-                                <label>Description</label>
-                                <textarea name="contact-message" class="form-control"
-                                    id="contact-message" class="input-field"
-                                    cols="60" rows="4" placeholder="Description (optional)" style="resize: none;"></textarea>
-                                </div>
-                            </div>            
-                
-                        <div class="modal-footer"> 
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
-                            <button class="btn btn-primary" type="submit">Add Strategy</button>       
-                        </div>      
-                      </form>       
-                    </div> 
+                          </form>
+                    </div>
                 </div>
-            </div> -->
+            </div> 
 
-                <div class="section__content section__content--p30">
-                        <div class="row">
-							<div class="col-md-12">
-                            <div class="overview-wrap">
-                                <button data-toggle="modal" data-target="#mymodal"  class="dashname dashname-icon">
-									dashboard name<i class='bx bx-pencil'></i></button>
-                                <button class="au-btn au-btn-icon au-btn--blue">
-                                <i class='bx bx-folder-open'></i>explore datasets</button>
-                                </div>
-                            </div>
-						</div>	
-					</div>
-				</div>
-			</div>
-
-						<div class="row">
+            <!-- DASHBOARD CONTENT 
+          <div class="db-container">
+            <div class="section__content section__content--p30">
+              <div class="row">
+			  				<div class="col-md-12">
+                  <div class="overview-wrap">
+                   <button class="dashname dashname-icon">
+			  						dashboard name<i class='bx bx-pencil'></i></button>
+                    <button type="button" data-toggle="modal" data-target="#dbmodal" class="au-btn au-btn-icon au-btn--blue">
+                   <i class='bx bx-folder-open'></i>explore datasets</button>
+                   </div>
+                </div>
+              </div>
+						 
 						<div class="overview-wrap">
 							<div class="overview-item">
 								<div class="overview-box">
-									<div class="photo">
-										<img src="{{url_for('static', filename='images/empty_dashboard.png')}}" alt="empty">
-									</div>
-									<div class="text">
-										<p>Your current dashboard is empty.</p><br>
-										<span>Add or explore dataset to your dashboard.</span><br>
-										<button class="au-btn2 au-btn2-icon au-btn--blue">
-											<i class='bx bx-folder-open'></i>explore datasets</button>
-									</div> 
+                    <div class="photo">
+                      <img src="{{url_for('static', filename='images/empty_dashboard.png')}}" alt="empty">
+                    </div>
+                    <div class="text">
+                      <p>Your current dashboard is empty.</p><br>
+                      <span>Add or explore dataset to your dashboard.</span><br>
+                      <button class="au-btn2 au-btn2-icon au-btn--blue">
+                      <i class='bx bx-folder-open'></i>explore datasets</button>
+									  </div> 
 								</div>
 							</div>
-						</div>	
-					</div>				
-				</div>
-			</div>
+						</div>
+          </div>
+        </div>
+      </div>  
+
     <!--========== MAIN JS ==========-->
 
 	<script src="{{ url_for('static', filename='js/dboard.js') }}"></script>
+    <script type = "text/javascript" src ="{{url_for('static', filename = 'js/jquery-3.2.1.min.js')}}"></script>
+	<script type = "text/javascript" src ="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> 
+    <script type = "text/javascript" src ="{{url_for('static', filename = 'js/tables.js')}}"></script>
 
+    
+	<!-- Jquery JS-->
+	<script src="vendor/jquery-3.2.1.min.js"></script>
+	<!-- Bootstrap JS-->
+	<script src="vendor/bootstrap-4.1/popper.min.js"></script>
+	<script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
 	
