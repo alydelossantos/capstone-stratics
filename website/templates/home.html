@@ -40,8 +40,8 @@
             <!-- HELLO CARD -->
             <div class="card-container-main">
               <div class="container-fluid">
-                <div class="card-inv">
-                  <div class="card-body">
+                <div class="dboard-card-inv">
+                  <div class="dboard-card-body">
                     <div class="hello">
                     <img src="{{url_for('static', filename='images/hi_user.svg')}}" alt="hi user">
                     </div>
@@ -82,7 +82,7 @@
                     <div class="col-md-12">
 
                       <div class="dboard-overview-wrap">
-                      <h2>{{current_user.dname}}</h2>
+                      <h3>{{current_user.dname}}</h3>
                       <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname dashname-icon">
                         <i class='bx bx-pencil'></i></button>
                         <button type="button" data-toggle="modal" data-target="#medmodal" class="au-btn au-btn-icon au-btn--blue">
@@ -120,7 +120,6 @@
             <!-- END OF DASHBOARD CONTAINER -->
     
             <!-- EXPLORE DATASET MODAL -->
-
 			      	
             <div class="modal fade" id="medmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -139,7 +138,7 @@
                               <button class="plan-action">
                                 <img src="{{url_for('static', filename='images/explore-1.svg')}}" alt="customer">
                               </button>
-                              <button class="plan-name"><input type="submit" value="customer" name="explore">
+                              <button class="plan-name" input type="submit" value="customer">
                                 <h2>Customer Management</h2>
                               </button>
                             </div>
@@ -150,7 +149,7 @@
                               <button class="plan-action">
                                 <img src="{{url_for('static', filename='images/explore.svg')}}" alt="sample">
                               </button>
-                              <button class="plan-name"><input type="submit" value="sample" name="explore">
+                              <button class="plan-name" input type="submit" value="sample">
                                 <h2>Sample<br>Data</h2>
                               </button>
                             </div>    
