@@ -494,11 +494,28 @@ section {
   }
 
   .au-btn--red {
-    background: #ed5e68;
+    background: #ff4b5a;
+    font-family: 'Inter', sans-serif;
+    line-height: 35px;
+    padding: 0 6px;
+    height: 25x;
+    min-width: 140px;
+    text-transform: capitalize;
+    color: black;
+    font-weight: 600;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 4px;
+    font-size: 20px;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer; 
   }
 
   .au-btn--red:hover{
-    background: #ff4d4d;
+    background: #FF2A3C;
   }
   
 .au-btn--block {
@@ -4719,6 +4736,30 @@ section {
     color: #935b03;
     display: inline-block;
     background: #FEE185;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    line-height: 30px;
+    padding: 0 14px;
+}
+
+.block-active {
+    font-size: 14px;
+    color: #1B9B17;
+    display: inline-block;
+    background: #b9f8aa;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    line-height: 30px;
+    padding: 0 14px;
+}
+
+.block-inactive {
+    font-size: 14px;
+    color: #ffc9c9;
+    display: inline-block;
+    background: #ff5757;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
