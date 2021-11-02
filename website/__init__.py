@@ -1,6 +1,6 @@
 from flask import Flask
 
-from .commands import create_tables
+from .command import create_tables
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
