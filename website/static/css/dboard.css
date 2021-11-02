@@ -186,12 +186,13 @@ strong {
   -moz-transition: all 0.3s ease;
   transition: all 0.3s ease;
   cursor: pointer;
+  margin-left: 5px;
 }
 
 .dashname-icon i {
   display: inline-block;
   vertical-align: baseline;
-  margin-left: 1rem;
+  margin-left: -1rem;
   margin-top: 0.8rem;
 }
 
