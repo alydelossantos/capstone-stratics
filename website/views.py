@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, url_for
 from flask_login import login_user, login_required, logout_user, current_user
 
+from .extensions import db
 views = Blueprint('views', __name__)
 
 @views.route('/home', methods=["GET", "POST"])
