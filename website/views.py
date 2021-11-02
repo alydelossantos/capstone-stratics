@@ -7,7 +7,7 @@ views = Blueprint('views', __name__)
 @views.route('/home', methods=["GET", "POST"])
 @login_required
 def home():
-    if current_user.explore == "sample":
+    if current_user.explore == "Sample Dataset":
         current_user.dname = "Sample Dataset"
     else:
         current_user.dname = "Customer Dataset"
