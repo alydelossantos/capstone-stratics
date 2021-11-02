@@ -1,4 +1,5 @@
 import os
+import re
 
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
@@ -8,6 +9,10 @@ MAIL_USERNAME = 'horizonfeua@gmail.com'
 MAIL_PASSWORD = 'horizonfeu123'
 MAIL_DEFAULT_SENDER = 'horizonfeua@gmail.com'
 
+uri = os.getenv('DATABASE_URL')
+if uri and uri.startswith('postgres://'):
+  uri = uri.replace('postgres://', 'postgresql://', 1)
+  
 SECRET_KEY = 'asdfghjkl'
-SQLALCHEMY_DATABASE_URI = os.getenv('postgres://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq')
+SQLALCHEMY_DATABASE_URI = uri
 SQLALCHEMY_TRACK_MODIFICATIONS = False
