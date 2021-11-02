@@ -22,120 +22,94 @@ body {
 }
 
 #title {
-    font-size: 60px;
+	font-size: 60px;
     font-weight: 800;
-    margin-bottom: -15px;
+    margin-bottom: -5px;
     margin-top: -72px;
-    margin-left: 30px;
+    margin-left: 80px;
+	 
 }
 
-.title2 {
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 10px;
-	margin-top: 30px;
-}
-
-.sucontainer {
-    display: flex;
-    flex-direction: column;
-}
-
-.info{
-    height: 650px;
-}
-
-.sign-up, .info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.info {
+.sicontainer {
     background-image: url('/static/images/pattern.svg');
-    background-size: cover;
     background-repeat: no-repeat;
+    background-size: cover;
     background-color: #f5f5f7;
-}
-
-.info .copy {
-    text-align: center;
-    -webkit-font-smoothing: antialiased;
-}
-
-.picture {
-	margin: 0;
-	width: 700px; 
-	height: 310px;
-	background-color: orange;
-	text-align: center;
-	justify-content: center;
-	align-items: center;margin-left: -100px;
-}
-
-.sign-up {
-    height: 810px;
-    background-color: #f5f5f7;
+    min-height: 60vh;
+	display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+
 }
 
-.sign-up .copy {
-    text-align: center;
-}
-
-.copy {
-    width: 500px;
-    text-align: center;
-}
-.sign-up #forms {
-    width: 328px;
+#logo {
+	width: 60px; height: 75px; margin-top: 0px; margin-left: -250px;
 }
 
 #forms {
-    margin-left: -100px;
+    background-color: #f5f5f7;
+    max-width: 550px;
+    max-height: 650px;
+    width: 100%;
+    z-index: 1;
+    display: grid;
+    margin: 0 auto;
+    padding: 40px 40px;
+    border-radius: 4px;
+    border: none;
+    font-size: 65px;
+	text-align: center;
+	
 }
 
-#forms input[type="text"], #forms input[type="email"], #forms input[type="password"] {
-    display: block;
-    width: 130%;
-    padding: 5px 8px;
-    margin-bottom: 5px;
-    color: #262626;
-    font-size: 16px;
-    border: 1px solid #ededed;
-    border-radius: 15px;
-    background-color: white;
+.formtext {
+    font-size: 20px;
+    font-weight: 400;
+    text-align: left;
 }
 
-.sulabel {
-    display: block;
+.silabel {
     margin-top: 0px;
     margin-bottom: 5px;
-    color: #262626;
+    color:#262626;
     font-size: 18px;
     text-align: left;
 }
 
-.input-container {
-    position: relative;
+#forms input {
+    padding: 10px 10px;
+    margin-bottom: 5px;
+    color:#262626;
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid #ededed;
+    border-radius: 15px;
 }
 
-
-.subtn {
-    display: block;
+.formbtn {
     margin-top: 25px;
     background-color: #f39519;
-    padding: 5px 5px;
-    width: 132%;
+    padding: 10px 10px;
+    width: 100%;
     border: none;
     border-radius: 15px;
     color: #ededed;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
+}
+
+.text {
+    text-align: center;
+    margin-top: 26px;
+    color: #262626;
+    font-size: 18px;
+    line-height: 30px;
 }
 
 .susmall {
     font-weight: bold; color: #f39519;
+	text-decoration: none;
 }
 
 .susmall:hover {
@@ -143,31 +117,37 @@ body {
 	font-weight: bold; color: #f39519; 
 }
 
-@media screen and (min-width: 990px) {
-    .sucontainer{
+@media screen and (min-width: 900px) {
+    .sicontainer{
         flex-direction: row;
         height: 100vh;
     }
-
-    .info {
-        display: flex;
-        width: 55%;
-        height: 100vh;
-    }
-
-    .sign-up {
-        display: flex;
-        width: 45%;
-        height: 100vh;
-    }
 	
-	.picture {
-		width: 630px;
-		height: 360px;margin-left: -70px;
+	#title {
+		font-size: 60px;
+		font-weight: 800;
+		margin-bottom: -15px;
+		margin-top: -85px;
+		margin-left: 80px;
+		 
 	}
-
-}
-
+	
+	#forms {
+	    background-color: #f5f5f7;
+	    max-width: 550px;
+	    height: 75%;
+	    width: 100%;
+	    z-index: 1;
+	    display: grid;
+	    margin: 0 auto;
+	    padding: 40px 40px;
+	    border-radius: 4px;
+	    border: none;
+	    font-size: 65px;
+	    text-align: center;
+	
+	}
+} 
 
 
 
