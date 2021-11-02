@@ -168,6 +168,7 @@ strong {
 }
 
 .dashname {
+  display: inline-block;
   font-family: 'Inter', sans-serif;
   line-height: 35px;
   padding: 0 6px;
@@ -188,6 +189,7 @@ strong {
 }
 
 .dashname-icon i {
+  display: inline-block;
   vertical-align: baseline;
   margin-left: 1rem;
   margin-top: 0.8rem;
