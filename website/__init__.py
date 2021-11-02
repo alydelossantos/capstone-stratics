@@ -1,4 +1,6 @@
 from flask import Flask
+
+from .commands import create_tables
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
@@ -8,9 +10,9 @@ db = SQLAlchemy()
 mail = Mail()
 DB_NAME = "db.db"
 
-def create_app(): #create database
+def create_app(config_file='configure.py'): #create database
     app = Flask(__name__)
-    app.config.from_pyfile('configure.py')
+    app.config.from_pyfile(config_file)
     
     db.init_app(app)
     
@@ -32,11 +34,6 @@ def create_app(): #create database
     def load_user(id):
         return User.query.get(int(id))
     
-    create_database(app)
+    app.cli.add_command(create_tables)
         
-    return app
-
-def create_database(app):
-    db.create_all(app=app)
-    print("Created Database")
-        
+    return app   
