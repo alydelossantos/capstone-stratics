@@ -6,7 +6,8 @@ import pandas as pd
 import sqlalchemy
 from PIL import Image
 from flask import Flask
-
+import base64
+import mimetypes
 from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -18,6 +19,12 @@ from website import mail
 from datetime import datetime
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
+from email.message import EmailMessage
+from email import encoders
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email.message import EmailMessage
 
 auth = Blueprint('auth', __name__)
   
@@ -358,19 +365,56 @@ def save_picture(form_picture):
     i.save(picture_path)
     return picture_fn
 
-# Email Marketing   
-@auth.route('/email-marketing')
-@login_required
-def email():
-    return render_template("email.html", user= current_user)
-
+#saving attachments to attachment folder
+def save_file(form_file):
+    print(form_file.filename)
+    _, f_ext = os.path.splitext(form_file.filename)
+    file_fn = _ + f_ext
+    file_path = os.path.join(auth.root_path, 'static/attachments',file_fn)
+    print(file_path,"kkk")
+    form_file.save(file_path)
+    print (file_fn, 'xxx')
+    return file_path
+#send email
 @auth.route('/email-marketing', methods = ['GET','POST'])
-def send_message():
+@login_required
+def emailmark():
+    EMAIL_ADDRESS = '201811294@feualabang.edu.ph'
+    EMAIL_PASSWORD = 'hildeguard'
+    contacts = ['YourAddress@gmail.com', 'test@example.com']
     if request.method == "POST":
-        email = request.form['Email']
-        subject = request.form['Subject']
-        msg = request.form['Body']
-        return render_template('email.html',user= current_user)
+        x = [] 
+        if request.files['attfile']:
+                file_attachments =''
+                form_file = save_file(request.files['attfile'])
+                print (form_file,"asdsa")
+                file_attachments = form_file
+                print (file_attachments)
+                x.append(file_attachments)
+        msg = MIMEMultipart()
+        msg['Subject'] = request.form['subject']
+        msg['To'] = request.form['email']
+        emailMsg=""
+        emailMsg = request.form['message']
+        msg.attach(MIMEText(emailMsg,'plain'))
+        print (x)
+        for attachment in x:
+            print (attachment)
+            content_type, encoding= mimetypes.guess_type(attachment)
+            main_type,sub_type = content_type.split('/',1)
+            file_name = os.path.basename(attachment)
+            f = open(attachment,'rb')
+            myFile = MIMEBase(main_type, sub_type)
+            myFile.set_payload(f.read())
+            myFile.add_header('Content-Disposition', 'attachment', filename=file_name)
+            encoders.encode_base64(myFile)
+            f.close()
+            msg.attach(myFile)
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            smtp.send_message(msg)
+            return redirect(url_for('auth.emailmark'))
+    return render_template('email-marketing.html')
     
 # Strategies
 @auth.route('/strategies', methods=["GET", "POST"])
