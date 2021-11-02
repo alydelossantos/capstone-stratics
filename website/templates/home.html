@@ -82,11 +82,13 @@
                     <div class="col-md-12">
 
                       <div class="dboard-overview-wrap">
-                      <h3>{{current_user.dname}}</h3>
-                      <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname dashname-icon">
-                        <i class='bx bx-pencil'></i></button>
-                        <button type="button" data-toggle="modal" data-target="#medmodal" class="au-btn au-btn-icon au-btn--blue">
-                       <i class='bx bx-folder-open'></i>explore datasets</button>
+                        <div class="text2">
+                        <h3 class="dashname">{{current_user.dname}}</h3>
+                        <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname dashname-icon">
+                          <i class='bx bx-pencil'></i></button>
+                        </div>
+                          <button type="button" data-toggle="modal" data-target="#medmodal" class="au-btn au-btn-icon au-btn--blue">
+                        <i class='bx bx-folder-open'></i>explore datasets</button>
                       </div>
 
                       <section class="p-t-20">
