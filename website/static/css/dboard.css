@@ -167,6 +167,9 @@ strong {
   font-weight: 600;
 }
 
+
+
+
 .dashname {
   display: inline-block;
   font-family: 'Inter', sans-serif;
@@ -192,7 +195,7 @@ strong {
 .dashname-icon i {
   display: inline-block;
   vertical-align: baseline;
-  margin-right: 4rem;
+  margin-left: -4rem;
   margin-top: 0.8rem;
 }
 

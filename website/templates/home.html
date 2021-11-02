@@ -82,8 +82,8 @@
                     <div class="col-md-12">
 
                       <div class="dboard-overview-wrap">
-                        <h3 class="dashname">{{current_user.dname}}</h3>
-                        <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname dashname-icon">
+                        <h3>{{current_user.dname}}</h3>
+                        <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname-icon">
                           <i class='bx bx-pencil'></i></button>
                           <button type="button" data-toggle="modal" data-target="#medmodal" class="au-btn au-btn-icon au-btn--blue">
                         <i class='bx bx-folder-open'></i>explore datasets</button>
@@ -151,7 +151,7 @@
                                 <img src="{{url_for('static', filename='images/explore.svg')}}" alt="sample">
                               </button>
                               <button class="plan-name"><input type="submit" value="Sample Dataset" name="explore">
-                              <h2>Sample<br>Data</h2>
+                              <!-- <h2>Sample<br>Data</h2> -->
                               </button>
                             </div>    
                            </div>
