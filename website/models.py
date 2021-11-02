@@ -65,7 +65,7 @@ class Strategies(db.Model):
     startdate = db.Column(db.String(150))
     enddate = db.Column(db.String(150))
     status = db.Column(db.String(100))
-    description = db.Column(db.Text(225))
+    description = db.Column(db.String(225))
     
 class Samplestrategies(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -76,11 +76,11 @@ class Samplestrategies(db.Model):
     startdate = db.Column(db.String(150))
     enddate = db.Column(db.String(150))
     status = db.Column(db.String(100))
-    description = db.Column(db.Text(225))
+    description = db.Column(db.String(225))
  
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     cuser_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     name = db.Column(db.String(100))
     email = db.Column(db.String(100))
-    message = db.Column(db.Text(225))
+    message = db.Column(db.String(225))
