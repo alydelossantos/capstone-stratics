@@ -22,9 +22,7 @@ def homeexp():
         current_user.explore = request.form['explore']
         db.session.commit()
     print(current_user.explore)
-
-    image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("home.html", user= current_user, image_file=image_file)
+    return redirect(url_for('views.home'))
 
 @views.route('/')
 def landing():

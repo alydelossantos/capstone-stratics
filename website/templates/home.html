@@ -118,7 +118,26 @@
 
             <!-- END OF DASHBOARD CONTAINER -->
     
-            <!-- EXPLORE DATASET MODAL -->
+            {{current_user.dname}}	
+					<div class="section__content section__content--p30">
+                        		<div class="row">
+							<div class="col-md-12">
+							<form action="/home/explore-dataset" method="POST">
+								<div class="form-group">
+									<button>Customer Dataset
+									<input type="submit" value="customer" name="explore"></button>
+								</div>
+								<div class="form-group">
+									<button>Sample Dataset
+									<input type="submit" value="sample" name="explore"></button>
+								</div> 	
+							</form>
+        </div>
+						</div>	
+					</div>
+				</div>
+			</div>
+            <!-- EXPLORE DATASET MODAL 
 
 			      	
             <div class="modal fade" id="medmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
