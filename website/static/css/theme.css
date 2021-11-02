@@ -4757,7 +4757,7 @@ section {
 
 .block-inactive {
     font-size: 14px;
-    color: #ffc9c9;
+    color: #fff;
     display: inline-block;
     background: #ff5757;
     -webkit-border-radius: 2px;
