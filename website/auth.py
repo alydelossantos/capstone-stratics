@@ -689,8 +689,8 @@ def deletestratcheck():
 def dashboard():
 
     cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-    connn = cnx.connect()
-    df = pd.read_sql_table('sampledata', connn=cnx)
+    conn = cnx.connect()
+    df = pd.read_sql_table('sampledata', con=cnx)
     print(df)
 
     # independent variable
@@ -712,13 +712,13 @@ def dashboard():
     # transform categorical var gender to binary - 0 - female 1 - male
     from sklearn.preprocessing import LabelEncoder
     lblencode = LabelEncoder()
-    X[:,1] = lblencode.fit_transform(X[:,1])
+    X[:,3] = lblencode.fit_transform(X[:,3])
     X
 
     # Using ColumnTransformer
     from sklearn.preprocessing import OneHotEncoder
     from sklearn.compose import ColumnTransformer
-    ct=ColumnTransformer(transformers=[("oh",OneHotEncoder(),[1])], remainder="passthrough")
+    ct=ColumnTransformer(transformers=[("oh",OneHotEncoder(),[3])], remainder="passthrough")
     ct.fit_transform(X)
     
     # Splitting Data into Train and Test
@@ -729,7 +729,6 @@ def dashboard():
     print("X_test : ",X_test.shape)
     print("y_train : ",y_train.shape)
     print("y_test : ",y_test.shape)
-
 
     # Outlier Detection
     print(df.shape)
