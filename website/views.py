@@ -23,10 +23,9 @@ def home():
         current_user.dname = "Customer Dataset"
     else:
         current_user.dname = "Enter Dashboard Name"
-        analysis = url_for('templates', filename='confirmemail.html')
     print(current_user.dname)
     image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("home.html", user= current_user, image_file=image_file, analysis=analysis)
+    return render_template("home.html", user= current_user, image_file=image_file)
 
 @login_required
 def sampleanalysis():
