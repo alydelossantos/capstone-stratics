@@ -78,7 +78,6 @@
                                     <span class="au-checkmark"></span>
                                 </label>
                             </th>
-                            <th></th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Message</th>
@@ -86,7 +85,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for row contacts %}
+                        {% for row in contacts %}
                         <tr class="tr-shadow">
                             <td>
                                 <label class="au-checkbox">
@@ -99,63 +98,28 @@
 							<td>{{row.message}}</td>
 							<td>
                                 <div class="table-data-feature">
-                                    <a href="/user-accounts/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
-                                    <a href="/user-accounts/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
+                                    <a href="/inquiries/send-email/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Send" data-target="#modaledit{{row.id}}"><button id = "send"><i class="zmdi zmdi-mail"></i></button></a>
+                                    <a href="/inquiries/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
                                 </div>
                             </td>
                         </tr>
 			</form>
-                    <!-- Modal Edit User-->
-
-                    <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-							aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">    
-                                    <div class="modal-header">   
-                                        <h4 class="modal-title">Update User</h4>
-                                    </div>
-    
-                                    <div class="modal-body">
-                                        <form action="/user-accounts/update/{{row.id}}" method="POST">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label>Position</label>
-                                                    <input type="hidden"  name="id" value="{{row.id}}">
-                                                    <input type="text" class="form-control" name="position" value="{{row.position}}">
-                                                </div>
-                                            </div> 
-											
-											<div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label>Password</label>
-                                                    <input type="text" class="form-control" name="password" value="{{row.password}}">
-                                                </div>
-                                            </div> 
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button class="btn btn-primary" type="submit">Update User</button>
-                                            </div>
-                                        </form>
-                                    </div>    
-                                </div>
-						    </div>
-                        </div>
-					
-					 <!-- Modal Delete User-->
+                   
+					 <!-- Modal Delete Inquiry-->
 
 					    <div id="modaldelete{{row.id}}" class="modal fade">
 						<div class="modal-dialog modal-dialog-centered">
 						    <div class="modal-content">
 								<div class="modal-header">   
-									<h4 class="modal-title">Delete User Account</h4>
+									<h4 class="modal-title">Delete Inquiry</h4>
 								</div>
 								<div class="modal-body">
-									<form action="/user-accounts/delete/{{row.id}}">
+									<form action="/inquiries/delete/{{row.id}}">
 										<div class="form-group">
-											<label>Are you sure you want to delete User {{row.name}}?</label>
+											<label>Are you sure you want to delete Inquiry?</label>
 										</div>  
 										<div class="modal-footer">
-											<button class="btn btn-primary" type="submit">Delete User</button>
+											<button class="btn btn-primary" type="submit">Delete Inquiry</button>
 											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 										</div>
 									</form>
