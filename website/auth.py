@@ -28,7 +28,7 @@ from email.message import EmailMessage
 
 auth = Blueprint('auth', __name__)
   
-#SIGNIN PAGE  
+#signin page   
 @auth.route('/', methods=["GET", "POST"]) #signin page
 def signin():
     if request.method == "POST" :
@@ -39,10 +39,13 @@ def signin():
         if user:
             if user.password == password:
                 if user.user_type == "admin":
-                    if user.email_confirmed == True:
-                        login_user(user, remember=True)
-                        return redirect(url_for("auth.accounts"))
-                    else:flash("Please confirm your account!", category="error")
+                    #if user.email_confirmed == True:
+                    login_user(user, remember=True)
+                    user.user_status = True
+                    db.session.add(user)
+                    db.session.commit()
+                    return redirect(url_for("auth.accounts"))
+                    #else:flash("Please confirm your account!", category="error")
                 else:
                     flash("You do not have an access to this webpage.", category="error")
             else:
@@ -52,11 +55,13 @@ def signin():
         
     return render_template("signin.html", user= current_user)
 
-#SIGNOUT PAGE
-@auth.route('/sign-out')
+@auth.route('/sign-out') #signout page
 @login_required
 def signout():
-    logout_user()
+    if current_user:
+        current_user.user_status = False
+        db.session.commit()
+        logout_user()
     return redirect(url_for("auth.signin"))
 
 #SIGNUP PAGE
