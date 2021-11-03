@@ -675,11 +675,11 @@ def deletestratcheck():
 @auth.route('/dashboard')
 def dashboard():
 
-    cnx = create_engine("postgres://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+    cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
     connn = cnx.connect()
     df = pd.read_sql_table('sampledata', con=cnx)
     print(df)
-    
+
     # independent variable
     X = df.iloc[:,:-1].values
     X
