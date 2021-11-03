@@ -30,6 +30,15 @@ body {
 	 
 }
 
+#title2 {
+	font-size: 50px;
+    font-weight: 400;
+    margin-bottom: -5px;
+    margin-top: -72px;
+    margin-left: 65px;
+	 
+}
+
 .sicontainer {
     background-image: url('/static/images/pattern.svg');
     background-repeat: no-repeat;
@@ -130,6 +139,15 @@ body {
 		margin-top: -85px;
 		margin-left: 80px;
 		 
+	}
+	
+	#title2 {
+	font-size: 50px;
+	    font-weight: 400;
+	    margin-bottom: -5px;
+	    margin-top: -85px;
+	    margin-left: 65px;
+
 	}
 	
 	#forms {
