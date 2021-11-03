@@ -426,10 +426,6 @@ def save_file(form_file):
 #send email
 @auth.route('/email-marketing', methods = ['GET','POST'])
 @login_required
-def email():
-    image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("email-marketing.html", user= current_user, image_file = image_file)
-    return render_template("email-marketing.html", user= current_user)
 
 def emailmark():
     EMAIL_ADDRESS = '201811294@feualabang.edu.ph'
@@ -470,7 +466,6 @@ def emailmark():
     
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("email-marketing.html", user= current_user, image_file = image_file)
-    return render_template('email-marketing.html')
     
 # Strategies
 @auth.route('/strategies', methods=["GET", "POST"])
