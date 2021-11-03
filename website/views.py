@@ -1,4 +1,14 @@
-from flask import Blueprint, render_template, request, url_for, redirect
+import os
+import numpy as np
+import pandas as pd
+import sqlalchemy
+from PIL import Image
+from flask import Flask
+from .extensions import db
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func, create_engine
+from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
 from flask_login import login_user, login_required, logout_user, current_user
 
 from .extensions import db
@@ -9,6 +19,7 @@ views = Blueprint('views', __name__)
 def home():
     if current_user.explore == "Sample Dataset":
         current_user.dname = "Sample Dataset"
+        
     else:
         current_user.dname = "Customer Dataset"
     print(current_user.dname)
