@@ -25,6 +25,7 @@ class User(db.Model, UserMixin):
     email_confirmed = db.Column(db.Boolean, nullable=True, default=False)
     email_confirmed_on = db.Column(db.DateTime, nullable=True)
     user_type = db.Column(db.String(50), nullable=False)
+    user_status = db.Column(db.Boolean, nullable=True, default=False)
     position = db.Column(db.String(50), nullable=False, default="Position")
     data = db.relationship("Data")
     strategies = db.relationship("Strategies")
@@ -68,9 +69,9 @@ class Sampledata(db.Model):
     State = db.Column(db.String(100))
     tenure = db.Column(db.Integer)
     InternetService = db.Column(db.String(100))
-    MonthlyCharges = db.Float(10,2)
-    TotalCharges = db.Float(10,2)
-    Churn = db.String(20)
+    MonthlyCharges = db.Column(db.Numeric)
+    TotalCharges = db.Column(db.Numeric)
+    Churn = db.Column(db.String(20))
     
 class Strategies(db.Model):
     id = db.Column(db.Integer, primary_key = True)
