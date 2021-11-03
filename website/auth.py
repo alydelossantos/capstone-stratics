@@ -181,11 +181,20 @@ def confirm_email(token):
   
 # Home Page
 
+# Side Bar
+def sidebarpic():
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template("base.html", user= current_user, image_file = image_file)
+
+
 # Customer Management
 @auth.route('/customer-management', methods=["GET", "POST"]) 
 @login_required
 def custman():
     if current_user.cname == "Kalibo":
+        all_data = Data.query.all()
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
         all_data = Data.query.all() 
         return render_template("custman.html", user=current_user, datas=all_data)
     else:
@@ -204,6 +213,9 @@ def custman():
             sstatus = request.form['sstatus']
             amnt_paid = request.form['amnt_paid']
             ref_num = request.form['ref_num']
+
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
         return render_template("scustman.html", user=current_user, sd=sd)
 
 @auth.route('/customer-management/insert', methods = ['POST'])
@@ -372,6 +384,8 @@ def edit():
 @auth.route('/user-profile',methods = ['GET', 'POST'])
 @login_required
 def profile():
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template("profile.html", user= current_user, image_file = image_file)
     return render_template("profile.html", user= current_user)
         
         
@@ -454,6 +468,9 @@ def strat():
             .filter(Strategies.status == "ongoing").count()
         print(statss)
         all_data = Strategies.query.all() 
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
+        all_data = Strategies.query.all()
         return render_template("strategies.html", user=current_user, strategiess=all_data, statss=statss, statc=statc)
     else:
         sd = Samplestrategies \
@@ -482,6 +499,8 @@ def strat():
             status = request.form['status']
             description = request.form['description']
         
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file)
         return render_template("sstrategies.html", user=current_user, statc=statc, statss=statss, sd=sd) 
             
 @auth.route('/strategies/insert', methods = ['POST'])
