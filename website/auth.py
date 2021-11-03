@@ -79,7 +79,7 @@ def contact():
     return render_template("contact.html", user= current_user)
 
  #signin page   
-@auth.route('/', methods=["GET", "POST"]) #signin page
+@auth.route('/sign-in', methods=["GET", "POST"]) #signin page
 def signin():
     if request.method == "POST" :
         email = request.form.get("email")
