@@ -77,8 +77,9 @@ def contact():
         flash("Inquiry Successfully Sent!")
         
     return render_template("contact.html", user= current_user)
-    
-@auth.route('/sign-in', methods=["GET", "POST"]) #signin page
+
+ #signin page   
+@auth.route('/', methods=["GET", "POST"]) #signin page
 def signin():
     if request.method == "POST" :
         email = request.form.get("email")
@@ -88,10 +89,13 @@ def signin():
         if user:
             if user.password == password:
                 if user.user_type == "user":
-                    if user.email_confirmed == True:
-                        login_user(user, remember=True)
-                        return redirect(url_for("views.home"))
-                    else:flash("Please confirm your account!", category="error")
+                    #if user.email_confirmed == True:
+                    login_user(user, remember=True)
+                    user.user_status = True
+                    db.session.add(user)
+                    db.session.commit()
+                    return redirect(url_for("views.home"))
+                    #else:flash("Please confirm your account!", category="error")
                 else:
                     flash("You do not have an access to this webpage.", category="error")
             else:
@@ -104,7 +108,10 @@ def signin():
 @auth.route('/sign-out') #signout page
 @login_required
 def signout():
-    logout_user()
+    if current_user:
+        current_user.user_status = False
+        db.session.commit()
+        logout_user()
     return redirect(url_for("views.landing"))
 
 @auth.route('/sign-up', methods=["GET", "POST"]) #signup page
