@@ -1,14 +1,7 @@
 .priv-container{
-    margin-left: 3 rem;
     position: relative;
-    padding: 25px 150px 25px 150px;
     text-align: justify;
     text-decoration: none;
-}
-
-h1{
-    font-weight: 500;
-    font-size: 30px;
 }
 
 h2{
@@ -20,3 +13,26 @@ h3{
     font-weight: 300;
     font-size: 20px;
 }
+
+@media (min-width: 0px) {
+    .priv-container{
+        padding: 25px 20px 25px 20px;
+    }
+
+}
+
+@media (min-width: 400px) {
+    .priv-container{
+        padding: 25px 25px 25px 25px;
+    }
+
+}
+
+@media (min-width: 1001px){
+    .priv-container{
+        padding: 25px 50px 25px 50px;
+    }
+
+}
+
+
