@@ -4743,6 +4743,30 @@ section {
     padding: 0 14px;
 }
 
+.block-verified {
+    font-size: 14px;
+    color: #133F79;
+    display: inline-block;
+    background: #65d0fd;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    line-height: 30px;
+    padding: 0 14px;
+}
+
+.block-unverified {
+    font-size: 14px;
+    color: #fff;
+    display: inline-block;
+    background: #ff5757;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    line-height: 30px;
+    padding: 0 14px;
+}
+
 .block-active {
     font-size: 14px;
     color: #1B9B17;
