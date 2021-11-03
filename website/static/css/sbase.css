@@ -137,9 +137,9 @@ img {
 .sb__logo {
   font-weight: var(--font-semi-bold);
   margin-bottom: 1.5rem;
-  margin-left: -.75rem;
-  width: 65px;
-  height: 65px;
+  margin-left: -.55rem;
+  width: 50px;
+  height: 50px;
   padding: 0;
   z-index: var(--z-fixed);
 }
