@@ -45,19 +45,6 @@ class Data(db.Model):
     amnt_paid = db.Column(db.String(150))
     ref_num = db.Column(db.String(100))
 
-# class Sampledata(db.Model):
-#     id = db.Column(db.Integer, primary_key = True)
-#     sduser_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-#     accnt_num = db.Column(db.String(100))
-#     name = db.Column(db.String(100))
-#     address = db.Column(db.String(100))
-#     services = db.Column(db.String(100))
-#     monthly = db.Column(db.String(100))
-#     collector = db.Column(db.String(100))
-#     sstatus = db.Column(db.String(150))
-#     amnt_paid = db.Column(db.String(150))
-#     ref_num = db.Column(db.String(100))
-
 class Sampledata(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     customerID = db.Column(db.String(100))

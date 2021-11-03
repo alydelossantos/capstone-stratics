@@ -712,13 +712,13 @@ def dashboard():
     # transform categorical var gender to binary - 0 - female 1 - male
     from sklearn.preprocessing import LabelEncoder
     lblencode = LabelEncoder()
-    X[:,1] = lblencode.fit_transform(X[:,1])
+    X[:,3] = lblencode.fit_transform(X[:,3])
     X
 
     # Using ColumnTransformer
     from sklearn.preprocessing import OneHotEncoder
     from sklearn.compose import ColumnTransformer
-    ct=ColumnTransformer(transformers=[("oh",OneHotEncoder(),[1])], remainder="passthrough")
+    ct=ColumnTransformer(transformers=[("oh",OneHotEncoder(),[3])], remainder="passthrough")
     ct.fit_transform(X)
     
     # Splitting Data into Train and Test
@@ -729,7 +729,6 @@ def dashboard():
     print("X_test : ",X_test.shape)
     print("y_train : ",y_train.shape)
     print("y_test : ",y_test.shape)
-
 
     # Outlier Detection
     print(df.shape)
