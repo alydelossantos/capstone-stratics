@@ -202,38 +202,38 @@ def emailmark(id):
     contacts = ['YourAddress@gmail.com', 'test@example.com']
     if request.method == "POST":
       my_data = Contact.query.get(request.form.get('id'))
-        x = [] 
-        if request.files['attfile']:
-                file_attachments =''
-                form_file = save_file(request.files['attfile'])
-                print (form_file,"asdsa")
-                file_attachments = form_file
-                print (file_attachments)
-                x.append(file_attachments)
-        msg = MIMEMultipart()
-        msg['Subject'] = request.form['subject']
-        msg['To'] = request.form['email']
-        emailMsg=""
-        emailMsg = request.form['message']
-        msg.attach(MIMEText(emailMsg,'plain'))
-        print (x)
-        for attachment in x:
-            print (attachment)
-            content_type, encoding= mimetypes.guess_type(attachment)
-            main_type,sub_type = content_type.split('/',1)
-            file_name = os.path.basename(attachment)
-            f = open(attachment,'rb')
-            myFile = MIMEBase(main_type, sub_type)
-            myFile.set_payload(f.read())
-            myFile.add_header('Content-Disposition', 'attachment', filename=file_name)
-            encoders.encode_base64(myFile)
-            f.close()
-            msg.attach(myFile)
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-            smtp.send_message(msg)
-            db.session.commit()
-            return redirect(url_for('auth.inq'))
+      x = [] 
+      if request.files['attfile']:
+              file_attachments =''
+              form_file = save_file(request.files['attfile'])
+              print (form_file,"asdsa")
+              file_attachments = form_file
+              print (file_attachments)
+              x.append(file_attachments)
+      msg = MIMEMultipart()
+      msg['Subject'] = request.form['subject']
+      msg['To'] = request.form['email']
+      emailMsg=""
+      emailMsg = request.form['message']
+      msg.attach(MIMEText(emailMsg,'plain'))
+      print (x)
+      for attachment in x:
+          print (attachment)
+          content_type, encoding= mimetypes.guess_type(attachment)
+          main_type,sub_type = content_type.split('/',1)
+          file_name = os.path.basename(attachment)
+          f = open(attachment,'rb')
+          myFile = MIMEBase(main_type, sub_type)
+          myFile.set_payload(f.read())
+          myFile.add_header('Content-Disposition', 'attachment', filename=file_name)
+          encoders.encode_base64(myFile)
+          f.close()
+          msg.attach(myFile)
+      with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+          smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+          smtp.send_message(msg)
+          db.session.commit()
+          return redirect(url_for('auth.inq'))
     
 #ACCOUNTS MANAGEMENT
 @auth.route('/user-accounts', methods = ['GET', 'POST'])
