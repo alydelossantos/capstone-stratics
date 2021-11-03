@@ -208,6 +208,10 @@ img {
   .header__search {
     width: 70%;
   }
+
+  .header__img {
+    float: left;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -230,6 +234,7 @@ img {
     width: 40px;
     height: 40px;
     order: 1;
+    float: left;
   }
   .side {
     left: 0;
