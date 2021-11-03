@@ -19,12 +19,17 @@ views = Blueprint('views', __name__)
 def home():
     if current_user.explore == "Sample Dataset":
         current_user.dname = "Sample Dataset"
-        
-    else:
+    elif current_user.explore == "Customer Dataset":
         current_user.dname = "Customer Dataset"
+    else:
+        current_user.dname = "Enter Dashboard Name"
     print(current_user.dname)
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("home.html", user= current_user, image_file=image_file)
+
+@login_required
+def sampleanalysis():
+    return render_template("confirmemail.html")
 
 @views.route('/home/explore-dataset', methods=["GET", "POST"])    
 @login_required
