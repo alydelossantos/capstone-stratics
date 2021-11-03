@@ -21,8 +21,10 @@ def home():
         current_user.dname = "Sample Dataset"
     elif current_user.explore == "Customer Dataset":
         current_user.dname = "Customer Dataset"
+        db.session.commit()
     else:
         current_user.dname = "Enter Dashboard Name"
+        db.session.commit()
     print(current_user.dname)
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("home.html", user= current_user, image_file=image_file)
