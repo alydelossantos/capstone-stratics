@@ -186,6 +186,16 @@ def sidebarpic():
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("base.html", user= current_user, image_file = image_file)
 
+ #Dashboard edit
+@auth.route('/home/dashboard/edit', methods=["GET", "POST"]) 
+@login_required
+def dashname():
+   if request.method == 'POST':
+      current_user.dname = request.form['dname']
+      db.session.commit()
+
+      flash("Dashboard Name Updated Successfully")
+      return redirect(url_for('views.home'))
 
 # Customer Management
 @auth.route('/customer-management', methods=["GET", "POST"]) 
