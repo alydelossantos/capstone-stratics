@@ -94,7 +94,7 @@ def signin():
                       user.user_status = True
                       db.session.add(user)
                       db.session.commit()
-                      return redirect(url_for("auth.signin"))
+                      return redirect(url_for("views.home"))
                     else:flash("Please confirm your account!", category="error")
                 else:
                     flash("You do not have an access to this webpage.", category="error")
