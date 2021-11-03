@@ -194,13 +194,14 @@ def save_file(form_file):
     return file_path
     
 #SEND EMAIL FOR INQUIRIES
-@auth.route('/inquiries/send-email', methods = ['GET','POST'])
+@auth.route('/inquiries/send-email/<id>/', methods = ['GET','POST'])
 @login_required
-def emailmark():
+def emailmark(id):
     EMAIL_ADDRESS = 'ksn.080900@gmail.com'
     EMAIL_PASSWORD = 's4noope@cH'
     contacts = ['YourAddress@gmail.com', 'test@example.com']
     if request.method == "POST":
+      my_data = Contact.query.get(request.form.get('id'))
         x = [] 
         if request.files['attfile']:
                 file_attachments =''
@@ -231,6 +232,7 @@ def emailmark():
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             smtp.send_message(msg)
+            db.session.commit()
             return redirect(url_for('auth.inq'))
     return render_template('inquiriesg.html')
     
