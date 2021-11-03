@@ -1,29 +1,32 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from os import path
+
+from .command import create_tables
+from .extensions import db
+from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
 from flask_login import LoginManager
 from flask_mail import Mail
 
-db = SQLAlchemy()
 mail = Mail()
-DB_NAME = "db.db"
 
-def create_app(): #create database
+#CREATE DATABASE
+def create_app(config_file='configure.py'):
     app = Flask(__name__)
-    app.config.from_pyfile('config.cfg')
+    app.config.from_pyfile(config_file)
     
     db.init_app(app)
+    
+    #SEND EMAILS
     mail.init_app(app)
+    
+    from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
     
     from .views import views
     from .auth import auth
 
     app.register_blueprint(views, url_prefix = '/')
     app.register_blueprint(auth, url_prefix = '/')
-
     
-    from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
-   
+    #LOGIN AUTHENTICATION
     login_manager = LoginManager() #user verification
     login_manager.login_view = "auth.signin"
     login_manager.init_app(app)
@@ -32,11 +35,7 @@ def create_app(): #create database
     def load_user(id):
         return User.query.get(int(id))
     
-    create_database(app)
-    
-    return app
-
-def create_database(app):
-    db.create_all(app=app)
-    print("Created Database")
+    #CREATE TABLES
+    app.cli.add_command(create_tables)
         
+    return app   
