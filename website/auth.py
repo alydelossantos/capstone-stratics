@@ -3,7 +3,7 @@ import secrets
 import smtplib
 import numpy as np
 import pandas as pd
-import sqlalchemy
+import sqlalchemy 
 from PIL import Image
 from flask import Flask
 import base64
@@ -25,6 +25,19 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email.message import EmailMessage
+
+# from website import db
+import matplotlib.pyplot as plt
+
+# Plotly Libraries
+import json
+import plotly
+import plotly.express as px
+
+# Data Preprocessing
+import matplotlib.pyplot as plt
+import scipy as sp
+import scipy._lib
 
 auth = Blueprint('auth', __name__)
   
@@ -677,7 +690,7 @@ def dashboard():
 
     cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
     connn = cnx.connect()
-    df = pd.read_sql_table('sampledata', con=cnx)
+    df = pd.read_sql_table('sampledata', connn=cnx)
     print(df)
 
     # independent variable
