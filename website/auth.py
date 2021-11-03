@@ -8,13 +8,14 @@ from PIL import Image
 from flask import Flask
 import base64
 import mimetypes
+from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
 from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
-from website import db, mail
+from website import mail
 from datetime import datetime
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
@@ -27,7 +28,7 @@ from email.message import EmailMessage
 
 auth = Blueprint('auth', __name__)
   
-#signin page   
+#SIGNIN PAGE  
 @auth.route('/', methods=["GET", "POST"]) #signin page
 def signin():
     if request.method == "POST" :
@@ -51,13 +52,15 @@ def signin():
         
     return render_template("signin.html", user= current_user)
 
-@auth.route('/sign-out') #signout page
+#SIGNOUT PAGE
+@auth.route('/sign-out')
 @login_required
 def signout():
     logout_user()
     return redirect(url_for("auth.signin"))
 
-@auth.route('/sign-up', methods=["GET", "POST"]) #signup page
+#SIGNUP PAGE
+@auth.route('/sign-up', methods=["GET", "POST"])
 def signup():
     if request.method == "POST" :
         fname = request.form.get("fname")
@@ -84,7 +87,8 @@ def signup():
             flash("Thank you for registering!, Please check your email to confirm your account", category="success")
             return redirect(url_for("auth.signin"))
     return render_template("signup.html", user= current_user)
- 
+
+#SEND CONFIRM EMAIL
 def send_email(subject, recipients, html_body):
     msg = Message(subject, recipients=recipients)
     msg.html = html_body
@@ -101,11 +105,7 @@ def send_confirmation_email(user_email):
     html = render_template('confirmemail.html', confirm_url=confirm_url)
     
     send_email('STRATICS EMAIL CONFIRMATION', [user_email], html)
-
-@auth.route('/confirm-email')
-def ce():
-    return render_template("confirmemail.html", user= current_user)
-    
+  
 @auth.route('/sign-up/confirm/<token>')
 def confirm_email(token):
     try:
@@ -129,11 +129,10 @@ def confirm_email(token):
     return redirect(url_for('auth.accounts'))
     return render_template(user= current_user)
   
-# Home Page
+# Admin Page
 
 # User Profile
-
-@auth.route('/user-profile/edit',methods = ['GET', 'POST']) # Edit User Profile
+@auth.route('/user-profile/edit',methods = ['GET', 'POST'])
 @login_required
 def edit():
         if request.method == 'POST':
@@ -162,8 +161,7 @@ def edit():
 @login_required
 def profile():
     return render_template("profile.html", user= current_user)
-        
-        
+                
 @login_required
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -189,7 +187,7 @@ def save_file(form_file):
     print (file_fn, 'xxx')
     return file_path
     
-#send email
+#SEND EMAIL FOR INQUIRIES
 @auth.route('/email-marketing', methods = ['GET','POST'])
 @login_required
 def emailmark():
@@ -230,13 +228,13 @@ def emailmark():
             return redirect(url_for('auth.emailmark'))
     return render_template('email-marketing.html')
     
- #Accounts Management
+#ACCOUNTS MANAGEMENT
 @auth.route('/user-accounts', methods = ['GET', 'POST'])
 @login_required
 def accounts():
-    all_data = User.query.filter_by(user_type="user").all() 
-    return render_template("accounts.html", user=current_user, users=all_data)
-
+    all_data = User.query.filter_by(user_type="user").all()
+    image_file = url_for('static', filename='images/' + current_user.image_file) 
+    return render_template("accounts.html", user=current_user, users=all_data, image_file = image_file)
 
 @auth.route('/user-accounts/update/<id>', methods = ['GET', 'POST'])
 @login_required
@@ -251,8 +249,7 @@ def updateaccnt(id):
         db.session.commit()
         return redirect(url_for('auth.accounts')) 
  
-
-#This route is for deleting our user
+#This route is for deleting our user accounts
 @auth.route('/user-accounts/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
 def deleteaccnt(id):
@@ -263,7 +260,7 @@ def deleteaccnt(id):
     
     return redirect(url_for('auth.accounts'))
 
-#This route is for deleting our accnt in checkbox
+#This route is for deleting user accnt in checkbox
 @auth.route('/user-accounts/delete-selected', methods = ['GET', 'POST'])
 @login_required
 def deletecheckaccnt():
@@ -275,4 +272,38 @@ def deletecheckaccnt():
         flash("User Deleted Successfully")
                  
         return redirect(url_for('auth.accounts'))
-# End of Accounts  
+# End of Accounts 
+
+#INQUIRIES
+@auth.route('/inquiries', methods = ['GET', 'POST'])
+@login_required
+def inq():
+    all_data = Contact.query.all()
+    image_file = url_for('static', filename='images/' + current_user.image_file) 
+    return render_template("inquiries.html", user=current_user, contacts=all_data, image_file = image_file)
+ 
+#This route is for deleting our inquiries
+@auth.route('/inquiries/delete/<id>/', methods = ['GET', 'POST'])
+@login_required
+def deleteinq(id):
+    my_data = Contact.query.get(id)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("Inquiry Deleted Successfully")
+    
+    return redirect(url_for('auth.inq'))
+
+#This route is for deleting inquiries in checkbox
+@auth.route('/inquiries/delete-selected', methods = ['GET', 'POST'])
+@login_required
+def deletecheckinq():
+    if request.method == "POST":
+        for getid in request.form.getlist("mycheckbox"):
+            print(getid)
+            db.session.query(Contact).filter(Contact.id==getid).delete()
+        db.session.commit()
+        flash("Selected Inquiries Deleted Successfully")
+                 
+        return redirect(url_for('auth.inq'))
+# End of Inquiries 
+
