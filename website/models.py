@@ -67,8 +67,8 @@ class Sampledata(db.Model):
     State = db.Column(db.String(100))
     tenure = db.Column(db.Integer)
     InternetService = db.Column(db.String(100))
-    MonthlyCharges = db.Decimal(10,2)
-    TotalCharges = db.Decimal(10,2)
+    MonthlyCharges = db.Float(10,2)
+    TotalCharges = db.Float(10,2)
     Churn = db.String(20)
     
 class Strategies(db.Model):
