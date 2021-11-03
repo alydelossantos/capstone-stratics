@@ -79,7 +79,7 @@ def contact():
     return render_template("contact.html", user= current_user)
 
  #signin page   
-@auth.route('/', methods=["GET", "POST"]) #signin page
+@auth.route('/sign-in', methods=["GET", "POST"]) #signin page
 def signin():
     if request.method == "POST" :
         email = request.form.get("email")
@@ -89,13 +89,13 @@ def signin():
         if user:
             if user.password == password:
                 if user.user_type == "user":
-                    #if user.email_confirmed == True:
-                    login_user(user, remember=True)
-                    user.user_status = True
-                    db.session.add(user)
-                    db.session.commit()
-                    return redirect(url_for("views.home"))
-                    #else:flash("Please confirm your account!", category="error")
+                    if user.email_confirmed == True:
+                      login_user(user, remember=True)
+                      user.user_status = True
+                      db.session.add(user)
+                      db.session.commit()
+                      return redirect(url_for("views.home"))
+                    else:flash("Please confirm your account!", category="error")
                 else:
                     flash("You do not have an access to this webpage.", category="error")
             else:
@@ -670,3 +670,137 @@ def deletestratcheck():
             return redirect(url_for('auth.strat'))
     
 # End of Strategies
+
+# Dashboard Plotly
+@auth.route('/dashboard')
+def dashboard():
+
+    cnx = create_engine("postgres://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+    connn = cnx.connect()
+    df = pd.read_sql_table('sampledata', con=cnx)
+    print(df)
+    
+    # independent variable
+    X = df.iloc[:,:-1].values
+    X
+
+    # dependent variable - churn column
+    y = df.iloc[:,10]
+    y
+
+    # Counts number of null values - resulted that no values are missing.
+    null_columns=df.columns[df.isnull().any()]
+    df[null_columns].isnull().sum()
+
+    # Categorical Value Encoding
+    X = df.iloc[:,:-1].values
+    y = df.iloc[:,4].values
+
+    # transform categorical var gender to binary - 0 - female 1 - male
+    from sklearn.preprocessing import LabelEncoder
+    lblencode = LabelEncoder()
+    X[:,1] = lblencode.fit_transform(X[:,1])
+    X
+
+    # Using ColumnTransformer
+    from sklearn.preprocessing import OneHotEncoder
+    from sklearn.compose import ColumnTransformer
+    ct=ColumnTransformer(transformers=[("oh",OneHotEncoder(),[1])], remainder="passthrough")
+    ct.fit_transform(X)
+    
+    # Splitting Data into Train and Test
+    from sklearn.model_selection import train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+
+    print("X_train : ",X_train.shape)
+    print("X_test : ",X_test.shape)
+    print("y_train : ",y_train.shape)
+    print("y_test : ",y_test.shape)
+
+
+    # Outlier Detection
+    print(df.shape)
+    print(df.columns)
+
+    # Zscore
+    from scipy import stats
+    zscore = np.abs(stats.zscore(df['MonthlyCharges']))
+    print (zscore)
+
+    # zscore values higher than 3 are outliers.
+    threshold = 3
+    print(np.where(zscore >3))
+
+    df.corr(method='pearson')
+
+    # Create Pivot Table - compute for sum
+    pd.pivot_table(df, index=['State', 'InternetService'], aggfunc = 'sum')
+
+    # Create Pivot Table - compute for mean
+    pd.pivot_table(df, index=['State', 'InternetService'], aggfunc = 'mean')    
+    
+    # Create Pivot Table - compute for count
+    pd.pivot_table(df, index=['State', 'InternetService'], aggfunc = 'count')
+
+    # Pie Chart
+    from plotly.offline import init_notebook_mode,iplot
+    import plotly.graph_objects as go
+    import cufflinks as cf
+    init_notebook_mode(connected=True)
+
+    #labels
+    lab = df["gender"].value_counts().keys().tolist()
+    #values
+    val = df["gender"].value_counts().values.tolist()
+    trace = go.Pie(labels=lab, 
+                    values=val, 
+                    marker=dict(colors=['red']), 
+                    # Seting values to 
+                    hoverinfo="value"
+                )
+    data = [trace]
+
+    
+    layout = go.Layout(title="Sex Distribution")
+    fig1 = go.Figure(data = data,layout = layout)
+    fig1.update_traces(hole=.4)
+    graph1JSON = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+
+    # Histogram - Service
+    # defining data
+    trace = go.Histogram(x=df['InternetService'],nbinsx=40,histnorm='percent')
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Service Distribution")
+    # defining figure and plotting
+    fig2 = go.Figure(data = data,layout = layout)
+    graph2JSON = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
+
+    # Histogram - State
+    # defining data
+    trace = go.Histogram(x=df['State'],nbinsx=52)
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="State")
+    # defining figure and plotting
+    fig3 = go.Figure(data = data,layout = layout)
+    fig3 = go.Figure(data = data,layout = layout)
+    graph3JSON = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
+
+    # Histogram - Churn
+    # defining data
+    trace = go.Histogram(x=df['Churn'],nbinsx=3)
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Churn Distribution")
+    # defining figure and plotting
+    fig4 = go.Figure(data = data,layout = layout)
+    fig4 = go.Figure(data = data,layout = layout)
+    graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return render_template("dashboard.html", user= current_user, 
+    graph1JSON=graph1JSON, 
+    graph2JSON=graph2JSON, 
+    graph3JSON=graph3JSON,
+    graph4JSON=graph4JSON,
+     )
