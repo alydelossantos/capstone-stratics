@@ -194,7 +194,7 @@ def save_file(form_file):
     return file_path
     
 #SEND EMAIL FOR INQUIRIES
-@auth.route('/email-marketing', methods = ['GET','POST'])
+@auth.route('/inquiries/send-email', methods = ['GET','POST'])
 @login_required
 def emailmark():
     EMAIL_ADDRESS = 'ksn.080900@gmail.com'
@@ -232,7 +232,7 @@ def emailmark():
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             smtp.send_message(msg)
             return redirect(url_for('auth.emailmark'))
-    return render_template('email-marketing.html')
+    return render_template('inquiriesg.html')
     
 #ACCOUNTS MANAGEMENT
 @auth.route('/user-accounts', methods = ['GET', 'POST'])
