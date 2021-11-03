@@ -231,7 +231,7 @@ def emailmark():
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             smtp.send_message(msg)
-            return redirect(url_for('auth.emailmark'))
+            return redirect(url_for('auth.inq'))
     return render_template('inquiriesg.html')
     
 #ACCOUNTS MANAGEMENT
