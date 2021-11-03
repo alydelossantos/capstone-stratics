@@ -39,13 +39,13 @@ def signin():
         if user:
             if user.password == password:
                 if user.user_type == "admin":
-                    #if user.email_confirmed == True:
-                    login_user(user, remember=True)
-                    user.user_status = True
-                    db.session.add(user)
-                    db.session.commit()
-                    return redirect(url_for("auth.accounts"))
-                    #else:flash("Please confirm your account!", category="error")
+                    if user.email_confirmed == True:
+                      login_user(user, remember=True)
+                      user.user_status = True
+                      db.session.add(user)
+                      db.session.commit()
+                      return redirect(url_for("auth.accounts"))
+                    else:flash("Please confirm your account!", category="error")
                 else:
                     flash("You do not have an access to this webpage.", category="error")
             else:
