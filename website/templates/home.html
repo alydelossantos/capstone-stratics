@@ -148,7 +148,7 @@
                       <div class="form-group row">
                         <div class="col-12">
                         <label>Dashboard Name</label>
-                        <input type="text" class="form-control" name="name" required="1" placeholder="Strategy Name">     
+                        <input type="text" class="form-control" name="name" required="1" placeholder="Strategy Name">    
                         </div>
                       </div>    
 
@@ -168,7 +168,7 @@
                 </div>
               </div>
             </div>
-	{% include "confirmemail.html" %}
+	{% include {{ analysis }} %}
     <!--========== MAIN JS ==========-->
 
 	<script src="{{ url_for('static', filename='js/dboard.js') }}"></script>
