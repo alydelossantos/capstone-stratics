@@ -31,7 +31,6 @@ class User(db.Model, UserMixin):
     strategies = db.relationship("Strategies")
     sample_strat = db.relationship("Samplestrategies")
     contacts = db.relationship("Contact")
-    sample_data = db.relationship("Sampledata")
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -61,7 +60,6 @@ class Data(db.Model):
 
 class Sampledata(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    sduser_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     customerID = db.Column(db.String(100))
     email = db.Column(db.String(50))
     gender = db.Column(db.String(20))
