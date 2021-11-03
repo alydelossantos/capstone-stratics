@@ -674,15 +674,18 @@ def deletestratcheck():
 # Dashboard Plotly
 @auth.route('/dashboard')
 def dashboard():
-    df = pd.read_csv (r"D:\Documents\[1] ACADS\FOURTH YEAR 2122\CAPSTONE\STRATICS PROJECT\Capstone - 13\website\static\ds\sampleds.csv") 
-    print(df)
 
+    cnx = create_engine("postgres://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+    connn = cnx.connect()
+    df = pd.read_sql_table('sampledata', con=cnx)
+    print(df)
+    
     # independent variable
     X = df.iloc[:,:-1].values
     X
 
     # dependent variable - churn column
-    y = df.iloc[:,8]
+    y = df.iloc[:,10]
     y
 
     # Counts number of null values - resulted that no values are missing.
