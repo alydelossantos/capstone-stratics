@@ -149,6 +149,11 @@ def home():
         fig4 = go.Figure(data = data,layout = layout)
         fig4 = go.Figure(data = data,layout = layout)
         graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
+        graph2JSON=graph2JSON, 
+        graph3JSON=graph3JSON,
+        graph4JSON=graph4JSON,)
     elif current_user.explore == "Customer Dataset":
         current_user.dname = "Customer Dataset"
         db.session.commit()
