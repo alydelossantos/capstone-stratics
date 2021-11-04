@@ -88,28 +88,12 @@ def dashboard():
     X
 
     # dependent variable - churn column
-    y = df.iloc[:,8]
+    y = df.iloc[:,10]
     y
 
     # Counts number of null values - resulted that no values are missing.
     null_columns=df.columns[df.isnull().any()]
     df[null_columns].isnull().sum()
-
-    # Categorical Value Encoding
-    X = df.iloc[:,:-1].values
-    y = df.iloc[:,4].values
-
-    # transform categorical var gender to binary - 0 - female 1 - male
-    from sklearn.preprocessing import LabelEncoder
-    lblencode = LabelEncoder()
-    X[:,1] = lblencode.fit_transform(X[:,1])
-    X
-
-    # Using ColumnTransformer
-    from sklearn.preprocessing import OneHotEncoder
-    from sklearn.compose import ColumnTransformer
-    ct=ColumnTransformer(transformers=[("oh",OneHotEncoder(),[1])], remainder="passthrough")
-    ct.fit_transform(X)
     
     # Splitting Data into Train and Test
     from sklearn.model_selection import train_test_split
@@ -119,7 +103,6 @@ def dashboard():
     print("X_test : ",X_test.shape)
     print("y_train : ",y_train.shape)
     print("y_test : ",y_test.shape)
-
 
     # Outlier Detection
     print(df.shape)
