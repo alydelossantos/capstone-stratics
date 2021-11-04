@@ -253,7 +253,6 @@ def updateaccnt(id):
         db.session.commit()
         flash("User Account Updated Successfully")
  
-        db.session.commit()
         return redirect(url_for('auth.accounts')) 
  
 #This route is for deleting our user accounts
