@@ -49,6 +49,10 @@ Notes:	decreasing heading by 0.4em with every subsequent heading level
   box-sizing: border-box;
 }
 
+body {
+  background-color: #f5f5f7;
+}
+
 ul {
   margin: 0;
 }
@@ -15145,7 +15149,7 @@ textarea.form-control {
 
 .card-container-main {
   width: 100%;
-  padding-top: 1.5rem;
+  padding-top: 2rem;
   padding-right: 10px;
   padding-left: 10px;
   padding-bottom: 10px;
