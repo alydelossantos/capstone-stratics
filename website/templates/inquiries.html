@@ -138,7 +138,7 @@
     
                         <div class="modal-body"> 
                             <div class="col-md-14 mx-auto">
-                            <form action="/inquiries/send-email/{{row.id}}" method="POST">
+                            <form action="/inquiries/send-email/{{row.id}}" method="POST" enctype="multipart/form-data>
 
                             <div class="form-group row">
                                 <div class="col-sm-6">
@@ -157,7 +157,7 @@
                             <div class="form-group row">
                                 <div class="col-12">
                                 <label>Message</label>
-                                <textarea name="message" class="form-control" id="message" class="input-field"
+                                <textarea name="message" class="form-control" id="" class="input-field"
                                     cols="60" rows="4" placeholder="Message Body" style="resize: none;"></textarea>
                                 </div>
                             </div>            
