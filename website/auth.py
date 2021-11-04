@@ -129,7 +129,11 @@ def signup():
         elif usern:
             flash("Username already exists.", category="error")
         elif len(password) < 8:
-            flash("Password must contain 8 characters.\nPlease try again!", category="error")
+            flash("Password must contain 8 characters.", category="error")
+        elif len(fname) < 2:
+            flash("Please input valid name.", category="error")
+        elif len(lname) < 2:
+            flash("Please input valid name.", category="error")
         else:
             new_user = User(fname=fname, lname=lname, uname=uname, email=email, cname=cname, password=password, user_type=user_type)
             db.session.add(new_user)
@@ -162,19 +166,18 @@ def confirm_email(token):
         confirm_serializer = URLSafeTimedSerializer('asdfghjkl')
         email = confirm_serializer.loads(token, salt='email-confirmation-salt', max_age=3600)
     except:
-        flash('The confirmation link is invalid')
+        flash('The confirmation link is invalid.')
         return redirect(url_for('auth.signin'))
         
     user = User.query.filter_by(email=email).first()
     
     if user.email_confirmed:
-        flash('Account confirmed')
+        flash('Your account has been confirmed.')
     else:
         user.email_confirmed = True 
         user.email_confirmed_on = datetime.now()
         db.session.add(user)
         db.session.commit()
-        flash('Thank your for confirming email')
     login_user(user, remember=True)   
     return redirect(url_for('views.home'))
     return render_template(user= current_user)
@@ -245,7 +248,7 @@ def insert():
             db.session.add(datas)
             db.session.commit()
             
-            flash("Customer Inserted Successfully")
+            flash("Customer Record Added Successfully")
             
             return redirect(url_for('auth.custman'))
     else:
@@ -265,15 +268,15 @@ def insert():
             amnt_paid = request.form['amnt_paid']
             ref_num = request.form['ref_num']
             
-            if sd <= 1:
+            if sd <= 10:
                 sdatas = Otherdata(accnt_num=accnt_num, name=name, address=address, services=services, monthly=monthly
                             , collector=collector, sstatus=sstatus, amnt_paid=amnt_paid, ref_num=ref_num, odata_id=current_user.id)
                 db.session.add(sdatas)
                 db.session.commit()   
-                flash("Customer Inserted Successfully", category="notlimit")
+                flash("Customer Record Added Successfully", category="notlimit")
             else:
                 db.session.commit()
-                flash("You have exceed to the number of inputted customer record!", category="limit")
+                flash("You have exceeded to the number of inputted customer records!", category="limit")
             
             return redirect(url_for('auth.custman'))
             return render_template(sd=sd)
@@ -296,7 +299,7 @@ def update(id):
             
             db.session.commit()
             
-            flash("Customer Updated Successfully")
+            flash("Customer Record Updated Successfully")
      
             return redirect(url_for('auth.custman'))
     else:
@@ -314,7 +317,7 @@ def update(id):
             
             db.session.commit()
             
-            flash("Customer Updated Successfully")
+            flash("Customer Record Updated Successfully")
      
             return redirect(url_for('auth.custman'))
 
@@ -326,14 +329,14 @@ def delete(id):
         my_data = Data.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
-        flash("Customer Deleted Successfully")
+        flash("Customer Record Deleted Successfully")
      
         return redirect(url_for('auth.custman'))
     else:
         my_data = Otherdata.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
-        flash("Customer Deleted Successfully")
+        flash("Customer Record Deleted Successfully")
      
         return redirect(url_for('auth.custman'))
  
@@ -347,7 +350,7 @@ def deletecheck():
                 print(getid)
                 db.session.query(Data).filter(Data.id ==getid).delete()
             db.session.commit()
-            flash("Customer Deleted Successfully")
+            flash("Customer Records Deleted Successfully")
                      
             return redirect(url_for('auth.custman'))
     else:
@@ -356,7 +359,7 @@ def deletecheck():
                 print(getid)
                 db.session.query(Otherdata).filter(Otherdata.id ==getid).delete()
             db.session.commit()
-            flash("Customer Deleted Successfully")
+            flash("Customer Records Deleted Successfully")
                      
             return redirect(url_for('auth.custman'))
   
@@ -382,7 +385,7 @@ def edit():
             current_user.tw = request.form['tw']
             current_user.linkedin = request.form['linkedin']
             db.session.commit()
-            flash("User Updated Successfully")
+            flash("User Profile Updated Successfully")
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("profile.html", user= current_user, image_file = image_file)
         image_file = url_for('static', filename='images/' + current_user.image_file)
@@ -526,7 +529,7 @@ def newstrat():
             db.session.add(my_strat)
             db.session.commit() 
             
-            flash("Customer Inserted Successfully")
+            flash("Strategy Added Successfully")
             
             return redirect(url_for('auth.strat'))
     else:
@@ -556,15 +559,15 @@ def newstrat():
             status = request.form['status']
             description = request.form['description']
             
-            if sd <= 1:
+            if sd <= 10:
                 my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
                 db.session.add(my_strat)
                 db.session.commit()   
-                flash("Strategy Inserted Successfully", category="notlimit")
+                flash("Strategy Added Successfully", category="notlimit")
             else:
                 db.session.commit()
-                flash("You have exceed to the number of inputted strategy record!", category="limit")
+                flash("You have exceeded to the number of inputted strategy records!", category="limit")
             
             return redirect(url_for('auth.strat'))
             return render_template(sd=sd)
@@ -584,6 +587,7 @@ def updatestrat(id):
             my_strat.description = request.form['description']
             
             db.session.commit()
+            flash("Strategy Updated Successfully", category="notlimit")
             return redirect(url_for('auth.strat')) 
     else:
         statc = Otherstrategies \
@@ -609,6 +613,7 @@ def updatestrat(id):
             my_strat.description = request.form['description']
             
             db.session.commit()
+            flash("Strategy Updated Successfully", category="notlimit")
             return redirect(url_for('auth.strat'))
  
 
