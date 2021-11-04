@@ -158,29 +158,28 @@
                                 </div>
 						    </div>
                         </div>
-					
-					 <!-- Modal Delete User-->
+		<!-- Modal Delete User-->
 
-					    <div id="modaldelete{{row.id}}" class="modal fade">
-						<div class="modal-dialog modal-dialog-centered">
-						    <div class="modal-content">
-								<div class="modal-header">   
-									<h4 class="modal-title">Delete User Account</h4>
+			    <div id="modaldelete{{row.id}}" class="modal fade">
+				<div class="modal-dialog modal-dialog-centered">
+				    <div class="modal-content">
+						<div class="modal-header">   
+							<h4 class="modal-title">Delete User Account</h4>
+						</div>
+						<div class="modal-body">
+							<form action="/user-accounts/delete/{{row.id}}">
+								<div class="form-group">
+									<label>Are you sure you want to delete User {{row.name}}?</label>
+								</div>  
+								<div class="modal-footer">
+									<button class="btn btn-primary" type="submit">Delete User</button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 								</div>
-								<div class="modal-body">
-									<form action="/user-accounts/delete/{{row.id}}">
-										<div class="form-group">
-											<label>Are you sure you want to delete User {{row.name}}?</label>
-										</div>  
-										<div class="modal-footer">
-											<button class="btn btn-primary" type="submit">Delete User</button>
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-										</div>
-									</form>
-								</div>    
-                            				</div>
-						</div> 
-					</div>	 							
+							</form>
+						</div>    
+					</div>
+				</div> 
+			</div>	 								
                         {% endfor %}
                     </tbody>
 			<div class="col-md-12">
