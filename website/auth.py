@@ -12,7 +12,7 @@ from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
-from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
+from .models import User, Data, Strategies, Otherdata, Otherstrategies, Contact, Sampledata
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 from website import mail
@@ -26,29 +26,12 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email.message import EmailMessage
 
-# from website import db
-import matplotlib.pyplot as plt
-
-# Plotly Libraries
-import json
-import plotly
-import plotly.express as px
-
-# Data Preprocessing
-import matplotlib.pyplot as plt
-import scipy as sp
-import scipy._lib
-
 auth = Blueprint('auth', __name__)
   
 # Landing Page
-#about page
+#About Page
 @auth.route('/about')
 def about():
-    '''cnx = create_engine("sqlite:///website/db.db", echo=True)
-    connn = cnx.connect()
-    df = pd.read_sql_table('strategies', con=cnx)
-    print(df)'''
     return render_template("about.html", user= current_user)
     
 #pripo page
@@ -56,7 +39,8 @@ def about():
 def pripo():
     return render_template("privacypolicy.html", user= current_user)
 
-@auth.route('/terms-conditions') #t&c page
+#t&c page 
+@auth.route('/terms-conditions') 
 def tc():
     return render_template("termsconditions.html", user= current_user)
 
@@ -83,7 +67,7 @@ def contact():
         email = request.form['email']
         message = request.form['message']
  
-        cont = Contact(name=name, email=email, message=message, cuser_id=current_user.id)
+        cont = Contact(name=name, email=email, message=message)
         db.session.add(cont)
         db.session.commit()
     
@@ -171,11 +155,7 @@ def send_confirmation_email(user_email):
     html = render_template('confirmemail.html', confirm_url=confirm_url)
     
     send_email('STRATICS EMAIL CONFIRMATION', [user_email], html)
-
-@auth.route('/confirm-email')
-def ce():
-    return render_template("confirmemail.html", user= current_user)
-    
+   
 @auth.route('/sign-up/confirm/<token>')
 def confirm_email(token):
     try:
@@ -225,10 +205,8 @@ def custman():
         all_data = Data.query.all()
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
-        all_data = Data.query.all() 
-        return render_template("custman.html", user=current_user, datas=all_data)
     else:
-        sd = Sampledata \
+        sd = Otherdata \
             .query \
             .join(User) \
             .filter(User.id==current_user.id).count()
@@ -246,7 +224,6 @@ def custman():
 
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
-        return render_template("scustman.html", user=current_user, sd=sd)
 
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
@@ -264,7 +241,7 @@ def insert():
             ref_num = request.form['ref_num']
      
             datas = Data(accnt_num=accnt_num, name=name, address=address, services=services, monthly=monthly
-                        , collector=collector, sstatus=sstatus, amnt_paid=amnt_paid, ref_num=ref_num, duser_id=current_user.id)
+                        , collector=collector, sstatus=sstatus, amnt_paid=amnt_paid, ref_num=ref_num)
             db.session.add(datas)
             db.session.commit()
             
@@ -272,7 +249,7 @@ def insert():
             
             return redirect(url_for('auth.custman'))
     else:
-        sd = Sampledata \
+        sd = Otherdata \
             .query \
             .join(User) \
             .filter(User.id==current_user.id).count()
@@ -289,8 +266,8 @@ def insert():
             ref_num = request.form['ref_num']
             
             if sd <= 1:
-                sdatas = Sampledata(accnt_num=accnt_num, name=name, address=address, services=services, monthly=monthly
-                            , collector=collector, sstatus=sstatus, amnt_paid=amnt_paid, ref_num=ref_num, sduser_id=current_user.id)
+                sdatas = Otherdata(accnt_num=accnt_num, name=name, address=address, services=services, monthly=monthly
+                            , collector=collector, sstatus=sstatus, amnt_paid=amnt_paid, ref_num=ref_num, odata_id=current_user.id)
                 db.session.add(sdatas)
                 db.session.commit()   
                 flash("Customer Inserted Successfully", category="notlimit")
@@ -324,7 +301,7 @@ def update(id):
             return redirect(url_for('auth.custman'))
     else:
         if request.method == 'POST':
-            datas = Sampledata.query.get(request.form.get('id'))
+            datas = Otherdata.query.get(request.form.get('id'))
             datas.accnt_num = request.form['accnt_num']
             datas.name = request.form['name']
             datas.address = request.form['address']
@@ -353,7 +330,7 @@ def delete(id):
      
         return redirect(url_for('auth.custman'))
     else:
-        my_data = Sampledata.query.get(id)
+        my_data = Otherdata.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
         flash("Customer Deleted Successfully")
@@ -377,7 +354,7 @@ def deletecheck():
         if request.method == "POST":
             for getid in request.form.getlist("mycheckbox"):
                 print(getid)
-                db.session.query(Sampledata).filter(Sampledata.id ==getid).delete()
+                db.session.query(Otherdata).filter(Otherdata.id ==getid).delete()
             db.session.commit()
             flash("Customer Deleted Successfully")
                      
@@ -416,8 +393,6 @@ def edit():
 def profile():
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("profile.html", user= current_user, image_file = image_file)
-    return render_template("profile.html", user= current_user)
-        
         
 @login_required
 def save_picture(form_picture):
@@ -503,24 +478,22 @@ def strat():
         all_data = Strategies.query.all() 
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
-        all_data = Strategies.query.all()
-        return render_template("strategies.html", user=current_user, strategiess=all_data, statss=statss, statc=statc)
     else:
-        sd = Samplestrategies \
+        sd = Otherstrategies \
             .query \
             .join(User) \
             .filter(User.id==current_user.id).count()
         print(sd)
-        statc = Samplestrategies \
+        statc = Otherstrategies \
             .query \
             .join(User) \
-            .filter(Samplestrategies.status == "complete") \
+            .filter(Otherstrategies.status == "complete") \
             .filter(User.id==current_user.id).count()
         print(statc)
-        statss = Samplestrategies \
+        statss = Otherstrategies \
             .query \
             .join(User) \
-            .filter(Samplestrategies.status == "ongoing") \
+            .filter(Otherstrategies.status == "ongoing") \
             .filter(User.id==current_user.id).count()
         print(statss)
         if request.method == 'POST':
@@ -533,8 +506,7 @@ def strat():
             description = request.form['description']
         
         image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file)
-        return render_template("sstrategies.html", user=current_user, statc=statc, statss=statss, sd=sd) 
+        return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file, sd=sd)
             
 @auth.route('/strategies/insert', methods = ['POST'])
 @login_required
@@ -550,7 +522,7 @@ def newstrat():
             description = request.form['description']
             
             my_strat = Strategies(name=name, act=act, platform=platform, startdate=startdate, 
-                        enddate=enddate, status=status, description=description, stratuser_id=current_user.id)
+                        enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
             db.session.commit() 
             
@@ -558,21 +530,21 @@ def newstrat():
             
             return redirect(url_for('auth.strat'))
     else:
-        sd = Samplestrategies \
+        sd = Otherstrategies \
             .query \
             .join(User) \
             .filter(User.id==current_user.id).count()
         print(sd)
-        statc = Samplestrategies \
+        statc = Otherstrategies \
             .query \
             .join(User) \
-            .filter(Samplestrategies.status == "complete") \
+            .filter(Otherstrategies.status == "complete") \
             .filter(User.id==current_user.id).count()
         print(statc)
-        statss = Samplestrategies \
+        statss = Otherstrategies \
             .query \
             .join(User) \
-            .filter(Samplestrategies.status == "ongoing") \
+            .filter(Otherstrategies.status == "ongoing") \
             .filter(User.id==current_user.id).count()
         print(statss)
         if request.method == 'POST':
@@ -585,8 +557,8 @@ def newstrat():
             description = request.form['description']
             
             if sd <= 1:
-                my_strat = Samplestrategies(name=name, act=act, platform=platform, startdate=startdate, 
-                        enddate=enddate, status=status, description=description, sstratuser_id=current_user.id)
+                my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
+                        enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
                 db.session.add(my_strat)
                 db.session.commit()   
                 flash("Strategy Inserted Successfully", category="notlimit")
@@ -602,7 +574,7 @@ def newstrat():
 def updatestrat(id):
     if current_user.cname == "Kalibo":
         if request.method == 'POST':
-            my_strat = Samplestrategies.query.get(request.form.get('id'))
+            my_strat = Strategies.query.get(request.form.get('id'))
             my_strat.name = request.form['name']
             my_strat.act = request.form['act']
             my_strat.platform = request.form['platform']
@@ -614,20 +586,20 @@ def updatestrat(id):
             db.session.commit()
             return redirect(url_for('auth.strat')) 
     else:
-        statc = Samplestrategies \
+        statc = Otherstrategies \
             .query \
             .join(User) \
-            .filter(Samplestrategies.status == "complete") \
+            .filter(Otherstrategies.status == "complete") \
             .filter(User.id==current_user.id).count()
         print(statc)
-        statss = Samplestrategies \
+        statss = Otherstrategies \
             .query \
             .join(User) \
-            .filter(Samplestrategies.status == "ongoing") \
+            .filter(Otherstrategies.status == "ongoing") \
             .filter(User.id==current_user.id).count()
         print(statss)
         if request.method == 'POST':
-            my_strat = Samplestrategies.query.get(request.form.get('id'))
+            my_strat = Otherstrategies.query.get(request.form.get('id'))
             my_strat.name = request.form['name']
             my_strat.act = request.form['act']
             my_strat.platform = request.form['platform']
@@ -652,7 +624,7 @@ def deletestrat(id):
         
         return redirect(url_for('auth.strat'))
     else:
-        my_data = Samplestrategies.query.get(id)
+        my_data = Otherstrategies.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
         flash("Strategy Deleted Successfully")
@@ -676,138 +648,10 @@ def deletestratcheck():
         if request.method == "POST":
             for getid in request.form.getlist("mycheckbox"):
                 print(getid)
-                db.session.query(Samplestrategies).filter(Samplestrategies.id ==getid).delete()
+                db.session.query(Otherstrategies).filter(Otherstrategies.id ==getid).delete()
             db.session.commit()
             flash("Strategy Deleted Successfully")
                      
             return redirect(url_for('auth.strat'))
     
 # End of Strategies
-
-# Dashboard Plotly
-@auth.route('/dashboard')
-def dashboard():
-
-    cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-    conn = cnx.connect()
-    df = pd.read_sql_table('sampledata', con=cnx)
-    print(df)
-
-    # independent variable
-    X = df.iloc[:,:-1].values
-    X
-
-    # dependent variable - churn column
-    y = df.iloc[:,10]
-    y
-
-    # Counts number of null values - resulted that no values are missing.
-    null_columns=df.columns[df.isnull().any()]
-    df[null_columns].isnull().sum()
-
-    # Categorical Value Encoding
-    X = df.iloc[:,:-1].values
-    y = df.iloc[:,4].values
-
-    # transform categorical var gender to binary - 0 - female 1 - male
-    from sklearn.preprocessing import LabelEncoder
-    lblencode = LabelEncoder()
-    X[:,3] = lblencode.fit_transform(X[:,3])
-    X
-
-    # Using ColumnTransformer
-    from sklearn.preprocessing import OneHotEncoder
-    from sklearn.compose import ColumnTransformer
-    ct=ColumnTransformer(transformers=[("oh",OneHotEncoder(),[3])], remainder="passthrough")
-    ct.fit_transform(X)
-    
-    # Splitting Data into Train and Test
-    from sklearn.model_selection import train_test_split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
-
-    print("X_train : ",X_train.shape)
-    print("X_test : ",X_test.shape)
-    print("y_train : ",y_train.shape)
-    print("y_test : ",y_test.shape)
-
-    # Outlier Detection
-    print(df.shape)
-    print(df.columns)
-
-    # Zscore
-    from scipy import stats
-    zscore = np.abs(stats.zscore(df['MonthlyCharges']))
-    print (zscore)
-
-    # zscore values higher than 3 are outliers.
-    threshold = 3
-    print(np.where(zscore >3))
-
-    df.corr(method='pearson')
-
-    # Create Pivot Table - compute for sum
-    pd.pivot_table(df, index=['State', 'InternetService'], aggfunc = 'sum')
-
-    # Create Pivot Table - compute for mean
-    pd.pivot_table(df, index=['State', 'InternetService'], aggfunc = 'mean')    
-    
-    # Create Pivot Table - compute for count
-    pd.pivot_table(df, index=['State', 'InternetService'], aggfunc = 'count')
-
-    # Pie Chart
-    from plotly.offline import init_notebook_mode,iplot
-    import plotly.graph_objects as go
-    import cufflinks as cf
-    init_notebook_mode(connected=True)
-
-    #labels
-    lab = df["gender"].value_counts().keys().tolist()
-    #values
-    val = df["gender"].value_counts().values.tolist()
-    trace = go.Pie(labels=lab, 
-                    values=val, 
-                    marker=dict(colors=['red']), 
-                    # Seting values to 
-                    hoverinfo="value"
-                )
-    data = [trace]
-
-    
-    layout = go.Layout(title="Sex Distribution")
-    fig1 = go.Figure(data = data,layout = layout)
-    fig1.update_traces(hole=.4)
-    graph1JSON = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
-
-    # Histogram - Service
-    # defining data
-    trace = go.Histogram(x=df['InternetService'],nbinsx=40,histnorm='percent')
-    data = [trace]
-    # defining layout
-    layout = go.Layout(title="Service Distribution")
-    # defining figure and plotting
-    fig2 = go.Figure(data = data,layout = layout)
-    graph2JSON = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
-
-    # Histogram - State
-    # defining data
-    trace = go.Histogram(x=df['State'],nbinsx=52)
-    data = [trace]
-    # defining layout
-    layout = go.Layout(title="State")
-    # defining figure and plotting
-    fig3 = go.Figure(data = data,layout = layout)
-    fig3 = go.Figure(data = data,layout = layout)
-    graph3JSON = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
-
-    # Histogram - Churn
-    # defining data
-    trace = go.Histogram(x=df['Churn'],nbinsx=3)
-    data = [trace]
-    # defining layout
-    layout = go.Layout(title="Churn Distribution")
-    # defining figure and plotting
-    fig4 = go.Figure(data = data,layout = layout)
-    fig4 = go.Figure(data = data,layout = layout)
-    graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
-
-    return render_template("dashboard.html", user= current_user)
