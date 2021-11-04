@@ -49,6 +49,10 @@ Notes:	decreasing heading by 0.4em with every subsequent heading level
   box-sizing: border-box;
 }
 
+body {
+  background-color: #f5f5f7;
+}
+
 ul {
   margin: 0;
 }
@@ -432,7 +436,7 @@ section {
 /*                   COMPONENTS                        */
 /*-----------------------------------------------------*/
 /* ----- Buttons----- */
-.au-btn {
+.dboard-btn {
   font-family: 'Inter', sans-serif;
   line-height: 35px;
   padding: 0 6px;
@@ -474,7 +478,7 @@ section {
   cursor: pointer;
 }
 
-.au-btn:hover {
+.dboard-btn:hover {
   background: #F5E050;
 }
 
@@ -482,7 +486,7 @@ section {
   background: #F5E050;
 }
 
-.au-btn--blue {
+.dboard-btn--blue {
   background: #FEE185;
 }
 
@@ -490,29 +494,29 @@ section {
   background: #FEE185;
 }
 
-.au-btn--block {
+.dboard-btn--block {
   display: block;
   width: 100%;
 }
 
-.au-btn-icon i {
+.dboard-btn-icon i {
   vertical-align: baseline;
   margin-right: 5px;
 }
 
-.au-btn--blue {
+.dboard-btn--blue {
   background: #FEE185;
 }
 
-.au-btn--green {
+.dboard-btn--green {
   background: #63c76a;
 }
 
-.au-btn--green:hover {
+.dboard-btn--green:hover {
   background: #59bd60;
 }
 
-.au-btn-plus {
+.dboard-btn-plus {
   position: absolute;
   height: 45px;
   width: 45px;
@@ -529,7 +533,7 @@ section {
   z-index: 3;
 }
 
-.au-btn-plus i {
+.dboard-btn-plus i {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -543,22 +547,22 @@ section {
   color: #fff;
 }
 
-.au-btn-plus:hover {
+.dboard-btn-plus:hover {
   background: #59bd60;
 }
 
-.au-btn-load {
+.dboard-btn-load {
   background: #808080;
   padding: 0 40px;
   font-size: 15px;
   color: #fff;
 }
 
-.au-btn-load:hover {
+.dboard-btn-load:hover {
   background: #767676;
 }
 
-.au-btn-filter {
+.dboard-btn-filter {
   font-size: 14px;
   color: #808080;
   background: #fff;
@@ -577,7 +581,7 @@ section {
   margin-right: 5px;
 }
 
-.au-btn--small {
+.dboard-btn--small {
   padding: 0 20px;
   line-height: 40px;
   font-size: 14px;
@@ -15145,7 +15149,7 @@ textarea.form-control {
 
 .card-container-main {
   width: 100%;
-  padding-top: 0.5rem;
+  padding-top: 1.8rem;
   padding-right: 10px;
   padding-left: 10px;
   padding-bottom: 10px;
