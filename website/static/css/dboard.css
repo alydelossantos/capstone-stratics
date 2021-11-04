@@ -456,7 +456,7 @@ section {
   cursor: pointer;
 }
 
-.au-btn2 {
+.dboard-btn2 {
   font-family: 'Inter', sans-serif;
   line-height: 35px;
   margin-top: 10px;
@@ -482,7 +482,7 @@ section {
   background: #F5E050;
 }
 
-.au-btn2:hover {
+.dboard-btn2:hover {
   background: #F5E050;
 }
 
@@ -490,7 +490,7 @@ section {
   background: #FEE185;
 }
 
-.au-btn2--blue {
+.dboard-btn2--blue {
   background: #FEE185;
 }
 
@@ -577,7 +577,7 @@ section {
   text-transform: capitalize;
 }
 
-.au-btn-filter i {
+.dboard-btn-filter i {
   margin-right: 5px;
 }
 
