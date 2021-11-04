@@ -28,10 +28,16 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     if current_user.explore == "sample":
+        current_user.dname = "Sample Dashboard"
+        db.session.commit()
         dashboard()
     elif current_user.explore == "customer":
+        current_user.dname = "Edit Dashboard Name"
+        db.session.commit()
         dashboard()
     else:
+        current_user.dname = "Empty Dashboard"
+        db.session.commit()
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("home.html", user= current_user, image_file=image_file) 
     
