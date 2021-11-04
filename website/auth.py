@@ -236,14 +236,14 @@ def emailmark(id):
           return redirect(url_for('auth.inq'))
     
 #ACCOUNTS MANAGEMENT
-@auth.route('/user-accounts', methods = ['GET', 'POST'])
+@auth.route('/admin-management', methods = ['GET', 'POST'])
 @login_required
 def accounts():
     all_data = User.query.filter_by(user_type="user").all()
     image_file = url_for('static', filename='images/' + current_user.image_file) 
     return render_template("accounts.html", user=current_user, users=all_data, image_file = image_file)
 
-@auth.route('/user-accounts/update/<id>', methods = ['GET', 'POST'])
+@auth.route('/admin-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
 def updateaccnt(id):
     if request.method == 'POST':
@@ -256,7 +256,7 @@ def updateaccnt(id):
         return redirect(url_for('auth.accounts')) 
  
 #This route is for deleting our user accounts
-@auth.route('/user-accounts/delete/<id>/', methods = ['GET', 'POST'])
+@auth.route('/admin-management/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
 def deleteaccnt(id):
     my_data = User.query.get(id)
@@ -267,7 +267,7 @@ def deleteaccnt(id):
     return redirect(url_for('auth.accounts'))
 
 #This route is for deleting user accnt in checkbox
-@auth.route('/user-accounts/delete-selected', methods = ['GET', 'POST'])
+@auth.route('/admin-management/delete-selected', methods = ['GET', 'POST'])
 @login_required
 def deletecheckaccnt():
     if request.method == "POST":
