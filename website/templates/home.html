@@ -23,6 +23,9 @@
       <!-- Cards Icons -->
       <link href ="{{url_for('static', filename = 'css/mdicon.css')}}" rel = "stylesheet"/>
 
+	  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+	  <script type='text/javascript'>
+
 
     </head>
 	<body>
@@ -138,8 +141,7 @@
 				      </div>
 				    </div>
 
-				    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-				    <script type='text/javascript'>
+				    
 				      var graph1 = {{graph1JSON | safe}};
 				      Plotly.plot('chart1',graph1,{});
 
@@ -212,8 +214,7 @@
 				      </div>
 				    </div>
 
-				    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-				    <script type='text/javascript'>
+				    
 				      var graph1 = {{graph1JSON | safe}};
 				      Plotly.plot('chart1',graph1,{});
 
