@@ -27,7 +27,13 @@ def home():
         db.session.commit()
     print(current_user.dname)
     image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("home.html", user= current_user, image_file=image_file)
+
+
+    return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
+    graph2JSON=graph2JSON, 
+    graph3JSON=graph3JSON,
+    graph4JSON=graph4JSON,) 
+
 
 @login_required
 def sampleanalysis():
@@ -45,3 +51,5 @@ def homeexp():
 @views.route('/')
 def landing():
     return render_template("landing.html", user= current_user)
+
+

@@ -810,9 +810,4 @@ def dashboard():
     fig4 = go.Figure(data = data,layout = layout)
     graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return render_template("dashboard.html", user= current_user, 
-    graph1JSON=graph1JSON, 
-    graph2JSON=graph2JSON, 
-    graph3JSON=graph3JSON,
-    graph4JSON=graph4JSON,
-     )
+    return render_template("dashboard.html", user= current_user)
