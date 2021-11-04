@@ -80,7 +80,7 @@
 			
                       <script src="{{ url_for('static', filename='js/dboard.js') }}"></script>
 		      {% for row in users %}
-			    {% if row.explore == "sample" && row.explore == "customer" %}
+			    {% if row.explore == "sample" || row.explore == "customer" %}
 			    	<!-- STATISTIC-->
 				      <section class="statistic statistic2">
 					<div class="container-fluid">
@@ -154,8 +154,10 @@
 				      Plotly.plot('chart4',graph4,{});
 
 				    </script>
+			    {% else %}
+			    	
 			    {% endif%}
-			{% end for %}
+			{% endfor %}
                     </div>
                   </div>  
                 </div>
