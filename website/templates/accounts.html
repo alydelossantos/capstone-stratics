@@ -137,8 +137,10 @@
                                         <form action="/admin-management/update/{{row.id}}" method="POST">
 					    <div class="form-group row">
 						<div class="col-sm-6">
-                                              	<h2>{{row.fname}} {{row.lname}}</h2><br>
+                                              	<h1>{{row.fname}} {{row.lname}}</h1>
 					        <p>{{row.email}}</p>
+						<p>{{row.cp}}</p>
+						<p>{{row.address}}</p>
 						</div>
                                             </div> 
 						
@@ -148,14 +150,13 @@
                                                     <input type="hidden"  name="id" value="{{row.id}}">
                                                     <input type="text" class="form-control" name="position" value="{{row.position}}">
                                                 </div>
-                                            </div> 
-											
-					<div class="form-group row">
-                                                <div class="col-sm-6">
+						    
+						 <div class="col-sm-6">
                                                     <label>Password</label>
                                                     <input type="text" class="form-control" name="password" value="{{row.password}}">
                                                 </div>
                                             </div> 
+		
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button class="btn btn-primary" type="submit">Update User Account</button>
