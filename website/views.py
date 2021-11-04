@@ -8,7 +8,7 @@ from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
-from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
+from .models import User, Data, Strategies, Contact, Sampledata, Otherdata, Otherstrategies
 from flask_login import login_user, login_required, logout_user, current_user
 
 # Plotly Libraries
@@ -276,10 +276,9 @@ def home():
         fig4 = go.Figure(data = data,layout = layout)
         fig4 = go.Figure(data = data,layout = layout)
         graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
-    else:
+    elif current_user.explore == "empty"::
         current_user.dname = "Enter Dashboard Name"
     print(current_user.dname)
-       
 
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
@@ -287,10 +286,6 @@ def home():
     graph3JSON=graph3JSON,
     graph4JSON=graph4JSON,) 
 
-
-@login_required
-def sampleanalysis():
-    return render_template("confirmemail.html")
 
 @views.route('/home/explore-dataset', methods=["GET", "POST"])    
 @login_required
