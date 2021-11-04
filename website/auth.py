@@ -103,17 +103,16 @@ def signin():
     return render_template("signin.html", user= current_user)
 
 @auth.route('/sign-in/forgot-password/', methods=["GET", "POST"]) 
-if request.method == 'POST':
-  email= request.form['accnt_num']
-  request_pass = request.form['request_pass']
+  if request.method == 'POST':
+    email= request.form['email']
+    request_pass=True
+    si = User(email=email, request_pass=request_pass)
+    db.session.add(si)
+    db.session.commit()
 
-  si = User(email=email, request_pass=request_pass)
-  db.session.add(si)
-  db.session.commit()
+    flash("Reset Password Request has been sent!")
 
-  flash("Reset Password Request has been sent!")
-
-  return redirect(url_for('auth.signin'))
+    return redirect(url_for('auth.signin'))
           
 @auth.route('/sign-out') #signout page
 @login_required
