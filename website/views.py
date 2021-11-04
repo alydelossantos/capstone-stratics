@@ -47,7 +47,7 @@ def dashname():
      if request.method == 'POST':
         current_user.dname = request.form['dname']
         db.session.commit()
-    return redirect(url_for('views.home'))
+        return redirect(url_for('views.home'))
 
 @views.route('/home/explore-dataset', methods=["GET", "POST"])    
 @login_required
