@@ -157,8 +157,6 @@ def home():
     elif current_user.explore == "Customer Dataset":
         current_user.dname = "Customer Dataset"
         db.session.commit()
-    else:
-        current_user.dname = "Enter Dashboard Name"
         db.session.commit()
         cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
         conn = cnx.connect()
@@ -279,6 +277,8 @@ def home():
         fig4 = go.Figure(data = data,layout = layout)
         fig4 = go.Figure(data = data,layout = layout)
         graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+    else:
+        current_user.dname = "Enter Dashboard Name"
     print(current_user.dname)
        
 
