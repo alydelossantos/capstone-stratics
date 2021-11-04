@@ -58,10 +58,39 @@
 				<label class="silabel" for="password">Password</label>
 				<input type="password" id="password" name="password"></input> 
 				<button class="formbtn" type="submit">Sign In</button>
-				<div class="text"><span style='font-weight: bold; color: #f39519;'>Forgot your Password?</span><br>
+				<div class="text">
+				<a href="/sign-in/forgot-password/" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Req" data-target="#modaledit">
+				<span style='font-weight: bold; color: #f39519;'>Forgot your Password?</span></a><br>
 								  Do not have an account yet? Click here to <span><a href="/sign-up" class="susmall">sign up</a></span></div>
 			</div>
 		</form>
+		<!-- Modal Edit User-->
+			
+                    <div id="modaledit" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+							aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">    
+                                    <div class="modal-header">   
+                                        <h4 class="modal-title">Forgot Password?</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/sign-in/forgot-password/" method="POST">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label>Enter your email</label>
+                                                    <input type="email" class="form-control" name="email">
+						</div>
+				    		</div> 
+	
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button class="btn btn-primary" type="submit">Reset Password</button>
+                                            </div>
+                                        </form>
+                                    </div>    
+                                </div>
+			    </div>
+		</div>
         </div>
 
         {%endblock%}
