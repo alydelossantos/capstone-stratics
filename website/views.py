@@ -28,19 +28,26 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     if current_user.explore == "sample":
-        current_user.dname = "Sample Dataset"
-        db.session.commit()
         dashboard()
     elif current_user.explore == "customer":
-        current_user.dname = "Customer Dataset"
-        db.session.commit()
         dashboard()
     else:
-        current_user.dname = "Enter Dashboard Name"
-        db.session.commit()
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("home.html", user= current_user, image_file=image_file) 
+    
     image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("home.html", user= current_user, image_file=image_file) 
+    return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
+    graph2JSON=graph2JSON, 
+    graph3JSON=graph3JSON,
+    graph4JSON=graph4JSON,)
 
+@views.route('/home/dashboard-name/edit', methods=["GET", "POST"])
+@login_required
+def dashname():
+     if request.method == 'POST':
+        current_user.dname = request.form['dname']
+        db.session.commit()
+    return redirect(url_for('views.home'))
 
 @views.route('/home/explore-dataset', methods=["GET", "POST"])    
 @login_required
