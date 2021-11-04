@@ -84,6 +84,7 @@
                 <div class="input-container password">
                     <label class="sulabel" for="password">Password</label>
                     <input id="password" name="password" type="password" placeholder="Must contain 8 characters" required="1">
+                    <i class="far fa-eye-slash" id="togglePassword" style="cursor: pointer;"></i>>>
                 </div>
 		<input id="user_type" name="user_type" type="hidden" value="user">
                 <button class="subtn" type="submit">Let's Start</button>
@@ -94,6 +95,19 @@
             </div>
         </div>
 
+        
+        <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#id_password');
+       
+        togglePassword.addEventListener('click', function (e) {
+          // toggle the type attribute
+          const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+          password.setAttribute('type', type);
+          // toggle the eye slash icon
+          this.classList.toggle('fa-eye-slash');
+        });
+        </script>
         {% endblock %}
 		
     </body>
