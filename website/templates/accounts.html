@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
         
-		{% block title %} Stratics Admin | Accounts Management {% endblock %}
+		{% block title %} Stratics Admin | Admin Management {% endblock %}
 		
 		</head>
 		<body>
@@ -69,7 +69,7 @@
 			
     <div class="row">
             <div class="table-responsive table-responsive-data2">
-			<form action="/user-accounts/delete-selected" method="POST">
+			<form action="/admin-management/delete-selected" method="POST">
                 <table class="table table-data2" id="mytable">
                     <thead>
                         <tr>
@@ -117,49 +117,14 @@
 							</td>{% endif %}
 							<td>
                                 <div class="table-data-feature">
-                                    <a href="/user-accounts/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
-                                    <a href="/user-accounts/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
+                                    <a href="/admin-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
+                                    <a href="/admin-management/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
                                 </div>
                             </td>
                         </tr>
 			</form>
-                    <!-- Modal Edit User-->
-
-                    <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-							aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">    
-                                    <div class="modal-header">   
-                                        <h4 class="modal-title">Update User</h4>
-                                    </div>
-    
-                                    <div class="modal-body">
-                                        <form action="/user-accounts/update/{{row.id}}" method="POST">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label>Position</label>
-                                                    <input type="hidden"  name="id" value="{{row.id}}">
-                                                    <input type="text" class="form-control" name="position" value="{{row.position}}">
-                                                </div>
-                                            </div> 
-											
-											<div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label>Password</label>
-                                                    <input type="text" class="form-control" name="password" value="{{row.password}}">
-                                                </div>
-                                            </div> 
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button class="btn btn-primary" type="submit">Update User Account</button>
-                                            </div>
-                                        </form>
-                                    </div>    
-                                </div>
-						    </div>
-					</div>
-					
-					 <!-- Modal Delete User-->
+                   
+					 <!-- Modal Delete User Account-->
 
 					    <div id="modaldelete{{row.id}}" class="modal fade">
 						<div class="modal-dialog modal-dialog-centered">
@@ -168,19 +133,20 @@
 									<h4 class="modal-title">Delete User Account</h4>
 								</div>
 								<div class="modal-body">
-									<form action="/user-accounts/delete/{{row.id}}">
+									<form action="/admin-management/delete/{{row.id}}">
 										<div class="form-group">
-											<label>Are you sure you want to delete User {{row.name}}?</label>
+											<label>Are you sure you want to delete User Account?</label>
 										</div>  
 										<div class="modal-footer">
-											<button class="btn btn-primary" type="submit">Delete User</button>
+											<button class="btn btn-primary" type="submit">Delete User Account</button>
 											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 										</div>
 									</form>
 								</div>    
                             				</div>
 						</div> 
-					</div>	 							
+					</div>	
+                </div>
                         {% endfor %}
                     </tbody>
 			<div class="col-md-12">
@@ -259,4 +225,3 @@
 	</html>
 
 {% endblock %}
-
