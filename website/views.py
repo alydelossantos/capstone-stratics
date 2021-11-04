@@ -11,6 +11,18 @@ from sqlalchemy import func, create_engine
 from .models import User, Data, Strategies, Contact, Sampledata, Samplestrategies
 from flask_login import login_user, login_required, logout_user, current_user
 
+import matplotlib.pyplot as plt
+
+# Plotly Libraries
+import json
+import plotly
+import plotly.express as px
+
+# Data Preprocessing
+import matplotlib.pyplot as plt
+import scipy as sp
+import scipy._lib
+
 from .extensions import db
 views = Blueprint('views', __name__)
 
