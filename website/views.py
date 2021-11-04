@@ -276,7 +276,7 @@ def home():
         fig4 = go.Figure(data = data,layout = layout)
         fig4 = go.Figure(data = data,layout = layout)
         graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
-    elif current_user.explore == "empty"::
+    elif current_user.explore == "empty":
         current_user.dname = "Enter Dashboard Name"
     print(current_user.dname)
 
