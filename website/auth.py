@@ -194,7 +194,7 @@ def save_file(form_file):
     return file_path
     
 #SEND EMAIL FOR INQUIRIES
-@auth.route('/inquiries/send-email/<id>/', methods = ['GET','POST'])
+@auth.route('/inquiries/send-email/<id>', methods = ['GET','POST'])
 @login_required
 def emailmark(id):
     EMAIL_ADDRESS = 'ksn.080900@gmail.com'
