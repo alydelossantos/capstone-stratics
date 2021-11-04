@@ -86,7 +86,8 @@
                             <th>Address</th>
                             <th>Password</th>
                             <th>Account Activated</th>
-							<th>Status</th>
+			    <th>Status</th>
+			    <th>Request</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -114,6 +115,11 @@
 								<li class="block-active" >Active</li>
 								{% else %}
 								<li class="block-inactive">Inactive</li>
+							</td>{% endif %}
+							<td> {% if row.request_pass == True %}
+								<li class="block-ongoing" >Password Change</li>
+								{% else %}
+								<li class="block-inactive">None</li>
 							</td>{% endif %}
 							<td>
                                 <div class="table-data-feature">
