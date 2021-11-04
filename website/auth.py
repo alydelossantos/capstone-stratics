@@ -258,7 +258,7 @@ def updateaccnt(id):
 #This route is for deleting our user accounts
 @auth.route('/user-accounts/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
-def deleteinq(id):
+def deleteaccnt(id):
     my_data = User.query.get(id)
     db.session.delete(my_data)
     db.session.commit()
