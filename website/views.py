@@ -25,6 +25,7 @@ def home():
     else:
         current_user.dname = "Enter Dashboard Name"
         db.session.commit()
+    dashboard()
     print(current_user.dname)
     image_file = url_for('static', filename='images/' + current_user.image_file)
 
