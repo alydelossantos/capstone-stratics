@@ -30,23 +30,14 @@ def home():
     if current_user.explore == "sample":
         current_user.dname = "Sample Dataset"
         db.session.commit()
-        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-        conn = cnx.connect()
-        df = pd.read_sql_table('sampledata', con=cnx)
         dashboard()
     elif current_user.explore == "customer":
         current_user.dname = "Customer Dataset"
         db.session.commit()
-        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-        conn = cnx.connect()
-        df = pd.read_sql_table('sampledata', con=cnx)
         dashboard()
     else:
         current_user.dname = "Enter Dashboard Name"
         db.session.commit()
-        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-        conn = cnx.connect()
-        df = pd.read_sql_table('sampledata', con=cnx)
         dashboard()
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
@@ -70,6 +61,19 @@ def landing():
 
 
 def dashboard():
+    if current_user.explore == "sample":
+        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+        conn = cnx.connect()
+        df = pd.read_sql_table('sampledata', con=cnx)
+    elif current_user.explore == "customer":
+        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+        conn = cnx.connect()
+        df = pd.read_sql_table('sampledata', con=cnx)
+    else:
+        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+        conn = cnx.connect()
+        df = pd.read_sql_table('sampledata', con=cnx)
+        
     # independent variable
     X = df.iloc[:,:-1].values
     X
