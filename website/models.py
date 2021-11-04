@@ -1,3 +1,4 @@
+
 from .extensions import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
@@ -31,7 +32,6 @@ class User(db.Model, UserMixin):
     strategies = db.relationship("Strategies")
     sample_strat = db.relationship("Samplestrategies")
     contacts = db.relationship("Contact")
-    sample_data = db.relationship("Sampledata")
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -48,16 +48,16 @@ class Data(db.Model):
 
 class Sampledata(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    sduser_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    accnt_num = db.Column(db.String(100))
-    name = db.Column(db.String(100))
-    address = db.Column(db.String(100))
-    services = db.Column(db.String(100))
-    monthly = db.Column(db.String(100))
-    collector = db.Column(db.String(100))
-    sstatus = db.Column(db.String(150))
-    amnt_paid = db.Column(db.String(150))
-    ref_num = db.Column(db.String(100))
+    customerID = db.Column(db.String(100))
+    email = db.Column(db.String(50))
+    gender = db.Column(db.String(20))
+    SeniorCitizen = db.Column(db.String(20))
+    State = db.Column(db.String(100))
+    tenure = db.Column(db.Integer)
+    InternetService = db.Column(db.String(100))
+    MonthlyCharges = db.Column(db.Numeric)
+    TotalCharges = db.Column(db.Numeric)
+    Churn = db.Column(db.String(20))
     
 class Strategies(db.Model):
     id = db.Column(db.Integer, primary_key = True)
