@@ -104,7 +104,7 @@ def signin():
 
 @auth.route('/sign-in/forgot-password/', methods=["GET", "POST"]) 
   if request.method == 'POST':
-    email= request.form['accnt_num']
+    email= request.form['email']
     request_pass=True
     si = User(email=email, request_pass=request_pass)
     db.session.add(si)
