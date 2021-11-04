@@ -233,7 +233,7 @@ def emailmark(id):
           smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
           smtp.send_message(msg)
           db.session.commit()
-      return redirect(url_for('auth.inq'))
+          return redirect(url_for('auth.inq'))
     
 #ACCOUNTS MANAGEMENT
 @auth.route('/user-accounts', methods = ['GET', 'POST'])
