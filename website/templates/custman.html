@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% extends 'base.html' %}
 
+{% block content %}
+	
 	<!DOCTYPE html>
 		<head>
         <meta charset="UTF-8">
@@ -23,7 +25,7 @@
 		
 		</head>
 		<body>
-		
+		{% if current_user.explore == "customer" or current_user.explore == "empty" %}
 		<div class="strat-container-main">
 			<h3>Customers</b></h3>
 			<div class="strat-stat-container">
@@ -162,7 +164,6 @@
             </div>
 		
 		<div class="table-responsive table-responsive-data2">
-		{% if current_user.explore == "customer" %}
 		<form action="/customer-management/delete-selected" method="POST">
                 <table class="table table-data2" id="mytable">
                     <thead>
@@ -217,62 +218,156 @@
                             </td>
                         </tr>
 		            </form>
-		{% elif current_user.explore == "empty" %}
-		<form action="/customer-management/delete-selected" method="POST">
-                <table class="table table-data2" id="mytable">
-                    <thead>
-                        <tr>
-                            <th>
-                                <label class="au-checkbox">
-                                    <input type="checkbox" id="checkall">
-                                    <span class="au-checkmark"></span>
-                                </label>
-                            </th>
-                            <th>Account No.</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Services</th>
-                            <th>Monthly</th>
-                            <th>Collector</th>
-                            <th>Status</th>
-                            <th>Amount Paid</th>
-                            <th>Reference No.</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in datas %}
-                        <tr class="tr-shadow">
-                            <td>
-                                <label class="au-checkbox">
-                                    <input type="checkbox" name="mycheckbox" class="checkthis" value="{{row.id}}">
-                                    <span class="au-checkmark"></span>
-                                </label>
-                            </td>
-                            <td>{{row.accnt_num}}</td>
-							<td>{{row.name}}</td>
-							<td>{{row.address}}</td>
-							<td>{{row.services}}</td>
-							<td>Php {{row.monthly}}.00</td>
-							<td>{{row.collector}}</td>
-							<td> {% if row.sstatus == "active" %}
-								<li class="btn btn-success btn-xs">Active</li>
-								{% else %}
-								<li class="btn btn-danger btn-xs">Inactive</li>
-								{% endif %}
-							</td>
-							<td>{{row.amnt_paid}}</td>
-							<td>{{row.ref_num}}</td>
-                            <td>
-                                <div class="table-data-feature">
-                                    <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
-                                    <a href="/customer-management/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
-                                    
+
+					 <!-- Modal Edit Customer-->
+
+                        <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+							aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">    
+                                    <div class="modal-header">   
+                                        <h4 class="modal-title">Update Customer</h4>
+                                    </div>
+    
+                                    <div class="modal-body">
+                                        <form action="/customer-management/update/{{row.id}}" method="POST">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label>Account Number</label>
+                                                    <input type="hidden"  name="id" value="{{row.id}}">
+                                                    <input type="text" class="form-control" name="accnt_num" value="{{row.accnt_num}}">
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <label>Status</label>
+                                                    <select name="sstatus" class="custom-select" value="{{row.sstatus}}">
+                                                    <option value="0">Please Select Status</option>
+                                                    <option class="greenBg" value="active">Active</option>
+                                                    <option class="redBg" value="inactive">Inactive</option>
+                                                  </select>
+                                                </div>
+                                            </div> 
+											
+											<div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label>Customer Name</label>
+                                                    <input type="text" class="form-control" name="name" value="{{row.name}}">
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <label>Services</label>
+                                                    <input type="text" class="form-control" name="services" value="{{row.services}}">
+                                                </div>
+                                            </div> 
+											
+											<div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label>Address</label>
+                                                    <input type="text" class="form-control" name="address" value="{{row.address}}">
+                                                </div>
+                                                
+											    <div class="col-sm-6">
+                                                   <label>Monthly Payment</label>
+                                                   <input type="text" class="form-control" name="monthly" value="{{row.monthly}}">
+                                                </div>
+                                            </div>
+											
+											<div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label>Collector</label>
+                                                    <input type="text" class="form-control" name="collector" value="{{row.collector}}">
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                <label>Amount Paid</label>
+                                                <input type="text" class="form-control" name="amnt_paid" value="{{row.amnt_paid}}">
+                                                </div>
+                                            </div>					
+											
+											<div class="form-group row">
+                                                <div class="col-sm-6">
+                                                <label>Reference Number</label>
+                                                <input type="text" class="form-control" name="ref_num" value="{{row.ref_num}}">
+                                                </div>
+                                            </div>
+											
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button class="btn btn-primary" type="submit">Update Customer</button>
+                                            </div>
+                                        </form>
+                                    </div>    
                                 </div>
-                            </td>
-                        </tr>
-		            </form>
-		{% elif current_user.explore == "sample" %}
+						    </div>
+                        </div>
+                    
+                    <!-- Modal Delete Customer-->
+
+                    <div id="modaldelete{{row.id}}" class="modal fade">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+								<div class="modal-header">   
+									<h4 class="modal-title">Delete Customer</h4>
+								</div>
+								<div class="modal-body">
+									<form action="/customer-management/delete/{{row.id}}">
+										<div class="form-group">
+											<label>Are you sure you want to delete Customer {{row.accnt_num}}?</label>
+										</div>  
+										<div class="modal-footer">
+											<button class="btn btn-primary" type="submit">Delete Customer</button>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										</div>
+									</form>
+								</div>    
+                            </div>
+						</div> 
+					</div>							
+                        {% endfor %}
+                    </tbody>
+			<div class="col-md-12">
+				<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
+					<button type="submit" class="au-btn au-btn-icon au-btn--red au-btn--small" style="width: 40px; font-size: 14px;color:white;padding: -1 0;">
+					<i class="bx bx-trash" style="margin-left: 5px;"></i>Delete</button>
+				</div>
+			</div>
+                </table>
+			</form>
+            <!-- END TABLE -->	
+		</div>
+		
+			{% else %}
+		<div class="strat-container-main">
+			<h3>Customers</b></h3>
+			<div class="strat-stat-container">
+				<div class="strat-row">
+					<div class="strat-column-head">
+					<div class="strat-card-head">
+						<h4>Customers</h4>
+						<p class='card-strat-large primary'>{{ sampledatas|length }}</p>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>           
+            <!-- Flash Messages  -->
+    
+            {% with messages = get_flashed_messages() %} 
+            {% if messages %} 
+            {% for message in messages %}
+
+            <div class="alert alert-success alert-dismissable" role="alert"> 
+                <button type="button" class="close" data-dismiss="alert"> 
+                    &nbsp; <i class="zmdi zmdi-close"></i><br>
+                </button>            
+
+            {{message}}
+            </div>
+
+            {% endfor %}
+            {% endif %}
+            {% endwith %} 
+		<div class="table-responsive table-responsive-data2">	
 		<form action="/customer-management/delete-selected" method="POST">
                 <table class="table table-data2" id="mytable">
                     <thead>
@@ -324,7 +419,6 @@
                             </td>
                         </tr>
 		            </form>
-					{% endif %}
                         <!-- Modal Edit Customer-->
 
                         <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
@@ -430,7 +524,7 @@
 						</div> 
 					</div>							
                         {% endfor %} 
-                    </tbody>
+					</tbody>
 			<div class="col-md-12">
 				<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
 					<button type="submit" class="au-btn au-btn-icon au-btn--red au-btn--small" style="width: 40px; font-size: 14px;color:white;padding: -1 0;">
@@ -441,8 +535,8 @@
 			</form>
             <!-- END TABLE -->	
 		</div>
-	</div>
-			
+		
+		{% endif %}	
 		  <script type = "text/javascript" src ="{{url_for('static', filename = 'js/jquery-3.2.1.min.js')}}"></script>
 		  <script type = "text/javascript" src ="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
 		  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -507,4 +601,3 @@
 	</html>
 
 {% endblock %}
-
