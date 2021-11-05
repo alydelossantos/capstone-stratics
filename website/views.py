@@ -29,58 +29,21 @@ views = Blueprint('views', __name__)
 def home():
     if current_user.explore == "sample":
         current_user.dname = "Sample Dashboard"
-        db.session.commit()
-        dashboard()
+
+        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+        conn = cnx.connect()
+        df = pd.read_sql_table('sampledata', con=cnx)
         
     elif current_user.explore == "customer":
         current_user.dname = "Edit Dashboard Name"
-        db.session.commit()
-        dashboard()
+        
+        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+        conn = cnx.connect()
+        df = pd.read_sql_table('data', con=cnx)
    
     else:
         current_user.dname = "Empty Dashboard"
-        db.session.commit()
-        dashboard()
-        
-    image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("home.html", user= current_user, image_file=image_file)
-
-@views.route('/home/dashboard-name/edit', methods=["GET", "POST"])
-@login_required
-def dashname():
-     if request.method == 'POST':
-        current_user.dname = request.form['dname']
-        db.session.commit()
-        return redirect(url_for('views.home'))
-
-@views.route('/home/explore-dataset', methods=["GET", "POST"])    
-@login_required
-def homeexp():
-    if request.method == 'POST':
-        current_user.explore = request.form['explore']
-        db.session.commit()
-    print(current_user.explore)
-    return redirect(url_for('views.home'))
-
-@views.route('/')
-def landing():
-    return render_template("landing.html", user= current_user)
-
-
-def dashboard():
-    if current_user.explore == "sample":
-        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-        conn = cnx.connect()
-        df = pd.read_sql_table('sampledata', con=cnx)
-    elif current_user.explore == "customer":
-        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-        conn = cnx.connect()
-        df = pd.read_sql_table('sampledata', con=cnx)
-    else:
-        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-        conn = cnx.connect()
-        df = pd.read_sql_table('sampledata', con=cnx)
-        
+    
     # independent variable
     X = df.iloc[:,:-1].values
     X
@@ -144,7 +107,6 @@ def dashboard():
                 )
     data = [trace]
 
-    
     layout = go.Layout(title="Sex Distribution")
     fig1 = go.Figure(data = data,layout = layout)
     fig1.update_traces(hole=.4)
@@ -187,3 +149,24 @@ def dashboard():
     graph2JSON=graph2JSON, 
     graph3JSON=graph3JSON,
     graph4JSON=graph4JSON,)
+
+@views.route('/home/dashboard-name/edit', methods=["GET", "POST"])
+@login_required
+def dashname():
+     if request.method == 'POST':
+        current_user.dname = request.form['dname']
+        db.session.commit()
+        return redirect(url_for('views.home'))
+
+@views.route('/home/explore-dataset', methods=["GET", "POST"])    
+@login_required
+def homeexp():
+    if request.method == 'POST':
+        current_user.explore = request.form['explore']
+        db.session.commit()
+    print(current_user.explore)
+    return redirect(url_for('views.home'))
+
+@views.route('/')
+def landing():
+    return render_template("landing.html", user= current_user)
