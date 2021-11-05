@@ -155,7 +155,7 @@
 
 				    </script>
 			    	{% elif current_user.explore == "customer" %}
-			    		{% if Data.query.count() >=1 %}
+			    		{% if db.session.query(Data).count() >=1 %}
 			    	<!-- STATISTIC -->
 				      <section class="statistic statistic2">
 					<div class="container-fluid">
