@@ -71,32 +71,35 @@
 		</form>
 		<!-- Modal Edit User-->
 			
-                    <div id="modaledit" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-							aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">    
+						<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content"> 
+
                                     <div class="modal-header">   
                                         <h4 class="modal-title">Forgot Password?</h4>
                                     </div>
+
                                     <div class="modal-body">
                                         <form action="/sign-in/forgot-password/" method="POST">
+
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label>Enter your email</label>
+                                                    <label>Enter your email:</label>
                                                     <input type="email" class="form-control" name="email">
-						</div>
-				    		</div> 
-	
+												</div>
+											</div> 
+							
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button class="btn btn-primary" type="submit">Reset Password</button>
                                             </div>
+
                                         </form>
                                     </div>    
                                 </div>
-			    </div>
-		</div>
-        </div>
+			    			</div>
+						</div>
+       				</div>
 
         {%endblock%}
 		
