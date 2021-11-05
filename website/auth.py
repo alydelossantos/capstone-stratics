@@ -201,7 +201,7 @@ def emailmark(id):
     EMAIL_PASSWORD = 's4noope@cH'
     contacts = ['YourAddress@gmail.com', 'test@example.com']
     if request.method == "POST":
-      my_data = Contact.query.get(request.form.get('id'))
+      my_data = Contact.query.get(request.form.get['id'])
       x = [] 
       if request.files['attfile']:
               file_attachments =''
