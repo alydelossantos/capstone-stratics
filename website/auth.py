@@ -246,7 +246,7 @@ def custman():
         all_data = Sampledata.query.all()
         
         image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
+        return render_template("custman.html", user= current_user, sampledatas=all_data, image_file = image_file)
 
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
