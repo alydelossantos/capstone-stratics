@@ -217,7 +217,7 @@ def dashname():
 @auth.route('/customer-management', methods=["GET", "POST"]) 
 @login_required
 def custman():
-    if current_user.explore == "customer" || current_user.explore == "empty":
+    if current_user.explore == "customer" or current_user.explore == "empty":
         if current_user.cname == "Kalibo":
             all_data = Data.query.all()
             
