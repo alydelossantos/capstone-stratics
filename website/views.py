@@ -6,7 +6,7 @@ from PIL import Image
 from flask import Flask
 from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, func
 from sqlalchemy import func, create_engine
 from .models import User, Data, Strategies, Contact, Sampledata, Otherdata, Otherstrategies
 from flask_login import login_user, login_required, logout_user, current_user
@@ -27,6 +27,7 @@ views = Blueprint('views', __name__)
 @views.route('/home', methods=["GET", "POST"])
 @login_required
 def home():
+    rows = db.session.query(func.count(Data.id))
     if current_user.explore == "sample":
         current_user.dname = "Sample Dashboard"
 
@@ -134,7 +135,7 @@ def home():
         fig4 = go.Figure(data = data,layout = layout)
         graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
         
-    elif current_user.explore == "customer" and Data.query.count() >= 1 :
+    elif current_user.explore == "customer" and rows >= 1 :
         current_user.dname = "Edit Dashboard Name"
         
         cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
@@ -246,7 +247,7 @@ def home():
         graph2JSON=graph2JSON, 
         graph3JSON=graph3JSON,
         graph4JSON=graph4JSON,)
-    elif current_user.explore == "customer" and Data.query.count() < 1 :
+    elif current_user.explore == "customer" and rows < 1 :
         current_user.dname = "Edit Dashboard Name"
         
         flash("Add Records in Customer Management", category="error") 
