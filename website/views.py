@@ -36,11 +36,12 @@ def home():
         
     elif current_user.explore == "customer":
         current_user.dname = "Edit Dashboard Name"
-        
-        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-        conn = cnx.connect()
-        df = pd.read_sql_table('data', con=cnx)
-   
+        if Data.query.count() >= 1 :
+            cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+            conn = cnx.connect()
+            df = pd.read_sql_table('data', con=cnx)
+        else:
+            flash("Add Records in Customer Management", category="error")
     else:
         current_user.dname = "Empty Dashboard"
     
