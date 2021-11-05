@@ -162,6 +162,7 @@
             </div>
 		
 		<div class="table-responsive table-responsive-data2">
+		{% if current_user.explore == "customer" %}
 		<form action="/customer-management/delete-selected" method="POST">
                 <table class="table table-data2" id="mytable">
                     <thead>
@@ -216,6 +217,114 @@
                             </td>
                         </tr>
 		            </form>
+		{% elif current_user.explore == "empty" %}
+		<form action="/customer-management/delete-selected" method="POST">
+                <table class="table table-data2" id="mytable">
+                    <thead>
+                        <tr>
+                            <th>
+                                <label class="au-checkbox">
+                                    <input type="checkbox" id="checkall">
+                                    <span class="au-checkmark"></span>
+                                </label>
+                            </th>
+                            <th>Account No.</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Services</th>
+                            <th>Monthly</th>
+                            <th>Collector</th>
+                            <th>Status</th>
+                            <th>Amount Paid</th>
+                            <th>Reference No.</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in datas %}
+                        <tr class="tr-shadow">
+                            <td>
+                                <label class="au-checkbox">
+                                    <input type="checkbox" name="mycheckbox" class="checkthis" value="{{row.id}}">
+                                    <span class="au-checkmark"></span>
+                                </label>
+                            </td>
+                            <td>{{row.accnt_num}}</td>
+							<td>{{row.name}}</td>
+							<td>{{row.address}}</td>
+							<td>{{row.services}}</td>
+							<td>Php {{row.monthly}}.00</td>
+							<td>{{row.collector}}</td>
+							<td> {% if row.sstatus == "active" %}
+								<li class="btn btn-success btn-xs">Active</li>
+								{% else %}
+								<li class="btn btn-danger btn-xs">Inactive</li>
+								{% endif %}
+							</td>
+							<td>{{row.amnt_paid}}</td>
+							<td>{{row.ref_num}}</td>
+                            <td>
+                                <div class="table-data-feature">
+                                    <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
+                                    <a href="/customer-management/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
+                                    
+                                </div>
+                            </td>
+                        </tr>
+		            </form>
+		{% elif current_user.explore == "sample" %}
+		<form action="/customer-management/delete-selected" method="POST">
+                <table class="table table-data2" id="mytable">
+                    <thead>
+                        <tr>
+                            <th>
+                                <label class="au-checkbox">
+                                    <input type="checkbox" id="checkall">
+                                    <span class="au-checkmark"></span>
+                                </label>
+                            </th>
+                            <th>Customer ID</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Senior Citizen</th>
+                            <th>State</th>
+                            <th>Tenure</th>
+                            <th>Internet Service</th>
+                            <th>Monthly Charges</th>
+                            <th>Total Charges</th>
+							<th>Churn</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in sampledatas %}
+                        <tr class="tr-shadow">
+                            <td>
+                                <label class="au-checkbox">
+                                    <input type="checkbox" name="mycheckbox" class="checkthis" value="{{row.id}}">
+                                    <span class="au-checkmark"></span>
+                                </label>
+                            </td>
+                            <td>{{row.customerID}}</td>
+							<td>{{row.email}}</td>
+							<td>{{row.gender}}</td>
+							<td>{{row.SeniorCitizen}}</td>
+							<td>{{row.State}}</td>
+							<td>{{row.tenure}}</td>
+							<td>{{row.InternetService}}</td>
+							<td>{{row.MonthlyCharges}}</td>
+							<td>{{row.TotalCharges}}</td>
+							<td>{{row.Churn}}</td>
+                            <td>
+                                <div class="table-data-feature">
+                                    <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
+                                    <a href="/customer-management/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
+                                    
+                                </div>
+                            </td>
+                        </tr>
+		            </form>
+					{% endif %}
                         <!-- Modal Edit Customer-->
 
                         <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
@@ -398,3 +507,4 @@
 	</html>
 
 {% endblock %}
+
