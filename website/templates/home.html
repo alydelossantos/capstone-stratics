@@ -155,7 +155,8 @@
 
 				    </script>
 			    	{% elif current_user.explore == "customer" %}
-			    	{% if row >= 1 %}
+			    	{% for row in Data %}
+			    	{% if row.id >= 1 %}
 			    	<!-- STATISTIC -->
 				      <section class="statistic statistic2">
 					<div class="container-fluid">
@@ -229,7 +230,7 @@
 
 				    </script>
 			    			
-			     {% else %}
+			     {% elif  row.id != 1 %}
 				  <section class="p-t-20">
 				    <div class="dboard-main-container">
 				      <div class="row">
@@ -253,7 +254,8 @@
 				      </div>
 				    </div>
 				{% endif %}
-			{% elif  current_user.explore == "empty"%}
+			  {% endfor %}
+			{% elif current_user.explore == "empty" %}
 				  <section class="p-t-20">
 				    <div class="dboard-main-container">
 				      <div class="row">
