@@ -241,19 +241,22 @@ def home():
         fig4 = go.Figure(data = data,layout = layout)
         graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
         
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
+        graph2JSON=graph2JSON, 
+        graph3JSON=graph3JSON,
+        graph4JSON=graph4JSON,)
     elif current_user.explore == "customer" and Data.query.count() < 1 :
         current_user.dname = "Edit Dashboard Name"
         
         flash("Add Records in Customer Management", category="error") 
-        
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("home.html", user= current_user, image_file=image_file)
     else:
         current_user.dname = "Empty Dashboard"
 
-    image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
-    graph2JSON=graph2JSON, 
-    graph3JSON=graph3JSON,
-    graph4JSON=graph4JSON,)
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("home.html", user= current_user, image_file=image_file)
 
 @views.route('/home/dashboard-name/edit', methods=["GET", "POST"])
 @login_required
