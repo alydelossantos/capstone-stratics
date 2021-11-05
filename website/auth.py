@@ -217,29 +217,36 @@ def dashname():
 @auth.route('/customer-management', methods=["GET", "POST"]) 
 @login_required
 def custman():
-    if current_user.cname == "Kalibo":
-        all_data = Data.query.all()
+    if current_user.explore == "customer" || current_user.explore == "empty":
+        if current_user.cname == "Kalibo":
+            all_data = Data.query.all()
+            
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
+        else:
+            sd = Otherdata \
+                .query \
+                .join(User) \
+                .filter(User.id==current_user.id).count()
+            print(sd)
+            if request.method == "POST":
+                accnt_num = request.form['accnt_num']
+                name = request.form['name']
+                address = request.form['address']
+                services= request.form['services']
+                monthly = request.form['monthly']
+                collector = request.form['collector']
+                sstatus = request.form['sstatus']
+                amnt_paid = request.form['amnt_paid']
+                ref_num = request.form['ref_num']
+
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
+    elif current_user.explore == "sample":
+        all_data = Sampledata.query.all()
+        
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
-    else:
-        sd = Otherdata \
-            .query \
-            .join(User) \
-            .filter(User.id==current_user.id).count()
-        print(sd)
-        if request.method == "POST":
-            accnt_num = request.form['accnt_num']
-            name = request.form['name']
-            address = request.form['address']
-            services= request.form['services']
-            monthly = request.form['monthly']
-            collector = request.form['collector']
-            sstatus = request.form['sstatus']
-            amnt_paid = request.form['amnt_paid']
-            ref_num = request.form['ref_num']
-
-        image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
 
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
