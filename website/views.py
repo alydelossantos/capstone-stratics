@@ -27,6 +27,7 @@ views = Blueprint('views', __name__)
 @views.route('/home', methods=["GET", "POST"])
 @login_required
 def home():
+    row = db.session.query(Data).count()
     if current_user.explore == "sample":
         current_user.dname = "Sample Dashboard"
 
@@ -250,7 +251,7 @@ def home():
         return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
         graph2JSON=graph2JSON, 
         graph3JSON=graph3JSON,
-        graph4JSON=graph4JSON,)
+        graph4JSON=graph4JSON, row=row)
     elif current_user.explore == "customer" and db.session.query(Data).count() < 1 :
         current_user.dname = "Edit Dashboard Name"
         
