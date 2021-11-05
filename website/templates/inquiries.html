@@ -139,29 +139,27 @@
         
                                 <div class="modal-body"> 
                                     <form action="/inquiries/send-email/{{row.id}}" method="POST" enctype="multipart/form-data">
+
                                     <div class="form-group"> 
                                         <label>To:</label>
                                         <input type="text" class="form-control" name="email" value="{{row.email}}" required="1"> 
                                     </div> 
+
                                     <div class="form-group"> 
                                         <label>Subject:</label>
-                                        <input type="text" class="form-control" name="subject" required="1" placeholder="Subject"> 
+                                        <input type="text" class="form-control" name="subject" required="1"> 
                                     </div> 
 
                                     <div class="form-group"> 
-                                        <textarea  class="input-field" name="message" id=""></textarea>
+                                        <textarea name="message" class="form-control" id="" cols="60" rows="4" placeholder="Message" style="resize: none;">
+                                        </textarea>
                                     </div> 
-
-                                    <!--
-                                    <div class="form-group"> 
-                                        <textarea name="message" class="form-control"
-                                        id="" cols="60" rows="4" placeholder="Message" style="resize: none;"></textarea>
-                                    </div> -->
                                     
                                     <div class="modal-footer"> 
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
                                         <button class="btn btn-primary" type="submit">Send</button> 
-                                    </div>   
+                                    </div>  
+                                     
                                     </form> 
                                 </div> 
                             </div>            
