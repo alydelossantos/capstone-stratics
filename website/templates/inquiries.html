@@ -140,6 +140,7 @@
                               <div class="modal-body"> 
                                 <form action="/inquiries/send-email/{{row.id}}" method="POST" enctype="multipart/form-data">
                                   <div class="form-inline"> 
+                                      <div class="col-sm-4">
                                       <label>To:</label>
                                       <input type="text" class="form-control" name="email" value="{{row.email}}" required="1"> 
                                       </div>
