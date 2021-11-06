@@ -166,31 +166,8 @@
 
 				    </script>
 			    	{% elif current_user.explore == "customer" %}
-				  {% if current_user.request_pass == False %}
-				  	<section class="p-t-20">
-				    <div class="dboard-main-container">
-				      <div class="row">
-					<div class="col-md-12">
-					  <div class="dboard-overview-wrap">
-					    <div class="dboard-overview-item">
-					      <div class="dboard-overview-box">
-						  <div class="photo">
-						    <img src="{{url_for('static', filename='images/empty_dashboard.png')}}" alt="empty">
-						  </div>
-						  <div class="text">
-						    <p>Your current dashboard is empty.</p><br>
-						    <span>Add or explore dataset to your dashboard.</span><br>
-						    <button type="button" data-toggle="modal" data-target="#medmodal" class="dboard-btn2 dboard-btn2-icon dboard-btn--blue">
-						    <i class='bx bx-folder-open'></i>explore datasets</button>
-						  </div> 
-						</div>
-					      </div>
-					  </div>
-					</div>
-				      </div>
-				    </div> 
-				{% else %}
-			    	<!-- STATISTIC -->
+				  {% if current_user.request_pass != False %}
+				  <!-- STATISTIC -->
 				      <section class="statistic statistic2">
 					<div class="container-fluid">
 					    <div class="row">
@@ -262,6 +239,29 @@
 				      Plotly.plot('chart4',graph4,{});
 
 				    </script>
+				{% else %}
+			    	<section class="p-t-20">
+				    <div class="dboard-main-container">
+				      <div class="row">
+					<div class="col-md-12">
+					  <div class="dboard-overview-wrap">
+					    <div class="dboard-overview-item">
+					      <div class="dboard-overview-box">
+						  <div class="photo">
+						    <img src="{{url_for('static', filename='images/empty_dashboard.png')}}" alt="empty">
+						  </div>
+						  <div class="text">
+						    <p>Your current dashboard is empty.</p><br>
+						    <span>Add or explore dataset to your dashboard.</span><br>
+						    <button type="button" data-toggle="modal" data-target="#medmodal" class="dboard-btn2 dboard-btn2-icon dboard-btn--blue">
+						    <i class='bx bx-folder-open'></i>explore datasets</button>
+						  </div> 
+						</div>
+					      </div>
+					  </div>
+					</div>
+				      </div>
+				    </div> 
 			{% endif%}
 			{% elif current_user.explore == "empty" %}
 				  <section class="p-t-20">
