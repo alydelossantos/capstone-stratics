@@ -29,7 +29,6 @@ views = Blueprint('views', __name__)
 def home():
     row = db.session.query(Data).count()
     if current_user.explore == "sample":
-        current_user.dname = "Sample Dashboard"
 
         cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
         conn = cnx.connect()
@@ -141,8 +140,7 @@ def home():
         graph3JSON=graph3JSON,
         graph4JSON=graph4JSON,)
     elif current_user.explore == "customer":
-        current_user.dname = "Edit Dashboard Name"
-        if db.session.query(Data).count() >= 3 :
+        if db.session.query(Data).count() >= 3 or current_user.request_pass == True:
         
             cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
             conn = cnx.connect()
@@ -253,16 +251,14 @@ def home():
             graph2JSON=graph2JSON, 
             graph3JSON=graph3JSON,
             graph4JSON=graph4JSON, row=row)
-        elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
-            current_user.dname = "Edit Dashboard Name"
-        
+        elif db.session.query(Data).count() < 3 or current_user.request_pass == False:
+
             flash("Records must contain atleast 3 rows.", category="error")
 
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("home.html", user= current_user, image_file=image_file)
-        elif db.session.query(Data).count() == 0 :
-            current_user.dname = "Edit Dashboard Name"
-        
+        elif db.session.query(Data).count() == 0 or current_user.request_pass == False :
+
             flash("Add Records in Customer Management", category="error")
 
             image_file = url_for('static', filename='images/' + current_user.image_file)
