@@ -252,7 +252,7 @@ def home():
                 graph3JSON=graph3JSON,
                 graph4JSON=graph4JSON, row=row)
         else:
-           if db.session.query(Data).count() < 3:
+            if db.session.query(Data).count() < 3:
                 flash("Records must contain atleast 3 rows.", category="error")
 
                 image_file = url_for('static', filename='images/' + current_user.image_file)
