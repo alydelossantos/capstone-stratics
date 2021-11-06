@@ -154,7 +154,7 @@
 				      Plotly.plot('chart4',graph4,{});
 
 				    </script>
-			    	{% elif current_user.explore == "customer" and  '{{ Data.query.count() }}' != 0 %}
+			    	{% elif current_user.explore == "customer" and  {{ Data.query.count() }} != 0 %}
 			    	<!-- STATISTIC -->
 				      <section class="statistic statistic2">
 					<div class="container-fluid">
@@ -227,7 +227,7 @@
 				      Plotly.plot('chart4',graph4,{});
 
 				    </script>
-			  {% elif current_user.explore == "customer" and  '{{ Data.query.count() }}' == 0 %}
+			  {% elif current_user.explore == "customer" and  {{ Data.query.count() }} == 0 %}
 				  <section class="p-t-20">
 				    <div class="dboard-main-container">
 				      <div class="row">
@@ -337,7 +337,7 @@
           <!-- EDIT DASHBOARD MODAL -->
 
             <div class="modal fade" id="edmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+              <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Edit Dashboard</h5>
