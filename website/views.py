@@ -142,7 +142,7 @@ def home():
         graph4JSON=graph4JSON,)
     elif current_user.explore == "customer":
         current_user.dname = "Edit Dashboard Name"
-        if db.session.query(Data).count() >= 1 :
+        if db.session.query(Data).count() >= 3 :
         
             cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
             conn = cnx.connect()
@@ -211,7 +211,7 @@ def home():
                         )
             data = [trace]
 
-            layout = go.Layout(title="Sex Distribution")
+            layout = go.Layout(title="Collector")
             fig1 = go.Figure(data = data,layout = layout)
             fig1.update_traces(hole=.4)
             graph1JSON = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
@@ -231,7 +231,7 @@ def home():
             trace = go.Histogram(x=df['address'],nbinsx=52)
             data = [trace]
             # defining layout
-            layout = go.Layout(title="State")
+            layout = go.Layout(title="Address")
             # defining figure and plotting
             fig3 = go.Figure(data = data,layout = layout)
             fig3 = go.Figure(data = data,layout = layout)
@@ -253,7 +253,14 @@ def home():
             graph2JSON=graph2JSON, 
             graph3JSON=graph3JSON,
             graph4JSON=graph4JSON, row=row)
-        else:
+        elif db.session.query(Data).count() < 3 :
+            current_user.dname = "Edit Dashboard Name"
+        
+            flash("Records must contain atleast 3 rows.", category="error")
+
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("home.html", user= current_user, image_file=image_file)
+        elif db.session.query(Data).count() == 0 :
             current_user.dname = "Edit Dashboard Name"
         
             flash("Add Records in Customer Management", category="error")
