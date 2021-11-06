@@ -251,18 +251,18 @@ def home():
             graph2JSON=graph2JSON, 
             graph3JSON=graph3JSON,
             graph4JSON=graph4JSON, row=row)
-        elif current_user.explore == "customer" and current_user.request_pass == False:
-            if db.session.query(Data).count() < 3:
-                flash("Records must contain atleast 3 rows.", category="error")
+    elif current_user.explore == "customer" and current_user.request_pass == False:
+        if db.session.query(Data).count() < 3:
+            flash("Records must contain atleast 3 rows.", category="error")
 
-                image_file = url_for('static', filename='images/' + current_user.image_file)
-                return render_template("home.html", user= current_user, image_file=image_file)
-            elif db.session.query(Data).count() == 0 :
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("home.html", user= current_user, image_file=image_file)
+        elif db.session.query(Data).count() == 0 :
 
-                flash("Add Records in Customer Management", category="error")
+            flash("Add Records in Customer Management", category="error")
 
-                image_file = url_for('static', filename='images/' + current_user.image_file)
-                return render_template("home.html", user= current_user, image_file=image_file)
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("home.html", user= current_user, image_file=image_file)
     elif current_user.explore == "empty":
         current_user.dname = "Empty Dashboard"
 
