@@ -154,7 +154,7 @@
 				      Plotly.plot('chart4',graph4,{});
 
 				    </script>
-			    	{% elif current_user.explore == "customer" and  {{ Data.query.count() }} != 0 %}
+			    	{% elif current_user.explore == "customer" %}
 			    	<!-- STATISTIC -->
 				      <section class="statistic statistic2">
 					<div class="container-fluid">
@@ -227,7 +227,7 @@
 				      Plotly.plot('chart4',graph4,{});
 
 				    </script>
-			  {% elif current_user.explore == "customer" and  {{ Data.query.count() }} == 0 %}
+			  <!--{% elif current_user.explore == "customer" and  {{ Data.query.count() }} == 0 %}
 				  <section class="p-t-20">
 				    <div class="dboard-main-container">
 				      <div class="row">
@@ -249,7 +249,7 @@
 					  </div>
 					</div>
 				      </div>
-				    </div>  
+				    </div>  -->
 			{% elif current_user.explore == "empty" %}
 				  <section class="p-t-20">
 				    <div class="dboard-main-container">
