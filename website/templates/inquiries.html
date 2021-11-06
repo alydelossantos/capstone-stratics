@@ -135,23 +135,22 @@
                           <div class="modal-content">
                               <div class="modal-header">
                                 <form action="/inquiries/send-email/{{row.id}}" method="POST" enctype="multipart/form-data">
-                                  <h4 class="modal-title">New Message</h4>
-				      <div class="col-sm-4">
+                                  <div class="col-sm-8">
+                                    <h4 class="modal-title">New Message</h4></div>
+				      <div class="col-sm-8">
                                       <label>To: </label>
                                       <input type="text" class="form-control" name="email" value="{{row.email}}" required="1"> 
                                       </div>
-				      <div class="col-sm-4">
+				      <div class="col-sm-8">
                                       <label>Subject: </label>
                                       <input type="text" class="form-control" name="subject" required="1" placeholder="Subject"> 
                                       </div>
-		      <		</div>
+		          	</div>
       
                               <div class="modal-body"> 
                                   <div class="form-group"> 
                                       <textarea class="input-field" name="message" id=""></textarea>
-                                  </div> 
-
-			      </div>
+                                  </div> </div>
 			      
 				  <div class="modal-footer">
 				    <button class="btn btn-primary" type="submit">Update</button>
