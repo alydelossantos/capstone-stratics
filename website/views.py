@@ -218,7 +218,7 @@ def home():
 
             # Histogram - Service
             # defining data
-            trace = go.Histogram(x=df['service'],nbinsx=40,histnorm='percent')
+            trace = go.Histogram(x=df['services'],nbinsx=40,histnorm='percent')
             data = [trace]
             # defining layout
             layout = go.Layout(title="Service Distribution")
@@ -228,7 +228,7 @@ def home():
 
             # Histogram - State
             # defining data
-            trace = go.Histogram(x=df['zone'],nbinsx=52)
+            trace = go.Histogram(x=df['address'],nbinsx=52)
             data = [trace]
             # defining layout
             layout = go.Layout(title="State")
