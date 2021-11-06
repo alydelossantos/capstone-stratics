@@ -185,13 +185,13 @@ def home():
             df.corr(method='pearson')
 
             # Create Pivot Table - compute for sum
-            pd.pivot_table(df, index=['State', 'services'], aggfunc = 'sum')
+            pd.pivot_table(df, index=['address', 'services'], aggfunc = 'sum')
 
             # Create Pivot Table - compute for mean
-            pd.pivot_table(df, index=['State', 'services'], aggfunc = 'mean')    
+            pd.pivot_table(df, index=['address', 'services'], aggfunc = 'mean')    
 
             # Create Pivot Table - compute for count
-            pd.pivot_table(df, index=['State', 'services'], aggfunc = 'count')
+            pd.pivot_table(df, index=['address', 'services'], aggfunc = 'count')
 
             # Pie Chart
             from plotly.offline import init_notebook_mode,iplot
