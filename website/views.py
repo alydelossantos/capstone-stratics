@@ -140,7 +140,7 @@ def home():
         graph4JSON=graph4JSON,)
     elif current_user.explore == "customer":
         if db.session.query(Data).count() >= 3:
-            datas = Data.query.all()
+            all_data = Data.query.all()
             cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
             conn = cnx.connect()
             df = pd.read_sql_table('data', con=cnx)
