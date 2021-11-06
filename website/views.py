@@ -255,7 +255,7 @@ def home():
 
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("home.html", user= current_user, image_file=image_file)
-         elif current_user.request_pass == False or db.session.query(Data).count() == 0 :
+        elif current_user.request_pass == False or db.session.query(Data).count() == 0 :
             flash("Records must contain atleast 3 rows.", category="error")
 
             image_file = url_for('static', filename='images/' + current_user.image_file)
