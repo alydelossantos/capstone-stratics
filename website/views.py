@@ -140,129 +140,129 @@ def home():
         graph3JSON=graph3JSON,
         graph4JSON=graph4JSON,)
     elif current_user.explore == "customer":
-        if db.session.query(Data).count() >= 3 :
-        
-            cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
-            conn = cnx.connect()
-            df = pd.read_sql_table('data', con=cnx)
+        if current_user.request_pass == False:
+            if db.session.query(Data).count() < 3:
+                flash("Records must contain atleast 3 rows.", category="error")
 
-            # independent variable
-            X = df.iloc[:,:1].values
-            X
+                image_file = url_for('static', filename='images/' + current_user.image_file)
+                return render_template("home.html", user= current_user, image_file=image_file)
+            elif db.session.query(Data).count() == 0 :
 
-            # dependent variable - churn column
-            y = df.iloc[:,8]
-            y
+                flash("Add Records in Customer Management", category="error")
 
-            # Counts number of null values - resulted that no values are missing.
-            null_columns=df.columns[df.isnull().any()]
-            df[null_columns].isnull().sum()
+                image_file = url_for('static', filename='images/' + current_user.image_file)
+                return render_template("home.html", user= current_user, image_file=image_file)
+        else:
+            if db.session.query(Data).count() >= 3 :
+                cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+                conn = cnx.connect()
+                df = pd.read_sql_table('data', con=cnx)
 
-            # Splitting Data into Train and Test
-            from sklearn.model_selection import train_test_split
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+                # independent variable
+                X = df.iloc[:,:1].values
+                X
 
-            print("X_train : ",X_train.shape)
-            print("X_test : ",X_test.shape)
-            print("y_train : ",y_train.shape)
-            print("y_test : ",y_test.shape)
+                # dependent variable - churn column
+                y = df.iloc[:,8]
+                y
 
-            # Outlier Detection
-            print(df.shape)
-            print(df.columns)
+                # Counts number of null values - resulted that no values are missing.
+                null_columns=df.columns[df.isnull().any()]
+                df[null_columns].isnull().sum()
 
-            # Zscore
-            from scipy import stats
-            zscore = np.abs(stats.zscore(df['monthly']))
-            print (zscore)
+                # Splitting Data into Train and Test
+                from sklearn.model_selection import train_test_split
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
 
-            # zscore values higher than 3 are outliers.
-            threshold = 3
-            print(np.where(zscore >3))
+                print("X_train : ",X_train.shape)
+                print("X_test : ",X_test.shape)
+                print("y_train : ",y_train.shape)
+                print("y_test : ",y_test.shape)
 
-            df.corr(method='pearson')
+                # Outlier Detection
+                print(df.shape)
+                print(df.columns)
 
-            # Create Pivot Table - compute for sum
-            pd.pivot_table(df, index=['address', 'services'], aggfunc = 'sum')
+                # Zscore
+                from scipy import stats
+                zscore = np.abs(stats.zscore(df['monthly']))
+                print (zscore)
 
-            # Create Pivot Table - compute for mean
-            pd.pivot_table(df, index=['address', 'services'], aggfunc = 'mean')    
+                # zscore values higher than 3 are outliers.
+                threshold = 3
+                print(np.where(zscore >3))
 
-            # Create Pivot Table - compute for count
-            pd.pivot_table(df, index=['address', 'services'], aggfunc = 'count')
+                df.corr(method='pearson')
 
-            # Pie Chart
-            from plotly.offline import init_notebook_mode,iplot
-            import plotly.graph_objects as go
-            import cufflinks as cf
-            init_notebook_mode(connected=True)
+                # Create Pivot Table - compute for sum
+                pd.pivot_table(df, index=['address', 'services'], aggfunc = 'sum')
 
-            #labels
-            lab = df["collector"].value_counts().keys().tolist()
-            #values
-            val = df["collector"].value_counts().values.tolist()
-            trace = go.Pie(labels=lab, 
-                            values=val, 
-                            marker=dict(colors=['red']), 
-                            # Seting values to 
-                            hoverinfo="value"
-                        )
-            data = [trace]
+                # Create Pivot Table - compute for mean
+                pd.pivot_table(df, index=['address', 'services'], aggfunc = 'mean')    
 
-            layout = go.Layout(title="Collector")
-            fig1 = go.Figure(data = data,layout = layout)
-            fig1.update_traces(hole=.4)
-            graph1JSON = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+                # Create Pivot Table - compute for count
+                pd.pivot_table(df, index=['address', 'services'], aggfunc = 'count')
 
-            # Histogram - Service
-            # defining data
-            trace = go.Histogram(x=df['services'],nbinsx=40,histnorm='percent')
-            data = [trace]
-            # defining layout
-            layout = go.Layout(title="Service Distribution")
-            # defining figure and plotting
-            fig2 = go.Figure(data = data,layout = layout)
-            graph2JSON = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
+                # Pie Chart
+                from plotly.offline import init_notebook_mode,iplot
+                import plotly.graph_objects as go
+                import cufflinks as cf
+                init_notebook_mode(connected=True)
 
-            # Histogram - State
-            # defining data
-            trace = go.Histogram(x=df['address'],nbinsx=52)
-            data = [trace]
-            # defining layout
-            layout = go.Layout(title="Address")
-            # defining figure and plotting
-            fig3 = go.Figure(data = data,layout = layout)
-            fig3 = go.Figure(data = data,layout = layout)
-            graph3JSON = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
+                #labels
+                lab = df["collector"].value_counts().keys().tolist()
+                #values
+                val = df["collector"].value_counts().values.tolist()
+                trace = go.Pie(labels=lab, 
+                                values=val, 
+                                marker=dict(colors=['red']), 
+                                # Seting values to 
+                                hoverinfo="value"
+                            )
+                data = [trace]
 
-            # Histogram - Churn
-            # defining data
-            trace = go.Histogram(x=df['sstatus'],nbinsx=3)
-            data = [trace]
-            # defining layout
-            layout = go.Layout(title="Churn Distribution")
-            # defining figure and plotting
-            fig4 = go.Figure(data = data,layout = layout)
-            fig4 = go.Figure(data = data,layout = layout)
-            graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+                layout = go.Layout(title="Collector")
+                fig1 = go.Figure(data = data,layout = layout)
+                fig1.update_traces(hole=.4)
+                graph1JSON = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
 
-            image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
-            graph2JSON=graph2JSON, 
-            graph3JSON=graph3JSON,
-            graph4JSON=graph4JSON, row=row)
-    elif current_user.explore == "customer" and current_user.request_pass == False:
-        if db.session.query(Data).count() < 3:
-            flash("Records must contain atleast 3 rows.", category="error")
+                # Histogram - Service
+                # defining data
+                trace = go.Histogram(x=df['services'],nbinsx=40,histnorm='percent')
+                data = [trace]
+                # defining layout
+                layout = go.Layout(title="Service Distribution")
+                # defining figure and plotting
+                fig2 = go.Figure(data = data,layout = layout)
+                graph2JSON = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
 
-            image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("home.html", user= current_user, image_file=image_file)
-        elif db.session.query(Data).count() == 0 :
+                # Histogram - State
+                # defining data
+                trace = go.Histogram(x=df['address'],nbinsx=52)
+                data = [trace]
+                # defining layout
+                layout = go.Layout(title="Address")
+                # defining figure and plotting
+                fig3 = go.Figure(data = data,layout = layout)
+                fig3 = go.Figure(data = data,layout = layout)
+                graph3JSON = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
 
-            flash("Add Records in Customer Management", category="error")
+                # Histogram - Churn
+                # defining data
+                trace = go.Histogram(x=df['sstatus'],nbinsx=3)
+                data = [trace]
+                # defining layout
+                layout = go.Layout(title="Churn Distribution")
+                # defining figure and plotting
+                fig4 = go.Figure(data = data,layout = layout)
+                fig4 = go.Figure(data = data,layout = layout)
+                graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
 
-            image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("home.html", user= current_user, image_file=image_file)
+                image_file = url_for('static', filename='images/' + current_user.image_file)
+                return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
+                graph2JSON=graph2JSON, 
+                graph3JSON=graph3JSON,
+                graph4JSON=graph4JSON, row=row)
     elif current_user.explore == "empty":
         current_user.dname = "Empty Dashboard"
 
