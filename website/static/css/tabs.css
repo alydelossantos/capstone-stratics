@@ -1,10 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+
 .tabs{
   overflow: hidden;
   padding: 0 20px;
@@ -14,17 +8,16 @@
   background: rgba(23,162,184,0.3);
 }
 .wrapper{
-  max-width: 1000px;
+  max-width: 1600px;
   width: 100%;
-  margin: 100px auto;
-  padding: 25px 30px 30px 30px;
-  border-radius: 5px;
-  background: #fff;
-  box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
+  margin: 50px auto;
+  padding: 20px 25px 25px 25px;
+  border-radius: 8px;
+  background: #f5f5f7;
 }
 .wrapper nav{
   position: relative;
-  width: 80%;
+  width: 60%;
   height: 50px;
   display: flex;
   align-items: center;
@@ -32,24 +25,24 @@
 .wrapper nav label{
   display: block;
   height: 100%;
-  width: 100%;
+  width: 80%;
   text-align: center;
   line-height: 50px;
   cursor: pointer;
   position: relative;
   z-index: 1;
-  color: #17a2b8;
+  color: #f39519;
   font-size: 17px;
   border-radius: 5px;
   margin: 0 5px;
   transition: all 0.3s ease;
 }
 .wrapper nav label:hover{
-  background: rgba(23,162,184,0.3);
+  background: rgba(243, 149, 25, 0.3);
 }
 #sales:checked ~ nav label.sales,
 #analytics:checked ~ nav label.analytics{
-  color: #fff;
+  color: #f5f5f7;
 }
 nav label i{
   padding-right: 7px;
@@ -62,7 +55,7 @@ nav .slider{
   bottom: 0;
   z-index: 0;
   border-radius: 5px;
-  background: #17a2b8;
+  background: #f39519;
   transition: all 0.3s ease;
 }
 input[type="radio"]{
@@ -74,7 +67,7 @@ input[type="radio"]{
 
 section .content{
   display: none;
-  background: #fff;
+  background: #f5f5f7;
 }
 #sales:checked ~ section .content-1,
 #analytics:checked ~ section .content-2{
