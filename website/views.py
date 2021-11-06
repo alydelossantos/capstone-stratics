@@ -148,11 +148,11 @@ def home():
         df = pd.read_sql_table('data', con=cnx)
         
         # independent variable
-        X = df.iloc[:,:-1].values
+        X = df.iloc[:,:1].values
         X
 
         # dependent variable - churn column
-        y = df.iloc[:,10]
+        y = df.iloc[:,8]
         y
 
         # Counts number of null values - resulted that no values are missing.
@@ -174,7 +174,7 @@ def home():
 
         # Zscore
         from scipy import stats
-        zscore = np.abs(stats.zscore(df['MonthlyCharges']))
+        zscore = np.abs(stats.zscore(df['monthly']))
         print (zscore)
 
         # zscore values higher than 3 are outliers.
@@ -184,13 +184,13 @@ def home():
         df.corr(method='pearson')
 
         # Create Pivot Table - compute for sum
-        pd.pivot_table(df, index=['State', 'InternetService'], aggfunc = 'sum')
+        pd.pivot_table(df, index=['State', 'services'], aggfunc = 'sum')
 
         # Create Pivot Table - compute for mean
-        pd.pivot_table(df, index=['State', 'InternetService'], aggfunc = 'mean')    
+        pd.pivot_table(df, index=['State', 'services'], aggfunc = 'mean')    
 
         # Create Pivot Table - compute for count
-        pd.pivot_table(df, index=['State', 'InternetService'], aggfunc = 'count')
+        pd.pivot_table(df, index=['State', 'services'], aggfunc = 'count')
 
         # Pie Chart
         from plotly.offline import init_notebook_mode,iplot
@@ -199,9 +199,9 @@ def home():
         init_notebook_mode(connected=True)
 
         #labels
-        lab = df["gender"].value_counts().keys().tolist()
+        lab = df["collector"].value_counts().keys().tolist()
         #values
-        val = df["gender"].value_counts().values.tolist()
+        val = df["collector"].value_counts().values.tolist()
         trace = go.Pie(labels=lab, 
                         values=val, 
                         marker=dict(colors=['red']), 
@@ -217,7 +217,7 @@ def home():
 
         # Histogram - Service
         # defining data
-        trace = go.Histogram(x=df['InternetService'],nbinsx=40,histnorm='percent')
+        trace = go.Histogram(x=df['service'],nbinsx=40,histnorm='percent')
         data = [trace]
         # defining layout
         layout = go.Layout(title="Service Distribution")
@@ -227,7 +227,7 @@ def home():
 
         # Histogram - State
         # defining data
-        trace = go.Histogram(x=df['State'],nbinsx=52)
+        trace = go.Histogram(x=df['zone'],nbinsx=52)
         data = [trace]
         # defining layout
         layout = go.Layout(title="State")
@@ -238,7 +238,7 @@ def home():
 
         # Histogram - Churn
         # defining data
-        trace = go.Histogram(x=df['Churn'],nbinsx=3)
+        trace = go.Histogram(x=df['sstatus'],nbinsx=3)
         data = [trace]
         # defining layout
         layout = go.Layout(title="Churn Distribution")
