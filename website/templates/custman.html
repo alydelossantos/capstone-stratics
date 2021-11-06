@@ -9,7 +9,7 @@
 
         <!-- Fontfaces CSS-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">          
-		<link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
+	<link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
         <link href="{{ url_for('static',  filename='css/theme.css') }}" rel="stylesheet">
         
         <!-- Sort/Search Table CSS -->
@@ -200,9 +200,9 @@
 							<td>Php {{row.monthly}}.00</td>
 							<td>{{row.collector}}</td>
 							<td> {% if row.sstatus == "active" %}
-								<li class="block-active>Active</li>
+								<li style = list-style-type:none; class="block-active">Active</li>
 								{% else %}
-								<li class="block-inactive>Inactive</li>
+								<li style = list-style-type:none; class="block-inactive">Inactive</li>
 								{% endif %}
 							</td>
 							<td>{{row.amnt_paid}}</td>
