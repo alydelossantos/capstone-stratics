@@ -140,7 +140,7 @@ def home():
         graph4JSON=graph4JSON,)
     elif current_user.explore == "customer":
         row = Data.query.count()
-        if current_user.reuest_pass != False:
+        if current_user.request_pass != False:
             cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
             conn = cnx.connect()
             df = pd.read_sql_table('data', con=cnx)
@@ -250,12 +250,12 @@ def home():
             graph2JSON=graph2JSON, 
             graph3JSON=graph3JSON,
             graph4JSON=graph4JSON, row=row)
-        elif current_user.reuest_pass == False:
+        elif current_user.request_pass == False:
             flash("Records must contain atleast 3 rows.", category="error")
 
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("home.html", user= current_user, image_file=image_file, row=row)
-        elif '''db.session.query(Data).count() == 0''' current_user.reuest_pass == False:
+        else:
             flash("Records must contain atleast 3 rows.", category="error")
 
             image_file = url_for('static', filename='images/' + current_user.image_file)
