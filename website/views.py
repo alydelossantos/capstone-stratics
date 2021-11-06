@@ -253,7 +253,7 @@ def home():
             graph2JSON=graph2JSON, 
             graph3JSON=graph3JSON,
             graph4JSON=graph4JSON, row=row)
-        elif db.session.query(Data).count() < 3 :
+        elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
             current_user.dname = "Edit Dashboard Name"
         
             flash("Records must contain atleast 3 rows.", category="error")
