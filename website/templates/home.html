@@ -3,12 +3,13 @@
 {% block content %}
 
 <!DOCTYPE html>
-		<head>
-		  <meta charset="utf-8">
-		  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-		  <link href ="{{url_for('static', filename = 'css/dboard.css')}}" rel = "stylesheet"/>
+	<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <link href ="{{url_for('static', filename = 'css/dboard.css')}}" rel = "stylesheet"/>
+	  <link href ="{{url_for('static', filename = 'css/tabs.css')}}" rel = "stylesheet"/>
       <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-      
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
       	<!-- Fontfaces CSS-->
       <link href="css/font-face.css" rel="stylesheet" media="all">
       <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -70,17 +71,27 @@
                   <div class="row">
                     <div class="col-md-12">
 
-                      <div class="dboard-overview-wrap">
-                      <div class="text2">
-                      <h2 class="dashname">{{current_user.dname}}</h2>
-                      <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname dashname-icon">
-                        <i class='bx bx-pencil'></i></button>
-                      </div>
-                      <button type="button" data-toggle="modal" data-target="#medmodal" class="dboard-btn dboard-btn-icon dboard-btn--blue">
-                       <i class='bx bx-folder-open'></i>explore datasets</button>
-                      </div>
-			
-                      <script src="{{ url_for('static', filename='js/dboard.js') }}"></script>
+					  <div class="dboard-overview-wrap">
+					  <div class="text2">
+					  <h2 class="dashname">{{current_user.dname}}</h2>
+					  <button type="button" data-toggle="modal" data-target="#edmodal" class="dashname dashname-icon">
+						<i class='bx bx-pencil'></i></button>
+					  </div>
+					  <button type="button" data-toggle="modal" data-target="#medmodal" class="dboard-btn dboard-btn-icon dboard-btn--blue">
+					   <i class='bx bx-folder-open'></i>explore datasets</button>
+					  </div>
+						
+					  <div class="wrapper">
+						<input type="radio" name="slider" checked id="sales">
+						<input type="radio" name="slider" id="analytics">
+						<nav>
+						  <label for="sales" class="sales">Sales Reports</label>
+						  <label for="analytics" class="analytics">Customer Analytics</label>
+						  <div class="slider"></div>
+						</nav>
+						<section>
+						  <div class="content content-1">
+						   <script src="{{ url_for('static', filename='js/dboard.js') }}"></script>
 			    {% if current_user.explore == "sample" %}
 			    	<!-- STATISTIC -->
 				      <section class="statistic statistic2">
@@ -251,12 +262,19 @@
 				      </div>
 				    </div>  
 			    {% endif %}
-                    </div>
+                    	  </div>
+						  <div class="content content-2">
+							<div class="title">This is a Blog content</div>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit amet. Possimus doloris nesciunt mollitia culpa sint itaque, vitae praesentium assumenda suscipit fugit doloremque adipisci doloribus, sequi facere itaque cumque accusamus, quam molestias sed provident quibusdam nam deleniti. Autem eaque aut impedit eo nobis quia, eos sequi tempore! Facere ex repellendus, laboriosam perferendise. Enim quis illo harum, exercitationem nam totam fugit omnis natus quam totam, repudiandae dolor laborum! Commodi?</p>
+						  </div>
+						</section>
+					  </div>
+						</div>
                   </div>  
                 </div>
               </div>
             </div>
-
+					
             <!-- END OF DASHBOARD CONTAINER -->
     
             <!-- EXPLORE DATASET MODAL -->
