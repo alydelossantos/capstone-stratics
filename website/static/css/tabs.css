@@ -1,10 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+
 .tabs{
   overflow: hidden;
   padding: 0 20px;
@@ -14,12 +8,12 @@
   background: rgba(23,162,184,0.3);
 }
 .wrapper{
-  max-width: 1000px;
+  max-width: 1500px;
   width: 100%;
-  margin: 100px auto;
+  margin: 50px auto;
   padding: 25px 30px 30px 30px;
-  border-radius: 5px;
-  background: #fff;
+  border-radius: 8px;
+  background: #f5f5f7;
   box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
 }
 .wrapper nav{
@@ -40,7 +34,7 @@
   z-index: 1;
   color: #17a2b8;
   font-size: 17px;
-  border-radius: 5px;
+  border-radius: 8px;
   margin: 0 5px;
   transition: all 0.3s ease;
 }
@@ -49,7 +43,7 @@
 }
 #sales:checked ~ nav label.sales,
 #analytics:checked ~ nav label.analytics{
-  color: #fff;
+  color: #f5f5f7;
 }
 nav label i{
   padding-right: 7px;
@@ -74,7 +68,7 @@ input[type="radio"]{
 
 section .content{
   display: none;
-  background: #fff;
+  background: #f5f5f7;
 }
 #sales:checked ~ section .content-1,
 #analytics:checked ~ section .content-2{
