@@ -166,7 +166,7 @@
 
 				    </script>
 			    	{% elif current_user.explore == "customer" %}
-				  {% if {{ row }} >= 3 %}
+				  {% if current_user.request_pass != False %}
 				  <!-- STATISTIC -->
 				      <section class="statistic statistic2">
 					<div class="container-fluid">
@@ -239,7 +239,7 @@
 				      Plotly.plot('chart4',graph4,{});
 
 				    </script>
-				{% elif row in datas.count() < 3 %}
+				{% elif current_user.request_pass == False %}
 			    	<section class="p-t-20">
 				    <div class="dboard-main-container">
 				      <div class="row">
