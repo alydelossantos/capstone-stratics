@@ -133,34 +133,31 @@
                 <div id="modalsend{{row.id}}" class="modal fade" role="dialog">
                       <div class="modal-dialog">
                           <div class="modal-content">
-                              <div class="modal-header"> 
-                                  <h4 class="modal-title">New Message</h4>
-                              </div>
-      
-                              <div class="modal-body"> 
+                              <div class="modal-header">
                                 <form action="/inquiries/send-email/{{row.id}}" method="POST" enctype="multipart/form-data">
-                                  <div class="form-inline"> 
-                                      <div class="col-sm-4">
-                                      <label>To:</label>
+                                  <h4 class="modal-title">New Message</h4>
+				      <div class="col-sm-4">
+                                      <label>To: </label>
                                       <input type="text" class="form-control" name="email" value="{{row.email}}" required="1"> 
                                       </div>
-                                  </div> 
-                                  
-                                  <div class="form-inline"> 
-                                        <label>Subject:</label>
+				      <div class="col-sm-4">
+                                      <label>Subject: </label>
                                       <input type="text" class="form-control" name="subject" required="1" placeholder="Subject"> 
-                                  </div> 
-
+                                      </div>
+		      <		</div>
+      
+                              <div class="modal-body"> 
                                   <div class="form-group"> 
                                       <textarea class="input-field" name="message" id=""></textarea>
                                   </div> 
 
-                                  <div class="modal-footer">
-                                    <button class="btn btn-primary" type="submit">Update</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  </div>
+			      </div>
+			      
+				  <div class="modal-footer">
+				    <button class="btn btn-primary" type="submit">Update</button>
+				    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				  </div>
 				  
-                                  </div>
                                 </form> 
                               </div> 
                           </div>            
