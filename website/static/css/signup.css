@@ -107,7 +107,7 @@ body {
     background-color: white;
 }
 
-.input-icons i {
+#forms input[type="password"] i {
     position: absolute;
 }
 
