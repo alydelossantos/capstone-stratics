@@ -444,11 +444,11 @@ def save_file(form_file):
 #send email
 @auth.route('/email-marketing', methods = ['GET','POST'])
 @login_required
-
-def emailmark():
+def send():
+    tasks = Task.query.all()
+    recepients = convert(tasks)
     EMAIL_ADDRESS = '201811294@feualabang.edu.ph'
     EMAIL_PASSWORD = 'hildeguard'
-    contacts = ['YourAddress@gmail.com', 'test@example.com']
     if request.method == "POST":
         x = [] 
         if request.files['attfile']:
@@ -458,9 +458,17 @@ def emailmark():
                 file_attachments = form_file
                 print (file_attachments)
                 x.append(file_attachments)
+        # txt = 'shandonmalapit@rocketmail.com 201812036@feualabang.edu.ph shandonmalapit@gmail.com'
+        # sendto = request.form['email']
+        contact =  recepients
+        print(recepients)
+        print(contact,"s")
+        # sendto = recepients
+        # print(sendto)
+        # .split()
         msg = MIMEMultipart()
         msg['Subject'] = request.form['subject']
-        msg['To'] = request.form['email']
+        msg['To'] = ", ".join(recepients) 
         emailMsg=""
         emailMsg = request.form['message']
         msg.attach(MIMEText(emailMsg,'plain'))
@@ -480,10 +488,46 @@ def emailmark():
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             smtp.send_message(msg)
-            return redirect(url_for('auth.emailmark'))
-    
-    image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template("email-marketing.html", user= current_user, image_file = image_file)
+            Task.query.delete()
+            db.session.commit()
+            return redirect(url_for('auth.send'))
+    return render_template('email-marketing.html', tasks=tasks, recepients = recepients)
+  
+ 
+#conver query into list of string
+def convert(any):
+    x = any
+    new_strings=[]
+    email_strings = []
+    for stringx in x:
+        new_string = str(stringx)
+        new_strings.append(new_string)
+    for string in new_strings:
+        first_string = string.replace("<Content ","")
+        second_string = first_string.replace(">","")
+        email_strings.append(second_string)
+    print(email_strings)
+    return(email_strings)
+
+#add email
+@auth.route('/add-email', methods=['POST'])
+def add_task():
+    content = request.form['content']
+    if not content:
+        return 'Error'
+    task = Task(content)
+    db.session.add(task)
+    db.session.commit()
+    return redirect(url_for('auth.send'))
+#delete email
+@auth.route('/delete/<int:task_id>')
+def delete_task(task_id):
+    task = Task.query.get(task_id)
+    if not task:
+        return redirect(url_for('auth.send'))
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for('auth.send'))
     
 # Strategies
 @auth.route('/strategies', methods=["GET", "POST"])
