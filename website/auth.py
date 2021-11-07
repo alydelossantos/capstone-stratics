@@ -12,7 +12,7 @@ from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
-from .models import User, Data, Strategies, Otherdata, Otherstrategies, Contact, Sampledata
+from .models import User, Data, Strategies, Otherdata, Otherstrategies, Contact, Sampledata, Task
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 from website import mail
