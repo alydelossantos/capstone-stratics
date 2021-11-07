@@ -749,7 +749,7 @@ def send_reset_email(user):
         smtp.send_message(msg)
 
 #redirect reset request
-@auth.route("/reset_password",methods=['GET','POST'])
+@auth.route("/reset-password",methods=['GET','POST'])
 def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for('auth.signin'))
