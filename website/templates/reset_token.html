@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Sign In{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signin.css') }}">
+		<link
+		  rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		/>
+		<link
+		  rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+		  crossorigin="anonymous"
+		/>
+		<script
+		  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		  crossorigin="anonymous"
+		></script>
+		<script
+		  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		  crossorigin="anonymous"
+		></script>
+		<script
+		  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		  crossorigin="anonymous"
+		></script>
+	          <script type = "text/javascript" src ="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
+		  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+		  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> 
+	    <link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
+    </head>
+    <body>
+        {% block content %}
+		
+			{% with messages = get_flashed_messages(with_categories = true) %}
+			{% if messages %}
+			  {% for category, messages in messages %}
+				  {% if category == "error" %}
+				  <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="True">&times;</span></button>
+				  </div>
+				  {% else %}
+				  <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 0;">{{ messages }}
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+				  </div>
+				  {% endif %}
+			  {% endfor %}
+			{% endif %}
+			{% endwith %}
+			
+        <div class="sicontainer">  
+		<form id="forms" method="POST">
+			<a class="link" href="/"><img  id="logo" src= 'static/images/Stratics_Logo.png'>
+			<h1 id="title">Stratics</h1></a>
+            {{ form.hidden_tag() }}
+			<span style="font-weight: bold; margin-top: 10px;font-size: 30px;margin-bottom: -10px;">Change Password</span>
+			<div class="formtext">
+                {{ form.password.label (class="silabel")}}
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.password(class="") }}
+                    {% endif %}
+                {{ form.confirm_password.label (class="silabel")}}
+                {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                        {% for error in form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.confirm_password(class="") }}
+                    {% endif %}
+                {{ form.submit(class="formbtn",style="color:white") }}
+			</div>
+		</form>
+		<!-- Modal Edit User-->
+			
+        </div>
+
+        {%endblock%}
+		
+    </body>
+</html>
