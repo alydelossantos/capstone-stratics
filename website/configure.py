@@ -6,7 +6,7 @@ MAIL_PORT = 465
 MAIL_USE_TLS = False
 MAIL_USE_SSL = True
 MAIL_USERNAME = 'horizonfeua@gmail.com'
-MAIL_PASSWORD = 'horizonfeu123'
+MAIL_PASSWORD = 'sleepdeprived'
 MAIL_DEFAULT_SENDER = 'horizonfeua@gmail.com'
 
 uri = os.getenv('DATABASE_URL')
