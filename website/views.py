@@ -260,10 +260,9 @@ def home():
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
             elif current_user.explore == "empty":
-            current_user.dname = "Empty Dashboard"
 
-            image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("home.html", user= current_user, image_file=image_file)
+                image_file = url_for('static', filename='images/' + current_user.image_file)
+                return render_template("home.html", user= current_user, image_file=image_file)
         else:
             if current_user.explore == "sample":
             cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
@@ -497,10 +496,9 @@ def home():
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
             elif current_user.explore == "empty":
-            current_user.dname = "Empty Dashboard"
 
-            image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("home.html", user= current_user, image_file=image_file)
+                image_file = url_for('static', filename='images/' + current_user.image_file)
+                return render_template("home.html", user= current_user, image_file=image_file)
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("home.html", user= current_user, image_file=image_file)
 
