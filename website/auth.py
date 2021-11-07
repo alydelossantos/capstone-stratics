@@ -196,8 +196,8 @@ def save_file(form_file):
 @auth.route('/inquiries/send-email/<id>', methods = ['GET','POST'])
 @login_required
 def emailmark(id):
-    EMAIL_ADDRESS = 'ksn.080900@gmail.com'
-    EMAIL_PASSWORD = 's4noope@cH'
+    EMAIL_ADDRESS = 'horizonfeua@gmail.com'
+    EMAIL_PASSWORD = 'sleepdeprived'
     contacts = ['YourAddress@gmail.com', 'test@example.com']
     if request.method == "POST":
       my_data = Contact.query.get(request.form.get('id'))
