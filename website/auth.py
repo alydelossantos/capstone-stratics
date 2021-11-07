@@ -450,8 +450,8 @@ def save_file(form_file):
 def send():
     tasks = Task.query.all()
     recepients = convert(tasks)
-    EMAIL_ADDRESS = '201811294@feualabang.edu.ph'
-    EMAIL_PASSWORD = 'hildeguard'
+    EMAIL_ADDRESS = 'horizonfeua@gmail.com'
+    EMAIL_PASSWORD = 'sleepdeprived'
     if request.method == "POST":
         x = [] 
         if request.files['attfile']:
@@ -461,14 +461,9 @@ def send():
                 file_attachments = form_file
                 print (file_attachments)
                 x.append(file_attachments)
-        # txt = 'shandonmalapit@rocketmail.com 201812036@feualabang.edu.ph shandonmalapit@gmail.com'
-        # sendto = request.form['email']
         contact =  recepients
         print(recepients)
         print(contact,"s")
-        # sendto = recepients
-        # print(sendto)
-        # .split()
         msg = MIMEMultipart()
         msg['Subject'] = request.form['subject']
         msg['To'] = ", ".join(recepients) 
@@ -733,8 +728,8 @@ def deletestratcheck():
 def send_reset_email(user):
     print(user)
     msg = EmailMessage()
-    EMAIL_ADDRESS = '201811294@feualabang.edu.ph'
-    EMAIL_PASSWORD = 'hildeguard'
+    EMAIL_ADDRESS = 'horizonfeua@gmail.com'
+    EMAIL_PASSWORD = 'sleepdeprived'
     token = user.get_reset_token()
     msg['To'] = [user.email]
     msg['Subject'] = 'Password Reset Request'
