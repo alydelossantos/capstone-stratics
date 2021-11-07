@@ -32,6 +32,19 @@ class User(db.Model, UserMixin):
     other_data = db.relationship("Otherdata")
     other_strategies = db.relationship("Otherstrategies")
     
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(SECRET_KEY, expires_sec)
+        return s.dumps({'user_id':self.id}).decode('utf-8')
+    
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(SECRET_KEY)
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return User.query.get(user_id)
+    
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     accnt_num = db.Column(db.String(100))
@@ -96,3 +109,18 @@ class Contact(db.Model):
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True)
     message = db.Column(db.String(225))
+    
+    
+    
+    class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+
+
+    def __init__(self, content):
+        self.content = content
+        self.done = False
+
+    def __repr__(self):
+        return '<Content %s>' % self.content
+
