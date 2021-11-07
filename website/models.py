@@ -112,7 +112,7 @@ class Contact(db.Model):
     
     
     
-    class Task(db.Model):
+class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
 
