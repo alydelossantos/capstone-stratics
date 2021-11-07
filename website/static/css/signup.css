@@ -107,13 +107,15 @@ body {
     background-color: white;
 }
 
-#forms input[type="password"] i {
+#forms input[type="password"] i a {
     position: absolute;
 }
 
 .icons {
     padding: 10px;
     min-width: 40px;
+    margin-left: 30px;
+    margin-top: -10px;
 }
 
 .sulabel {
