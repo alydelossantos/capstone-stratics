@@ -59,43 +59,15 @@
 			<span style="font-weight: bold; margin-top: 10px;font-size: 30px;margin-bottom: -10px;">Sign In</span>
 			<div class="formtext">
 				<label class="silabel" for="email">Email Address</label>
-				<input type="email" id="email" name="email"></input> 
+				<input type="email" id="email" name="email" required="1"></input> 
 				<label class="silabel" for="password">Password</label>
-				<input type="password" id="password" name="password"></input> 
+				<input type="password" id="password" name="password" required="1"></input> 
 				<button class="formbtn" type="submit">Sign In</button>
 				<div class="text">
 				<span style='font-weight: bold; color: #f39519;'>Forgot your Password?</span><br>
 								  Do not have an account yet? Click here to <span><a href="/sign-up" class="susmall">sign up</a></span></div>
 			</div>
 		</form>
-		<!-- Modal Edit User-->
-			
-						<div id="modaledit" class="modal fade" tabindex="-1" role="dialog">
-							<div class="modal-dialog modal-dialog-centered">
-								<div class="modal-content">
-
-								<div class="modal-header">   
-									<h4 class="modal-title">Forgot Password?</h4>
-								</div>
-
-								<div class="modal-body">
-								<form action="/sign-in/forgot-password/" method="POST">
-
-									<div class="form-group row">
-											<label>Enter your email:</label>
-											<input type="email" class="form-control" name="email">
-									</div> 
-									
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-										<button class="btn btn-primary" type="submit">Reset Password</button>
-									</div>
-								</form>
-							</div>    
-						</div>
-					</div>
-				</div>
-
         {%endblock%}
 		
     </body>
