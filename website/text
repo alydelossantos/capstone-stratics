@@ -1,1 +1,8 @@
+algomodels = [logmodel.predict(X_train), dtmodel.predict(X_train), rfmodel.predict(X_train), model.predict(X_train)]
 
+max = None
+for algo in algomodels:
+    if (algo is None or al > max):
+        max = al
+
+print(al)
