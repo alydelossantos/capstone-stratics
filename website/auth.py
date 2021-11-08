@@ -79,7 +79,7 @@ def contact():
     return render_template("contact.html", user= current_user)
 
 #signin page   
-@auth.route('/sign-in', methods=["GET", "POST"]) #signin page
+@auth.route('/sign-in/check-code', methods=["GET", "POST"]) #signin page
 def signin():
     kfull = "Kalibo Cable Television Network, Inc."
     knoinc = "Kalibo Cable Television Network"
