@@ -93,7 +93,7 @@ class Sampledata(db.Model):
     PaperlessBilling = db.Column(db.String(20))
     PaymentMethod = db.Column(db.String(100))
     MonthlyCharges = db.Column(db.Numeric)
-    TotalCharges = db.Column(db.String(50), nullable=True)
+    TotalCharges = db.Column(db.Numeric)
     Churn = db.Column(db.String(20))
     
 class Strategies(db.Model):
