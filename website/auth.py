@@ -129,8 +129,8 @@ def checkcode():
         #if user.ccode == "11A392O":
         login_user(user, remember=True)
         user.user_status = True
-        #check = User(email=email, ccode=ccode, user_status=user_status)
-        db.session.add(user)
+        check = User(email=email, ccode=ccode, user_status=user_status)
+        db.session.add(check)
         db.session.commit()
         return redirect(url_for("views.home"))
         #else:
