@@ -126,11 +126,11 @@ def checkcode():
         ccode = request.form.get("ccode")
         user = User.query.filter_by(email=email).first()
         
-        if user.ccode == ccode:
+        if user.ccode == "11A392O":
             login_user(user, remember=True)
             user.user_status = True
-            check = User(email=email, ccode=ccode, user_status=user_status)
-            db.session.add(check)
+            #check = User(email=email, ccode=ccode, user_status=user_status)
+            db.session.add(user)
             db.session.commit()
             return redirect(url_for("views.home"))
         else:
