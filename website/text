@@ -10,18 +10,30 @@ if max_algo == logmodel_accuracy:
     from sklearn.metrics import confusion_matrix
     conf_mat_logmodel = confusion_matrix(y_test,y_hat_test)
     conf_mat_logmodel
+    
+    from sklearn.metrics import classification_report, accuracy_score
+    print(classification_report(y_test,y_hat_test )) 
+    print(accuracy_score(y_test, y_hat_test ))
 elif max_algo == dt_accuracy:
     y_hat_train = dtmodel.predict(X_train)
     y_hat_test = dtmodel.predict(X_test
     from sklearn.metrics import confusion_matrix
     conf_mat_dtmodel = confusion_matrix(y_test,y_hat_test)
     conf_mat_dtmodel
+    
+    from sklearn.metrics import classification_report, accuracy_score
+    print(classification_report(y_test,y_hat_test )) 
+    print(accuracy_score(y_test, y_hat_test ))
 elif max_algo == rf_accuracy:
     y_hat_train = rfmodel.predict(X_train)
     y_hat_test = rfmodel.predict(X_test
     from sklearn.metrics import confusion_matrix
     conf_mat_rfmodel = confusion_matrix(y_test,y_hat_test)
     conf_mat_rfmodel 
+    
+    from sklearn.metrics import classification_report, accuracy_score
+    print(classification_report(y_test,y_hat_test )) 
+    print(accuracy_score(y_test, y_hat_test ))
 elif max_algo == xgb_accuracy:
     y_hat_train = model.predict(X_train)
     y_hat_test = model.predict(X_test
@@ -29,6 +41,6 @@ elif max_algo == xgb_accuracy:
     conf_mat_xgbmodel = confusion_matrix(y_test,y_hat_test)
     conf_mat_xgbmodel    
     
-from sklearn.metrics import classification_report, accuracy_score
-print(classification_report(y_test,y_hat_test )) 
-print(accuracy_score(y_test, y_hat_test ))
+    from sklearn.metrics import classification_report, accuracy_score
+    print(classification_report(y_test,y_hat_test )) 
+    print(accuracy_score(y_test, y_hat_test ))
