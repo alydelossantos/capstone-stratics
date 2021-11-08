@@ -99,7 +99,7 @@ def signin():
             if user.password == password:
                 if user.user_type == "user":
                     if user.email_confirmed == True:
-                        if user.cname.casefold() == kfull.casefold() or user.cname.casefold() == knoinc.casefold() or user.cname.casefold() == knonet.casefold() or user.cname.casefold() == knotel.casefold() or user.cname.casefold() == knocable.casefold() or user.cname.casefold() == abbre.casefold() or user.cname.casefold() == abbrenoinc.casefold() or user.cname.casefold() == abbrenonet.casefold() or user.cname.casefold() == abbrenotel.casefold():
+                        if user.cname.lower() == kfull.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbre.lower() or user.cname.lower() == abbrenoinc.lower() or user.cname.lower() == abbrenonet.lower() or user.cname.lower() == abbrenotel.lower():
                             user.ccode =  "11A392O"
                             user.user_status = True
                             db.session.add(user)
