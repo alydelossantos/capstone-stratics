@@ -27,7 +27,7 @@ from email.mime.base import MIMEBase
 from email.message import EmailMessage
 from wtforms.validators import DataRequired
 from wtforms import StringField
-
+from .forms import RequestResetForm
 
 auth = Blueprint('auth', __name__)
   
