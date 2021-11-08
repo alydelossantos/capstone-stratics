@@ -479,15 +479,12 @@ def send():
                 print (file_attachments)
                 x.append(file_attachments)
         contact =  recepients
-        print(recepients)
-        print(contact,"s")
         msg = MIMEMultipart()
         msg['Subject'] = request.form['subject']
         msg['To'] = ", ".join(recepients) 
         emailMsg=""
         emailMsg = request.form['message']
         msg.attach(MIMEText(emailMsg,'plain'))
-        print (x)
         for attachment in x:
             print (attachment)
             content_type, encoding= mimetypes.guess_type(attachment)
@@ -768,7 +765,6 @@ def reset_request():
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        print(user)
         send_reset_email(user)
         flash('An eamil has been sent with instruction to reset your password','info')
         return redirect(url_for('auth.signin'))
