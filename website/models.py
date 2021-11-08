@@ -91,7 +91,7 @@ class Sampledata(db.Model):
     StreamingMovies = db.Column(db.String(20))
     Contract = db.Column(db.String(20))
     PaperlessBilling = db.Column(db.String(20))
-    PaymentMethod = db.Column(db.String(20))
+    PaymentMethod = db.Column(db.String(100))
     MonthlyCharges = db.Column(db.Numeric)
     TotalCharges = db.Column(db.Numeric)
     Churn = db.Column(db.String(20))
