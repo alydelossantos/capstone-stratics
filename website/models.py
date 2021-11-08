@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 from website.configure import SECRET_KEY
 from itsdangerous import Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
