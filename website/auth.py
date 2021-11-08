@@ -78,9 +78,18 @@ def contact():
         
     return render_template("contact.html", user= current_user)
 
- #signin page   
+#signin page   
 @auth.route('/sign-in', methods=["GET", "POST"]) #signin page
-def signin():
+def signin():   
+    kfull = "Kalibo Cable Television Network, Inc."
+    knoinc = "Kalibo Cable Television Network"
+    knonet = "Kalibo Cable Television Network"
+    knotel = "Kalibo Cable"
+    knocable = "Kalibo"
+    abbre = "KCTNI"
+    abbrenoinc = "KCTN"
+    abbrenonet = "KCT"
+    abbrenotel = "KC"
     if request.method == "POST" :
         email = request.form.get("email")
         password = request.form.get("password")
@@ -90,12 +99,16 @@ def signin():
             if user.password == password:
                 if user.user_type == "user":
                     if user.email_confirmed == True:
-                      login_user(user, remember=True)
-                      user.user_status = True
-                      db.session.add(user)
-                      db.session.commit()
-                      return redirect(url_for("views.home"))
-                    else:flash("Please confirm your account!", category="error")
+                        if user.cname.casefold() == kfull.casefold() or user.cname.casefold() == knoinc.casefold() or user.cname.casefold() == knonet.casefold() or user.cname.casefold() == knotel.casefold() or user.cname.casefold() == knocable.casefold() or user.cname.casefold() == abbre.casefold() or user.cname.casefold() == abbrenoinc.casefold() or user.cname.casefold() == abbrenonet.casefold() or user.cname.casefold() == abbrenotel.casefold():
+                            return redirect(url_for("auth.checkcode"))
+                        else:
+                            login_user(user, remember=True)
+                            user.user_status = True
+                            db.session.add(user)
+                            db.session.commit()
+                            return redirect(url_for("views.home"))
+                    else:
+                      flash("Please confirm your account!", category="error")
                 else:
                     flash("You do not have an access to this webpage.", category="error")
             else:
@@ -104,6 +117,25 @@ def signin():
             flash("Email does not exists.", category="error")
         
     return render_template("signin.html", user= current_user)
+    
+#signin page   
+@auth.route('/sign-in/check-code', methods=["GET", "POST"]) #signin page
+def checkcode():
+    if request.method == "POST" :
+        email = request.form.get("email")
+        ccode = request.form.get("ccode")
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if user.ccode == ccode:
+                login_user(user, remember=True)
+                user.user_status = True
+                check = User(email=email, ccode=ccode, user_status=user_status)
+                db.session.add(check)
+                db.session.commit()
+                return redirect(url_for("views.home"))
+            else:
+                flash("Incorrect Company Code", category="error")
+    return render_template("check_code.html", user= current_user)
           
 @auth.route('/sign-out') #signout page
 @login_required
@@ -449,15 +481,12 @@ def send():
                 print (file_attachments)
                 x.append(file_attachments)
         contact =  recepients
-        print(recepients)
-        print(contact,"s")
         msg = MIMEMultipart()
         msg['Subject'] = request.form['subject']
         msg['To'] = ", ".join(recepients) 
         emailMsg=""
         emailMsg = request.form['message']
         msg.attach(MIMEText(emailMsg,'plain'))
-        print (x)
         for attachment in x:
             print (attachment)
             content_type, encoding= mimetypes.guess_type(attachment)
@@ -737,9 +766,7 @@ def reset_request():
         return redirect(url_for('auth.signin'))
     form = RequestResetForm()
     if form.validate_on_submit():
-        form.validate_on_submit()
         user = User.query.filter_by(email=form.email.data).first()
-        print(user)
         send_reset_email(user)
         flash('An eamil has been sent with instruction to reset your password','info')
         return redirect(url_for('auth.signin'))
@@ -750,7 +777,7 @@ def reset_request():
 @auth.route("/sign-in/reset-password/<token>",methods=['GET','POST'])
 def reset_token(token):
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('views.home'))
     user = User.verify_reset_token(token)
     if user is None:
         flash('Invalid or expired token','warning')
@@ -760,5 +787,5 @@ def reset_token(token):
         user.password = form.password.data
         db.session.commit()
         flash('Your password has been updated! You are now able to log in', 'success')
-        return redirect(url_for('signin'))
+        return redirect(url_for('auth.signin'))
     return render_template('reset_token.html',title = 'Reset Password', form = form)
