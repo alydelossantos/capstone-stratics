@@ -126,7 +126,7 @@ def checkcode():
         ccode = request.form.get("ccode")
         user = User.query.filter_by(email=email).first()
         if user:
-            if user.ccode == "11A392O":
+            if user.ccode == ccode:
                 login_user(user, remember=True)
                 user.user_status = True
                 check = User(email=email, ccode=ccode, user_status=user_status)
