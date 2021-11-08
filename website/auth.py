@@ -86,10 +86,7 @@ def signin():
     knonet = "Kalibo Cable Television Network"
     knotel = "Kalibo Cable"
     knocable = "Kalibo"
-    abbre = "KCTNI"
     abbrenoinc = "KCTN"
-    abbrenonet = "KCT"
-    abbrenotel = "KC"
     if request.method == "POST" :
         email = request.form.get("email")
         password = request.form.get("password")
@@ -99,8 +96,7 @@ def signin():
             if user.password == password:
                 if user.user_type == "user":
                     if user.email_confirmed == True:
-                        if user.cname.lower() == kfull.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbre.lower() or user.cname.lower() == abbrenoinc.lower() or user.cname.lower() == abbrenonet.lower() or user.cname.lower() == abbrenotel.lower():
-                            user.ccode =  "11A392O"
+                        if user.cname.lower() == kfull.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbrenoinc.lower():
                             user.user_status = True
                             db.session.add(user)
                             db.session.commit()
