@@ -100,7 +100,7 @@ def signin():
                 if user.user_type == "user":
                     if user.email_confirmed == True:
                         if user.cname.casefold() == kfull.casefold() or user.cname.casefold() == knoinc.casefold() or user.cname.casefold() == knonet.casefold() or user.cname.casefold() == knotel.casefold() or current_user.cname.casefold() == knocable.casefold() or user.cname.casefold() == abbre.casefold() or user.cname.casefold() == abbrenoinc.casefold() or user.cname.casefold() == abbrenonet.casefold() or user.cname.casefold() == abbrenotel.casefold():
-                            return redirect(url_for("views.checkcode"))
+                            return redirect(url_for("auth.checkcode"))
                         else:
                             login_user(user, remember=True)
                             user.user_status = True
