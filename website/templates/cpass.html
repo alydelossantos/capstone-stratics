@@ -1,0 +1,16 @@
+<div class="email" style="text-align:center; font-size:16px;">
+    <h1>Change Password</h1><br>
+    <p>Click the button to reset your password<br>Disregard this email if you did not request to change your password.</p><br><br>
+        <a href="{{url_for('auth.reset_token',token=token,_external=True) }}">
+            <button style="display: inline-block;
+                            color: #fff;
+                            font-size: 16px;
+                            outline: none;
+                            border: none;
+                            padding: 8px 16px;
+                            border-radius: 6px;
+                            background: #ff6d00;
+                            cursor: pointer;
+                            transition: all 0.3s ease;">Change Password</button>
+        </a>
+    </div>
