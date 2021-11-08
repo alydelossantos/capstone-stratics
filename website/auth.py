@@ -78,9 +78,18 @@ def contact():
         
     return render_template("contact.html", user= current_user)
 
- #signin page   
+#signin page   
 @auth.route('/sign-in', methods=["GET", "POST"]) #signin page
 def signin():
+    kfull = "Kalibo Cable Television Network, Inc."
+    knoinc = "Kalibo Cable Television Network"
+    knonet = "Kalibo Cable Television Network"
+    knotel = "Kalibo Cable"
+    knocable = "Kalibo"
+    abbre = "KCTNI"
+    abbrenoinc = "KCTN"
+    abbrenonet = "KCT"
+    abbrenotel = "KC"
     if request.method == "POST" :
         email = request.form.get("email")
         password = request.form.get("password")
@@ -90,11 +99,14 @@ def signin():
             if user.password == password:
                 if user.user_type == "user":
                     if user.email_confirmed == True:
-                      login_user(user, remember=True)
-                      user.user_status = True
-                      db.session.add(user)
-                      db.session.commit()
-                      return redirect(url_for("views.home"))
+                        if user.cname.casefold() == kfull.casefold() or user.cname.casefold() == knoinc.casefold() or user.cname.casefold() == knonet.casefold() or user.cname.casefold() == knotel.casefold() or current_user.cname.casefold() == knocable.casefold() or user.cname.casefold() == abbre.casefold() or user.cname.casefold() == abbrenoinc.casefold() or user.cname.casefold() == abbrenonet.casefold() or user.cname.casefold() == abbrenotel.casefold():
+                            return redirect(url_for("views.checkcode"))
+                        else:
+                            login_user(user, remember=True)
+                            user.user_status = True
+                            db.session.add(user)
+                            db.session.commit()
+                            return redirect(url_for("views.home"))
                     else:flash("Please confirm your account!", category="error")
                 else:
                     flash("You do not have an access to this webpage.", category="error")
@@ -104,6 +116,23 @@ def signin():
             flash("Email does not exists.", category="error")
         
     return render_template("signin.html", user= current_user)
+    
+#signin page   
+@auth.route('/sign-in/check-code', methods=["GET", "POST"]) #signin page
+def checkcode():
+    if request.method == "POST" :
+        email = request.form.get("email")
+        ccode = request.form.get("ccode")
+        user_status = request.form.get("user_status")
+        
+        user = User.query.filter_by(email=email).first()
+        login_user(user, remember=True)
+        
+        check = User(email=email, ccode=ccode, user_status=user_status)
+        db.session.add(check)
+        db.session.commit()
+        return redirect(url_for("views.home"))
+    return render_template("check_code.html", user= current_user)
           
 @auth.route('/sign-out') #signout page
 @login_required
