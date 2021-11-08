@@ -472,7 +472,6 @@ def send():
     EMAIL_PASSWORD = 'sleepdeprived'
     if request.method == "POST":
         if checker == 0:
-              flash('no receptient')
               return redirect(url_for('auth.send'))
         else:
             x = [] 
