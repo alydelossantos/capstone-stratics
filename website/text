@@ -47,3 +47,193 @@ elif max_algo == xgb_accuracy:
 
     print(classification_report(y_test,y_hat_test )) 
     print(accuracy_score(y_test, y_hat_test ))
+
+
+
+
+# Dashboard Views
+
+    # Pie Chart
+    from plotly.offline import init_notebook_mode,iplot
+    import plotly.graph_objects as go
+    import cufflinks as cf
+    init_notebook_mode(connected=True)
+
+
+    #Gender Distribution
+    lab = df["gender"].value_counts().keys().tolist()
+    #values
+    val = df["gender"].value_counts().values.tolist()
+    trace = go.Pie(labels=lab, 
+                    values=val, 
+                    marker=dict(colors=['#9da4d8', '#ed7071']),
+                    hole = 0.4,
+                    # Seting values to 
+                    hoverinfo="value")
+    data = [trace]
+
+    layout = go.Layout(dict(title="Gender Distribution",
+                plot_bgcolor = "white",
+                paper_bgcolor = "white",))
+    fig1gender = go.Figure(data = data,layout = layout)
+    graph1JSON = json.dumps(fig1gender, cls=plotly.utils.PlotlyJSONEncoder)
+
+    #Senior Citizen Distribution
+    lab = df["SeniorCitizen"].value_counts().keys().tolist()
+    #values
+    val = df["SeniorCitizen"].value_counts().values.tolist()
+    trace = go.Pie(labels=lab, 
+                    values=val, 
+                    marker=dict(colors=['#ffa14a', '#ed7071']),
+                    hole = 0.4,
+                    # Seting values to 
+                    hoverinfo="value")
+    data = [trace]
+
+    layout = go.Layout(dict(title="% of Senior Citizens",
+                plot_bgcolor = "white",
+                paper_bgcolor = "white",))
+    fig2senior = go.Figure(data = data,layout = layout)
+    graph2JSON = json.dumps(fig2senior, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Dependents
+    # defining data
+    trace = go.Histogram(x=df['Dependents'],nbinsx=3,
+                    marker = dict(color = '#ed7071'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Dependents Distribution")
+    # defining figure and plotting
+    fig3dependents = go.Figure(data = data,layout = layout)
+    graph3JSON = json.dumps(fig3dependents, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Partner 
+    # defining data
+    trace = go.Histogram(
+        x=df['Partner'],
+        nbinsx=3,
+        marker = dict(color = '#9da4d8')
+        )
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Partner Distribution")
+    # defining figure and plotting
+    fig4partner = go.Figure(data = data,layout = layout)
+    graph4JSON = json.dumps(fig4partner, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Device Protection
+    # defining data
+    trace = go.Histogram(x=df['DeviceProtection'],nbinsx=3,marker = dict(color = '#6D9886'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Device Protection Distribution")
+    # defining figure and plotting
+    fig5device = go.Figure(data = data,layout = layout)
+    graph5JSON = json.dumps(fig5device, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Multiple Lines
+    # defining data
+    trace = go.Histogram(x=df['MultipleLines'],nbinsx=3,marker = dict(color = '#6D9886'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Multiple Lines Distribution")
+    # defining figure and plotting
+    fig6multiple = go.Figure(data = data,layout = layout)
+    graph6JSON = json.dumps(fig6multiple, cls=plotly.utils.PlotlyJSONEncoder)
+
+    # Histogram - Online Backup
+    # defining data
+    trace = go.Histogram(x=df['OnlineBackup'],nbinsx=3,marker = dict(color = '#6D9886'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Online Backup Distribution")
+    # defining figure and plotting
+    fig7backup = go.Figure(data = data,layout = layout)
+    graph7JSON = json.dumps(fig7backup, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Online Security
+    # defining data
+    trace = go.Histogram(x=df['OnlineSecurity'],nbinsx=3,marker = dict(color = '#6D9886'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Online Security Distribution")
+    # defining figure and plotting
+    fig8security = go.Figure(data = data,layout = layout)
+    graph8JSON = json.dumps(fig8security, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Paperless Billing
+    # defining data
+    trace = go.Histogram(x=df['PaperlessBilling'],nbinsx=3,marker = dict(color = '#6D9886'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Paperless Billing Distribution")
+    # defining figure and plotting
+    fig9paperless = go.Figure(data = data,layout = layout)
+    graph9JSON = json.dumps(fig9paperless, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Phone Service
+    # defining data
+    trace = go.Histogram(x=df['PhoneService'],nbinsx=3,marker = dict(color = '#6D9886'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Phone Service Distribution")
+    # defining figure and plotting
+    fig10phone = go.Figure(data = data,layout = layout)
+    graph10JSON = json.dumps(fig10phone, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Streaming Movies
+    # defining data
+    trace = go.Histogram(x=df['StreamingMovies'],nbinsx=3,marker = dict(color = '#6D9886'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Streaming Movies Distribution")
+    # defining figure and plotting
+    fig11movies = go.Figure(data = data,layout = layout)
+    graph11JSON = json.dumps(fig11movies, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Streaming TV
+    # defining data
+    trace = go.Histogram(x=df['StreamingTV'],nbinsx=3,marker = dict(color = '#6D9886'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Streaming TV Distribution")
+    # defining figure and plotting
+    fig12tv = go.Figure(data = data,layout = layout)
+    graph12JSON = json.dumps(fig12tv, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    # Histogram - Tech Support
+    # defining data
+    trace = go.Histogram(x=df['TechSupport'],nbinsx=3,marker = dict(color = '#6D9886'))
+    data = [trace]
+    # defining layout
+    layout = go.Layout(title="Technical Support Distribution")
+    # defining figure and plotting
+    fig13techsupport = go.Figure(data = data,layout = layout)
+    graph13JSON = json.dumps(fig13techsupport, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    return render_template("dashboard.html", user= current_user, 
+    graph1JSON=graph1JSON, 
+    graph2JSON=graph2JSON, 
+    graph3JSON=graph3JSON,
+    graph4JSON=graph4JSON,
+    graph5JSON=graph5JSON,
+    graph6JSON=graph6JSON,
+    graph7JSON=graph7JSON,
+    graph8JSON=graph8JSON,
+    graph9JSON=graph9JSON,
+    graph10JSON=graph10JSON,
+    graph11JSON=graph11JSON,
+    graph12JSON=graph12JSON,
+    graph13JSON=graph13JSON,
+     )
