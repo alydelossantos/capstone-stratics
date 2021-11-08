@@ -104,19 +104,6 @@ def signin():
             flash("Email does not exists.", category="error")
         
     return render_template("signin.html", user= current_user)
-
-@auth.route('/sign-in/forgot-password/', methods=["GET", "POST"])
-def signinfp():
-    if request.method == 'POST':
-        email= request.form['email']
-        request_pass=True
-        si = User(email=email, request_pass=request_pass)
-        db.session.add(si)
-        db.session.commit()
-
-        flash("Reset Password Request has been sent!")
-
-        return redirect(url_for('auth.signin'))
           
 @auth.route('/sign-out') #signout page
 @login_required
@@ -744,7 +731,7 @@ def send_reset_email(user):
         smtp.send_message(msg)
 
 #redirect reset request
-@auth.route("/reset-password",methods=['GET','POST'])
+@auth.route("/sign-in/reset-password",methods=['GET','POST'])
 def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for('auth.signin'))
@@ -759,7 +746,7 @@ def reset_request():
   
   
  #ridirect reset password
-@auth.route("/reset_password/<token>",methods=['GET','POST'])
+@auth.route("/sign-in/reset-password/<token>",methods=['GET','POST'])
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
