@@ -83,3 +83,4 @@ wcwidth==0.2.5
 webencodings==0.5.1
 Werkzeug==2.0.2
 widgetsnbextension==3.5.2
+WTForms==2.3.3
