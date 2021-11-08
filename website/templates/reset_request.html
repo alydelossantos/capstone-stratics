@@ -54,12 +54,13 @@
 			{% endwith %}
 			
         <div class="sicontainer"> 
+		<a class="link" href="/"><img  id="logo" src= 'static/images/Stratics_Logo.png'>
+		<h1 id="title">Stratics</h1></a>
+		<span style="font-weight: bold; margin-top: 10px;font-size: 30px;margin-bottom: -10px;">Forgot your Password?</span>
 		<form id="forms" method="POST">
 			
 			{{ form.hidden_tag() }}
-			<a class="link" href="/"><img  id="logo" src="{{ url_for('static', filename='images/Stratics_Logo.png') }}">
-			<h1 id="title">Stratics</h1></a>
-			<span style="font-weight: bold; margin-top: 10px;font-size: 30px;margin-bottom: -10px;">Forgot your Password?</span>
+			
 			<div class="formtext">
 				<div class="form-group row">
 					<div class="col-sm-12">
@@ -78,43 +79,7 @@
 				</div>
 			</div>
 		</form>
-		
-		<!-- Modal Edit User-->
-<!-- 			
-                    <div id="modaledit" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-							aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">    
-                                    <div class="modal-header">   
-                                        <h4 class="modal-title">Forgot Password?</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="/sign-in/reset-password" method="POST">
-                                            <div class="form-group row">
-						<div class="col-sm-6">
-								{{ form.email.label}}
-								{% if form.email.errors %}
-									{{ form.email(class="form-control form-control-lg is-invalid") }}
-										{% for error in form.email.errors %}
-											<span>{{ error }}</span>
-										{% endfor %}
-									{% else %}
-										{{ form.email(class="form-control form-control-lg") }}
-									{% endif %}
-
-							</div>
-							{{ form.submit(class="btn btn-primary") }}
-					</div> 
 	
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-												
-                                            </div>
-                                        </form>
-                                    </div>    
-                                </div>
-			    </div>
-		</div> -->
         </div>
 
         {%endblock%}
