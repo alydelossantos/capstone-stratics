@@ -752,12 +752,10 @@ def send_reset_email(user):
     token = user.get_reset_token()
     msg['To'] = [user.email]
     msg['Subject'] = 'Password Reset Request'
-    body = f'''
-    To reset your password, visit the following link:
-    {url_for('auth.reset_token',token=token,_external=True)}
-    Disregard this email if you did not make any request
-    '''
-    msg.set_content(body)
+    msg.set_content('')
+    html = render_template("cpass.html")
+    msg.add_alternative(html, subtype="html")
+    
     with smtplib.SMTP_SSL('smtp.gmail.com',465) as smtp:
         smtp.login(EMAIL_ADDRESS,EMAIL_PASSWORD)
         smtp.send_message(msg)
