@@ -1,7 +1,9 @@
 from .extensions import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
-    
+from website.configure import SECRET_KEY
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     fname = db.Column(db.String(50))
@@ -27,10 +29,23 @@ class User(db.Model, UserMixin):
     user_type = db.Column(db.String(50))
     user_status = db.Column(db.Boolean, nullable=True, default=False)
     position = db.Column(db.String(50), default="Position")
-    request_pass = db.Column(db.Boolean, nullable=True, default=False)
+    dash = db.Column(db.String(20), default="none")
     ccode = db.Column(db.String(20))
     other_data = db.relationship("Otherdata")
     other_strategies = db.relationship("Otherstrategies")
+    
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(SECRET_KEY, expires_sec)
+        return s.dumps({'user_id':self.id}).decode('utf-8')
+    
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(SECRET_KEY)
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return User.query.get(user_id)
     
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -60,12 +75,23 @@ class Otherdata(db.Model):
 class Sampledata(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     customerID = db.Column(db.String(100))
-    email = db.Column(db.String(100), unique=True)
     gender = db.Column(db.String(20))
     SeniorCitizen = db.Column(db.String(20))
-    State = db.Column(db.String(100))
+    Partner = db.Column(db.String(20))
+    Dependents = db.Column(db.String(20))
     tenure = db.Column(db.Integer)
+    PhoneService = db.Column(db.String(20))
+    MultipleLines = db.Column(db.String(20))
     InternetService = db.Column(db.String(100))
+    OnlineSecurity = db.Column(db.String(20))
+    OnlineBackup = db.Column(db.String(20))
+    DeviceProtection = db.Column(db.String(20))
+    TechSupport = db.Column(db.String(20))
+    StreamingTV = db.Column(db.String(20))
+    StreamingMovies = db.Column(db.String(20))
+    Contract = db.Column(db.String(20))
+    PaperlessBilling = db.Column(db.String(20))
+    PaymentMethod = db.Column(db.String(20))
     MonthlyCharges = db.Column(db.Numeric)
     TotalCharges = db.Column(db.Numeric)
     Churn = db.Column(db.String(20))
@@ -96,3 +122,18 @@ class Contact(db.Model):
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True)
     message = db.Column(db.String(225))
+    
+    
+    
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+
+
+    def __init__(self, content):
+        self.content = content
+        self.done = False
+
+    def __repr__(self):
+        return '<Content %s>' % self.content
+
