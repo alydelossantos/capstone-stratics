@@ -124,15 +124,17 @@ def checkcode():
     if request.method == "POST" :
         email = request.form.get("email")
         ccode = request.form.get("ccode")
-        user_status = request.form.get("user_status")
-        
         user = User.query.filter_by(email=email).first()
-        login_user(user, remember=True)
-        
-        check = User(email=email, ccode=ccode, user_status=user_status)
-        db.session.add(check)
-        db.session.commit()
-        return redirect(url_for("views.home"))
+        if user:
+            if user.ccode == "11A392O":
+                login_user(user, remember=True)
+                user.user_status = True
+                check = User(email=email, ccode=ccode, user_status=user_status)
+                db.session.add(check)
+                db.session.commit()
+                return redirect(url_for("views.home"))
+            else:
+                flash("Incorrect Company Code", category="error")
     return render_template("check_code.html", user= current_user)
           
 @auth.route('/sign-out') #signout page
