@@ -471,43 +471,43 @@ def send():
     EMAIL_ADDRESS = 'horizonfeua@gmail.com'
     EMAIL_PASSWORD = 'sleepdeprived'
     if request.method == "POST":
-      if checker == 0:
-            flash('no receptient')
-            return redirect(url_for('auth.send'))
-        else:
-            x = [] 
-            if request.files['attfile']:
-                    file_attachments =''
-                    form_file = save_file(request.files['attfile'])
-                    print (form_file,"asdsa")
-                    file_attachments = form_file
-                    print (file_attachments)
-                    x.append(file_attachments)
-            contact =  recepients
-            msg = MIMEMultipart()
-            msg['Subject'] = request.form['subject']
-            msg['To'] = ", ".join(recepients) 
-            emailMsg=""
-            emailMsg = request.form['message']
-            msg.attach(MIMEText(emailMsg,'plain'))
-            for attachment in x:
-                print (attachment)
-                content_type, encoding= mimetypes.guess_type(attachment)
-                main_type,sub_type = content_type.split('/',1)
-                file_name = os.path.basename(attachment)
-                f = open(attachment,'rb')
-                myFile = MIMEBase(main_type, sub_type)
-                myFile.set_payload(f.read())
-                myFile.add_header('Content-Disposition', 'attachment', filename=file_name)
-                encoders.encode_base64(myFile)
-                f.close()
-                msg.attach(myFile)
-            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-                smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-                smtp.send_message(msg)
-                Task.query.delete()
-                db.session.commit()
-                return redirect(url_for('auth.send'))
+        if checker == 0:
+              flash('no receptient')
+              return redirect(url_for('auth.send'))
+          else:
+              x = [] 
+              if request.files['attfile']:
+                      file_attachments =''
+                      form_file = save_file(request.files['attfile'])
+                      print (form_file,"asdsa")
+                      file_attachments = form_file
+                      print (file_attachments)
+                      x.append(file_attachments)
+              contact =  recepients
+              msg = MIMEMultipart()
+              msg['Subject'] = request.form['subject']
+              msg['To'] = ", ".join(recepients) 
+              emailMsg=""
+              emailMsg = request.form['message']
+              msg.attach(MIMEText(emailMsg,'plain'))
+              for attachment in x:
+                  print (attachment)
+                  content_type, encoding= mimetypes.guess_type(attachment)
+                  main_type,sub_type = content_type.split('/',1)
+                  file_name = os.path.basename(attachment)
+                  f = open(attachment,'rb')
+                  myFile = MIMEBase(main_type, sub_type)
+                  myFile.set_payload(f.read())
+                  myFile.add_header('Content-Disposition', 'attachment', filename=file_name)
+                  encoders.encode_base64(myFile)
+                  f.close()
+                  msg.attach(myFile)
+              with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                  smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                  smtp.send_message(msg)
+                  Task.query.delete()
+                  db.session.commit()
+                  return redirect(url_for('auth.send'))
     return render_template('email-marketing.html', tasks=tasks, recepients = recepients)
   
  
