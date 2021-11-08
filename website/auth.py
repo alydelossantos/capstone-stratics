@@ -737,7 +737,6 @@ def reset_request():
         return redirect(url_for('auth.signin'))
     form = RequestResetForm()
     if form.validate_on_submit():
-        form.validate_on_submit()
         user = User.query.filter_by(email=form.email.data).first()
         print(user)
         send_reset_email(user)
