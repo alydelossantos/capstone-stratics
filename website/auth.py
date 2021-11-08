@@ -100,6 +100,10 @@ def signin():
                 if user.user_type == "user":
                     if user.email_confirmed == True:
                         if user.cname.casefold() == kfull.casefold() or user.cname.casefold() == knoinc.casefold() or user.cname.casefold() == knonet.casefold() or user.cname.casefold() == knotel.casefold() or user.cname.casefold() == knocable.casefold() or user.cname.casefold() == abbre.casefold() or user.cname.casefold() == abbrenoinc.casefold() or user.cname.casefold() == abbrenonet.casefold() or user.cname.casefold() == abbrenotel.casefold():
+                            user.ccode =  "11A392O"
+                            user.user_status = True
+                            db.session.add(user)
+                            db.session.commit()
                             return redirect(url_for("auth.checkcode"))
                         else:
                             login_user(user, remember=True)
@@ -124,12 +128,12 @@ def checkcode():
     if request.method == "POST" :
         email = request.form.get("email")
         ccode = request.form.get("ccode")
+        user_status = request.form.get("user_status")
+        
         user = User.query.filter_by(email=email).first()
         
         if user.ccode == ccode:
             login_user(user, remember=True)
-            user.user_status = True
-            db.session.commit()
             return redirect(url_for("views.home"))
         else:
             flash("Incorrect Company Code", category="error")
@@ -472,6 +476,7 @@ def send():
     EMAIL_PASSWORD = 'sleepdeprived'
     if request.method == "POST":
         if checker == 0:
+              flash('no receptient')
               return redirect(url_for('auth.send'))
         else:
             x = [] 
