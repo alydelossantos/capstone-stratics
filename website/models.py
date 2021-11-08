@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
     user_type = db.Column(db.String(50))
     user_status = db.Column(db.Boolean, nullable=True, default=False)
     position = db.Column(db.String(50), default="Position")
-    request_pass = db.Column(db.Boolean, nullable=True, default=False)
+    dash = db.Column(db.String(20), default="none")
     ccode = db.Column(db.String(20))
     other_data = db.relationship("Otherdata")
     other_strategies = db.relationship("Otherstrategies")
