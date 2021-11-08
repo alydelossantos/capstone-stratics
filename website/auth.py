@@ -125,16 +125,16 @@ def checkcode():
         email = request.form.get("email")
         ccode = request.form.get("ccode")
         user = User.query.filter_by(email=email).first()
-        if user:
-            if user.ccode == ccode:
-                login_user(user, remember=True)
-                user.user_status = True
-                check = User(email=email, ccode=ccode, user_status=user_status)
-                db.session.add(check)
-                db.session.commit()
-                return redirect(url_for("views.home"))
-            else:
-                flash("Incorrect Company Code", category="error")
+        
+        if user.ccode == ccode:
+            login_user(user, remember=True)
+            user.user_status = True
+            check = User(email=email, ccode=ccode, user_status=user_status)
+            db.session.add(check)
+            db.session.commit()
+            return redirect(url_for("views.home"))
+        else:
+            flash("Incorrect Company Code", category="error")
     return render_template("check_code.html", user= current_user)
           
 @auth.route('/sign-out') #signout page
