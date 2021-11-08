@@ -80,7 +80,7 @@ def contact():
 
 #signin page   
 @auth.route('/sign-in', methods=["GET", "POST"]) #signin page
-def signin():
+def signin():   
     kfull = "Kalibo Cable Television Network, Inc."
     knoinc = "Kalibo Cable Television Network"
     knonet = "Kalibo Cable Television Network"
@@ -99,7 +99,7 @@ def signin():
             if user.password == password:
                 if user.user_type == "user":
                     if user.email_confirmed == True:
-                        if user.cname.casefold() == kfull.casefold() or user.cname.casefold() == knoinc.casefold() or user.cname.casefold() == knonet.casefold() or user.cname.casefold() == knotel.casefold() or current_user.cname.casefold() == knocable.casefold() or user.cname.casefold() == abbre.casefold() or user.cname.casefold() == abbrenoinc.casefold() or user.cname.casefold() == abbrenonet.casefold() or user.cname.casefold() == abbrenotel.casefold():
+                        if user.cname.casefold() == kfull.casefold() or user.cname.casefold() == knoinc.casefold() or user.cname.casefold() == knonet.casefold() or user.cname.casefold() == knotel.casefold() or user.cname.casefold() == knocable.casefold() or user.cname.casefold() == abbre.casefold() or user.cname.casefold() == abbrenoinc.casefold() or user.cname.casefold() == abbrenonet.casefold() or user.cname.casefold() == abbrenotel.casefold():
                             return redirect(url_for("auth.checkcode"))
                         else:
                             login_user(user, remember=True)
@@ -107,7 +107,8 @@ def signin():
                             db.session.add(user)
                             db.session.commit()
                             return redirect(url_for("views.home"))
-                    else:flash("Please confirm your account!", category="error")
+                    else:
+                      flash("Please confirm your account!", category="error")
                 else:
                     flash("You do not have an access to this webpage.", category="error")
             else:
