@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
         
-		{% block title %} Stratics Admin | Admin Management {% endblock %}
+		{% block title %} Stratics Admin | Accounts Management {% endblock %}
 		
 		</head>
 		<body>
@@ -73,15 +73,15 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-							<th>Company Name</th>
+			    <th>Company Name</th>
                             <th>Position</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Address</th>
                             <th>Password</th>
                             <th>Account Activated</th>
-							<th>Status</th>
-							<th></th>
+			    <th>Status</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,13 +124,13 @@
     
                                     <div class="modal-body">
                                         <form action="/admin-management/update/{{row.id}}" method="POST">
-										<div class="form-group row">
-										<div class="col-sm-6">
-																<h1>{{row.fname}} {{row.lname}}</h1>
-											<p>{{row.email}}</p>
-										<p>{{row.cp}}</p>
-										<p>{{row.address}}</p>
-										</div>
+					    <div class="form-group row">
+						<div class="col-sm-6">
+                                              	<h1>{{row.fname}} {{row.lname}}</h1>
+					        <p>{{row.email}}</p>
+						<p>{{row.cp}}</p>
+						<p>{{row.address}}</p>
+						</div>
                                             </div> 
 						
                                             <div class="form-group row">
@@ -212,7 +212,7 @@
                     buttons: [    
                         {
                             extend: 'excelHtml5',
-                            title: 'Stratics',
+                            title: 'Stratics - User Accounts',
                             text: 'Export',
                             split: [ 'pdf', 'excel', 'csv'],
                         },  
@@ -223,6 +223,6 @@
             } );
             </script>
         </body>
-</html>
+	</html>
 
 {% endblock %}
