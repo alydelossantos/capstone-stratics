@@ -68,7 +68,6 @@
 			
     <div class="row">
             <div class="table-responsive table-responsive-data2">
-			<form action="/admin-management/delete-selected" method="POST">
                 <table class="table table-data2" id="mytable">
                     <thead>
                         <tr>
@@ -112,7 +111,6 @@
                                 </div>
                             </td>
                         </tr>
-			</form>
 				<!-- Modal Edit User-->
 
                     <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
@@ -179,7 +177,6 @@
                         {% endfor %}
                     </tbody>
                 </table>
-			</form>
 		</div>
 	</div>
 	
@@ -225,25 +222,6 @@
             } );
             </script>
 		
-		<script>
-			$(document).ready(function(){
-			$("#mytable #checkall").click(function () {
-					if ($("#mytable #checkall").is(':checked')) {
-						$("#mytable input[type=checkbox]").each(function () {
-							$(this).prop("checked", true);
-						});
-			 
-					} else {
-						$("#mytable input[type=checkbox]").each(function () {
-							$(this).prop("checked", false);
-						});
-					}
-				});
-				 
-				$("[data-toggle=tooltip]").tooltip();
-			});
-			 
-		</script>
         </body>
 	</html>
 
