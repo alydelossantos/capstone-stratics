@@ -34,6 +34,7 @@ def home():
     knocable = "Kalibo"
     abbrenoinc = "KCTN"
     if current_user.explore == "sample":
+'''
         cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
         conn = cnx.connect()
         df = pd.read_sql_table('sampledata', con=cnx)
@@ -413,7 +414,7 @@ def home():
         graph10JSON=graph10JSON,
         graph11JSON=graph11JSON,
         graph12JSON=graph12JSON,
-        graph13JSON=graph13JSON  )
+        graph13JSON=graph13JSON  ) '''
     elif current_user.explore == "customer":
         if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
             if db.session.query(Data).count() >=3 :
