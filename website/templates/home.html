@@ -361,7 +361,7 @@
 						<div class="col-md-6 col-lg-4">
 						    <div class="statistic__item statistic__item--green">
 							<h2 class="number">388,688</h2>
-							<span class="desc">subscribers gained</span>
+							<span class="desc">Active</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-shopping-cart"></i>
 							</div>
@@ -370,7 +370,7 @@
 						<div class="col-md-6 col-lg-4">
 						    <div class="statistic__item statistic__item--red">
 							<h2 class="number">$1,060,386</h2>
-							<span class="desc">subscribers loss</span>
+							<span class="desc">Disconnected</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-money"></i>
 							</div>
@@ -381,24 +381,62 @@
 				    </section>
 				    <!-- END STATISTIC-->
 
-          <div class="container-fluid">
-				      <div class="row">
-					<div class="col-sm-4">
-					  <div id='chart5'></div>
-					</div>
-					<div class="col-sm-8">
-					  <div id='chart6'></div>
-					</div>
-				      </div>
-				    </div>
-            
-            <div class="container-fluid">
-				      <div class="row">
-					<div class="col-sm-4">
-					  <div id='chart7'></div>
-					</div>
-				      </div>
-				    </div>
+					<div class="container-fluid">
+						<div class="row">
+						  <div class="col-sm-4">
+							<div id='chart14'></div>
+						  </div>
+						  <div class="col-sm-4">
+							<div id='chart15'></div>
+						  </div>
+						  <div class="col-sm-4">
+							<div id='chart16'></div>
+						  </div>
+						</div>
+					  </div>
+					  
+					  <div class="container-fluid">
+						<div class="row">
+						  <div class="col-sm-4">
+							<div id='chart17'></div>
+						  </div>
+						  <div class="col-sm-8">
+							<div id='chart18'></div>
+						  </div>
+						</div>
+					  </div>
+					  
+					  <div class="container-fluid">
+						<div class="row">
+						  <div class="col-sm-12">
+							<div id='chart19'></div>
+						  </div>
+						</div>
+					  </div>
+
+					  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+						<script type='text/javascript'>
+
+						// For Churn
+
+						var graph14 = {{graph14JSON | safe}};
+						Plotly.plot('chart14',graph14,{});
+
+						var graph15 = {{graph15JSON | safe}};
+						Plotly.plot('chart15',graph15,{});
+
+						var graph16 = {{graph16JSON | safe}};
+						Plotly.plot('chart16',graph16,{});
+
+						var graph17 = {{graph17JSON | safe}};
+						Plotly.plot('chart17',graph17,{});
+
+						var graph18 = {{graph18JSON | safe}};
+						Plotly.plot('chart18',graph18,{});
+
+						var graph19 = {{graph19JSON | safe}};
+						Plotly.plot('chart19',graph19,{});
+					</script>
 
   			{% elif current_user.explore == "customer" %}
 			

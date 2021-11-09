@@ -51,22 +51,6 @@ def home():
                     le.fit(df[col])
                     df[col] = le.transform(df[col])
                     le_count +=1
-        # print('{} columns label encoded'.format(le_count))
-
-        # df2 = df[['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'tenure', 'PhoneService', 'PaperlessBilling', 'MonthlyCharges', 'TotalCharges']]
-        # fig = plt.figure(figsize=(15, 10))
-
-        # for i in range(df2.shape[1]):
-        #     plt.subplot(6, 3, i+1)
-        #     f=plt.gca()
-        #     f.set_title(df2.columns.values[i])
-
-        # vals = np.size(df2.iloc[:, i].unique())
-        # if vals >= 100:
-        #     vals = 100
-
-        # plt.hist(df2.iloc[:, i], bins=vals, color = '#f39519')
-        # plt.tight_layout()
 
         # Pie Chart
         from plotly.offline import init_notebook_mode,iplot
@@ -224,7 +208,6 @@ def home():
         fig12tv = go.Figure(data = data,layout = layout)
         graph12JSON = json.dumps(fig12tv, cls=plotly.utils.PlotlyJSONEncoder)
 
-
         # Histogram - Tech Support
         # defining data
         trace = go.Histogram(x=df['TechSupport'],nbinsx=3,marker = dict(color = '#6D9886'))
@@ -234,6 +217,144 @@ def home():
         # defining figure and plotting
         fig13techsupport = go.Figure(data = data,layout = layout)
         graph13JSON = json.dumps(fig13techsupport, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+            # ------------ CHURN ANALYTICS ----------------
+
+        #Churn Distribution
+        lab = df["Churn"].value_counts().keys().tolist()
+        #values
+        val = df["Churn"].value_counts().values.tolist()
+        trace = go.Pie(labels=lab, 
+                        values=val, 
+                        marker=dict(colors=['#9da4d8', '#ed7071']),
+                        hole = 0.4,
+                        # Seting values to 
+                        hoverinfo="value")
+        data = [trace]
+
+        layout = go.Layout(dict(title="Gender Distribution",
+                    plot_bgcolor = "white",
+                    paper_bgcolor = "white",))
+        cfig1 = go.Figure(data = data,layout = layout)
+        graph14JSON = json.dumps(cfig1, cls=plotly.utils.PlotlyJSONEncoder)
+
+        # Churn Rate by Gender
+        plot_by_gender = df.groupby('gender').Churn.mean().reset_index()
+        plot_data = [
+            go.Bar(
+                x=plot_by_gender['gender'],
+                y=plot_by_gender['Churn'],
+            width = [0.8],
+                marker = dict(
+                    color=['#ed7071', '#ffa14a']
+                )
+            )
+        ]
+
+        layout=go.Layout(
+            xaxis={"type": "category"},
+            yaxis={"title": "Churn Rate"},
+            title="Churn Rate by Gender",
+            plot_bgcolor = 'white',
+            paper_bgcolor = 'white',
+        )
+
+        cfig2 = go.Figure(data=plot_data, layout=layout)
+        graph15JSON = json.dumps(cfig2, cls=plotly.utils.PlotlyJSONEncoder)
+
+        # Churn Rate by Internet Service
+        plot_by_payment = df.groupby('InternetService').Churn.mean().reset_index()
+        plot_data = [
+            go.Bar(
+                x=plot_by_payment['InternetService'],
+                y=plot_by_payment['Churn'],
+            width = [0.8],
+                marker = dict(
+                    color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                )
+            )
+        ]
+
+        layout=go.Layout(
+            xaxis={"type": "category"},
+            yaxis={"title": "Churn Rate"},
+            title="Churn Rate by Internet Service",
+            plot_bgcolor = 'white',
+            paper_bgcolor = 'white',
+        )
+
+        cfig3 = go.Figure(data=plot_data, layout=layout)
+        graph16JSON = json.dumps(cfig3, cls=plotly.utils.PlotlyJSONEncoder)
+
+        # Churn Rate by Contract Duration
+        plot_by_contract = df.groupby('Contract').Churn.mean().reset_index()
+        plot_data = [
+            go.Bar(
+                x=plot_by_contract['Contract'],
+                y=plot_by_contract['Churn'],
+                width = [0.8],
+                marker = dict(
+                    color=['#ffa14a', '#9da4d8', '#21ced2']
+                )
+            )
+        ]
+
+        cfig4 = go.Figure(data=plot_data, layout=layout)
+        graph17JSON = json.dumps(cfig4, cls=plotly.utils.PlotlyJSONEncoder)
+
+        # Churn Rate by Payment Method
+        plot_by_payment = df.groupby('PaymentMethod').Churn.mean().reset_index()
+        plot_data = [
+            go.Bar(
+                x=plot_by_payment['PaymentMethod'],
+                y=plot_by_payment['Churn'],
+                width = [0.8],
+                marker = dict(
+                    color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                )
+            )
+        ]
+
+        layout=go.Layout(
+            xaxis={"type": "category"},
+            yaxis={"title": "Churn Rate"},
+            title="Churn Rate by Payment Method",
+            plot_bgcolor = 'white',
+            paper_bgcolor = 'white',
+        )
+
+        cfig5 = go.Figure(data=plot_data, layout=layout)
+        graph18JSON = json.dumps(cfig5, cls=plotly.utils.PlotlyJSONEncoder)
+
+        # Relationship of Tenure and Churn Rate
+        plot_by_tenure = df.groupby('tenure').Churn.mean().reset_index()
+        plot_data = [
+            go.Scatter(
+                x=plot_by_tenure['tenure'],
+                y=plot_by_tenure['Churn'],
+                mode = "markers",
+                name = "Low",
+                marker = dict(
+                    size = 5,
+                    line = dict(width=0.8),
+                    color='green'
+                ),
+            )
+        ]
+
+        layout=go.Layout(
+            yaxis={"title": "Churn Rate"},
+            xaxis={"title": "Tenure"},
+            title="Churn Rate and Tenure Relationship",
+            plot_bgcolor = 'white',
+            paper_bgcolor = 'white',
+        )
+
+        cfig6 = go.Figure(data=plot_data, layout=layout)
+        graph19JSON = json.dumps(cfig6, cls=plotly.utils.PlotlyJSONEncoder)
+
+        # ------------ End of Churn Analytics ------------
         
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("home.html", user= current_user, image_file=image_file,
@@ -249,7 +370,15 @@ def home():
         graph10JSON=graph10JSON,
         graph11JSON=graph11JSON,
         graph12JSON=graph12JSON,
-        graph13JSON=graph13JSON)
+        graph13JSON=graph13JSON,
+         # For Churn
+        graph14JSON=graph14JSON,
+        graph15JSON=graph15JSON,
+        graph16JSON=graph16JSON,
+        graph17JSON=graph17JSON,
+        graph18JSON=graph18JSON,
+        graph19JSON=graph19JSON
+        )
 
     elif current_user.explore == "customer":
         if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
