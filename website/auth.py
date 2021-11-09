@@ -192,7 +192,9 @@ def emailmark(id):
       msg = MIMEMultipart()
       msg['Subject'] = request.form['subject']
       msg['To'] = request.form['email']
+      emailMsg=""
       emailMsg = request.form['message']
+      msg.attach(MIMEText(emailMsg,'plain'))
       with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
           smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
           smtp.send_message(msg)
