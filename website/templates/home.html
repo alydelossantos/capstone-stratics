@@ -269,8 +269,38 @@
 			    {% endif %}
  			 </div>
 			  <div class="content content-2">
-				<div class="title">This is a Blog content</div>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit amet. Possimus doloris nesciunt mollitia culpa sint itaque, vitae praesentium assumenda suscipit fugit doloremque adipisci doloribus, sequi facere itaque cumque accusamus, quam molestias sed provident quibusdam nam deleniti. Autem eaque aut impedit eo nobis quia, eos sequi tempore! Facere ex repellendus, laboriosam perferendise. Enim quis illo harum, exercitationem nam totam fugit omnis natus quam totam, repudiandae dolor laborum! Commodi?</p>
+			 {% if current_user.explore == "sample" %}
+			<!--DITO LALAGAY-->
+
+  			{% elif current_user.explore == "customer" %}
+			
+			 <!--DITO LALAGAY-->
+				  
+			{% elif current_user.explore == "empty" %}
+				  <section class="p-t-20">
+				    <div class="dboard-main-container">
+				      <div class="row">
+					<div class="col-md-12">
+					  <div class="dboard-overview-wrap">
+					    <div class="dboard-overview-item">
+					      <div class="dboard-overview-box">
+						  <div class="photo">
+						    <img src="{{url_for('static', filename='images/empty_dashboard.png')}}" alt="empty">
+						  </div>
+						  <div class="text">
+						    <p>Your current dashboard is empty.</p><br>
+						    <span>Add or explore dataset to your dashboard.</span><br>
+						    <button type="button" data-toggle="modal" data-target="#medmodal" class="dboard-btn2 dboard-btn2-icon dboard-btn--blue">
+						    <i class='bx bx-folder-open'></i>explore datasets</button>
+						  </div> 
+						</div>
+					      </div>
+					  </div>
+					</div>
+				      </div>
+				    </div>  
+			    {% endif %}
+							  
 			  </div>
 			</section>
 		  </div>
