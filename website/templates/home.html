@@ -378,7 +378,7 @@
 						</div>
 					    </div>
 					</div>
-				    </section>
+				    
 				    <!-- END STATISTIC-->
 
 					<div class="container-fluid">
@@ -393,7 +393,7 @@
 							<div id='chart16'></div>
 						  </div>
 						</div>
-					  </div>
+					</div>
 					  
 					  <div class="container-fluid">
 						<div class="row">
@@ -413,9 +413,10 @@
 						  </div>
 						</div>
 					  </div>
+					</section>
 
-					  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-						<script type='text/javascript'>
+					<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+					<script type='text/javascript'>
 
 						// For Churn
 
@@ -436,7 +437,9 @@
 
 						var graph19 = {{graph19JSON | safe}};
 						Plotly.plot('chart19',graph19,{});
+
 					</script>
+
 
   			{% elif current_user.explore == "customer" %}
 			
