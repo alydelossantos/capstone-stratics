@@ -545,7 +545,6 @@ def delete_task(task_id):
 @login_required
 def strat():
     if current_user.explore == "customer" or current_user.explore == "empty":
-        if current_user.explore == "customer" or current_user.explore == "empty":
         if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
             statc = Strategies \
                 .query \
