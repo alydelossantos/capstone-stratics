@@ -311,7 +311,7 @@ def insert():
             
             if sd <= 10:
                 sdatas = Otherdata(accnt_num=accnt_num, name=name, address=address, services=services, monthly=monthly
-                            , collector=collector, sstatus=sstatus, amnt_paid=amnt_paid, ref_num=ref_num, odata_id=current_user.id)
+                            , collector=collector, sstatus=sstatus, amnt_paid=amnt_paid, ref_num=ref_num, odata_id=user.id)
                 db.session.add(sdatas)
                 db.session.commit()   
                 flash("Customer Record Added Successfully", category="notlimit")
@@ -646,7 +646,7 @@ def newstrat():
             
             if sd <= 10:
                 my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
-                        enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
+                        enddate=enddate, status=status, description=description, ostrat_id=user.id)
                 db.session.add(my_strat)
                 db.session.commit()   
                 flash("Strategy Added Successfully", category="notlimit")
