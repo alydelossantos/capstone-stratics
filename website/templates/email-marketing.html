@@ -347,10 +347,23 @@ input[type=submit]:hover {
 }
 </style>
 		</head>
-		<body>
-	<div class="strat-container-main">
-
-  </div>
+	<body style="margin-top:40px">
+	{% with messages = get_flashed_messages(with_categories = true) %}
+	{% if messages %}
+	  {% for category, messages in messages %}
+		  {% if category == "error" %}
+		  <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 0; margin-top:20px;">{{ messages }}
+			<button type="button" class="close" data-dismiss="alert"><span aria-hidden="True">&times;</span></button>
+		  </div>
+		  {% else %}
+		  <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 0; margin-top:20px;">{{ messages }}
+			<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+		  </div>
+		  {% endif %}
+	  {% endfor %}
+	{% endif %}
+	{% endwith %}
+        <h1 style="margin-top: 30px;">{% block title %} Customer Management {% endblock %}</h1>
         <form action="/add-email" method="post">
         <div class="row" style="margin: 0;">
           <div>
