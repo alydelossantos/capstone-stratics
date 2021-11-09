@@ -15141,11 +15141,12 @@ textarea.form-control {
   color: black;
   font-weight: 600;
   right: 35px;
+  bottom: 20px;
 }
 
 .card-container-main {
   width: 100%;
-  padding-top: 2rem;
+  padding-top: 2.8rem;
   padding-right: 10px;
   padding-left: 10px;
   padding-bottom: 10px;
