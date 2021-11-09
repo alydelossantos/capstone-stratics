@@ -1,8 +1,6 @@
 import os
 import secrets
 import smtplib
-import numpy as np
-import pandas as pd
 import sqlalchemy 
 from PIL import Image
 from flask import Flask
