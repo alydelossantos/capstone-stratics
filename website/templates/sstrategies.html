@@ -31,7 +31,7 @@
                 <div class="strat-column-head">
                 <div class="strat-card-head">
                     <h4>Strategies</h4>
-                    <p class='card-strat-large primary'>{{ user.sample_strat|length }}</p>
+                    <p class='card-strat-large primary'>{{ user.other_strat|length }}</p>
                 </div>
                 </div>
             
@@ -200,7 +200,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for row in user.sample_strat %}
+                        {% for row in user.other_strat %}
                         <tr class="tr-shadow">
                             <td>
                                 <label class="au-checkbox">

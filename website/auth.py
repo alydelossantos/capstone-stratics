@@ -596,11 +596,29 @@ def strat():
 
         all_data = Strategies.query.all() 
         image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
+        return render_template("strategies.html", user= current_user, samplestrat=all_data, statss=statss, statc=statc, image_file = image_file)
             
 @auth.route('/strategies/insert', methods = ['POST'])
 @login_required
 def newstrat():
+    if current_user.explore == "sample" :
+        if request.method == 'POST':
+            name = request.form['name']
+            act = request.form['act']
+            platform = request.form['platform']
+            startdate = request.form['startdate']
+            enddate = request.form['enddate']
+            status = request.form['status']
+            description = request.form['description']
+            
+            my_strat = Strategies(name=name, act=act, platform=platform, startdate=startdate, 
+                        enddate=enddate, status=status, description=description)
+            db.session.add(my_strat)
+            db.session.commit() 
+            
+            flash("Strategy Added Successfully")
+            
+            return redirect(url_for('auth.strat'))
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             name = request.form['name']
@@ -662,6 +680,21 @@ def newstrat():
 @auth.route('/strategies/update/<id>', methods = ['GET', 'POST'])
 @login_required
 def updatestrat(id):
+    if current_user.explore == "sample" :
+        if request.method == 'POST':
+            name = request.form['name']
+            act = request.form['act']
+            platform = request.form['platform']
+            startdate = request.form['startdate']
+            enddate = request.form['enddate']
+            status = request.form['status']
+            description = request.form['description']
+            
+            db.session.commit() 
+            
+            flash("Strategy Updated Successfully", category="notlimit")
+            
+            return redirect(url_for('auth.strat'))
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             my_strat = Strategies.query.get(request.form.get('id'))
@@ -708,6 +741,13 @@ def updatestrat(id):
 @auth.route('/strategies/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
 def deletestrat(id):
+    if current_user.explore == "sample" :
+        my_data = Strategies.query.get(id)
+        db.session.delete(my_data)
+        db.session.commit()
+        flash("Strategy Deleted Successfully")
+        
+        return redirect(url_for('auth.strat'))
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         my_data = Strategies.query.get(id)
         db.session.delete(my_data)
@@ -727,6 +767,15 @@ def deletestrat(id):
 @auth.route('/strategies/delete-selected', methods = ['GET', 'POST'])
 @login_required
 def deletestratcheck():
+    if current_user.explore == "sample" :
+        if request.method == "POST":
+            for getid in request.form.getlist("mycheckbox"):
+                print(getid)
+                db.session.query(Strategies).filter(Strategies.id ==getid).delete()
+            db.session.commit()
+            flash("Strategy Deleted Successfully")
+                     
+            return redirect(url_for('auth.strat'))
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == "POST":
             for getid in request.form.getlist("mycheckbox"):
