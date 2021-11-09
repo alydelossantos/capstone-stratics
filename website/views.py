@@ -176,7 +176,6 @@ def home():
         fig6 = go.Figure(data=plot_data, layout=layout)
         graph6JSON = json.dumps(fig6, cls=plotly.utils.PlotlyJSONEncoder)
 
-
         # Relationship of Tenure and Churn Rate
         plot_by_tenure = df.groupby('tenure').Churn.mean().reset_index()
         plot_data = [
@@ -204,9 +203,6 @@ def home():
         fig7 = go.Figure(data=plot_data, layout=layout)
         graph7JSON = json.dumps(fig7, cls=plotly.utils.PlotlyJSONEncoder)
 
-        current_user.dash = "full"
-        db.session.add(current_user)
-        db.session.commit()
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
         graph2JSON=graph2JSON, 
