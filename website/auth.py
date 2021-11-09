@@ -585,8 +585,8 @@ def strat():
                 status = request.form['status']
                 description = request.form['description']
                 
-             image_file = url_for('static', filename='images/' + current_user.image_file)
-             return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file, sd=sd)
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file, sd=sd)
     elif current_user.explore == "sample":
         statc = Strategies \
             .query \
