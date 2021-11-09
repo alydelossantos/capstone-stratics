@@ -31,7 +31,7 @@ auth = Blueprint('auth', __name__)
  
 kfull = "Kalibo Cable Television Network, Inc."
 knoinc = "Kalibo Cable Television Network"
-knonet = "Kalibo Cable Television Network"
+knonet = "Kalibo Cable Television"
 knotel = "Kalibo Cable"
 knocable = "Kalibo"
 abbrenoinc = "KCTN"
@@ -98,6 +98,7 @@ def signin():
                     if user.email_confirmed == True:
                         if user.cname.lower() == kfull.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbrenoinc.lower():
                             user.ccode =  "11A392O"
+                            user.cname = "Kalibo Cable"
                             user.user_status = True
                             db.session.add(user)
                             db.session.commit()
@@ -222,17 +223,6 @@ def confirm_email(token):
 def sidebarpic():
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("base.html", user= current_user, image_file = image_file)
-
- #Dashboard edit
-@auth.route('/home/dashboard/edit', methods=["GET", "POST"]) 
-@login_required
-def dashname():
-   if request.method == 'POST':
-      current_user.dname = request.form['dname']
-      db.session.commit()
-
-      flash("Dashboard Name Updated Successfully")
-      return redirect(url_for('views.home'))
 
 # Customer Management
 @auth.route('/customer-management', methods=["GET", "POST"]) 
@@ -554,47 +544,61 @@ def delete_task(task_id):
 @auth.route('/strategies', methods=["GET", "POST"])
 @login_required
 def strat():
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+    if current_user.explore == "customer" or current_user.explore == "empty":
+        if current_user.explore == "customer" or current_user.explore == "empty":
+        if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+            statc = Strategies \
+                .query \
+                .filter(Strategies.status == "complete").count()
+
+            statss = Strategies \
+                .query \
+                .filter(Strategies.status == "ongoing").count()
+
+            all_data = Strategies.query.all() 
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
+        else:
+            sd = Otherstrategies \
+                .query \
+                .join(User) \
+                .filter(User.id==current_user.id).count()
+
+            statc = Otherstrategies \
+                .query \
+                .join(User) \
+                .filter(Otherstrategies.status == "complete") \
+                .filter(User.id==current_user.id).count()
+
+            statss = Otherstrategies \
+                .query \
+                .join(User) \
+                .filter(Otherstrategies.status == "ongoing") \
+                .filter(User.id==current_user.id).count()
+
+            if request.method == 'POST':
+                name = request.form['name']
+                act = request.form['act']
+                platform = request.form['platform']
+                startdate = request.form['startdate']
+                enddate = request.form['enddate']
+                status = request.form['status']
+                description = request.form['description']
+                
+             image_file = url_for('static', filename='images/' + current_user.image_file)
+             return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file, sd=sd)
+    elif current_user.explore == "sample":
         statc = Strategies \
             .query \
             .filter(Strategies.status == "complete").count()
-        print(statc)
+
         statss = Strategies \
             .query \
             .filter(Strategies.status == "ongoing").count()
-        print(statss)
+
         all_data = Strategies.query.all() 
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
-    else:
-        sd = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(User.id==current_user.id).count()
-        print(sd)
-        statc = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "complete") \
-            .filter(User.id==current_user.id).count()
-        print(statc)
-        statss = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "ongoing") \
-            .filter(User.id==current_user.id).count()
-        print(statss)
-        if request.method == 'POST':
-            name = request.form['name']
-            act = request.form['act']
-            platform = request.form['platform']
-            startdate = request.form['startdate']
-            enddate = request.form['enddate']
-            status = request.form['status']
-            description = request.form['description']
-        
-        image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file, sd=sd)
             
 @auth.route('/strategies/insert', methods = ['POST'])
 @login_required
@@ -622,19 +626,19 @@ def newstrat():
             .query \
             .join(User) \
             .filter(User.id==current_user.id).count()
-        print(sd)
+
         statc = Otherstrategies \
             .query \
             .join(User) \
             .filter(Otherstrategies.status == "complete") \
             .filter(User.id==current_user.id).count()
-        print(statc)
+
         statss = Otherstrategies \
             .query \
             .join(User) \
             .filter(Otherstrategies.status == "ongoing") \
             .filter(User.id==current_user.id).count()
-        print(statss)
+
         if request.method == 'POST':
             name = request.form['name']
             act = request.form['act']
