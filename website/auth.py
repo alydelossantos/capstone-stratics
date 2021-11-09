@@ -97,6 +97,7 @@ def signin():
                 if user.user_type == "user":
                     if user.email_confirmed == True:
                         if user.cname.lower() == kfull.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbrenoinc.lower():
+                            user.ccode =  "11A392O"
                             user.user_status = True
                             db.session.add(user)
                             db.session.commit()
