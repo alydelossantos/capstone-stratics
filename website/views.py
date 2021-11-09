@@ -150,6 +150,7 @@ def home():
         )
 
         fig5 = go.Figure(data=plot_data, layout=layout)
+        fig5 = go.Figure(data=plot_data, layout=layout)
         graph5JSON = json.dumps(fig5, cls=plotly.utils.PlotlyJSONEncoder)
 
         # Churn Rate by Internet Service
@@ -173,6 +174,7 @@ def home():
             paper_bgcolor = 'white',
         )
 
+        fig6 = go.Figure(data=plot_data, layout=layout)
         fig6 = go.Figure(data=plot_data, layout=layout)
         graph6JSON = json.dumps(fig6, cls=plotly.utils.PlotlyJSONEncoder)
 
@@ -200,6 +202,7 @@ def home():
             paper_bgcolor = 'white',
         )
 
+        fig7 = go.Figure(data=plot_data, layout=layout)
         fig7 = go.Figure(data=plot_data, layout=layout)
         graph7JSON = json.dumps(fig7, cls=plotly.utils.PlotlyJSONEncoder)
 
