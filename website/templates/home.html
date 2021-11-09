@@ -341,12 +341,13 @@
 				    </div>  
 			    {% endif %}
  			 </div>
-			  <div class="content content-2">
+			  
+			<div class="content content-2">
 			 {% if current_user.explore == "sample" %}
 			<!--DITO LALAGAY-->
 
       	<!-- STATISTIC -->
-        <section class="statistic statistic2">
+        		<section class="statistic statistic2">
 					<div class="container-fluid">
 					    <div class="row">
 						<div class="col-md-3 col-lg-4">
@@ -378,8 +379,8 @@
 						</div>
 					    </div>
 					</div>
-				    
-				    <!-- END STATISTIC-->
+				</section>
+				<!-- END STATISTIC-->
 
 					<div class="container-fluid">
 						<div class="row">
@@ -395,7 +396,7 @@
 						</div>
 					</div>
 					  
-					  <div class="container-fluid">
+					<div class="container-fluid">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart17'></div>
@@ -404,16 +405,15 @@
 							<div id='chart18'></div>
 						  </div>
 						</div>
-					  </div>
+					</div>
 					  
-					  <div class="container-fluid">
+					<div class="container-fluid">
 						<div class="row">
 						  <div class="col-sm-12">
 							<div id='chart19'></div>
 						  </div>
 						</div>
-					  </div>
-					
+					</div>
 
 					<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 					<script type='text/javascript'>
@@ -437,9 +437,9 @@
 
 						var graph19 = {{graph19JSON | safe}};
 						Plotly.plot('chart19',graph19,{});
-
+						
 					</script>
-					</section>
+
 
 
   			{% elif current_user.explore == "customer" %}
