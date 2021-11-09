@@ -24,15 +24,16 @@ import scipy._lib
 from .extensions import db
 views = Blueprint('views', __name__)
 
+kfull = "Kalibo Cable Television Network, Inc."
+knoinc = "Kalibo Cable Television Network"
+knonet = "Kalibo Cable Television Network"
+knotel = "Kalibo Cable"
+knocable = "Kalibo"
+abbrenoinc = "KCTN"
+
 @views.route('/home', methods=["GET", "POST"])
 @login_required
 def home():
-    kfull = "Kalibo Cable Television Network, Inc."
-    knoinc = "Kalibo Cable Television Network"
-    knonet = "Kalibo Cable Television Network"
-    knotel = "Kalibo Cable"
-    knocable = "Kalibo"
-    abbrenoinc = "KCTN"
     if current_user.explore == "sample":
         cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
         conn = cnx.connect()
@@ -249,7 +250,10 @@ def home():
                 fig4 = go.Figure(data = data,layout = layout)
                 fig4 = go.Figure(data = data,layout = layout)
                 graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
-
+                
+                current_user.dash = "full"
+                db.session.add(current_user)
+                db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
                 graph2JSON=graph2JSON, 
@@ -257,23 +261,151 @@ def home():
                 graph4JSON=graph4JSON, row=row)
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() > 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
-
+                current_user.dash = "none"
+                db.session.add(current_user)
+                db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
             elif db.session.query(Data).count() == 0:
                 flash("Records must contain atleast 3 rows.", category="error")
-
+                current_user.dash = "none"
+                db.session.add(current_user)
+                db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
-            elif current_user.explore == "empty":
+        else:
+            if db.session.query(Otherdata).count() >=3 :
+                cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+                conn = cnx.connect()
+                df = pd.read_sql_table('otherdata', con=cnx)
 
+                # independent variable
+                X = df.iloc[:,:1].values
+                X
+
+                # dependent variable - churn column
+                y = df.iloc[:,8]
+                y
+
+                # Counts number of null values - resulted that no values are missing.
+                null_columns=df.columns[df.isnull().any()]
+                df[null_columns].isnull().sum()
+
+                # Splitting Data into Train and Test
+                from sklearn.model_selection import train_test_split
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+
+                print("X_train : ",X_train.shape)
+                print("X_test : ",X_test.shape)
+                print("y_train : ",y_train.shape)
+                print("y_test : ",y_test.shape)
+
+                # Outlier Detection
+                print(df.shape)
+                print(df.columns)
+
+                # Zscore
+                from scipy import stats
+                zscore = np.abs(stats.zscore(df['monthly']))
+                print (zscore)
+
+                # zscore values higher than 3 are outliers.
+                threshold = 3
+                print(np.where(zscore >3))
+
+                df.corr(method='pearson')
+
+                # Create Pivot Table - compute for sum
+                pd.pivot_table(df, index=['address', 'services'], aggfunc = 'sum')
+
+                # Create Pivot Table - compute for mean
+                pd.pivot_table(df, index=['address', 'services'], aggfunc = 'mean')    
+
+                # Create Pivot Table - compute for count
+                pd.pivot_table(df, index=['address', 'services'], aggfunc = 'count')
+
+                # Pie Chart
+                from plotly.offline import init_notebook_mode,iplot
+                import plotly.graph_objects as go
+                import cufflinks as cf
+                init_notebook_mode(connected=True)
+
+                #labels
+                lab = df["collector"].value_counts().keys().tolist()
+                #values
+                val = df["collector"].value_counts().values.tolist()
+                trace = go.Pie(labels=lab, 
+                                values=val, 
+                                marker=dict(colors=['red']), 
+                                # Seting values to 
+                                hoverinfo="value"
+                            )
+                data = [trace]
+
+                layout = go.Layout(title="Collector")
+                fig1 = go.Figure(data = data,layout = layout)
+                fig1.update_traces(hole=.4)
+                graph1JSON = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Histogram - Service
+                # defining data
+                trace = go.Histogram(x=df['services'],nbinsx=40,histnorm='percent')
+                data = [trace]
+                # defining layout
+                layout = go.Layout(title="Service Distribution")
+                # defining figure and plotting
+                fig2 = go.Figure(data = data,layout = layout)
+                graph2JSON = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Histogram - State
+                # defining data
+                trace = go.Histogram(x=df['address'],nbinsx=52)
+                data = [trace]
+                # defining layout
+                layout = go.Layout(title="Address")
+                # defining figure and plotting
+                fig3 = go.Figure(data = data,layout = layout)
+                fig3 = go.Figure(data = data,layout = layout)
+                graph3JSON = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Histogram - Churn
+                # defining data
+                trace = go.Histogram(x=df['sstatus'],nbinsx=3)
+                data = [trace]
+                # defining layout
+                layout = go.Layout(title="Churn Distribution")
+                # defining figure and plotting
+                fig4 = go.Figure(data = data,layout = layout)
+                fig4 = go.Figure(data = data,layout = layout)
+                graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+                
+                current_user.dash = "full"
+                db.session.add(current_user)
+                db.session.commit()
+                image_file = url_for('static', filename='images/' + current_user.image_file)
+                return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
+                graph2JSON=graph2JSON, 
+                graph3JSON=graph3JSON,
+                graph4JSON=graph4JSON, row=row)
+            elif db.session.query(Otherdata).count() < 3 and db.session.query(Data).count() > 1 :
+                flash("Records must contain atleast 3 rows.", category="error")
+                current_user.dash = "none"
+                db.session.add(current_user)
+                db.session.commit()
+                image_file = url_for('static', filename='images/' + current_user.image_file)
+                return render_template("home.html", user= current_user, image_file=image_file)
+            elif db.session.query(Otherdata).count() == 0:
+                flash("Records must contain atleast 3 rows.", category="error")
+                current_user.dash = "none"
+                db.session.add(current_user)
+                db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
     elif current_user.explore == "empty":
 
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("home.html", user= current_user, image_file=image_file)
-    image_file = url_for('static', filename='images/' + current_user.image_file)
+image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("home.html", user= current_user, image_file=image_file)
 
 
@@ -297,3 +429,4 @@ def homeexp():
 @views.route('/')
 def landing():
     return render_template("landing.html", user= current_user)
+
