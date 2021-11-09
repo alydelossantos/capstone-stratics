@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
@@ -69,37 +68,23 @@
 			
     <div class="row">
             <div class="table-responsive table-responsive-data2">
-			<form action="/admin-management/delete-selected" method="POST">
                 <table class="table table-data2" id="mytable">
                     <thead>
                         <tr>
-                            <th>
-                                <label class="au-checkbox">
-                                    <input type="checkbox" id="checkall">
-                                    <span class="au-checkmark"></span>
-                                </label>
-                            </th>
                             <th>Name</th>
-			    <th>Company Name</th>
+							<th>Company Name</th>
                             <th>Position</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Address</th>
                             <th>Password</th>
                             <th>Account Activated</th>
-			    <th>Status</th>
-                            <th></th>
+							<th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for row in users %}
                         <tr class="tr-shadow">
-                            <td>
-                                <label class="au-checkbox">
-                                    <input type="checkbox" name="mycheckbox" class="checkthis" value="{{row.id}}">
-                                    <span class="au-checkmark"></span>
-                                </label>
-                            </td>
 							<td>{{row.fname}} {{row.lname}}</td>
 							<td>{{row.cname}}</td>
 							<td>{{row.position}}</td>
@@ -117,12 +102,6 @@
 								{% else %}
 								<li class="block-inactive">Inactive</li>
 							</td>{% endif %}
-							<td>
-                                <div class="table-data-feature">
-                                    <a href="/admin-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
-                                    <a href="/admin-management/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
-                                </div>
-                            </td>
                         </tr>
 			</form>
 				<!-- Modal Edit User-->
@@ -137,13 +116,13 @@
     
                                     <div class="modal-body">
                                         <form action="/admin-management/update/{{row.id}}" method="POST">
-					    <div class="form-group row">
-						<div class="col-sm-6">
+										<div class="form-group row">
+											<div class="col-sm-6">
                                               	<h1>{{row.fname}} {{row.lname}}</h1>
-					        <p>{{row.email}}</p>
-						<p>{{row.cp}}</p>
-						<p>{{row.address}}</p>
-						</div>
+												<p>{{row.email}}</p>
+												<p>{{row.cp}}</p>
+												<p>{{row.address}}</p>
+												</div>
                                             </div> 
 						
                                             <div class="form-group row">
@@ -151,11 +130,6 @@
                                                     <label>Position</label>
                                                     <input type="hidden"  name="id" value="{{row.id}}">
                                                     <input type="text" class="form-control" name="position" value="{{row.position}}">
-                                                </div>
-						    
-						 <div class="col-sm-6">
-                                                    <label>Password</label>
-                                                    <input type="text" class="form-control" name="password" value="{{row.password}}">
                                                 </div>
                                             </div> 
 		
@@ -194,14 +168,7 @@
                 </div>
                         {% endfor %}
                     </tbody>
-			<div class="col-md-12">
-				<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
-					<button type="submit" class="au-btn au-btn-icon au-btn--red au-btn--small" style="width: 40px; font-size: 14px;color:white;padding: -1 0;">
-					<i class="bx bx-trash" style="margin-left: 5px;"></i>Delete</button>
-				</div>
-			</div>
                 </table>
-			</form>
 		</div>
 	</div>
 	
@@ -247,25 +214,6 @@
             } );
             </script>
 		
-		<script>
-			$(document).ready(function(){
-			$("#mytable #checkall").click(function () {
-					if ($("#mytable #checkall").is(':checked')) {
-						$("#mytable input[type=checkbox]").each(function () {
-							$(this).prop("checked", true);
-						});
-			 
-					} else {
-						$("#mytable input[type=checkbox]").each(function () {
-							$(this).prop("checked", false);
-						});
-					}
-				});
-				 
-				$("[data-toggle=tooltip]").tooltip();
-			});
-			 
-		</script>
         </body>
 	</html>
 
