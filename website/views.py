@@ -167,23 +167,12 @@ def home():
                 from sklearn.model_selection import train_test_split
                 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
 
-                print("X_train : ",X_train.shape)
-                print("X_test : ",X_test.shape)
-                print("y_train : ",y_train.shape)
-                print("y_test : ",y_test.shape)
-
-                # Outlier Detection
-                print(df.shape)
-                print(df.columns)
-
                 # Zscore
                 from scipy import stats
                 zscore = np.abs(stats.zscore(df['monthly']))
-                print (zscore)
 
                 # zscore values higher than 3 are outliers.
                 threshold = 3
-                print(np.where(zscore >3))
 
                 df.corr(method='pearson')
 
@@ -250,15 +239,91 @@ def home():
                 fig4 = go.Figure(data = data,layout = layout)
                 fig4 = go.Figure(data = data,layout = layout)
                 graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+                # Churn Rate by Gender
+                plot_by_gender = df.groupby('gender').Churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_gender['gender'],
+                        y=plot_by_gender['Churn'],
+                       width = [0.8],
+                        marker = dict(
+                            color=['#ed7071', '#ffa14a']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Gender",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig5 = go.Figure(data=plot_data, layout=layout)
+                graph5JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Churn Rate by Internet Service
+                plot_by_payment = df.groupby('InternetService').Churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_payment['InternetService'],
+                        y=plot_by_payment['Churn'],
+                       width = [0.8],
+                        marker = dict(
+                            color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Internet Service",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig6 = go.Figure(data=plot_data, layout=layout)
+                graph6JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+                # Relationship of Tenure and Churn Rate
+                plot_by_tenure = df.groupby('tenure').Churn.mean().reset_index()
+                plot_data = [
+                    go.Scatter(
+                        x=plot_by_tenure['tenure'],
+                        y=plot_by_tenure['Churn'],
+                        mode = "markers",
+                        name = "Low",
+                        marker = dict(
+                            size = 5,
+                            line = dict(width=0.8),
+                            color='green'
+                        ),
+                    )
+                ]
+
+                layout=go.Layout(
+                    yaxis={"title": "Churn Rate"},
+                    xaxis={"title": "Tenure"},
+                    title="Churn Rate and Tenure Relationship",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig7 = go.Figure(data=plot_data, layout=layout)
+                graph7JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
                 
                 current_user.dash = "full"
-                db.session.add(current_user)
                 db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
                 graph2JSON=graph2JSON, 
                 graph3JSON=graph3JSON,
-                graph4JSON=graph4JSON)
+                graph4JSON=graph4JSON, graph5JSON=graph5JSON, 
+                graph6JSON=graph6JSON,
+                graph7JSON=graph7JSON)
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() > 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
                 current_user.dash = "none"
@@ -295,23 +360,12 @@ def home():
                 from sklearn.model_selection import train_test_split
                 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
 
-                print("X_train : ",X_train.shape)
-                print("X_test : ",X_test.shape)
-                print("y_train : ",y_train.shape)
-                print("y_test : ",y_test.shape)
-
-                # Outlier Detection
-                print(df.shape)
-                print(df.columns)
-
                 # Zscore
                 from scipy import stats
                 zscore = np.abs(stats.zscore(df['monthly']))
-                print (zscore)
 
                 # zscore values higher than 3 are outliers.
                 threshold = 3
-                print(np.where(zscore >3))
 
                 df.corr(method='pearson')
 
@@ -378,15 +432,91 @@ def home():
                 fig4 = go.Figure(data = data,layout = layout)
                 fig4 = go.Figure(data = data,layout = layout)
                 graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+                # Churn Rate by Gender
+                plot_by_gender = df.groupby('gender').Churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_gender['gender'],
+                        y=plot_by_gender['Churn'],
+                       width = [0.8],
+                        marker = dict(
+                            color=['#ed7071', '#ffa14a']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Gender",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig5 = go.Figure(data=plot_data, layout=layout)
+                graph5JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Churn Rate by Internet Service
+                plot_by_payment = df.groupby('InternetService').Churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_payment['InternetService'],
+                        y=plot_by_payment['Churn'],
+                       width = [0.8],
+                        marker = dict(
+                            color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Internet Service",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig6 = go.Figure(data=plot_data, layout=layout)
+                graph6JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+                # Relationship of Tenure and Churn Rate
+                plot_by_tenure = df.groupby('tenure').Churn.mean().reset_index()
+                plot_data = [
+                    go.Scatter(
+                        x=plot_by_tenure['tenure'],
+                        y=plot_by_tenure['Churn'],
+                        mode = "markers",
+                        name = "Low",
+                        marker = dict(
+                            size = 5,
+                            line = dict(width=0.8),
+                            color='green'
+                        ),
+                    )
+                ]
+
+                layout=go.Layout(
+                    yaxis={"title": "Churn Rate"},
+                    xaxis={"title": "Tenure"},
+                    title="Churn Rate and Tenure Relationship",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig7 = go.Figure(data=plot_data, layout=layout)
+                graph7JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
                 
                 current_user.dash = "full"
-                db.session.add(current_user)
                 db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
                 graph2JSON=graph2JSON, 
                 graph3JSON=graph3JSON,
-                graph4JSON=graph4JSON)
+                graph4JSON=graph4JSON, graph5JSON=graph5JSON, 
+                graph6JSON=graph6JSON,
+                graph7JSON=graph7JSON)
             elif db.session.query(Otherdata).count() < 3 and db.session.query(Data).count() > 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
                 current_user.dash = "none"
