@@ -30,7 +30,15 @@ from wtforms import StringField
 from .forms import RequestResetForm, ResetPasswordForm
 
 auth = Blueprint('auth', __name__)
-  
+ 
+kfull = "Kalibo Cable Television Network, Inc."
+knoinc = "Kalibo Cable Television Network"
+knonet = "Kalibo Cable Television Network"
+knotel = "Kalibo Cable"
+knocable = "Kalibo"
+abbrenoinc = "KCTN"
+
+ 
 # Landing Page
 #About Page
 @auth.route('/about')
@@ -80,13 +88,7 @@ def contact():
 
 #signin page   
 @auth.route('/sign-in', methods=["GET", "POST"]) #signin page
-def signin():   
-    kfull = "Kalibo Cable Television Network, Inc."
-    knoinc = "Kalibo Cable Television Network"
-    knonet = "Kalibo Cable Television Network"
-    knotel = "Kalibo Cable"
-    knocable = "Kalibo"
-    abbrenoinc = "KCTN"
+def signin():  
     if request.method == "POST" :
         email = request.form.get("email")
         password = request.form.get("password")
@@ -173,7 +175,7 @@ def signup():
             db.session.add(new_user)
             db.session.commit()
             send_confirmation_email(new_user.email)
-            flash("Thank you for registering!, Please check your email to confirm your account", category="success")
+            flash("Thank you for registering! Please check your email to confirm your account.", category="success")
             return redirect(url_for("auth.signin"))
     return render_template("signup.html", user= current_user)
  
@@ -200,7 +202,7 @@ def confirm_email(token):
         confirm_serializer = URLSafeTimedSerializer('asdfghjkl')
         email = confirm_serializer.loads(token, salt='email-confirmation-salt', max_age=3600)
     except:
-        flash('The confirmation link is invalid.')
+        flash('The confirmation link is invalid.', category="error")
         return redirect(url_for('auth.signin'))
         
     user = User.query.filter_by(email=email).first()
@@ -239,7 +241,7 @@ def dashname():
 @login_required
 def custman():
     if current_user.explore == "customer" or current_user.explore == "empty":
-        if current_user.cname == "Kalibo":
+        if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
             all_data = Data.query.all()
             
             image_file = url_for('static', filename='images/' + current_user.image_file)
@@ -272,7 +274,7 @@ def custman():
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
 def insert():
-    if current_user.cname == "Kalibo":
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             accnt_num = request.form['accnt_num']
             name = request.form['name']
@@ -325,7 +327,7 @@ def insert():
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
 def update(id):
-    if current_user.cname == "Kalibo":
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             datas = Data.query.get(request.form.get('id'))
             datas.accnt_num = request.form['accnt_num']
@@ -366,7 +368,7 @@ def update(id):
 @auth.route('/customer-management/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
 def delete(id):
-    if current_user.cname == "Kalibo":
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         my_data = Data.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
@@ -385,7 +387,7 @@ def delete(id):
 @auth.route('/customer-management/delete-selected', methods = ['GET', 'POST'])
 @login_required
 def deletecheck():
-    if current_user.cname == "Kalibo":
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == "POST":
             for getid in request.form.getlist("mycheckbox"):
                 print(getid)
@@ -462,6 +464,7 @@ def save_file(form_file):
     form_file.save(file_path)
     print (file_fn, 'xxx')
     return file_path
+    
 #send email
 @auth.route('/email-marketing', methods = ['GET','POST'])
 @login_required
@@ -509,7 +512,8 @@ def send():
                 Task.query.delete()
                 db.session.commit()
                 return redirect(url_for('auth.send'))
-    return render_template('email-marketing.html', tasks=tasks, recepients = recepients)
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template('email-marketing.html', tasks=tasks, recepients = recepients, user= current_user, image_file = image_file)
   
  
 #conver query into list of string
@@ -537,6 +541,7 @@ def add_task():
     db.session.add(task)
     db.session.commit()
     return redirect(url_for('auth.send'))
+    
 #delete email
 @auth.route('/delete/<int:task_id>')
 def delete_task(task_id):
@@ -551,7 +556,7 @@ def delete_task(task_id):
 @auth.route('/strategies', methods=["GET", "POST"])
 @login_required
 def strat():
-    if current_user.cname == "Kalibo":
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         statc = Strategies \
             .query \
             .filter(Strategies.status == "complete").count()
@@ -596,7 +601,7 @@ def strat():
 @auth.route('/strategies/insert', methods = ['POST'])
 @login_required
 def newstrat():
-    if current_user.cname == "Kalibo":
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             name = request.form['name']
             act = request.form['act']
@@ -657,7 +662,7 @@ def newstrat():
 @auth.route('/strategies/update/<id>', methods = ['GET', 'POST'])
 @login_required
 def updatestrat(id):
-    if current_user.cname == "Kalibo":
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             my_strat = Strategies.query.get(request.form.get('id'))
             my_strat.name = request.form['name']
@@ -703,7 +708,7 @@ def updatestrat(id):
 @auth.route('/strategies/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
 def deletestrat(id):
-    if current_user.cname == "Kalibo":
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         my_data = Strategies.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
@@ -722,7 +727,7 @@ def deletestrat(id):
 @auth.route('/strategies/delete-selected', methods = ['GET', 'POST'])
 @login_required
 def deletestratcheck():
-    if current_user.cname == "Kalibo":
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == "POST":
             for getid in request.form.getlist("mycheckbox"):
                 print(getid)
@@ -772,10 +777,10 @@ def reset_request():
         send_reset_email(user)
         flash('An eamil has been sent with instruction to reset your password','info')
         return redirect(url_for('auth.signin'))
-    return render_template('reset_request.html',title = 'Reset Password', form = form)
+    return render_template('reset_request.html',title = 'Forgot your Password?', form = form)
   
   
- #ridirect reset password
+ #redirect reset password
 @auth.route("/sign-in/reset-password/<token>",methods=['GET','POST'])
 def reset_token(token):
     if current_user.is_authenticated:
