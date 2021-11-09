@@ -474,8 +474,8 @@ def send():
     EMAIL_PASSWORD = 'sleepdeprived'
     if request.method == "POST":
         if checker == 0:
-              flash('no receptient')
-              return redirect(url_for('auth.send'))
+            flash('Please specify at least one recipient.', category="error")
+            return redirect(url_for('auth.send'))
         else:
             x = [] 
             if request.files['attfile']:
