@@ -47,10 +47,6 @@ def home():
         na_cols = na_cols[na_cols == True].reset_index()
         na_cols = na_cols["index"].tolist()
 
-        for col in df.columns[1:]:
-            if col in na_cols:
-                if df[col].dtype != 'object':
-                    df[col] = df[col].fillna(df[col].mean()).round(0)
 
         # Label Encoder
         from sklearn.preprocessing import LabelEncoder
