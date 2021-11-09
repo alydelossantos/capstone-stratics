@@ -181,53 +181,19 @@ def save_picture(form_picture):
     i.save(picture_path)
     return picture_fn
 
-#saving attachments to attachment folder
-def save_file(form_file):
-    print(form_file.filename)
-    _, f_ext = os.path.splitext(form_file.filename)
-    file_fn = _ + f_ext
-    file_path = os.path.join(auth.root_path, 'static/attachments',file_fn)
-    print(file_path,"kkk")
-    form_file.save(file_path)
-    print (file_fn, 'xxx')
-    return file_path
-    
 #SEND EMAIL FOR INQUIRIES
 @auth.route('/inquiries/send-email/<id>', methods = ['GET','POST'])
 @login_required
 def emailmark(id):
     EMAIL_ADDRESS = 'horizonfeua@gmail.com'
     EMAIL_PASSWORD = 'sleepdeprived'
-    contacts = ['YourAddress@gmail.com', 'test@example.com']
     if request.method == "POST":
       my_data = Contact.query.get(request.form.get('id'))
-      x = [] 
-      if request.files['attfile']:
-              file_attachments =''
-              form_file = save_file(request.files['attfile'])
-              print (form_file,"asdsa")
-              file_attachments = form_file
-              print (file_attachments)
-              x.append(file_attachments)
       msg = MIMEMultipart()
       msg['Subject'] = request.form['subject']
       msg['To'] = request.form['email']
       emailMsg=""
       emailMsg = request.form['message']
-      msg.attach(MIMEText(emailMsg,'plain'))
-      print (x)
-      for attachment in x:
-          print (attachment)
-          content_type, encoding= mimetypes.guess_type(attachment)
-          main_type,sub_type = content_type.split('/',1)
-          file_name = os.path.basename(attachment)
-          f = open(attachment,'rb')
-          myFile = MIMEBase(main_type, sub_type)
-          myFile.set_payload(f.read())
-          myFile.add_header('Content-Disposition', 'attachment', filename=file_name)
-          encoders.encode_base64(myFile)
-          f.close()
-          msg.attach(myFile)
       with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
           smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
           smtp.send_message(msg)
