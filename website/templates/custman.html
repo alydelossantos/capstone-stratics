@@ -334,7 +334,7 @@
             <!-- END TABLE -->	
 		</div>
 		
-			{% else %}
+			{% elif current_user.explore == "sample" %}
 		<div class="strat-container-main">
 			<h3>Customers</b></h3>
 			<div class="strat-stat-container">
@@ -385,8 +385,7 @@
                             <th>Internet Service</th>
                             <th>Monthly Charges</th>
                             <th>Total Charges</th>
-							<th>Churn</th>
-                            <th></th>
+			    <th>Churn</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -408,13 +407,7 @@
 							<td>{{row.MonthlyCharges}}</td>
 							<td>{{row.TotalCharges}}</td>
 							<td>{{row.Churn}}</td>
-                            <td>
-                                <div class="table-data-feature">
-                                    <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
-                                    <a href="/customer-management/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
-                                    
-                                </div>
-                            </td>
+                           
                         </tr>
 		            </form>
                       						
