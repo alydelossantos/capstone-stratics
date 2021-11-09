@@ -56,38 +56,6 @@ def home():
         from sklearn.preprocessing import LabelEncoder
         le = LabelEncoder()
 
-        # Label encoding for columns with 2 or less unique
-
-        le_count = 0
-        for col in df.columns[1:]:
-            if df[col].dtype == 'object':
-                if len(list(df[col].unique())) <=2:
-                    le.fit(df[col])
-                    df[col] = le.transform(df[col])
-                    le_count +=1
-
-        df2 = df[['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'tenure', 'PhoneService', 'PaperlessBilling', 'MonthlyCharges', 'TotalCharges']]
-        fig = plt.figure(figsize=(15, 10))
-
-        for i in range(df2.shape[1]):
-            plt.subplot(6, 3, i+1)
-            f=plt.gca()
-            f.set_title(df2.columns.values[i])
-
-        vals = np.size(df2.iloc[:, i].unique())
-        if vals >= 100:
-            vals = 100
-
-        plt.hist(df2.iloc[:, i], bins=vals, color = '#f39519')
-        plt.tight_layout()
-
-        df.corr(method='pearson')
-
-        # Correlation
-
-        plt.figure(figsize=(15,8))
-        df.corr()['Churn'].sort_values(ascending = False).plot(kind='bar')
-
         from plotly.offline import init_notebook_mode,iplot
         import plotly.graph_objects as go
         import cufflinks as cf
