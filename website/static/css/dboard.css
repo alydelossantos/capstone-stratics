@@ -15131,6 +15131,7 @@ textarea.form-control {
 
 .dboard-overview-item p {
   display: inline-flex;
+  margin-top: 20px;
   font-size: 16px;
   color: black;
 }
