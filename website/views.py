@@ -143,7 +143,7 @@ def home():
         return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
         graph2JSON=graph2JSON, 
         graph3JSON=graph3JSON,
-        graph4JSON=graph4JSON,)
+        graph4JSON=graph4JSON)
     elif current_user.explore == "customer":
         if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
             if db.session.query(Data).count() >=3 :
@@ -258,7 +258,7 @@ def home():
                 return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
                 graph2JSON=graph2JSON, 
                 graph3JSON=graph3JSON,
-                graph4JSON=graph4JSON, row=row)
+                graph4JSON=graph4JSON)
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() > 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
                 current_user.dash = "none"
@@ -386,7 +386,7 @@ def home():
                 return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
                 graph2JSON=graph2JSON, 
                 graph3JSON=graph3JSON,
-                graph4JSON=graph4JSON, row=row)
+                graph4JSON=graph4JSON)
             elif db.session.query(Otherdata).count() < 3 and db.session.query(Data).count() > 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
                 current_user.dash = "none"
