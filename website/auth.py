@@ -250,7 +250,6 @@ def custman():
                 sstatus = request.form['sstatus']
                 amnt_paid = request.form['amnt_paid']
                 ref_num = request.form['ref_num']
-
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
     elif current_user.explore == "sample":
