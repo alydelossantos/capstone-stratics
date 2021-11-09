@@ -776,7 +776,7 @@ def reset_request():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_email(user)
-        flash('An amail has been sent with instruction to reset your password','info')
+        flash('An email has been sent with instruction to reset your password','info')
         return redirect(url_for('auth.signin'))
     return render_template('reset_request.html',title = 'Forgot your Password?', form = form)
   
