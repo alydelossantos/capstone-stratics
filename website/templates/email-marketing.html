@@ -12,9 +12,7 @@
       <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
       <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
       <link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
-      {% block title %} Stratics | Email Marketing {% endblock %}
 		
-
   <style>
   .image-upload>input {
   margin: 0;
@@ -339,6 +337,13 @@ input[type=submit]:hover {
   margin-right: 10px;
   margin-top: 5px;
 }
+	  
+h3{
+	color: #333333;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 1.2;
+}
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
   .col-25, .col-75, input[type=submit] {
@@ -364,7 +369,7 @@ input[type=submit]:hover {
 	  {% endfor %}
 	{% endif %}
 	{% endwith %}
-	<h3 style="margin-top: 30px;">Customers</b></h3>
+	<h3 style="margin-top: 30px;">Email Marketing</b></h3>
         <form action="/add-email" method="post">
         <div class="row" style="margin: 0;">
           <div>

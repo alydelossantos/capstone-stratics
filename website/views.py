@@ -25,7 +25,7 @@ views = Blueprint('views', __name__)
 
 kfull = "Kalibo Cable Television Network, Inc."
 knoinc = "Kalibo Cable Television Network"
-knonet = "Kalibo Cable Television Network"
+knonet = "Kalibo Cable Television"
 knotel = "Kalibo Cable"
 knocable = "Kalibo"
 abbrenoinc = "KCTN"
@@ -476,6 +476,7 @@ def home():
                 graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
                 
                 current_user.dash = "full"
+                db.session.add(current_user)
                 db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
@@ -489,7 +490,7 @@ def home():
                 db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
-            elif db.session.query(Data).count() == 0:
+            elif db.session.query(Data).count() < 1:
                 flash("Records must contain atleast 3 rows.", category="error")
                 current_user.dash = "none"
                 db.session.add(current_user)
@@ -500,7 +501,7 @@ def home():
             if db.session.query(Otherdata).count() >=3 :
                 cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
                 conn = cnx.connect()
-                df = pd.read_sql_table('otherdata', con=cnx)
+                df = pd.read_sql_query('otherdata', con=cnx)
 
                 # independent variable
                 X = df.iloc[:,:1].values
@@ -592,6 +593,7 @@ def home():
                 graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
         
                 current_user.dash = "full"
+                db.session.add(current_user)
                 db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
