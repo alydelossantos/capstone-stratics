@@ -12,7 +12,7 @@
       <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
       <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
       <link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
-		  {% block title %} Customer Management {% endblock %}
+		
 
   <style>
   .image-upload>input {
@@ -363,7 +363,7 @@ input[type=submit]:hover {
 	  {% endfor %}
 	{% endif %}
 	{% endwith %}
-        <h1 style="margin-top: 30px;">{% block title %} Customer Management {% endblock %}</h1>
+        <h1 style="margin-top: 30px;">{% block title %} Email Marketing {% endblock %}</h1>
         <form action="/add-email" method="post">
         <div class="row" style="margin: 0;">
           <div>
