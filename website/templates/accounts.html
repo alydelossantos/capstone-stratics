@@ -52,7 +52,7 @@
             </div>
 			{% else %}
 			
-            <div class="alert alert-success alert-dismissable" role="alert">
+            <div class="alert alert-success alert-dismissable" role="alert"> 
                 <button type="button" class="close" data-dismiss="alert"> 
                     &nbsp; <i class="zmdi zmdi-close"></i><br>
                 </button>            
@@ -87,6 +87,7 @@
                     <tbody>
                         {% for row in users %}
                         <tr class="tr-shadow">
+                            
 							<td>{{row.fname}} {{row.lname}}</td>
 							<td>{{row.cname}}</td>
 							<td>{{row.position}}</td>
@@ -124,13 +125,13 @@
     
                                     <div class="modal-body">
                                         <form action="/admin-management/update/{{row.id}}" method="POST">
-					    <div class="form-group row">
-						<div class="col-sm-6">
-                                              	<h1>{{row.fname}} {{row.lname}}</h1>
-					        <p>{{row.email}}</p>
-						<p>{{row.cp}}</p>
-						<p>{{row.address}}</p>
-						</div>
+										<div class="form-group row">
+										<div class="col-sm-6">
+																<h1>{{row.fname}} {{row.lname}}</h1>
+											<p>{{row.email}}</p>
+										<p>{{row.cp}}</p>
+										<p>{{row.address}}</p>
+										</div>
                                             </div> 
 						
                                             <div class="form-group row">
@@ -139,6 +140,7 @@
                                                     <input type="hidden"  name="id" value="{{row.id}}">
                                                     <input type="text" class="form-control" name="position" value="{{row.position}}">
                                                 </div>
+						    
                                             </div> 
 		
                                             <div class="modal-footer">
@@ -222,6 +224,26 @@
                 $('.btn_pdf').attr("class","btn btn-success");        
             } );
             </script>
+		
+		<script>
+			$(document).ready(function(){
+			$("#mytable #checkall").click(function () {
+					if ($("#mytable #checkall").is(':checked')) {
+						$("#mytable input[type=checkbox]").each(function () {
+							$(this).prop("checked", true);
+						});
+			 
+					} else {
+						$("#mytable input[type=checkbox]").each(function () {
+							$(this).prop("checked", false);
+						});
+					}
+				});
+				 
+				$("[data-toggle=tooltip]").tooltip();
+			});
+			 
+		</script>
         </body>
 	</html>
 
