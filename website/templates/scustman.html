@@ -31,7 +31,7 @@
 					<div class="strat-column-head">
 					<div class="strat-card-head">
 						<h4>Customers</h4>
-						<p class='card-strat-large primary'>{{ user.sample_data|length }}</p>
+						<p class='card-strat-large primary'>{{ user.other_data|length }}</p>
 					</div>
 					</div>
 				</div>
@@ -197,7 +197,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for row in user.sample_data %}
+                        {% for row in user.other_data %}
                         <tr class="tr-shadow">
                             <td>
                                 <label class="au-checkbox">
@@ -209,15 +209,14 @@
 							<td>{{row.name}}</td>
 							<td>{{row.address}}</td>
 							<td>{{row.services}}</td>
-							<td>Php {{row.monthly}}.00</td>
+							<td>Php {{row.monthly}}</td>
 							<td>{{row.collector}}</td>
-							<td> {% if row.sstatus == "active" %}
-								<li class="btn btn-success btn-xs">Active</li>
+							<td> {% if row.user_status == True %}
+								<li class="block-active" >Active</li>
 								{% else %}
-								<li class="btn btn-danger btn-xs">Inactive</li>
-								{% endif %}
-							</td>
-							<td>{{row.amnt_paid}}</td>
+								<li class="block-inactive">Inactive</li>
+							</td>{% endif %}
+							<td>Php {{row.amnt_paid}}</td>
 							<td>{{row.ref_num}}</td>
                             <td>
                                 <div class="table-data-feature">
