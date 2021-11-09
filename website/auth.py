@@ -474,8 +474,8 @@ def send():
     EMAIL_PASSWORD = 'sleepdeprived'
     if request.method == "POST":
         if checker == 0:
-              flash('no receptient')
-              return redirect(url_for('auth.send'))
+            flash('Please specify at least one recipient.', category="error")
+            return redirect(url_for('auth.send'))
         else:
             x = [] 
             if request.files['attfile']:
@@ -756,9 +756,12 @@ def send_reset_email(user):
     token = user.get_reset_token()
     msg['To'] = [user.email]
     msg['Subject'] = 'Password Reset Request'
-    msg.set_content('')
-    html = render_template("cpass.html")
-    msg.add_alternative(html, subtype="html")
+    body = f'''
+    To reset your password, visit the following link:
+    {url_for('auth.reset_token',token=token,_external=True)}
+    Disregard this email if you did not make any request
+    '''
+    msg.set_content(body)
     
     with smtplib.SMTP_SSL('smtp.gmail.com',465) as smtp:
         smtp.login(EMAIL_ADDRESS,EMAIL_PASSWORD)
@@ -773,7 +776,7 @@ def reset_request():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_email(user)
-        flash('An eamil has been sent with instruction to reset your password','info')
+        flash('An email has been sent with instruction to reset your password','info')
         return redirect(url_for('auth.signin'))
     return render_template('reset_request.html',title = 'Forgot your Password?', form = form)
   
