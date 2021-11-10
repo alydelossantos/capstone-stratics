@@ -503,7 +503,7 @@ def home():
             conn = cnx.connect()
             df = pd.read_sql_table('otherdata', con=cnx)
             #df.loc[df['odata_id'].isin(current_user.id)]
-            if df(df['odata_id'].values) == current_user.id:
+            if df[df['odata_id'].values] == current_user.id:
                 # independent variable
                 X = df.iloc[:,:1].values
                 X
