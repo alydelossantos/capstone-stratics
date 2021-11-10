@@ -8,7 +8,7 @@ from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
-from .models import User, Data, Strategies, Contact, Sampledata, Otherdata, Otherstrategies
+from .models import User, Data, Otherdata, Sampledata, Strategies, Otherstrategies, Samplestrategies, Contact, Task
 from flask_login import login_user, login_required, logout_user, current_user
 
 # Plotly Libraries
@@ -24,6 +24,9 @@ from .extensions import db
 views = Blueprint('views', __name__)
 
 kfull = "Kalibo Cable Television Network, Inc."
+knoc = "Kalibo Cable Television Network Inc."
+knop = "Kalibo Cable Television Network, Inc"
+knob = "Kalibo Cable Television Network Inc"
 knoinc = "Kalibo Cable Television Network"
 knonet = "Kalibo Cable Television"
 knotel = "Kalibo Cable"
@@ -34,7 +37,7 @@ abbrenoinc = "KCTN"
 @login_required
 def home():
     if current_user.explore == "sample":
-        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
+        cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
         conn = cnx.connect()
         df = pd.read_sql_table('sampledata', con=cnx)
 
