@@ -501,7 +501,7 @@ def home():
             #if db.session.query(Otherdata).join(User).filter(User.id == current_user.id).count() >=3 :
             cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
             conn = cnx.connect()
-            df = pd.read_sql_query('''SELECT p.id, c.* FROM user p LEFT JOIN otherdata c ON c.odata_id = p.id''', con=cnx)
+            df = pd.read_sql_query('otherdata', con=cnx)
 
             # independent variable
             X = df.iloc[:,:1].values
