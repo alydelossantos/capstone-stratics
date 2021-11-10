@@ -30,6 +30,9 @@ from .forms import RequestResetForm, ResetPasswordForm
 auth = Blueprint('auth', __name__)
  
 kfull = "Kalibo Cable Television Network, Inc."
+knoc = "Kalibo Cable Television Network Inc."
+knop = "Kalibo Cable Television Network, Inc"
+knob = "Kalibo Cable Television Network Inc"
 knoinc = "Kalibo Cable Television Network"
 knonet = "Kalibo Cable Television"
 knotel = "Kalibo Cable"
@@ -96,7 +99,7 @@ def signin():
             if user.password == password:
                 if user.user_type == "user":
                     if user.email_confirmed == True:
-                        if user.cname.lower() == kfull.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbrenoinc.lower():
+                        if user.cname.lower() == kfull.lower() or user.cname.lower() == knoc.lower() or user.cname.lower() == knob.lower() or user.cname.lower() == knop.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbrenoinc.lower():
                             user.ccode =  "11A392O"
                             user.cname = "Kalibo Cable"
                             user.user_status = True
@@ -229,7 +232,7 @@ def sidebarpic():
 @login_required
 def custman():
     if current_user.explore == "customer" or current_user.explore == "empty":
-        if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+        if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
             all_data = Data.query.all()
             
             image_file = url_for('static', filename='images/' + current_user.image_file)
@@ -241,15 +244,22 @@ def custman():
                 .filter(User.id==current_user.id).count()
             print(sd)
             if request.method == "POST":
-                accnt_num = request.form['accnt_num']
-                name = request.form['name']
+                account_no = request.form['account_no']
+                subscriber = request.form['subscriber']
+                gender = request.form['gender']
                 address = request.form['address']
-                services= request.form['services']
+                province = request.form['province']
+                services = request.form['services']
                 monthly = request.form['monthly']
-                collector = request.form['collector']
-                sstatus = request.form['sstatus']
-                amnt_paid = request.form['amnt_paid']
-                ref_num = request.form['ref_num']
+                status = request.form['status']
+                amount_paid = request.form['amount_paid']
+                ref_no = request.form['ref_no']
+                date_paid = request.form['date_paid']
+                category = request.form['category']
+                activation_date = request.form['activation_date']
+                disconnection_date = request.form['disconnection_date']
+                reactivation_date = request.form['reactivation_date']
+                churn = request.form['churn']
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
     elif current_user.explore == "sample":
@@ -261,20 +271,28 @@ def custman():
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
 def insert():
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
-            accnt_num = request.form['accnt_num']
-            name = request.form['name']
+            account_no = request.form['account_no']
+            subscriber = request.form['subscriber']
             address = request.form['address']
-            services= request.form['services']
+            zone = request.form['zone']
+            services = request.form['services']
             monthly = request.form['monthly']
             collector = request.form['collector']
-            sstatus = request.form['sstatus']
-            amnt_paid = request.form['amnt_paid']
-            ref_num = request.form['ref_num']
+            status = request.form['status']
+            amount_paid = request.form['amount_paid']
+            ref_no = request.form['ref_no']
+            date_paid = request.form['date_paid']
+            category = request.form['category']
+            activation_date = request.form['activation_date']
+            disconnection_date = request.form['disconnection_date']
+            reactivation_date = request.form['reactivation_date']
+            churn = request.form['churn']
      
-            datas = Data(accnt_num=accnt_num, name=name, address=address, services=services, monthly=monthly
-                        , collector=collector, sstatus=sstatus, amnt_paid=amnt_paid, ref_num=ref_num)
+            datas = Data(account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
+                         collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+                         disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
             db.session.add(datas)
             db.session.commit()
             
@@ -288,19 +306,27 @@ def insert():
             .filter(User.id==current_user.id).count()
         print(sd)
         if request.method == 'POST':
-            accnt_num = request.form['accnt_num']
-            name = request.form['name']
+            account_no = request.form['account_no']
+            subscriber = request.form['subscriber']
+            gender = request.form['gender']
             address = request.form['address']
-            services= request.form['services']
+            province = request.form['province']
+            services = request.form['services']
             monthly = request.form['monthly']
-            collector = request.form['collector']
-            sstatus = request.form['sstatus']
-            amnt_paid = request.form['amnt_paid']
-            ref_num = request.form['ref_num']
+            status = request.form['status']
+            amount_paid = request.form['amount_paid']
+            ref_no = request.form['ref_no']
+            date_paid = request.form['date_paid']
+            category = request.form['category']
+            activation_date = request.form['activation_date']
+            disconnection_date = request.form['disconnection_date']
+            reactivation_date = request.form['reactivation_date']
+            churn = request.form['churn']
             
             if sd <= 10:
-                sdatas = Otherdata(accnt_num=accnt_num, name=name, address=address, services=services, monthly=monthly
-                            , collector=collector, sstatus=sstatus, amnt_paid=amnt_paid, ref_num=ref_num, odata_id=current_user.id)
+                sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
+                         status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+                         disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn, odata_id=current_user.id)
                 db.session.add(sdatas)
                 db.session.commit()   
                 flash("Customer Record Added Successfully", category="notlimit")
@@ -314,7 +340,7 @@ def insert():
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
 def update(id):
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             datas = Data.query.get(request.form.get('id'))
             datas.accnt_num = request.form['accnt_num']
@@ -355,7 +381,7 @@ def update(id):
 @auth.route('/customer-management/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
 def delete(id):
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         my_data = Data.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
@@ -374,7 +400,7 @@ def delete(id):
 @auth.route('/customer-management/delete-selected', methods = ['GET', 'POST'])
 @login_required
 def deletecheck():
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == "POST":
             for getid in request.form.getlist("mycheckbox"):
                 print(getid)
@@ -544,7 +570,7 @@ def delete_task(task_id):
 @login_required
 def strat():
     if current_user.explore == "customer" or current_user.explore == "empty":
-        if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+        if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
             statc = Strategies \
                 .query \
                 .filter(Strategies.status == "complete").count()
@@ -619,7 +645,7 @@ def newstrat():
             flash("Strategy Added Successfully")
             
             return redirect(url_for('auth.strat'))
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             name = request.form['name']
             act = request.form['act']
@@ -695,7 +721,7 @@ def updatestrat(id):
             flash("Strategy Updated Successfully", category="notlimit")
             
             return redirect(url_for('auth.strat'))
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             my_strat = Strategies.query.get(request.form.get('id'))
             my_strat.name = request.form['name']
@@ -748,7 +774,7 @@ def deletestrat(id):
         flash("Strategy Deleted Successfully")
         
         return redirect(url_for('auth.strat'))
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         my_data = Strategies.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
@@ -776,7 +802,7 @@ def deletestratcheck():
             flash("Strategy Deleted Successfully")
                      
             return redirect(url_for('auth.strat'))
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == "POST":
             for getid in request.form.getlist("mycheckbox"):
                 print(getid)
