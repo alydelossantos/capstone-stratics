@@ -24,6 +24,9 @@ from .extensions import db
 views = Blueprint('views', __name__)
 
 kfull = "Kalibo Cable Television Network, Inc."
+knoc = "Kalibo Cable Television Network Inc."
+knop = "Kalibo Cable Television Network, Inc"
+knob = "Kalibo Cable Television Network Inc"
 knoinc = "Kalibo Cable Television Network"
 knonet = "Kalibo Cable Television"
 knotel = "Kalibo Cable"
