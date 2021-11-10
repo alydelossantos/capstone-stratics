@@ -215,7 +215,6 @@ def updateaccnt(id):
     if request.method == 'POST':
         my_data = User.query.get(request.form.get('id'))
         my_data.position = request.form['position']
-        my_data.password = request.form['password']
         db.session.commit()
         flash("User Account Updated Successfully")
  
