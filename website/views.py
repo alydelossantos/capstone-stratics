@@ -498,7 +498,7 @@ def home():
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
         else:
-            if db.session.query(Otherdata).join(User).filter_by(User.id == current_user.id).count() >=3 :
+            if db.session.query(Otherdata).join(User).filter(User.id == current_user.id).count() >=3 :
                 cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
                 conn = cnx.connect()
                 #sql = '''SELECT od.*, d.id FROM otherdata od JOIN user d ON od.odata_id = d.id FILTER BY d.id'''
@@ -601,7 +601,7 @@ def home():
                 graph2JSON=graph2JSON, 
                 graph3JSON=graph3JSON,
                 graph4JSON=graph4JSON)
-            elif db.session.query(Otherdata).join(User).filter_by(User.id == current_user.id).count() < 3 and db.session.query(Otherdata).join(User).filter_by(User.id == current_user.id).count() > 1 :
+            elif db.session.query(Otherdata).join(User).filter(User.id == current_user.id).count() < 3 and db.session.query(Otherdata).join(User).filter(User.id == current_user.id).count() > 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
                 current_user.dash = "none"
                 db.session.add(current_user)
