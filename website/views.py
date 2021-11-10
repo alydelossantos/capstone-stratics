@@ -504,8 +504,7 @@ def home():
             df = pd.read_sql_query('''SELECT user.id, otherdata.*
                                       FROM user
                                       LEFT OUTER JOIN otherdata
-                                      ON user.id = otherdata.id
-                                      FILTER BY otherdata.id''', con=cnx)
+                                      ON user.id = otherdata.id''', con=cnx)
 
             # independent variable
             X = df.iloc[:,:1].values
