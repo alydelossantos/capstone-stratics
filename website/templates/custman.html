@@ -84,8 +84,8 @@
 
 							<div class="form-group row">
 								<div class="col-sm-6">
-									<label>Subsriber</label>
-									<input type="text" class="form-control" name="subscriber" required="1" placeholder="Subsriber Name">     
+									<label>Subscriber</label>
+									<input type="text" class="form-control" name="subscriber" required="1" placeholder="Subscriber Name">     
 								</div>
 
 								<div class="col-sm-6">
@@ -109,7 +109,7 @@
 							<div class="form-group row">
 								<div class="col-sm-6">
 									<label>Zone</label>
-									<select name="status" class="custom-select">
+									<select name="zone" class="custom-select">
 										<option value="0">Select Zone</option>
 										<option value="Balete">Balete</option>
 										<option value="Banga">Banga</option>
@@ -125,7 +125,7 @@
 
 								<div class="col-sm-6">
 									<label>Category</label>
-									<select name="status" class="custom-select">
+									<select name="category" class="custom-select">
 										<option value="0">Select Category</option>
 										<option value="RS">RS</option>
 										<option value="GV">GV</option>
@@ -137,7 +137,7 @@
 							<div class="form-group row">
 								<div class="col-sm-6">
 									<label>Services</label>
-									<select name="status" class="custom-select">
+									<select name="services" class="custom-select">
 										<option value="0">Select Services</option>
 										<option value="Digital HD">Digital HD</option>
 										<option value="Internet with HD">Internet with HD</option>
@@ -154,19 +154,19 @@
 							<div class="form-group row">
 								<div class="col-sm-6">
 									<label>Monthly</label>
-									<input type="text" class="form-control" name="monthly" required="1" placeholder="Monthly">>    
+									<input type="text" class="form-control" name="monthly" required="1" placeholder="Monthly Payment">   
 								</div>
 								
 								<div class="col-sm-6">
-									<label>Activation Date</label>
-									<input type="date" class="form-control" name="activation_date" required="1">     
+									<label>Disconnection Date</label>
+									<input type="date" class="form-control" name="disconnection_date">     
 								</div>
 							</div>
 						
 							<div class="form-group row">
 								<div class="col-sm-6">
 									<label>Collector</label>
-									<select name="status" class="custom-select">
+									<select name="collector" class="custom-select">
 										<option value="0">Select Collector</option>
 										<option value="Kalibo Office">Kalibo Office</option>
 										<option value="Cymore">Cymore</option>
@@ -177,8 +177,8 @@
 								</div>
 								
 								<div class="col-sm-6">
-									<label>Disconnection Date</label>
-									<input type="date" class="form-control" name="disconnection_date" required="1">     
+									<label>Reactivation Date</label>
+									<input type="date" class="form-control" name="reactivation_date">     
 								</div>
 							</div>
 						
@@ -193,21 +193,14 @@
 								</div>
 								
 								<div class="col-sm-6">
-									<label>Reactivation Date</label>
-									<input type="date" class="form-control" name="reactivation_date" required="1">
-								</div>
-							</div>
-						
-							<div class="form-group row">
-								<div class="col-sm-6">
-									<label>Churn</label>
+									<label>Churn</label><br>
 									<input type="radio" id="yes" name="churn" value="1">
 									<label for="yes"> Yes</label>
 									<input type="radio" id="no" name="churn" value="0">
 									<label for="no"> No</label>
 								</div>
 							</div>
-							
+
 							<div class="modal-footer"> 
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
 								<button class="btn btn-primary" type="submit">Add Customer</button> 
@@ -226,10 +219,10 @@
                     <button data-toggle="modal" data-target="#mymodal" class="au-btn au-btn-icon au-btn--green au-btn--small">
                         <i class="zmdi zmdi-plus"></i>new customer</button>
                 </div>
-            </div>
+		</div>
 		
 		<div class="table-responsive table-responsive-data2">
-		<form action="/customer-management/delete-selected" method="POST">
+			<form action="/customer-management/delete-selected" method="POST">
                 <table class="table table-data2" id="mytable">
                     <thead>
                         <tr>
@@ -240,7 +233,7 @@
                                 </label>
                             </th>
                             <th>Account No.</th>
-                            <th>Subsriber Name</th>
+                            <th>Subscriber Name</th>
                             <th>Address</th>
                             <th>Zone</th>
                             <th>Services</th>
@@ -301,9 +294,9 @@
                                 </div>
                             </td>
                         </tr>
-		            </form>
+			</form>
 
-					 <!-- Modal Edit Customer
+					 <!-- Modal Edit Customer-->
 
                         <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
 							aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -317,62 +310,129 @@
                                         <form action="/customer-management/update/{{row.id}}" method="POST">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label>Account Number</label>
-                                                    <input type="hidden"  name="id" value="{{row.id}}">
-                                                    <input type="text" class="form-control" name="accnt_num" value="{{row.accnt_num}}">
+                                                    <h1>{{row.subscriber}}</h1>
+													<h4 style="font-weight:500">{{row.account_no}}</h4>
+													<h4 style="font-weight:500">{{row.ref_no}}</h4>
+													<p>{{row.address}}, {{row.zone}}</p>
+													
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <label>Status</label>
-                                                    <select name="sstatus" class="custom-select" value="{{row.sstatus}}">
-                                                    <option value="0">Please Select Status</option>
-                                                    <option class="greenBg" value="active">Active</option>
-                                                    <option class="redBg" value="inactive">Inactive</option>
-                                                  </select>
+
                                                 </div>
                                             </div> 
 											
 											<div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label>Customer Name</label>
-                                                    <input type="text" class="form-control" name="name" value="{{row.name}}">
-                                                </div>
+													<label>Services</label>
+													<select name="services" class="custom-select" value="{{row.services}}">
+														<option value="0">Select Services</option>
+														<option value="Digital HD">Digital HD</option>
+														<option value="Internet with HD">Internet with HD</option>
+														<option value="Internet Only">Internet Only</option>
+													</select>    
+												</div>
 
                                                 <div class="col-sm-6">
-                                                    <label>Services</label>
-                                                    <input type="text" class="form-control" name="services" value="{{row.services}}">
-                                                </div>
+													<label>Date Paid</label>
+													<input type="date" class="form-control" name="date_paid" required="1" value="{{row.date_paid}}">     
+												</div>
                                             </div> 
 											
 											<div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label>Address</label>
-                                                    <input type="text" class="form-control" name="address" value="{{row.address}}">
-                                                </div>
+													<label>Monthly Payment</label>
+													<input type="text" class="form-control" name="monthly" required="1" value="{{row.monthly}}">   
+												</div>
                                                 
-											    <div class="col-sm-6">
-                                                   <label>Monthly Payment</label>
-                                                   <input type="text" class="form-control" name="monthly" value="{{row.monthly}}">
-                                                </div>
+											   <div class="col-sm-6">
+													<label>Category</label>
+													<select name="category" class="custom-select" value="{{row.category}}">
+														<option value="0">Select Category</option>
+														<option value="RS">RS</option>
+														<option value="GV">GV</option>
+														<option value="CS">CS</option>
+													</select>    
+												</div>
                                             </div>
 											
 											<div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label>Collector</label>
-                                                    <input type="text" class="form-control" name="collector" value="{{row.collector}}">
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                <label>Amount Paid</label>
-                                                <input type="text" class="form-control" name="amnt_paid" value="{{row.amnt_paid}}">
-                                                </div>
-                                            </div>					
+													<label>Status</label>
+													<select name="status" class="custom-select" value="{{row.status}}">
+														<option value="0">Select Status</option>
+														<option class="greenBg" value="active">Active</option>
+														<option class="redBg" value="inactive">Inactive</option>
+													  </select>   
+												</div>
+                                                
+											   <div class="col-sm-6">
+													<label>Activation Date</label>
+													<input type="date" class="form-control" name="activation_date" required="1" value="{{row.activation_date}}">     
+												</div>
+                                            </div>
 											
 											<div class="form-group row">
                                                 <div class="col-sm-6">
-                                                <label>Reference Number</label>
-                                                <input type="text" class="form-control" name="ref_num" value="{{row.ref_num}}">
-                                                </div>
+													<label>Collector</label>
+													<select name="collector" class="custom-select" value="{{row.collector}}">
+														<option value="0">Select Collector</option>
+														<option value="Kalibo Office">Kalibo Office</option>
+														<option value="Cymore">Cymore</option>
+														<option value="Wilsol">Wilsol</option>
+														<option value="Arnel">Arnel</option>
+														<option value="Vincent">Vincent</option>
+													</select>    
+												</div>
+
+                                                <div class="col-sm-6">
+													<label>Category</label>
+													<select name="category" class="custom-select" value="{{row.category}}">
+														<option value="0">Select Category</option>
+														<option value="RS">RS</option>
+														<option value="GV">GV</option>
+														<option value="CS">CS</option>
+													</select>    
+												</div>
+                                            </div>					
+											
+											<div class="form-group row">
+												<div class="col-sm-6">
+													<label>Activation Date</label>
+													<input type="date" class="form-control" name="activation_date" required="1" value="{{row.activation_date}}">     
+												</div>
+												
+												<div class="col-sm-6">
+													<label>Amount Paid</label>
+													<input type="text" class="form-control" name="amount_paid" required="1" value="{{row.amount_paid}}">     
+												</div>
+												
+                                            </div>
+											
+											<div class="form-group row">
+												<div class="col-sm-6">
+													<label>Disconnection Date</label>
+													<input type="date" class="form-control" name="disconnection_date" value="{{row.disconnection_date}}">     
+												</div>
+												
+												<div class="col-sm-6">
+													<label>Reactivation Date</label>
+													<input type="date" class="form-control" name="reactivation_date" value="{{row.reactivation_date}}">     
+												</div>
+                                            </div>
+											
+											<div class="form-group row">
+                                                <div class="col-sm-6">
+     
+												</div>
+												
+												<div class="col-sm-6">
+													<label>Churn</label><br>
+													<input type="radio" id="yes" name="churn" value="1">
+													<label for="yes"> Yes</label>
+													<input type="radio" id="no" name="churn" value="0">
+													<label for="no"> No</label>
+												</div>
                                             </div>
 											
                                             <div class="modal-footer">
@@ -383,9 +443,9 @@
                                     </div>    
                                 </div>
 						    </div>
-                        </div>-->
+                        </div>
                     
-                    <!-- Modal Delete Customer
+                    <!-- Modal Delete Customer-->
 
                     <div id="modaldelete{{row.id}}" class="modal fade">
                         <div class="modal-dialog modal-dialog-centered">
@@ -406,7 +466,7 @@
 								</div>    
                             </div>
 						</div> 
-					</div>	-->						
+					</div>						
                         {% endfor %}
                     </tbody>
 					<div class="col-md-12">
@@ -471,7 +531,7 @@
                             <th>Internet Service</th>
                             <th>Monthly Charges</th>
                             <th>Total Charges</th>
-			    <th>Churn</th>
+							<th>Churn</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -575,3 +635,4 @@
 	</html>
 
 {% endblock %}
+
