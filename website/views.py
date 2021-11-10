@@ -502,18 +502,18 @@ def home():
             cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
             conn = cnx.connect()
             df = pd.read_sql_table('otherdata', con=cnx)
-            df.loc[df['odata_id'] == current_user.id]
+            dataf = df.loc[df['odata_id'] == current_user.id]
             # independent variable
-            X = df.iloc[:,:1].values
+            X = dataf.iloc[:,:1].values
             X
 
             # dependent variable - churn column
-            y = df.iloc[:,8]
+            y = dataf.iloc[:,8]
             y
 
             # Counts number of null values - resulted that no values are missing.
-            null_columns=df.columns[df.isnull().any()]
-            df[null_columns].isnull().sum()
+            null_columns=df.columns[dataf.isnull().any()]
+            dataf[null_columns].isnull().sum()
 
             # Splitting Data into Train and Test
             from sklearn.model_selection import train_test_split
@@ -526,16 +526,16 @@ def home():
             # zscore values higher than 3 are outliers.
             threshold = 3
 
-            df.corr(method='pearson')
+            dataf.corr(method='pearson')
 
             # Create Pivot Table - compute for sum
-            pd.pivot_table(df, index=['address', 'services'], aggfunc = 'sum')
+            pd.pivot_table(dataf, index=['address', 'services'], aggfunc = 'sum')
 
             # Create Pivot Table - compute for mean
-            pd.pivot_table(df, index=['address', 'services'], aggfunc = 'mean')    
+            pd.pivot_table(dataf, index=['address', 'services'], aggfunc = 'mean')    
 
             # Create Pivot Table - compute for count
-            pd.pivot_table(df, index=['address', 'services'], aggfunc = 'count')
+            pd.pivot_table(dataf, index=['address', 'services'], aggfunc = 'count')
 
             # Pie Chart
             from plotly.offline import init_notebook_mode,iplot
@@ -544,9 +544,9 @@ def home():
             init_notebook_mode(connected=True)
 
             #labels
-            lab = df["collector"].value_counts().keys().tolist()
+            lab = dataf["collector"].value_counts().keys().tolist()
             #values
-            val = df["collector"].value_counts().values.tolist()
+            val = dataf["collector"].value_counts().values.tolist()
             trace = go.Pie(labels=lab, 
                             values=val, 
                             marker=dict(colors=['red']), 
@@ -562,7 +562,7 @@ def home():
 
             # Histogram - Service
             # defining data
-            trace = go.Histogram(x=df['services'],nbinsx=40,histnorm='percent')
+            trace = go.Histogram(x=dataf['services'],nbinsx=40,histnorm='percent')
             data = [trace]
             # defining layout
             layout = go.Layout(title="Service Distribution")
@@ -572,7 +572,7 @@ def home():
 
             # Histogram - State
             # defining data
-            trace = go.Histogram(x=df['address'],nbinsx=52)
+            trace = go.Histogram(x=dataf['address'],nbinsx=52)
             data = [trace]
             # defining layout
             layout = go.Layout(title="Address")
@@ -583,7 +583,7 @@ def home():
 
             # Histogram - Churn
             # defining data
-            trace = go.Histogram(x=df['sstatus'],nbinsx=3)
+            trace = go.Histogram(x=dataf['sstatus'],nbinsx=3)
             data = [trace]
             # defining layout
             layout = go.Layout(title="Churn Distribution")
@@ -600,6 +600,7 @@ def home():
             graph2JSON=graph2JSON, 
             graph3JSON=graph3JSON,
             graph4JSON=graph4JSON)
+            '''
             if db.session.query(Otherdata).join(User).filter(User.id == current_user.id).count() < 3 and db.session.query(Otherdata).join(User).filter(User.id == current_user.id).count() > 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
                 current_user.dash = "none"
@@ -614,6 +615,7 @@ def home():
                 db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
+                '''
     elif current_user.explore == "empty":
 
         image_file = url_for('static', filename='images/' + current_user.image_file)
