@@ -8,7 +8,7 @@ from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
-from .models import User, Data, Otherdata, Sampledata, Strategies, Otherstrategies, Samplestrategies, Contact, Task
+from .models import User, Data, Strategies, Contact, Sampledata, Otherdata, Otherstrategies
 from flask_login import login_user, login_required, logout_user, current_user
 
 # Plotly Libraries
@@ -388,199 +388,198 @@ def home():
                 df = pd.read_sql_table('data', con=cnx)
 
                     # Check for missing values
-    df.isna().any()
-    # Fill missing values with NaN
-    df.fillna('Null')
+                df.isna().any()
+                # Fill missing values with NaN
+                df.fillna('Null')
 
-    # Convert dates to datetype
-    df.activation_date = pd.to_datetime(df.activation_date)
-    df.disconnection_date = pd.to_datetime(df.disconnection_date)
-    df.reactivation_date = pd.to_datetime(df.reactivation_date)
-    df.date_paid = pd.to_datetime(df.date_paid)
+                # Convert dates to datetype
+                df.activation_date = pd.to_datetime(df.activation_date)
+                df.disconnection_date = pd.to_datetime(df.disconnection_date)
+                df.reactivation_date = pd.to_datetime(df.reactivation_date)
+                df.date_paid = pd.to_datetime(df.date_paid)
 
-    df['disconnection_date'] = df['disconnection_date'].dt.strftime('%m-%d-%Y')
-    df['reactivation_date'] = df['reactivation_date'].dt.strftime('%m-%d-%Y')
-    df['activation_date'] = df['activation_date'].dt.strftime('%m-%d-%Y')
-    df['date_paid'] = df['date_paid'].dt.strftime('%m-%d-%Y')
-
-
-    # ------ Dashboard for Kalibo DS Sales --------
-
-    # Pie Chart
-    from plotly.offline import init_notebook_mode,iplot
-    import plotly.graph_objects as go
-    init_notebook_mode(connected=True)
-
-    #Gender Distribution
-    lab = df["zone"].value_counts().keys().tolist()
-    #values
-    val = df["zone"].value_counts().values.tolist()
-    trace = go.Pie(labels=lab, 
-                    values=val, 
-                    hole = 0.4,
-                    # Seting values to 
-                    hoverinfo="value")
-    data = [trace]
-
-    layout = go.Layout(dict(title="Zone Distribution",
-                plot_bgcolor = "white",
-                paper_bgcolor = "white",))
-    fig1zone = go.Figure(data = data,layout = layout)
-    graph20JSON = json.dumps(fig1zone, cls=plotly.utils.PlotlyJSONEncoder)
-
-    #Status Distribution
-    lab = df["status"].value_counts().keys().tolist()
-    #values
-    val = df["status"].value_counts().values.tolist()
-    trace = go.Pie(labels=lab, 
-                    values=val, 
-                    marker=dict(colors=['#ffa14a', '#ed7071']),
-                    hole = 0.4,
-                    # Seting values to 
-                    hoverinfo="value")
-    data = [trace]
-
-    layout = go.Layout(dict(title="Status Distribution",
-                plot_bgcolor = "white",
-                paper_bgcolor = "white",))
-    fig2status = go.Figure(data = data,layout = layout)
-    graph21JSON = json.dumps(fig2status, cls=plotly.utils.PlotlyJSONEncoder)
-
-    # Histogram - Services Availed
-    # defining data
-    trace = go.Histogram(x=df['services'],nbinsx=3,
-                    marker = dict(color = '#ed7071'))
-    data = [trace]
-    # defining layout
-    layout = go.Layout(title="Services Availed Distribution")
-    # defining figure and plotting
-    fig3services = go.Figure(data = data,layout = layout)
-    graph22JSON = json.dumps(fig3services, cls=plotly.utils.PlotlyJSONEncoder)
-
-    # Histogram - Category
-    # defining data
-    trace = go.Histogram(
-        x=df['collector'],
-        nbinsx=3,
-        marker = dict(color = '#9da4d8')
-        )
-    data = [trace]
-    # defining layout
-    layout = go.Layout(title="Collector Distribution")
-    # defining figure and plotting
-    fig4collector = go.Figure(data = data,layout = layout)
-    graph23JSON = json.dumps(fig4collector, cls=plotly.utils.PlotlyJSONEncoder)
-
-    # Histogram - Category
-    # defining data
-    trace = go.Histogram(
-        x=df['category'],
-        nbinsx=3,
-        marker = dict(color = '#9da4d8')
-        )
-    data = [trace]
-    # defining layout
-    layout = go.Layout(title="Category Distribution")
-    # defining figure and plotting
-    fig5category = go.Figure(data = data,layout = layout)
-    graph24JSON = json.dumps(fig5category, cls=plotly.utils.PlotlyJSONEncoder)
-
-    # ------ End for Kalibo DS Sales -----
+                df['disconnection_date'] = df['disconnection_date'].dt.strftime('%m-%d-%Y')
+                df['reactivation_date'] = df['reactivation_date'].dt.strftime('%m-%d-%Y')
+                df['activation_date'] = df['activation_date'].dt.strftime('%m-%d-%Y')
+                df['date_paid'] = df['date_paid'].dt.strftime('%m-%d-%Y')
 
 
-    # ------ Kalibo DS Sales Churn  --------
+                # ------ Dashboard for Kalibo DS Sales --------
 
-   #Churn
-    lab = df["churn"].value_counts().keys().tolist()
-    #values
-    val = df["churn"].value_counts().values.tolist()
-    trace = go.Pie(labels=lab, 
-                    values=val, 
-                    hole = 0.4,
-                    # Seting values to 
-                    hoverinfo="value")
-    data = [trace]
+                # Pie Chart
+                from plotly.offline import init_notebook_mode,iplot
+                import plotly.graph_objects as go
+                init_notebook_mode(connected=True)
 
-    layout = go.Layout(dict(title="Churn",
-                plot_bgcolor = "white",
-                paper_bgcolor = "white",))
-    fig6churn = go.Figure(data = data,layout = layout)
-    graph25JSON = json.dumps(fig6churn, cls=plotly.utils.PlotlyJSONEncoder)
+                #Gender Distribution
+                lab = df["zone"].value_counts().keys().tolist()
+                #values
+                val = df["zone"].value_counts().values.tolist()
+                trace = go.Pie(labels=lab, 
+                                values=val, 
+                                hole = 0.4,
+                                # Seting values to 
+                                hoverinfo="value")
+                data = [trace]
+
+                layout = go.Layout(dict(title="Zone Distribution",
+                            plot_bgcolor = "white",
+                            paper_bgcolor = "white",))
+                fig1zone = go.Figure(data = data,layout = layout)
+                graph20JSON = json.dumps(fig1zone, cls=plotly.utils.PlotlyJSONEncoder)
+
+                #Status Distribution
+                lab = df["status"].value_counts().keys().tolist()
+                #values
+                val = df["status"].value_counts().values.tolist()
+                trace = go.Pie(labels=lab, 
+                                values=val, 
+                                marker=dict(colors=['#ffa14a', '#ed7071']),
+                                hole = 0.4,
+                                # Seting values to 
+                                hoverinfo="value")
+                data = [trace]
+
+                layout = go.Layout(dict(title="Status Distribution",
+                            plot_bgcolor = "white",
+                            paper_bgcolor = "white",))
+                fig2status = go.Figure(data = data,layout = layout)
+                graph21JSON = json.dumps(fig2status, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Histogram - Services Availed
+                # defining data
+                trace = go.Histogram(x=df['services'],nbinsx=3,
+                                marker = dict(color = '#ed7071'))
+                data = [trace]
+                # defining layout
+                layout = go.Layout(title="Services Availed Distribution")
+                # defining figure and plotting
+                fig3services = go.Figure(data = data,layout = layout)
+                graph22JSON = json.dumps(fig3services, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Histogram - Category
+                # defining data
+                trace = go.Histogram(
+                    x=df['collector'],
+                    nbinsx=3,
+                    marker = dict(color = '#9da4d8')
+                    )
+                data = [trace]
+                # defining layout
+                layout = go.Layout(title="Collector Distribution")
+                # defining figure and plotting
+                fig4collector = go.Figure(data = data,layout = layout)
+                graph23JSON = json.dumps(fig4collector, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Histogram - Category
+                # defining data
+                trace = go.Histogram(
+                    x=df['category'],
+                    nbinsx=3,
+                    marker = dict(color = '#9da4d8')
+                    )
+                data = [trace]
+                # defining layout
+                layout = go.Layout(title="Category Distribution")
+                # defining figure and plotting
+                fig5category = go.Figure(data = data,layout = layout)
+                graph24JSON = json.dumps(fig5category, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # ------ End for Kalibo DS Sales -----
 
 
-    # Churn Rate by Services
-    plot_by_gender = df.groupby('services').churn.mean().reset_index()
-    plot_data = [
-        go.Bar(
-            x=plot_by_gender['services'],
-            y=plot_by_gender['churn'],
-        width = [0.8],
-                marker = dict(
-                color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
-            )
-        )
-    ]
+                # ------ Kalibo DS Sales Churn  --------
 
-    layout=go.Layout(
-        xaxis={"type": "category"},
-        yaxis={"title": "Churn Rate"},
-        title="Churn Rate by Services",
-        plot_bgcolor = 'white',
-        paper_bgcolor = 'white',
-    )
+            #Churn
+                lab = df["churn"].value_counts().keys().tolist()
+                #values
+                val = df["churn"].value_counts().values.tolist()
+                trace = go.Pie(labels=lab, 
+                                values=val, 
+                                hole = 0.4,
+                                # Seting values to 
+                                hoverinfo="value")
+                data = [trace]
 
-    fig7services = go.Figure(data=plot_data, layout=layout)
-    graph26JSON = json.dumps(fig7services, cls=plotly.utils.PlotlyJSONEncoder)
+                layout = go.Layout(dict(title="Churn",
+                            plot_bgcolor = "white",
+                            paper_bgcolor = "white",))
+                fig6churn = go.Figure(data = data,layout = layout)
+                graph25JSON = json.dumps(fig6churn, cls=plotly.utils.PlotlyJSONEncoder)
 
 
-    # Churn Rate by Zone
-    plot_by_payment = df.groupby('zone').churn.mean().reset_index()
-    plot_data = [
-        go.Bar(
-            x=plot_by_payment['zone'],
-            y=plot_by_payment['churn'],
-        width = [0.8],
-            marker = dict(
-                color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
-            )
-        )
-    ]
+                # Churn Rate by Services
+                plot_by_gender = df.groupby('services').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_gender['services'],
+                        y=plot_by_gender['churn'],
+                    width = [0.8],
+                            marker = dict(
+                            color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
 
-    layout=go.Layout(
-        xaxis={"type": "category"},
-        yaxis={"title": "Churn Rate"},
-        title="Churn Rate by Zone",
-        plot_bgcolor = 'white',
-        paper_bgcolor = 'white',
-    )
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Services",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
 
-    fig8zone = go.Figure(data=plot_data, layout=layout)
-    graph27JSON = json.dumps(fig8zone, cls=plotly.utils.PlotlyJSONEncoder)
+                fig7services = go.Figure(data=plot_data, layout=layout)
+                graph26JSON = json.dumps(fig7services, cls=plotly.utils.PlotlyJSONEncoder)
 
-    # Churn Rate by Category
-    plot_by_contract = df.groupby('category').churn.mean().reset_index()
-    plot_data = [
-        go.Bar(
-            x=plot_by_contract['category'],
-            y=plot_by_contract['churn'],
-            width = [0.8],
-            marker = dict(
-                color=['#ffa14a', '#9da4d8', '#21ced2']
-            )
-        )
-    ]
 
-    layout=go.Layout(
-        xaxis={"type": "category"},
-        yaxis={"title": "Churn Rate"},
-        title="Churn Rate by Category",
-        plot_bgcolor = 'white',
-        paper_bgcolor = 'white',
-    )
+                # Churn Rate by Zone
+                plot_by_payment = df.groupby('zone').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_payment['zone'],
+                        y=plot_by_payment['churn'],
+                    width = [0.8],
+                        marker = dict(
+                            color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
 
-    fig9contract = go.Figure(data=plot_data, layout=layout)
-    graph28JSON = json.dumps(fig9contract, cls=plotly.utils.PlotlyJSONEncoder)
-                
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Zone",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig8zone = go.Figure(data=plot_data, layout=layout)
+                graph27JSON = json.dumps(fig8zone, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Churn Rate by Category
+                plot_by_contract = df.groupby('category').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_contract['category'],
+                        y=plot_by_contract['churn'],
+                        width = [0.8],
+                        marker = dict(
+                            color=['#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Category",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig9contract = go.Figure(data=plot_data, layout=layout)
+                graph28JSON = json.dumps(fig9contract, cls=plotly.utils.PlotlyJSONEncoder)
                 
                 current_user.dash = "full"
                 db.session.add(current_user)
@@ -597,7 +596,7 @@ def home():
                     graph25JSON=graph25JSON,
                     graph26JSON=graph26JSON,
                     graph27SON=graph27JSON,
-                    graph28JSON=graph28JSON,
+                    graph28JSON=graph28JSON
                     )
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
