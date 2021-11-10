@@ -304,7 +304,7 @@ def insert():
             .query \
             .join(User) \
             .filter(User.id==current_user.id).count()
-        print(sd)
+
         if request.method == 'POST':
             account_no = request.form['account_no']
             subscriber = request.form['subscriber']
@@ -532,7 +532,6 @@ def send():
                 return redirect(url_for('auth.send'))
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template('email-marketing.html', tasks=tasks, recepients = recepients, user= current_user, image_file = image_file)
-  
  
 #conver query into list of string
 def convert(any):
@@ -617,15 +616,15 @@ def strat():
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file, sd=sd)
     elif current_user.explore == "sample":
-        statc = Strategies \
+        statc = Samplestrategies \
             .query \
-            .filter(Strategies.status == "complete").count()
+            .filter(Samplestrategies.status == "complete").count()
 
-        statss = Strategies \
+        statss = Samplestrategies \
             .query \
-            .filter(Strategies.status == "ongoing").count()
+            .filter(Samplestrategies.status == "ongoing").count()
 
-        all_data = Strategies.query.all() 
+        all_data = Samplestrategies.query.all() 
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("strategies.html", user= current_user, samplestrat=all_data, statss=statss, statc=statc, image_file = image_file)
             
@@ -713,19 +712,19 @@ def newstrat():
 def updatestrat(id):
     if current_user.explore == "sample" :
         if request.method == 'POST':
-            name = request.form['name']
-            act = request.form['act']
-            platform = request.form['platform']
-            startdate = request.form['startdate']
-            enddate = request.form['enddate']
-            status = request.form['status']
-            description = request.form['description']
+            my_strat = Samplestrategies.query.get(request.form.get('id'))
+            my_strat.name = request.form['name']
+            my_strat.act = request.form['act']
+            my_strat.platform = request.form['platform']
+            my_strat.startdate = request.form['startdate']
+            my_strat.enddate = request.form['enddate']
+            my_strat.status = request.form['status']
+            my_strat.description = request.form['description']
             
-            db.session.commit() 
-            
+            db.session.commit()
             flash("Strategy Updated Successfully", category="notlimit")
-            
             return redirect(url_for('auth.strat'))
+
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             my_strat = Strategies.query.get(request.form.get('id'))
@@ -773,7 +772,7 @@ def updatestrat(id):
 @login_required
 def deletestrat(id):
     if current_user.explore == "sample" :
-        my_data = Strategies.query.get(id)
+        my_data = Samplestrategies.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
         flash("Strategy Deleted Successfully")
@@ -802,7 +801,7 @@ def deletestratcheck():
         if request.method == "POST":
             for getid in request.form.getlist("mycheckbox"):
                 print(getid)
-                db.session.query(Strategies).filter(Strategies.id ==getid).delete()
+                db.session.query(Samplestrategies).filter(Samplestrategies.id ==getid).delete()
             db.session.commit()
             flash("Strategy Deleted Successfully")
                      
