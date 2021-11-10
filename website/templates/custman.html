@@ -23,7 +23,7 @@
 		
 		</head>
 		<body>
-		{% if current_user.explore == "customer" or current_user.explore == "empty" %}
+	{% if current_user.explore == "customer" or current_user.explore == "empty" %}
 		<div class="strat-container-main">
 			<h3>Customers</b></h3>
 			<div class="strat-stat-container">
@@ -57,86 +57,164 @@
     
                     <!-- Modal Create Strategies--> 
  
-            <div id="mymodal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+	<div id="mymodal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
             aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content">
 
-                        <div class="modal-header"> 
-                            <h4 class="modal-title">New Customer</h4>
-                        </div>
+				<div class="modal-header"> 
+					<h4 class="modal-title">New Customer</h4>
+				</div>
     
-                        <div class="modal-body"> 
-                            <div class="col-md-14 mx-auto">
-                            <form action="/customer-management/insert" method="POST">
-
-                            <div class="form-group row">
+				<div class="modal-body"> 
+					<div class="col-md-14 mx-auto">
+						<form action="/customer-management/insert" method="POST">
+							<div class="form-group row">
 								<div class="col-sm-6">
-                                    <label>Account Number</label>
-									<input type="text" class="form-control" name="accnt_num" required="1" placeholder="Account Number">     
+									<label>Account Number</label>
+									<input type="text" class="form-control" name="account_no" required="1" placeholder="Account Number">     
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Amount Paid</label>
+									<input type="text" class="form-control" name="amount_paid" required="1" placeholder="Amount Paid">     
 								</div>
 
-                                <div class="col-sm-6">
-                                    <label>Status</label>
-                                    <select name="sstatus" class="custom-select">
-                                        <option value="0">Please Select Status</option>
-                                        <option class="greenBg" value="active">Active</option>
-                                        <option class="redBg" value="inactive">Inactive</option>
-                                      </select>
-                                </div>
-                            </div> 
+							</div> 
 
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Customer Name</label>
-                                    <input type="text" class="form-control" name="name" required="1" placeholder="Customer Name">     
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label>Services</label>
-                                    <input type="text" class="form-control" name="services" required="1" placeholder="Services Availed">     
-                                </div> 
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Address</label>
-                                    <input type="text" class="form-control" name="address" required="1" placeholder="Address">     
-                                </div>
-                                
-                                <div class="col-sm-6">
-                                    <label>Monthly Payment</label>
-									<input type="text" class="form-control" name="monthly" required="1" placeholder="Monthly Payment">     
-							    </div>
-                            </div> 
-							
 							<div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Collector</label>
-                                    <input type="text" class="form-control" name="collector" required="1" placeholder="Collector">     
-                                </div> 
+								<div class="col-sm-6">
+									<label>Subsriber</label>
+									<input type="text" class="form-control" name="subscriber" required="1" placeholder="Subsriber Name">     
+								</div>
 
-                                <div class="col-sm-6">
-                                    <label>Amount</label>
-									<input type="text" class="form-control" name="amnt_paid" required="1" placeholder="Amount Paid">     
-							    </div>
+								<div class="col-sm-6">
+									<label>Reference Number</label>
+									<input type="text" class="form-control" name="ref_no" required="1" placeholder="Reference Number">     
+								</div> 
+							</div>
 
-                            </div>
-							
 							<div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Reference No.</label>
-                                    <input type="text" class="form-control" name="ref_num" required="1" placeholder="Reference Number">     
-                                </div>
-                            </div>
+								<div class="col-sm-6">
+									<label>Address</label>
+									<input type="text" class="form-control" name="address" required="1" placeholder="Address">     
+								</div>
 								
-                        <div class="modal-footer"> 
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
-                            <button class="btn btn-primary" type="submit">Add Customer</button> 
-                        </div>      
-                    </form>       
-                    </div> 
-                </div>
+								<div class="col-sm-6">
+									<label>Date Paid</label>
+									<input type="date" class="form-control" name="date_paid" required="1">     
+								</div>
+							</div> 
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Zone</label>
+									<select name="status" class="custom-select">
+										<option value="0">Select Zone</option>
+										<option value="Balete">Balete</option>
+										<option value="Banga">Banga</option>
+										<option value="Kalibo">Kalibo</option>
+										<option value="Lezo">Lezo</option>
+										<option value="Makato">Makato</option>
+										<option value="Malinao">Malinao</option>
+										<option value="New Washington">New Washington</option>
+										<option value="Numancia">Numancia</option>
+										<option value="Tangalan">Tangalan</option>
+									</select>    
+								</div> 
+
+								<div class="col-sm-6">
+									<label>Category</label>
+									<select name="status" class="custom-select">
+										<option value="0">Select Category</option>
+										<option value="RS">RS</option>
+										<option value="GV">GV</option>
+										<option value="CS">CS</option>
+									</select>    
+								</div>
+							</div>
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Services</label>
+									<select name="status" class="custom-select">
+										<option value="0">Select Services</option>
+										<option value="Digital HD">Digital HD</option>
+										<option value="Internet with HD">Internet with HD</option>
+										<option value="Internet Only">Internet Only</option>
+									</select>    
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Activation Date</label>
+									<input type="date" class="form-control" name="activation_date" required="1">     
+								</div>
+							</div>
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Monthly</label>
+									<input type="text" class="form-control" name="monthly" required="1" placeholder="Monthly">>    
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Activation Date</label>
+									<input type="date" class="form-control" name="activation_date" required="1">     
+								</div>
+							</div>
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Collector</label>
+									<select name="status" class="custom-select">
+										<option value="0">Select Collector</option>
+										<option value="Kalibo Office">Kalibo Office</option>
+										<option value="Cymore">Cymore</option>
+										<option value="Wilsol">Wilsol</option>
+										<option value="Arnel">Arnel</option>
+										<option value="Vincent">Vincent</option>
+									</select>    
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Disconnection Date</label>
+									<input type="date" class="form-control" name="disconnection_date" required="1">     
+								</div>
+							</div>
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Status</label>
+									<select name="status" class="custom-select">
+										<option value="0">Select Status</option>
+										<option class="greenBg" value="active">Active</option>
+										<option class="redBg" value="inactive">Inactive</option>
+									  </select>   
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Reactivation Date</label>
+									<input type="date" class="form-control" name="reactivation_date" required="1">
+								</div>
+							</div>
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Churn</label>
+									<input type="radio" id="yes" name="churn" value="1">
+									<label for="yes"> Yes</label>
+									<input type="radio" id="no" name="churn" value="0">
+									<label for="no"> No</label>
+								</div>
+							</div>
+							
+							<div class="modal-footer"> 
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+								<button class="btn btn-primary" type="submit">Add Customer</button> 
+							</div>      
+						</form>       
+					</div> 
+				</div>
             </div>
 		</div> 
 	</div>
@@ -147,17 +225,6 @@
                 <div class="table-data__tool-right" style=padding-bottom:10px;>
                     <button data-toggle="modal" data-target="#mymodal" class="au-btn au-btn-icon au-btn--green au-btn--small">
                         <i class="zmdi zmdi-plus"></i>new customer</button>
-
-                        <!-- <div class="dropdown" style=float:right>
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Export
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" class="btn_excel">Excel</a>
-                              <a class="dropdown-item" class="btn_csv">CSV</a>
-                              <a class="dropdown-item" class="btn_pdf">PDF</a>
-                            </div>
-                        </div> -->
                 </div>
             </div>
 		
@@ -173,14 +240,21 @@
                                 </label>
                             </th>
                             <th>Account No.</th>
-                            <th>Name</th>
+                            <th>Subsriber Name</th>
                             <th>Address</th>
+                            <th>Zone</th>
                             <th>Services</th>
-                            <th>Monthly</th>
+                            <th>Monthly Payment</th>
                             <th>Collector</th>
                             <th>Status</th>
                             <th>Amount Paid</th>
-                            <th>Reference No.</th>
+							<th>Reference Number</th>
+                            <th>Date Paid</th>
+                            <th>Category</th>
+                            <th>Activation</th>
+                            <th>Disconnection</th>
+                            <th>Reactivation</th>
+							<th>Churn</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -193,20 +267,32 @@
                                     <span class="au-checkmark"></span>
                                 </label>
                             </td>
-                            <td>{{row.accnt_num}}</td>
-							<td>{{row.name}}</td>
+                            <td>{{row.account_no}}</td>
+							<td>{{row.subscriber}}</td>
 							<td>{{row.address}}</td>
+							<td>{{row.zone}}</td>
 							<td>{{row.services}}</td>
-							<td>Php {{row.monthly}}.00</td>
+							<td>Php {{row.monthly}}</td>
 							<td>{{row.collector}}</td>
-							<td> {% if row.sstatus == "active" %}
+							<td> {% if row.status == "active" %}
 								<li style = list-style-type:none; class="block-active">Active</li>
 								{% else %}
 								<li style = list-style-type:none; class="block-inactive">Inactive</li>
 								{% endif %}
 							</td>
-							<td>{{row.amnt_paid}}</td>
-							<td>{{row.ref_num}}</td>
+							<td>Php {{row.amount_paid}}</td>
+							<td>{{row.ref_no}}</td>
+							<td>{{row.date_paid}}</td>
+							<td>{{row.category}}</td>
+							<td>{{row.activation_date}}</td>
+							<td>{{row.disconnection_date}}</td>
+							<td>{{row.reactivation_date}}</td>
+							<td> {% if row.churn == "0" %}
+								<li style = list-style-type:none; class="block-active">Non Churner</li>
+								{% else %}
+								<li style = list-style-type:none; class="block-inactive">Churner</li>
+								{% endif %}
+							</td>
                             <td>
                                 <div class="table-data-feature">
                                     <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
@@ -217,7 +303,7 @@
                         </tr>
 		            </form>
 
-					 <!-- Modal Edit Customer-->
+					 <!-- Modal Edit Customer
 
                         <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
 							aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -297,9 +383,9 @@
                                     </div>    
                                 </div>
 						    </div>
-                        </div>
+                        </div>-->
                     
-                    <!-- Modal Delete Customer-->
+                    <!-- Modal Delete Customer
 
                     <div id="modaldelete{{row.id}}" class="modal fade">
                         <div class="modal-dialog modal-dialog-centered">
@@ -320,15 +406,15 @@
 								</div>    
                             </div>
 						</div> 
-					</div>							
+					</div>	-->						
                         {% endfor %}
                     </tbody>
-			<div class="col-md-12">
-				<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
-					<button type="submit" class="au-btn au-btn-icon au-btn--red au-btn--small" style="width: 40px; font-size: 14px;color:white;padding: -1 0;">
-					<i class="bx bx-trash" style="margin-left: 5px;"></i>Delete</button>
-				</div>
-			</div>
+					<div class="col-md-12">
+						<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
+							<button type="submit" class="au-btn au-btn-icon au-btn--red au-btn--small" style="width: 40px; font-size: 14px;color:white;padding: -1 0;">
+							<i class="bx bx-trash" style="margin-left: 5px;"></i>Delete</button>
+						</div>
+					</div>
                 </table>
 			</form>
             <!-- END TABLE -->	
@@ -456,7 +542,7 @@
                     buttons: [    
                         {
                             extend: 'excelHtml5',
-                            title: 'Stratics',
+                            title: 'Stratics - Customer Management',
                             text: 'Export',
                             split: [ 'pdf', 'excel', 'csv'],
                         },  
