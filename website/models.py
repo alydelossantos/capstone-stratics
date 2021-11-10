@@ -71,7 +71,7 @@ class Otherdata(db.Model):
     odata_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     account_no = db.Column(db.String(100))
     subscriber = db.Column(db.String(100))
-    gender = db.Column(db.String(20)))
+    gender = db.Column(db.String(20))
     address = db.Column(db.String(225))
     province = db.Column(db.String(100))
     services = db.Column(db.String(100))
