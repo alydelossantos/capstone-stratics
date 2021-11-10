@@ -49,28 +49,42 @@ class User(db.Model, UserMixin):
     
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    accnt_num = db.Column(db.String(100))
-    name = db.Column(db.String(100))
-    address = db.Column(db.String(100))
+    account_no = db.Column(db.String(100))
+    subscriber = db.Column(db.String(100))
+    address = db.Column(db.String(225))
+    zone = db.Column(db.String(50))
     services = db.Column(db.String(100))
     monthly = db.Column(db.Numeric)
-    collector = db.Column(db.String(100))
-    sstatus = db.Column(db.String(150))
-    amnt_paid = db.Column(db.Numeric)
-    ref_num = db.Column(db.String(100))
+    collector = db.Column(db.String(50))
+    status = db.Column(db.String(50))
+    amount_paid = db.Column(db.Numeric)
+    ref_no = db.Column(db.String(100), nullable=True)
+    date_paid = db.Column(db.String(50), nullable=True)
+    category = db.Column(db.String(50))
+    activation_date = db.Column(db.String(100))
+    disconnection_date = db.Column(db.String(100), nullable=True)
+    reactivation_date = db.Column(db.String(100), nullable=True)
+    churn = db.Column(db.Numeric)
     
 class Otherdata(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     odata_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    accnt_num = db.Column(db.String(100))
-    name = db.Column(db.String(100))
-    address = db.Column(db.String(100))
+    account_no = db.Column(db.String(100))
+    subscriber = db.Column(db.String(100))
+    gender = db.Column(db.String(20)))
+    address = db.Column(db.String(225))
+    province = db.Column(db.String(100))
     services = db.Column(db.String(100))
     monthly = db.Column(db.Numeric)
-    collector = db.Column(db.String(100))
-    sstatus = db.Column(db.String(150))
-    amnt_paid = db.Column(db.Numeric)
-    ref_num = db.Column(db.String(100))
+    status = db.Column(db.String(50))
+    amount_paid = db.Column(db.Numeric)
+    ref_no = db.Column(db.String(100), nullable=True)
+    date_paid = db.Column(db.String(50), nullable=True)
+    category = db.Column(db.String(50))
+    activation_date = db.Column(db.String(100))
+    disconnection_date = db.Column(db.String(100), nullable=True)
+    reactivation_date = db.Column(db.String(100), nullable=True)
+    churn = db.Column(db.Numeric)
     
 class Sampledata(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -116,7 +130,17 @@ class Otherstrategies(db.Model):
     enddate = db.Column(db.String(150))
     status = db.Column(db.String(100))
     description = db.Column(db.String(225))
- 
+    
+class Samplestrategies(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(100))
+    act = db.Column(db.String(100))
+    platform = db.Column(db.String(100))
+    startdate = db.Column(db.String(150))
+    enddate = db.Column(db.String(150))
+    status = db.Column(db.String(100))
+    description = db.Column(db.String(225))
+    
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100))
@@ -126,7 +150,6 @@ class Contact(db.Model):
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
-
 
     def __init__(self, content):
         self.content = content
