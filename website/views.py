@@ -649,12 +649,13 @@ def home():
                 proba = logmodel.predict_proba(Xnew)[:,1]
 
                 for i in range(len(Xnew)):
-	                df['Churn Probability'][i] = proba[i]
+	                df.to_sql['Churn Probability'][i] = proba[i]
 
                 display = df[(df['Churn Probability'].isnull())].index
                 df.drop(display, inplace=True)
 
                 df[['account_no','Churn Probability']]
+                print(df)
 
                 # ------------ DECISION TREE ----------------
 
