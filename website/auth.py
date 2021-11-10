@@ -343,16 +343,18 @@ def update(id):
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             datas = Data.query.get(request.form.get('id'))
-            datas.accnt_num = request.form['accnt_num']
-            datas.name = request.form['name']
-            datas.address = request.form['address']
-            datas.services= request.form['services']
+            datas.services = request.form['services']
             datas.monthly = request.form['monthly']
             datas.collector = request.form['collector']
-            datas.sstatus = request.form['sstatus']
-            datas.amnt_paid = request.form['amnt_paid']
-            datas.ref_num = request.form['ref_num']
-            
+            datas.status = request.form['status']
+            datas.amount_paid = request.form['amount_paid']
+            datas.ref_no = request.form['ref_no']
+            datas.date_paid = request.form['date_paid']
+            datas.category = request.form['category']
+            datas.activation_date = request.form['activation_date']
+            datas.disconnection_date = request.form['disconnection_date']
+            datas.reactivation_date = request.form['reactivation_date']
+            datas.churn = request.form['churn']
             db.session.commit()
             
             flash("Customer Record Updated Successfully")
@@ -361,15 +363,18 @@ def update(id):
     else:
         if request.method == 'POST':
             datas = Otherdata.query.get(request.form.get('id'))
-            datas.accnt_num = request.form['accnt_num']
-            datas.name = request.form['name']
-            datas.address = request.form['address']
-            datas.services= request.form['services']
+            datas.services = request.form['services']
             datas.monthly = request.form['monthly']
             datas.collector = request.form['collector']
-            datas.sstatus = request.form['sstatus']
-            datas.amnt_paid = request.form['amnt_paid']
-            datas.ref_num = request.form['ref_num']
+            datas.status = request.form['status']
+            datas.amount_paid = request.form['amount_paid']
+            datas.ref_no = request.form['ref_no']
+            datas.date_paid = request.form['date_paid']
+            datas.category = request.form['category']
+            datas.activation_date = request.form['activation_date']
+            datas.disconnection_date = request.form['disconnection_date']
+            datas.reactivation_date = request.form['reactivation_date']
+            datas.churn = request.form['churn']
             
             db.session.commit()
             
