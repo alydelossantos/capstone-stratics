@@ -52,7 +52,7 @@
         {% endwith %}
 			
             <!-- HELLO CARD -->
-            <div class="card-container-main" style="padding-top: 50px;">
+            <div class="card-container-main">
               <div class="container-fluid">
                 <div class="card-inv">
                   <div class="dboard-card-body">
@@ -61,7 +61,7 @@
                     </div>
                     <div class="text">
                     <h2>Hi, {{current_user.fname}}!</h2>
-                    <p>Have fun in extracting meaningful insights!</p>
+                    <p>Good luck in extracting meaningful insights!</p>
                   </div>
                 </div>
               </div>
@@ -70,7 +70,7 @@
 
             <!-- DASHBOARD CONTENTS -->
               
-            <div class="dboard-main-content" style = "background: #f5f5f7">
+            <div class="dboard-main-content">
               <div class="dboard-section__content dboard-section__content--p30">
                 <div class="container-fluid">
                   <div class="row">
@@ -86,15 +86,15 @@
 					   <i class='bx bx-folder-open'></i>explore datasets</button>
 					  </div>
 						
-					  <div class="wrapper container-fluid">
-						<!-- <input type="radio" name="slider" checked id="sales">
+					  <div class="wrapper">
+						<input type="radio" name="slider" checked id="sales">
 						<input type="radio" name="slider" id="analytics">
-						<nav> -->
-						  <!-- <label for="sales" class="sales">Sales Reports</label>
-						  <label for="analytics" class="analytics">Churn Analytics</label> -->
-						  <!-- <div class="slider"></div> -->
-						<!-- </nav>
-						<section> -->
+						<nav>
+						  <label for="sales" class="sales">Sales Reports</label>
+						  <label for="analytics" class="analytics">Churn Analytics</label>
+						  <div class="slider"></div>
+						</nav>
+						<section>
 						  <div class="content content-1">
 			    {% if current_user.explore == "sample" %}
 			<!-- STATISTIC -->
@@ -197,16 +197,6 @@
 						</div>
 					  </div>
 
-					  <div class="wrapper container-fluid">
-						<!-- <input type="radio" name="slider" checked id="sales">
-						<input type="radio" name="slider" id="analytics">
-						<nav> -->
-						  <!-- <label for="sales" class="sales">Sales Reports</label> -->
-						  <label for="analytics" class="analytics">Churn Analytics</label>
-						  <!-- <div class="slider"></div> -->
-						<!-- </nav>
-						<section> -->
-
 					  <!-- Try -->
 
 					  <div class="container-fluid" style = "padding-bottom: 20px">
@@ -223,25 +213,7 @@
 						</div>
 					</div>
 					  
-					<div class="container-fluid" style = "padding-bottom: 20px">
-						<div class="row">
-						  <div class="col-sm-4">
-							<div id='chart17'></div>
-						  </div>
-						  <div class="col-sm-8">
-							<div id='chart18'></div>
-						  </div>
-						</div>
-					</div>
-					  
-					<div class="container-fluid" style = "padding-bottom: 20px">
-						<div class="row">
-						  <div class="col-sm-12">
-							<div id='chart19'></div>
-						  </div>
-						</div>
-					</div>
-
+					  </body>
 					  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 					  <script type='text/javascript'>
 						var graph1 = {{graph1JSON | safe}};
@@ -291,137 +263,15 @@
 
 						var graph16 = {{graph16JSON | safe}};
 						Plotly.plot('chart16',graph16,{});
-
-						var graph17 = {{graph17JSON | safe}};
-						Plotly.plot('chart17',graph17,{});
-
-						var graph18 = {{graph18JSON | safe}};
-						Plotly.plot('chart18',graph18,{});
-
-						var graph19 = {{graph19JSON | safe}};
-						Plotly.plot('chart19',graph19,{});
 					  
 					  </script>
 
 				    </script>
   			{% elif current_user.explore == "customer" %}
-
-			  <section class="statistic statistic2">
-				<div class="container-fluid">
-					<div class="row">
-					<div class="col-md-3 col-lg-4">
-						<div class="statistic__item statistic__item--blue">
-						<h2 class="number">10,368</h2>
-						<span class="desc">average earnings</span>
-						<div class="icon">
-							<i class="zmdi zmdi-account-o"></i>
-						</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4">
-						<div class="statistic__item statistic__item--green">
-						<h2 class="number">{{active}}</h2>
-						<span class="desc">Active</span>
-						<div class="icon">
-							<i class="zmdi zmdi-shopping-cart"></i>
-						</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4">
-						<div class="statistic__item statistic__item--red">
-						<h2 class="number">{{disconnected}}</h2>
-						<span class="desc">Disconnected</span>
-						<div class="icon">
-							<i class="zmdi zmdi-money"></i>
-						</div>
-						</div>
-					</div>
-					</div>
-				</div>
-			</section>
-
-				<!-- For Kalibo Sales -->
-
-				<div class="container-fluid" style = "padding-bottom: 20px">
-					<div class="row">
-					<div class="col-sm-4">
-						<div id='chart20'></div>
-					</div>
-					<div class="col-sm-8">
-						<div id='chart21'></div>
-					</div>
-					</div>
-				</div>
-				
-				<div class="container-fluid" style = "padding-bottom: 20px">
-					<div class="row">
-					<div class="col-sm-4">
-						<div id='chart22'></div>
-					</div>
-					<div class="col-sm-4">
-						<div id='chart23'></div>
-					</div>
-					<div class="col-sm-4">
-						<div id='chart24'></div>
-					</div>
-					</div>
-				</div>
-
-				<!-- Kalibo Churn -->
-
-				<div class="container-fluid" style = "padding-bottom: 20px">
-					<div class="row">
-					<div class="col-sm-6">
-						<div id='chart25'></div>
-					</div>
-					<div class="col-sm-6">
-						<div id='chart26'></div>
-					</div>
-					</div>
-				</div>
-				
-				<div class="container-fluid" style = "padding-bottom: 20px">
-					<div class="row">
-					<div class="col-sm-6">
-						<div id='chart27'></div>
-					</div>
-					<div class="col-sm-6">
-						<div id='chart28'></div>
-					</div>
-					</div>
-				</div>
-
-				<script type='text/javascript'>
-					var graph20 = {{graph20JSON | safe}};
-					Plotly.plot('chart20',graph20,{});
-
-					var graph21 = {{graph21JSON | safe}};
-					Plotly.plot('chart21',graph21,{});
-
-					var graph22 = {{graph22JSON | safe}};
-					Plotly.plot('chart22',graph22,{});
-
-					var graph23 = {{graph23JSON | safe}};
-					Plotly.plot('chart23',graph23,{});
-
-					var graph24 = {{graph24JSON | safe}};
-					Plotly.plot('chart24',graph24,{});
-
-					var graph25 = {{graph25JSON | safe}};
-					Plotly.plot('chart25',graph25,{});
-	
-					var graph26 = {{graph26JSON | safe}};
-					Plotly.plot('chart26',graph26,{});
-	
-					var graph27 = {{graph27JSON | safe}};
-					Plotly.plot('chart27',graph27,{});
-	
-					var graph28 = {{graph28JSON | safe}};
-					Plotly.plot('chart28',graph28,{});
-				</script>
 			
 			{% if current_user.cname == "Kalibo Cable"%}
 
+			
 				<!-- STATISTIC -->
 				      <section class="statistic statistic2">
 					<div class="container-fluid">
@@ -485,30 +335,6 @@
 						</div>
 					</div>
 
-					<!-- Kalibo Churn -->
-
-					<div class="container-fluid" style = "padding-bottom: 20px">
-						<div class="row">
-						<div class="col-sm-6">
-							<div id='chart25'></div>
-						</div>
-						<div class="col-sm-6">
-							<div id='chart26'></div>
-						</div>
-						</div>
-					</div>
-					
-					<div class="container-fluid" style = "padding-bottom: 20px">
-						<div class="row">
-						<div class="col-sm-6">
-							<div id='chart27'></div>
-						</div>
-						<div class="col-sm-6">
-							<div id='chart28'></div>
-						</div>
-						</div>
-					</div>
-
 					<script type='text/javascript'>
 						var graph20 = {{graph20JSON | safe}};
 						Plotly.plot('chart20',graph20,{});
@@ -524,26 +350,9 @@
 
 						var graph24 = {{graph24JSON | safe}};
 						Plotly.plot('chart24',graph24,{});
-
-						var graph25 = {{graph25JSON | safe}};
-						Plotly.plot('chart25',graph25,{});
-		
-						var graph26 = {{graph26JSON | safe}};
-						Plotly.plot('chart26',graph26,{});
-		
-						var graph27 = {{graph27JSON | safe}};
-						Plotly.plot('chart27',graph27,{});
-		
-						var graph28 = {{graph28JSON | safe}};
-						Plotly.plot('chart28',graph28,{});
 				    </script>
-					
 			{% else %}
 			<!-- For Free Users -->
-
-			<div class="tab-header" style = "background-color: #f1f1f1; border: none; padding: 10px 10px;">
-				<h3>Sales Reports</h3>
-			  </div>
 
 			<div class="container-fluid" style = "padding-bottom: 20px">
 				<div class="row">
@@ -567,32 +376,6 @@
 				</div>
 			</div>
 
-			<div class="tab-header" style = "background-color: #f1f1f1; border: none; padding: 10px 10px;">
-				<h3>Churn Analytics</h3>
-			  </div>
-
-			<div class="container-fluid" style = "padding-bottom: 20px">
-				<div class="row">
-				<div class="col-sm-4">
-					<div id='chart5'></div>
-				</div>
-				<div class="col-sm-8">
-					<div id='chart6'></div>
-				</div>
-				</div>
-			</div>
-
-			<div class="container-fluid" style = "padding-bottom: 20px">
-				<div class="row">
-				<div class="col-sm-4">
-					<div id='chart7'></div>
-				</div>
-				<div class="col-sm-8">
-					<div id='chart8'></div>
-				</div>
-				</div>
-			</div>
-
 			<script type='text/javascript'>
 				var graph1 = {{graph1JSON | safe}};
 				Plotly.plot('chart1',graph1,{});
@@ -608,18 +391,10 @@
 
 				var graph5 = {{graph5JSON | safe}};
 				Plotly.plot('chart5',graph5,{});
-				
-				var graph6 = {{graph6JSON | safe}};
-				Plotly.plot('chart6',graph6,{});
-
-				var graph7 = {{graph7JSON | safe}};
-				Plotly.plot('chart7',graph7,{});
-
-				var graph8 = {{graph8JSON | safe}};
-				Plotly.plot('chart8',graph8,{});
 			</script>
 
 			{% endif %}
+
 
 			{% elif current_user.explore == "empty" %}
 				  <section class="p-t-20">
@@ -652,7 +427,7 @@
 			<!--DITO LALAGAY-->
 
       	<!-- STATISTIC -->
-        		<!-- <section class="statistic statistic2">
+        		<section class="statistic statistic2">
 					<div class="container-fluid">
 					    <div class="row">
 						<div class="col-md-3 col-lg-4">
@@ -684,7 +459,7 @@
 						</div>
 					    </div>
 					</div>
-				</section> -->
+				</section>
 				<!-- END STATISTIC-->
 
 					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
@@ -700,8 +475,9 @@
 						  </div>
 						</div>
 					</div> -->
+					
 					  
-					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
+					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart17'></div>
@@ -710,7 +486,7 @@
 							<div id='chart18'></div>
 						  </div>
 						</div>
-					</div> -->
+					</div>
 					  
 					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
@@ -720,7 +496,7 @@
 						</div>
 					</div> -->
 
-					<!-- <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+					<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 					<script type='text/javascript'>
 
 						// For Churn
@@ -743,7 +519,7 @@
 						var graph19 = {{graph19JSON | safe}};
 						Plotly.plot('chart19',graph19,{});
 						
-					</script> -->
+					</script>
 
   			{% elif current_user.explore == "customer" %}
 
@@ -780,86 +556,45 @@
 					</div>
 				</div>
 			</section>
+			
+			<!-- For Kalibo Churn -->
 
-				<!-- For Kalibo Sales -->
-
-				<div class="container-fluid" style = "padding-bottom: 20px">
-					<div class="row">
-					<div class="col-sm-4">
-						<div id='chart20'></div>
-					</div>
-					<div class="col-sm-8">
-						<div id='chart21'></div>
-					</div>
-					</div>
+			<div class="container-fluid" style = "padding-bottom: 20px">
+				<div class="row">
+				<div class="col-sm-6">
+					<div id='chart25'></div>
 				</div>
-				
-				<div class="container-fluid" style = "padding-bottom: 20px">
-					<div class="row">
-					<div class="col-sm-4">
-						<div id='chart22'></div>
-					</div>
-					<div class="col-sm-4">
-						<div id='chart23'></div>
-					</div>
-					<div class="col-sm-4">
-						<div id='chart24'></div>
-					</div>
-					</div>
+				<div class="col-sm-6">
+					<div id='chart26'></div>
 				</div>
-
-				<!-- Kalibo Churn -->
-
-				<div class="container-fluid" style = "padding-bottom: 20px">
-					<div class="row">
-					<div class="col-sm-6">
-						<div id='chart25'></div>
-					</div>
-					<div class="col-sm-6">
-						<div id='chart26'></div>
-					</div>
-					</div>
 				</div>
-				
-				<div class="container-fluid" style = "padding-bottom: 20px">
-					<div class="row">
-					<div class="col-sm-6">
-						<div id='chart27'></div>
-					</div>
-					<div class="col-sm-6">
-						<div id='chart28'></div>
-					</div>
-					</div>
+			</div>
+			
+			<div class="container-fluid" style = "padding-bottom: 20px">
+				<div class="row">
+				<div class="col-sm-6">
+					<div id='chart27'></div>
 				</div>
+				<div class="col-sm-6">
+					<div id='chart28'></div>
+				</div>
+				</div>
+			</div>
 
-				<script type='text/javascript'>
-					var graph20 = {{graph20JSON | safe}};
-					Plotly.plot('chart20',graph20,{});
+			<!-- <script src='https://cdn.plot.ly/plotly-latest.min.js'></script> -->
+			<script type='text/javascript'>
+				var graph25 = {{graph25JSON | safe}};
+				Plotly.plot('chart25',graph25,{});
 
-					var graph21 = {{graph21JSON | safe}};
-					Plotly.plot('chart21',graph21,{});
+				var graph26 = {{graph26JSON | safe}};
+				Plotly.plot('chart26',graph26,{});
 
-					var graph22 = {{graph22JSON | safe}};
-					Plotly.plot('chart22',graph22,{});
+				var graph27 = {{graph27JSON | safe}};
+				Plotly.plot('chart27',graph27,{});
 
-					var graph23 = {{graph23JSON | safe}};
-					Plotly.plot('chart23',graph23,{});
-
-					var graph24 = {{graph24JSON | safe}};
-					Plotly.plot('chart24',graph24,{});
-
-					var graph25 = {{graph25JSON | safe}};
-					Plotly.plot('chart25',graph25,{});
-	
-					var graph26 = {{graph26JSON | safe}};
-					Plotly.plot('chart26',graph26,{});
-	
-					var graph27 = {{graph27JSON | safe}};
-					Plotly.plot('chart27',graph27,{});
-	
-					var graph28 = {{graph28JSON | safe}};
-					Plotly.plot('chart28',graph28,{});
-				</script>
+				var graph28 = {{graph28JSON | safe}};
+				Plotly.plot('chart28',graph28,{});
+			</script>
 				  
 			{% elif current_user.explore == "empty" %}
 				  <section class="p-t-20">
