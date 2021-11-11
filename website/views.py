@@ -376,7 +376,6 @@ def home():
 
         # Converting categorical variables into dummy variables
         df_dummies = pd.get_dummies(df2)
-        df_dummies.head()
 
         #Perform One Hot Encoding using get_dummies method
         df= pd.get_dummies(df, columns = ['Contract','Dependents','DeviceProtection','gender',
@@ -446,7 +445,7 @@ def home():
         df.drop(display, inplace=True)
 
         # Create a Dataframe showcasing probability of Churn of each customer
-        df[['customerID','Churn Probability']]
+        #df[['customerID','Churn Probability']]
  
 
         image_file = url_for('static', filename='images/' + current_user.image_file)
