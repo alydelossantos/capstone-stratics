@@ -46,7 +46,7 @@ def sample():
 	
 @auth.route('/sample/data')
 def sample_data():
-	return {'datas': [data.all() for data in Data.query]}
+	return {'datas': [data.to_dict() for data in Data.query]}
 
 # Landing Page
 #About Page
