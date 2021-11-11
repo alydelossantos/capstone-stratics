@@ -384,8 +384,8 @@ def home():
         )
 
     elif current_user.explore == "customer":
-        active = db.session.query(Data).filter_by(Data.status == "Active").count()
-        disconnected = db.session.query(Data).filter_by(Data.status == "Disconnected").count()
+        active = Data.query.filter_by(status =="Active").count()
+        disconnected = Data.query.filter_by(status =="Disconnected").count()
         if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
             if db.session.query(Data).count() >=3 :
                 cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
