@@ -8,7 +8,7 @@ from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
-from .models import User, Data, Strategies, Contact, Sampledata, Otherdata, Otherstrategies
+from .models import User, Data, Sampledata, Otherdata, Strategies, Samplestrategies, Otherstrategies, Contact, Task
 from flask_login import login_user, login_required, logout_user, current_user
 
 # Plotly Libraries
@@ -24,11 +24,15 @@ from .extensions import db
 views = Blueprint('views', __name__)
 
 kfull = "Kalibo Cable Television Network, Inc."
+knoc = "Kalibo Cable Television Network Inc."
+knop = "Kalibo Cable Television Network, Inc"
+knob = "Kalibo Cable Television Network Inc"
 knoinc = "Kalibo Cable Television Network"
 knonet = "Kalibo Cable Television"
 knotel = "Kalibo Cable"
 knocable = "Kalibo"
 abbrenoinc = "KCTN"
+
 
 @views.route('/home', methods=["GET", "POST"])
 @login_required
@@ -390,12 +394,10 @@ def home():
 
 
         churners_number = len(df[df['Churn'] == 1])
-        print("Number of churners", churners_number)
 
         churners = (df[df['Churn'] == 1])
 
         non_churners = df[df['Churn'] == 0].sample(n=churners_number)
-        print("Number of non-churners", len(non_churners))
         df2 = churners.append(non_churners)
 
         try:
@@ -409,12 +411,6 @@ def home():
         from sklearn.model_selection import train_test_split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
 
-        print("Number transactions X_train dataset: ", X_train.shape)
-        print("Number transactions X_train dataset: ", y_train.shape)
-        print("Number transactions X_train dataset: ", X_test.shape)
-        print("Number transactions X_train dataset: ", y_test.shape)
-
-
         y = df_dummies['Churn'].values
         X = df_dummies.drop(columns = ['Churn'])
 
@@ -425,7 +421,6 @@ def home():
         scaler.fit(X)
         X = pd.DataFrame(scaler.transform(X))
         X.columns = features
-
 
         from sklearn.model_selection import train_test_split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
@@ -441,13 +436,8 @@ def home():
         pred = logmodel.predict(X_test)
 
         logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
-        print (logmodel_accuracy)
-
 
         proba = logmodel.predict_proba(Xnew)[:,1]
-
-        for i in range(len(Xnew)):
-            df['Churn Probability'] = print(proba[i])
 
         for i in range(len(Xnew)):
 	        df['Churn Probability'][i] = proba[i]
@@ -457,8 +447,6 @@ def home():
 
         # Create a Dataframe showcasing probability of Churn of each customer
         df[['customerID','Churn Probability']]
-
-
 
         # ---------- Decision Tree -------------
 
@@ -482,7 +470,6 @@ def home():
 
         # Make predictions
         rf_pred = rfmodel.predict(X_test)
-        print (metrics.accuracy_score(y_test, rf_pred))
 
         rf_accuracy = round(metrics.accuracy_score(y_test, rf_pred)*100,2)
 
@@ -506,16 +493,13 @@ def home():
         Model_Comparison_df = Model_Comparison.sort_values(by='Score', ascending=False)
         Model_Comparison_df - Model_Comparison_df.set_index('Score')
         Model_Comparison_df.reset_index()
-
-
+	
         logtrainpred = logmodel.predict(X_train)
         logtrainpred
 
         algomodels = [logmodel_accuracy, dt_accuracy, rf_accuracy,  xgb_accuracy]
 
         max_algo = np.max(algomodels)
-
-        print('Maximum value of the array is',max_algo)
 
         from sklearn.metrics import confusion_matrix
         from sklearn.metrics import classification_report, accuracy_score
@@ -524,28 +508,20 @@ def home():
 
         max_algo = np.max(algomodels)
 
-        print(max_algo)
-
         if max_algo == logmodel_accuracy:
             y_hat_train = logmodel.predict(X_train)
             y_hat_test = logmodel.predict(X_test)
             
             conf_mat_logmodel = confusion_matrix(y_test,y_hat_test)
             conf_mat_logmodel
-            
-            
-            print(classification_report(y_test,y_hat_test )) 
-            print(accuracy_score(y_test, y_hat_test ))
+
         elif max_algo == dt_accuracy:
             y_hat_train = dtmodel.predict(X_train)
             y_hat_test = dtmodel.predict(X_test)
         
             conf_mat_dtmodel = confusion_matrix(y_test,y_hat_test)
             conf_mat_dtmodel
-            
 
-            print(classification_report(y_test,y_hat_test )) 
-            print(accuracy_score(y_test, y_hat_test ))
         elif max_algo == rf_accuracy:
             y_hat_train = rfmodel.predict(X_train)
             y_hat_test = rfmodel.predict(X_test)
@@ -553,9 +529,6 @@ def home():
             conf_mat_rfmodel = confusion_matrix(y_test,y_hat_test)
             conf_mat_rfmodel 
             
-
-            print(classification_report(y_test,y_hat_test )) 
-            print(accuracy_score(y_test, y_hat_test ))
         elif max_algo == xgb_accuracy:
             y_hat_train = model.predict(X_train)
             y_hat_test = model.predict(X_test)
@@ -563,20 +536,7 @@ def home():
             conf_mat_xgbmodel = confusion_matrix(y_test,y_hat_test)
             conf_mat_xgbmodel    
             
-
-            print(classification_report(y_test,y_hat_test )) 
-            print(accuracy_score(y_test, y_hat_test ))
-
-
-        y_hat_train = logmodel.predict(X_train)
-        y_hat_test = logmodel.predict(X_test)
-
-        svc_accuracy = round(metrics.accuracy_score(y_test, y_hat_test)* 100, 2)
-
-        print (svc_accuracy)
-
-
-        
+        return render_template('model.html', tables=[Model_Comparison.to_html(classes='data')], titles=Model_Comparison.columns.values)
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("home.html", user= current_user, image_file=image_file,
         graph1JSON=graph1JSON, 
@@ -707,7 +667,7 @@ def home():
                 graph24JSON = json.dumps(fig5category, cls=plotly.utils.PlotlyJSONEncoder)
 
                 # ------ End for Kalibo DS Sales -----
-
+		'''
                 # ------ Kalibo DS Sales Churn  --------
 
                 #Churn
@@ -975,7 +935,7 @@ def home():
 
                 
                 # ------------- End of Algorithms -------------------
-                
+                '''
                 current_user.dash = "full"
                 db.session.add(current_user)
                 db.session.commit()
@@ -986,12 +946,12 @@ def home():
                     graph21JSON=graph21JSON,
                     graph22JSON=graph22JSON,
                     graph23JSON=graph23JSON,
-                    graph24JSON=graph24JSON,
+                    graph24JSON=graph24JSON''',
                     # For Kalibo Churn
                     graph25JSON=graph25JSON,
                     graph26JSON=graph26JSON,
                     graph27SON=graph27JSON,
-                    graph28JSON=graph28JSON
+                    graph28JSON=graph28JSON'''
                     )
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
