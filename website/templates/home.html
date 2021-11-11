@@ -86,7 +86,7 @@
 					   <i class='bx bx-folder-open'></i>explore datasets</button>
 					  </div>
 						
-					  <div class="wrapper">
+					  <!-- <div class="wrapper">
 						<input type="radio" name="slider" checked id="sales">
 						<input type="radio" name="slider" id="analytics">
 						<nav>
@@ -94,11 +94,14 @@
 						  <label for="analytics" class="analytics">Churn Analytics</label>
 						  <div class="slider"></div>
 						</nav>
-						<section>
+						<section> -->
+				
+
 						  <div class="content content-1">
 			    {% if current_user.explore == "sample" %}
 			<!-- STATISTIC -->
 				      <section class="statistic statistic2">
+						<h3><b>Sales Reports</b></h3>
 					<div class="container-fluid">
 					    <div class="row">
 						<div class="col-md-3 col-lg-4">
@@ -197,9 +200,9 @@
 						</div>
 					  </div>
 
-					  <!-- Try -->
+					  <h3><b>Churn Analytics</b></h3>
 
-					  <div class="container-fluid" style = "padding-bottom: 20px">
+					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart14'></div>
@@ -209,6 +212,25 @@
 						  </div>
 						  <div class="col-sm-4">
 							<div id='chart16'></div>
+						  </div>
+						</div>
+					</div>
+					
+					<div class="container-fluid" style = "padding-bottom: 20px">
+						<div class="row">
+						  <div class="col-sm-4">
+							<div id='chart17'></div>
+						  </div>
+						  <div class="col-sm-8">
+							<div id='chart18'></div>
+						  </div>
+						</div>
+					</div>
+					  
+					<div class="container-fluid" style = "padding-bottom: 20px">
+						<div class="row">
+						  <div class="col-sm-12">
+							<div id='chart19'></div>
 						  </div>
 						</div>
 					</div>
@@ -263,6 +285,15 @@
 
 						var graph16 = {{graph16JSON | safe}};
 						Plotly.plot('chart16',graph16,{});
+
+						var graph17 = {{graph17JSON | safe}};
+						Plotly.plot('chart17',graph17,{});
+
+						var graph18 = {{graph18JSON | safe}};
+						Plotly.plot('chart18',graph18,{});
+
+						var graph19 = {{graph19JSON | safe}};
+						Plotly.plot('chart19',graph19,{});
 					  
 					  </script>
 
@@ -461,65 +492,6 @@
 					</div>
 				</section>
 				<!-- END STATISTIC-->
-
-					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
-						<div class="row">
-						  <div class="col-sm-4">
-							<div id='chart14'></div>
-						  </div>
-						  <div class="col-sm-4">
-							<div id='chart15'></div>
-						  </div>
-						  <div class="col-sm-4">
-							<div id='chart16'></div>
-						  </div>
-						</div>
-					</div> -->
-					
-					  
-					<div class="container-fluid" style = "padding-bottom: 20px">
-						<div class="row">
-						  <div class="col-sm-4">
-							<div id='chart17'></div>
-						  </div>
-						  <div class="col-sm-8">
-							<div id='chart18'></div>
-						  </div>
-						</div>
-					</div>
-					  
-					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
-						<div class="row">
-						  <div class="col-sm-12">
-							<div id='chart19'></div>
-						  </div>
-						</div>
-					</div> -->
-
-					<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-					<script type='text/javascript'>
-
-						// For Churn
-
-						var graph14 = {{graph14JSON | safe}};
-						Plotly.plot('chart14',graph14,{});
-
-						var graph15 = {{graph15JSON | safe}};
-						Plotly.plot('chart15',graph15,{});
-
-						var graph16 = {{graph16JSON | safe}};
-						Plotly.plot('chart16',graph16,{});
-
-						var graph17 = {{graph17JSON | safe}};
-						Plotly.plot('chart17',graph17,{});
-
-						var graph18 = {{graph18JSON | safe}};
-						Plotly.plot('chart18',graph18,{});
-
-						var graph19 = {{graph19JSON | safe}};
-						Plotly.plot('chart19',graph19,{});
-						
-					</script>
 
   			{% elif current_user.explore == "customer" %}
 
