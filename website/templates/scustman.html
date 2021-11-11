@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+	
 	<!DOCTYPE html>
 		<head>
         <meta charset="UTF-8">
@@ -9,7 +9,7 @@
 
         <!-- Fontfaces CSS-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">          
-		<link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
+	<link href ="{{url_for('static', filename = 'css/bootstrap-strategies.css')}}" rel = "stylesheet"/>
         <link href="{{ url_for('static',  filename='css/theme.css') }}" rel="stylesheet">
         
         <!-- Sort/Search Table CSS -->
@@ -23,7 +23,7 @@
 		
 		</head>
 		<body>
-		
+	{% if current_user.explore == "customer" or current_user.explore == "empty" %}
 		<div class="strat-container-main">
 			<h3>Customers</b></h3>
 			<div class="strat-stat-container">
@@ -31,7 +31,7 @@
 					<div class="strat-column-head">
 					<div class="strat-card-head">
 						<h4>Customers</h4>
-						<p class='card-strat-large primary'>{{ user.other_data|length }}</p>
+						<p class='card-strat-large primary'>{{  user.other_data|length }}</p>
 					</div>
 					</div>
 				</div>
@@ -39,20 +39,10 @@
 		</div>           
             <!-- Flash Messages  -->
     
-            {% with messages = get_flashed_messages(with_categories = true) %} 
+            {% with messages = get_flashed_messages() %} 
             {% if messages %} 
-            {% for category, message in messages %}
+            {% for message in messages %}
 
-			{% if category == "limit" %}
-			<div class="alert alert-primary alert-dismissable" role="alert"> 
-                <button type="button" class="close" data-dismiss="alert"> 
-                    &nbsp; <i class="zmdi zmdi-close"></i><br>
-                </button>            
-
-            {{message}}
-            </div>
-			{% else %}
-			
             <div class="alert alert-success alert-dismissable" role="alert"> 
                 <button type="button" class="close" data-dismiss="alert"> 
                     &nbsp; <i class="zmdi zmdi-close"></i><br>
@@ -60,96 +50,156 @@
 
             {{message}}
             </div>
-			
-			{% endif %}
-			
+
             {% endfor %}
             {% endif %}
             {% endwith %} 
     
                     <!-- Modal Create Strategies--> 
  
-            <div id="mymodal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+	<div id="mymodal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
             aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content">
 
-                        <div class="modal-header"> 
-                            <h4 class="modal-title">New Customer</h4>
-                        </div>
+				<div class="modal-header"> 
+					<h4 class="modal-title">New Customer</h4>
+				</div>
     
-                        <div class="modal-body"> 
-                            <div class="col-md-14 mx-auto">
-                            <form action="/customer-management/insert" method="POST">
-
-                            <div class="form-group row">
+				<div class="modal-body"> 
+					<div class="col-md-14 mx-auto">
+						<form action="/customer-management/insert" method="POST">
+							<div class="form-group row">
 								<div class="col-sm-6">
-                                    <label>Account Number</label>
-									<input type="text" class="form-control" name="accnt_num" required="1" placeholder="Account Number">     
+									<label>Account Number</label>
+									<input type="text" class="form-control" name="account_no" required="1" placeholder="Account Number">     
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Amount Paid</label>
+									<input type="text" class="form-control" name="amount_paid" required="1" placeholder="Php 0.00">     
 								</div>
 
-                                <div class="col-sm-6">
-                                    <label>Status</label>
-                                    <select name="sstatus" class="custom-select">
-                                        <option value="0">Please Select Status</option>
-                                        <option class="greenBg" value="active">Active</option>
-                                        <option class="redBg" value="inactive">Inactive</option>
-                                      </select>
-                                </div>
-                            </div> 
+							</div> 
 
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Customer Name</label>
-                                    <input type="text" class="form-control" name="name" required="1" placeholder="Customer Name">     
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label>Services</label>
-                                    <input type="text" class="form-control" name="services" required="1" placeholder="Services Availed">     
-                                </div> 
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Address</label>
-                                    <input type="text" class="form-control" name="address" required="1" placeholder="Address">     
-                                </div>
-                                
-                                <div class="col-sm-6">
-                                    <label>Monthly Payment</label>
-									<input type="text" class="form-control" name="monthly" required="1" placeholder="Monthly Payment">     
-							    </div>
-                            </div> 
-							
 							<div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Collector</label>
-                                    <input type="text" class="form-control" name="collector" required="1" placeholder="Collector">     
-                                </div> 
+								<div class="col-sm-6">
+									<label>Subscriber</label>
+									<input type="text" class="form-control" name="subscriber" required="1" placeholder="Subscriber Name">     
+								</div>
 
-                                <div class="col-sm-6">
-                                    <label>Amount</label>
-									<input type="text" class="form-control" name="amnt_paid" required="1" placeholder="Amount Paid">     
-							    </div>
+								<div class="col-sm-6">
+									<label>Reference Number</label>
+									<input type="text" class="form-control" name="ref_no" required="1" placeholder="Reference Number">     
+								</div> 
+							</div>
 
-                            </div>
-							
 							<div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Reference No.</label>
-                                    <input type="text" class="form-control" name="ref_num" required="1" placeholder="Reference Number">     
-                                </div>
-                            </div>
+								<div class="col-sm-6">
+									<label>Gender</label>
+									<select name="gender" class="custom-select">
+										<option value="0">Select Gender</option>
+										<option value="Female">Female</option>
+										<option value="Male">Male</option>
+									</select>    
+								</div> 
+								<div class="col-sm-6">
+									<label>Date Paid</label>
+									<input type="date" class="form-control" name="date_paid" required="1" placeholder="Date Paid">     
+								</div>
+							</div> 
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Address</label>
+									<input type="text" class="form-control" name="address" required="1" placeholder="Address">     
+								</div>
 								
-                        <div class="modal-footer"> 
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
-                            <button class="btn btn-primary" type="submit">Add Customer</button> 
-                        </div>      
-                    </form>       
-                    </div> 
-                </div>
-            </div>
+								<div class="col-sm-6">
+									<label>Category</label>
+									<select name="category" class="custom-select">
+										<option value="0">Select Category</option>
+										<option value="RS">RS</option>
+										<option value="GV">GV</option>
+										<option value="CS">CS</option>
+									</select>    
+								</div>
+							</div>
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Province</label>
+									<select name="province" class="custom-select">
+										<option value="0">Select Province</option>
+										<option value="Digital HD">Digital HD</option>
+										<option value="Internet with HD">Internet with HD</option>
+										<option value="Internet Only">Internet Only</option>
+									</select>    
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Activation Date</label>
+									<input type="date" class="form-control" name="activation_date" required="1" placeholder="Activation Date">     
+								</div>
+							</div>
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Monthly</label>
+									<input type="text" class="form-control" name="monthly" required="1" placeholder="Php 0.00">   
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Disconnection Date</label>
+									<input type="date" class="form-control" name="disconnection_date" placeholder="Disconnection Date">     
+								</div>
+							</div>
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label>Services</label>
+									<select name="services" class="custom-select">
+										<option value="0">Select Services</option>
+										<option value="Package A">Package A</option>
+										<option value="Package B">Package B</option>
+										<option value="Package C">Package C</option>
+										<option value="Package D">Package D</option>
+										<option value="Package E">Package E</option>
+									</select>    
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Reactivation Date</label>
+									<input type="date" class="form-control" name="reactivation_date" placeholder="Reactivation Date" >     
+								</div>
+							</div>
+						
+							<div class="form-group row">
+								<div class="col-sm-6">
+								<label>Status</label>
+								<select name="status" class="custom-select">
+									<option value="0">Select Status</option>
+									<option class="greenBg" value="Active">Active</option>
+									<option class="redBg" value="Disconnected">Disconnected</option>
+								  </select>   
+								</div>
+								<div class="col-sm-6">
+									<label>Churn</label><br>
+									<input type="radio" id="yes" name="churn" value="1">
+									<label for="yes"> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" id="no" name="churn" value="0">
+									<label for="no"> No</label>
+								</div>
+							</div>
+
+							<div class="modal-footer"> 
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+								<button class="btn btn-primary" type="submit">Add Customer</button> 
+							</div>      
+						</form>       
+					</div> 
+				</div>
+			</div>
 		</div> 
 	</div>
 
@@ -159,22 +209,11 @@
                 <div class="table-data__tool-right" style=padding-bottom:10px;>
                     <button data-toggle="modal" data-target="#mymodal" class="au-btn au-btn-icon au-btn--green au-btn--small">
                         <i class="zmdi zmdi-plus"></i>new customer</button>
-
-                        <!-- <div class="dropdown" style=float:right>
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Export
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" class="btn_excel">Excel</a>
-                              <a class="dropdown-item" class="btn_csv">CSV</a>
-                              <a class="dropdown-item" class="btn_pdf">PDF</a>
-                            </div>
-                          </div> -->
                 </div>
-            </div>
+		</div>
 		
 		<div class="table-responsive table-responsive-data2">
-		<form action="/customer-management/delete-selected" method="POST">
+			<form action="/customer-management/delete-selected" method="POST">
                 <table class="table table-data2" id="mytable">
                     <thead>
                         <tr>
@@ -185,19 +224,26 @@
                                 </label>
                             </th>
                             <th>Account No.</th>
-                            <th>Name</th>
-                            <th>Address</th>
+                            <th>Subscriber Name</th>
+                            <th>Gender</th>
+							<th>Address</th>
+                            <th>Province</th>
                             <th>Services</th>
-                            <th>Monthly</th>
-                            <th>Collector</th>
+                            <th>Monthly Payment</th>
                             <th>Status</th>
                             <th>Amount Paid</th>
-                            <th>Reference No.</th>
+							<th>Reference Number</th>
+                            <th>Date Paid</th>
+                            <th>Category</th>
+                            <th>Activation</th>
+                            <th>Disconnection</th>
+                            <th>Reactivation</th>
+							<th>Churn</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for row in user.other_data %}
+                        {% for row in datas %}
                         <tr class="tr-shadow">
                             <td>
                                 <label class="au-checkbox">
@@ -205,19 +251,33 @@
                                     <span class="au-checkmark"></span>
                                 </label>
                             </td>
-                            <td>{{row.accnt_num}}</td>
-							<td>{{row.name}}</td>
+                            <td>{{row.account_no}}</td>
+							<td>{{row.subscriber}}</td>
+							<td>{{row.gender}}</td>
 							<td>{{row.address}}</td>
+							<td>{{row.province}}</td>
 							<td>{{row.services}}</td>
 							<td>Php {{row.monthly}}</td>
 							<td>{{row.collector}}</td>
-							<td> {% if row.user_status == True %}
-								<li class="block-active" >Active</li>
+							<td> {% if row.status == "Active" %}
+								<li style = list-style-type:none; class="block-active">Active</li>
 								{% else %}
-								<li class="block-inactive">Inactive</li>
-							</td>{% endif %}
-							<td>Php {{row.amnt_paid}}</td>
-							<td>{{row.ref_num}}</td>
+								<li style = list-style-type:none; class="block-inactive">Disconnected</li>
+								{% endif %}
+							</td>
+							<td>Php {{row.amount_paid}}</td>
+							<td>{{row.ref_no}}</td>
+							<td>{{row.date_paid}}</td>
+							<td>{{row.category}}</td>
+							<td>{{row.activation_date}}</td>
+							<td>{{row.disconnection_date}}</td>
+							<td>{{row.reactivation_date}}</td>
+							<td> {% if row.churn == "0" %}
+								<li style = list-style-type:none; class="block-active">Non Churner</li>
+								{% else %}
+								<li style = list-style-type:none; class="block-inactive">Churner</li>
+								{% endif %}
+							</td>
                             <td>
                                 <div class="table-data-feature">
                                     <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
@@ -226,8 +286,9 @@
                                 </div>
                             </td>
                         </tr>
-		</form>
-                        <!-- Modal Edit Customer-->
+			</form>
+
+					 <!-- Modal Edit Customer-->
 
                         <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
 							aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -241,62 +302,96 @@
                                         <form action="/customer-management/update/{{row.id}}" method="POST">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label>Account Number</label>
-                                                    <input type="hidden"  name="id" value="{{row.id}}">
-                                                    <input type="text" class="form-control" name="accnt_num" value="{{row.accnt_num}}">
+                                                    <h1>{{row.subscriber}}</h1>
+													<h4 style="font-weight:500">Accnt. No. {{row.account_no}}</h4>
+													<h4 style="font-weight:500">Ref. No. {{row.ref_no}}</h4>
+													<p>Gender: {{row.gender}}</p>
+													<p>{{row.address}}, {{row.province}}</p>
+													
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <label>Status</label>
-                                                    <select name="sstatus" class="custom-select" value="{{row.sstatus}}">
-                                                    <option value="0">Please Select Status</option>
-                                                    <option class="greenBg" value="active">Active</option>
-                                                    <option class="redBg" value="inactive">Inactive</option>
-                                                  </select>
-                                                </div>
-                                            </div> 
-											
-											<div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label>Customer Name</label>
-                                                    <input type="text" class="form-control" name="name" value="{{row.name}}">
-                                                </div>
 
-                                                <div class="col-sm-6">
-                                                    <label>Services</label>
-                                                    <input type="text" class="form-control" name="services" value="{{row.services}}">
                                                 </div>
                                             </div> 
 											
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<label>Services</label>
+							<select name="services" class="custom-select" value="{{row.services}}">
+								<option value="0">Select Services</option>
+								<option value="Digital HD">Digital HD</option>
+								<option value="Internet with HD">Internet with HD</option>
+								<option value="Internet Only">Internet Only</option>
+							</select>    
+						</div>
+
+						<div class="col-sm-6">
+							<label>Date Paid</label>
+							<input type="date" class="form-control" name="date_paid" required="1" value="{{row.date_paid}}">     
+						</div>
+					</div> 
+											
+					<div class="form-group row">
+					<div class="col-sm-6">
+							<label>Monthly Payment</label>
+							<input type="text" class="form-control" name="monthly" required="1" value="Php {{row.monthly}}">   
+						</div>
+
+					   <div class="col-sm-6">
+							<label>Category</label>
+							<select name="category" class="custom-select" value="{{row.category}}">
+								<option value="0">Select Category</option>
+								<option value="RS">RS</option>
+								<option value="GV">GV</option>
+								<option value="CS">CS</option>
+							</select>    
+						</div>
+					</div>
+											
 											<div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label>Address</label>
-                                                    <input type="text" class="form-control" name="address" value="{{row.address}}">
-                                                </div>
+													<label>Status</label>
+													<select name="status" class="custom-select" value="{{row.status}}">
+														<option value="0">Select Status</option>
+														<option class="greenBg" value="Active">Active</option>
+														<option class="redBg" value="Disconnected">Disconnected</option>
+													  </select>   
+												</div>
                                                 
-											    <div class="col-sm-6">
-                                                   <label>Monthly Payment</label>
-                                                   <input type="text" class="form-control" name="monthly" value="{{row.monthly}}">
-                                                </div>
+											   <div class="col-sm-6">
+													<label>Activation Date</label>
+													<input type="date" class="form-control" name="activation_date" required="1" value="{{row.activation_date}}">     
+												</div>
                                             </div>
 											
 											<div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label>Collector</label>
-                                                    <input type="text" class="form-control" name="collector" value="{{row.collector}}">
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                <label>Amount Paid</label>
-                                                <input type="text" class="form-control" name="amnt_paid" value="{{row.amnt_paid}}">
-                                                </div>
+												<div class="col-sm-6">
+													<label>Amount Paid</label>
+													<input type="text" class="form-control" name="amount_paid" required="1" value="Php {{row.amount_paid}}">     
+												</div>
+												
+												<div class="col-sm-6">
+													<label>Disconnection Date</label>
+													<input type="date" class="form-control" name="disconnection_date" value="{{row.disconnection_date}}">     
+												</div>
+												
                                             </div>					
-											
+										
 											<div class="form-group row">
-                                                <div class="col-sm-6">
-                                                <label>Reference Number</label>
-                                                <input type="text" class="form-control" name="ref_num" value="{{row.ref_num}}">
-                                                </div>
+												
+												<div class="col-sm-6">
+													<label>Reactivation Date</label>
+													<input type="date" class="form-control" name="reactivation_date" value="{{row.reactivation_date}}">     
+												</div>
+												
+												<div class="col-sm-6">
+													<label>Churn</label><br>
+													<input type="radio" id="yes" name="churn" value="1">
+													<label for="yes"> Yes</label>
+													<input type="radio" id="no" name="churn" value="0">
+													<label for="no"> No</label>
+												</div>
                                             </div>
 											
                                             <div class="modal-footer">
@@ -320,7 +415,7 @@
 								<div class="modal-body">
 									<form action="/customer-management/delete/{{row.id}}">
 										<div class="form-group">
-											<label>Are you sure you want to delete Customer {{row.accnt_num}}?</label>
+											<label>Are you sure you want to delete Customer {{row.aaccount_no}}?</label>
 										</div>  
 										<div class="modal-footer">
 											<button class="btn btn-primary" type="submit">Delete Customer</button>
@@ -330,21 +425,21 @@
 								</div>    
                             </div>
 						</div> 
-					</div>							
-                        {% endfor %} 
+					</div>						
+                        {% endfor %}
                     </tbody>
-			<div class="col-md-12">
-				<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
-					<button type="submit" class="au-btn au-btn-icon au-btn--red au-btn--small" style="width: 40px; font-size: 14px;color:white;padding: -1 0;">
-					<i class="bx bx-trash" style="margin-left: 5px;"></i>Delete</button>
-				</div>
-			</div>
+					<div class="col-md-12">
+						<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
+							<button type="submit" class="au-btn au-btn-icon au-btn--red au-btn--small" style="width: 40px; font-size: 14px;color:white;padding: -1 0;">
+							<i class="bx bx-trash" style="margin-left: 5px;"></i>Delete</button>
+						</div>
+					</div>
                 </table>
 			</form>
             <!-- END TABLE -->	
 		</div>
-	</div>
-			
+		
+		{% endif %}	
 		  <script type = "text/javascript" src ="{{url_for('static', filename = 'js/jquery-3.2.1.min.js')}}"></script>
 		  <script type = "text/javascript" src ="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
 		  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -376,7 +471,7 @@
                     buttons: [    
                         {
                             extend: 'excelHtml5',
-                            title: 'Stratics',
+                            title: 'Stratics - Customer Management',
                             text: 'Export',
                             split: [ 'pdf', 'excel', 'csv'],
                         },  

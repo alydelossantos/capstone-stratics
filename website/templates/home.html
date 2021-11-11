@@ -134,7 +134,7 @@
 				    </section>
 				    <!-- END STATISTIC-->
 
-					<div class="container-fluid">
+					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart1'></div>
@@ -148,7 +148,7 @@
 						</div>
 					  </div>
 					  
-					  <div class="container-fluid">
+					  <div class="container-fluid style = "padding-bottom: 20px"">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart4'></div>
@@ -162,7 +162,7 @@
 						</div>
 					  </div>
 					  
-					  <div class="container-fluid">
+					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart7'></div>
@@ -176,7 +176,7 @@
 						</div>
 					  </div>
 					  
-					  <div class="container-fluid">
+					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart10'></div>
@@ -190,7 +190,7 @@
 						</div>
 					  </div>
 					  
-					  <div class="container-fluid">
+					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-8">
 							<div id='chart13'></div>
@@ -282,7 +282,7 @@
 
 				    <!-- For Kalibo Sales -->
 
-					<div class="container-fluid">
+					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						<div class="col-sm-4">
 							<div id='chart20'></div>
@@ -293,7 +293,7 @@
 						</div>
 					</div>
 					
-					<div class="container-fluid">
+					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						<div class="col-sm-4">
 							<div id='chart22'></div>
@@ -389,7 +389,7 @@
 				</section>
 				<!-- END STATISTIC-->
 
-					<div class="container-fluid">
+					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart14'></div>
@@ -403,7 +403,7 @@
 						</div>
 					</div>
 					  
-					<div class="container-fluid">
+					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart17'></div>
@@ -414,7 +414,7 @@
 						</div>
 					</div>
 					  
-					<div class="container-fluid">
+					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-12">
 							<div id='chart19'></div>
@@ -448,10 +448,44 @@
 					</script>
 
   			{% elif current_user.explore == "customer" %}
+
+			  <section class="statistic statistic2">
+				<div class="container-fluid">
+					<div class="row">
+					<div class="col-md-3 col-lg-4">
+						<div class="statistic__item statistic__item--blue">
+						<h2 class="number">10,368</h2>
+						<span class="desc">average earnings</span>
+						<div class="icon">
+							<i class="zmdi zmdi-account-o"></i>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4">
+						<div class="statistic__item statistic__item--green">
+						<h2 class="number">{{active}}</h2>
+						<span class="desc">Active</span>
+						<div class="icon">
+							<i class="zmdi zmdi-shopping-cart"></i>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4">
+						<div class="statistic__item statistic__item--red">
+						<h2 class="number">{{disconnected}}</h2>
+						<span class="desc">Disconnected</span>
+						<div class="icon">
+							<i class="zmdi zmdi-money"></i>
+						</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</section>
 			
 			<!-- For Kalibo Churn -->
 
-			<div class="container-fluid">
+			<div class="container-fluid" style = "padding-bottom: 20px">
 				<div class="row">
 				<div class="col-sm-6">
 					<div id='chart25'></div>
@@ -462,7 +496,7 @@
 				</div>
 			</div>
 			
-			<div class="container-fluid">
+			<div class="container-fluid" style = "padding-bottom: 20px">
 				<div class="row">
 				<div class="col-sm-6">
 					<div id='chart27'></div>
@@ -473,6 +507,7 @@
 				</div>
 			</div>
 
+			<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 			<script type='text/javascript'>
 				var graph25 = {{graph25JSON | safe}};
 				Plotly.plot('chart25',graph25,{});

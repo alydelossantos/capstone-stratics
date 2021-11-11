@@ -132,7 +132,7 @@ def checkcode():
         user_status = request.form.get("user_status")
         
         user = User.query.filter_by(email=email).first()
-        
+
         if user.ccode == ccode:
             login_user(user, remember=True)
             return redirect(url_for("views.home"))
@@ -273,32 +273,32 @@ def custman():
 def insert():
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
-            account_no = request.form['account_no']
-            subscriber = request.form['subscriber']
-            address = request.form['address']
-            zone = request.form['zone']
-            services = request.form['services']
-            monthly = request.form['monthly']
-            collector = request.form['collector']
-            status = request.form['status']
-            amount_paid = request.form['amount_paid']
-            ref_no = request.form['ref_no']
-            date_paid = request.form['date_paid']
-            category = request.form['category']
-            activation_date = request.form['activation_date']
-            disconnection_date = request.form['disconnection_date']
-            reactivation_date = request.form['reactivation_date']
-            churn = request.form['churn']
-     
-            datas = Data(account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
-                         collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
-                         disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
-            db.session.add(datas)
-            db.session.commit()
-            
-            flash("Customer Record Added Successfully")
-            
-            return redirect(url_for('auth.custman'))
+			account_no = request.form['account_no']
+			subscriber = request.form['subscriber']
+			address = request.form['address']
+			zone = request.form['zone']
+			services = request.form['services']
+			monthly = request.form['monthly']
+			collector = request.form['collector']
+			status = request.form['status']
+			amount_paid = request.form['amount_paid']
+			ref_no = request.form['ref_no']
+			date_paid = request.form['date_paid']
+			category = request.form['category']
+			activation_date = request.form['activation_date']
+			disconnection_date = request.form['disconnection_date']
+			reactivation_date = request.form['reactivation_date']
+			churn = request.form['churn']
+
+			datas = Data(account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
+						collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+						disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
+			db.session.add(datas)
+			db.session.commit()
+
+			flash("Customer Record Added Successfully")
+
+			return redirect(url_for('auth.custman'))
     else:
         sd = Otherdata \
             .query \
@@ -348,7 +348,6 @@ def update(id):
             datas.collector = request.form['collector']
             datas.status = request.form['status']
             datas.amount_paid = request.form['amount_paid']
-            datas.ref_no = request.form['ref_no']
             datas.date_paid = request.form['date_paid']
             datas.category = request.form['category']
             datas.activation_date = request.form['activation_date']
@@ -368,7 +367,6 @@ def update(id):
             datas.collector = request.form['collector']
             datas.status = request.form['status']
             datas.amount_paid = request.form['amount_paid']
-            datas.ref_no = request.form['ref_no']
             datas.date_paid = request.form['date_paid']
             datas.category = request.form['category']
             datas.activation_date = request.form['activation_date']
@@ -641,7 +639,7 @@ def newstrat():
             status = request.form['status']
             description = request.form['description']
             
-            my_strat = Strategies(name=name, act=act, platform=platform, startdate=startdate, 
+            my_strat = Samplestrategies(name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
             db.session.commit() 

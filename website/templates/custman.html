@@ -184,14 +184,13 @@
 						
 							<div class="form-group row">
 								<div class="col-sm-6">
-									<label>Status</label>
-									<select name="status" class="custom-select">
-										<option value="0">Select Status</option>
-										<option class="greenBg" value="active">Active</option>
-										<option class="redBg" value="inactive">Inactive</option>
-									  </select>   
+								<label>Status</label>
+								<select name="status" class="custom-select">
+									<option value="0">Select Status</option>
+									<option class="greenBg" value="Active">Active</option>
+									<option class="redBg" value="Disconnected">Disconnected</option>
+								  </select>   
 								</div>
-								
 								<div class="col-sm-6">
 									<label>Churn</label><br>
 									<input type="radio" id="yes" name="churn" value="1">
@@ -267,10 +266,10 @@
 							<td>{{row.services}}</td>
 							<td>Php {{row.monthly}}</td>
 							<td>{{row.collector}}</td>
-							<td> {% if row.status == "active" %}
+							<td> {% if row.status == "Active" %}
 								<li style = list-style-type:none; class="block-active">Active</li>
 								{% else %}
-								<li style = list-style-type:none; class="block-inactive">Inactive</li>
+								<li style = list-style-type:none; class="block-inactive">Disconnected</li>
 								{% endif %}
 							</td>
 							<td>Php {{row.amount_paid}}</td>
@@ -361,8 +360,8 @@
 													<label>Status</label>
 													<select name="status" class="custom-select" value="{{row.status}}">
 														<option value="0">Select Status</option>
-														<option class="greenBg" value="active">Active</option>
-														<option class="redBg" value="inactive">Inactive</option>
+														<option class="greenBg" value="Active">Active</option>
+														<option class="redBg" value="Disconnected">Disconnected</option>
 													  </select>   
 												</div>
                                                 

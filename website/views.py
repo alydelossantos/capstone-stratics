@@ -8,7 +8,7 @@ from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
-from .models import User, Data, Otherdata, Sampledata, Strategies, Otherstrategies, Samplestrategies, Contact, Task
+from .models import User, Data, Sampledata, Otherdata, Strategies, Samplestrategies, Otherstrategies, Contact, Task
 from flask_login import login_user, login_required, logout_user, current_user
 
 # Plotly Libraries
@@ -32,6 +32,7 @@ knonet = "Kalibo Cable Television"
 knotel = "Kalibo Cable"
 knocable = "Kalibo"
 abbrenoinc = "KCTN"
+
 
 @views.route('/home', methods=["GET", "POST"])
 @login_required
@@ -58,7 +59,6 @@ def home():
         # Pie Chart
         from plotly.offline import init_notebook_mode,iplot
         import plotly.graph_objects as go
-        import cufflinks as cf
         init_notebook_mode(connected=True)
 
         #Gender Distribution
@@ -249,7 +249,7 @@ def home():
                 x=plot_by_gender['gender'],
                 y=plot_by_gender['Churn'],
             width = [0.8],
-                marker = dict(
+                marker = dict(      
                     color=['#ed7071', '#ffa14a']
                 )
             )
@@ -358,7 +358,7 @@ def home():
         graph19JSON = json.dumps(cfig6, cls=plotly.utils.PlotlyJSONEncoder)
 
         # ------------ End of Churn Analytics ------------
-        
+
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("home.html", user= current_user, image_file=image_file,
         graph1JSON=graph1JSON, 
@@ -384,6 +384,12 @@ def home():
         )
 
     elif current_user.explore == "customer":
+        active = Data \
+            .query \
+            .filter(Data.status == "Active").count()
+        disconnected = Data \
+            .query \
+            .filter(Data.status == "Disconnected").count()
         if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
             if db.session.query(Data).count() >=3 :
                 cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
@@ -490,7 +496,7 @@ def home():
 
                 # ------ End for Kalibo DS Sales -----
 
-                # ------ Kalibo DS Sales Churn  --------
+                 # ------ Kalibo DS Sales Churn  --------
 
                 #Churn
                 lab = df["churn"].value_counts().keys().tolist()
@@ -583,178 +589,7 @@ def home():
                 fig9contract = go.Figure(data=plot_data, layout=layout)
                 graph28JSON = json.dumps(fig9contract, cls=plotly.utils.PlotlyJSONEncoder)
 
-                # --------------- Data Preprocessing --------------------
 
-                # Remove Account Number-Address
-                df2 = df.iloc[:,3:]
-                # Remove Reference Number
-                del df2['ref_no']
-                del df2['date_paid']
-                del df2['activation_date']
-                del df2['disconnection_date']
-                del df2['reactivation_date']
-
-                # independent variable - all columns aside from 'Churn'
-                X = df2.iloc[:,:-1].values
-                # dependent variable - Churn
-                y = df2.iloc[:,7]
-
-                # Convert predictor variables in a binary numeric variable
-                df2['status'].replace(to_replace='Active', value=1, inplace=True)
-                df2['status'].replace(to_replace='Disconnected', value=0, inplace=True)
-
-                # Converting categorical variables into dummy variables
-                df_dummies = pd.get_dummies(df2)
-
-                from sklearn.preprocessing import StandardScaler
-                standardscaler = StandardScaler()
-                columns_for_fit_scaling = ['monthly', 'amount_paid']
-                df_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(df_dummies[columns_for_fit_scaling])
-
-                try:
-                    account_no = df2['acccount_no'] # Store this as customer_id variable
-                    del df2['account_no'] # Don't need in ML DF
-                except:
-                    print("already removed Account Number")
-
-                # Splitting Data into Train and Test
-                from sklearn.model_selection import train_test_split
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,  random_state=101)
-
-                y = df_dummies['churn'].values
-                X = df_dummies.drop(columns = ['churn'])
-
-                # Scaling all the variables to a range of 0 to 1
-                from sklearn.preprocessing import MinMaxScaler
-                features = X.columns.values
-                scaler = MinMaxScaler(feature_range = (0,1))
-                scaler.fit(X)
-                X = pd.DataFrame(scaler.transform(X))
-                X.columns = features
-
-                from sklearn.model_selection import train_test_split
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
-
-                # ----------- LOGISTIC REGRESSION --------------
-
-                # Running logistic regression model
-                from sklearn.linear_model import LogisticRegression
-                import sklearn.metrics as metrics
-                logmodel = LogisticRegression(random_state=50)
-                result = logmodel.fit(X_train, y_train)
-
-                Xnew = X_test.values
-                pred = logmodel.predict(X_test)
-
-                logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
-                print (logmodel_accuracy)
-
-                proba = logmodel.predict_proba(Xnew)[:,1]
-
-                # for i in range(len(Xnew)):
-	            #     df.to_sql(['Churn Probability'][i] = proba[i])
-
-                # display = df[(df['Churn Probability'].isnull())].index
-                # df.drop(display, inplace=True)
-
-                # df[['account_no','Churn Probability']]
-                # print(df)
-
-                # ------------ DECISION TREE ----------------
-
-                from sklearn.tree import DecisionTreeClassifier
-                dtmodel = DecisionTreeClassifier(criterion = 'gini', random_state=50)
-                dtmodel.fit(X_train, y_train)
-
-                dt_pred = dtmodel.predict(X_test)
-
-                dt_accuracy = round(metrics.accuracy_score(y_test, dt_pred)*100,2)
-
-                # ------------ RANDOM FOREST ----------------
-
-                from sklearn.ensemble import RandomForestClassifier
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
-                rfmodel = RandomForestClassifier(n_estimators=1000 , oob_score = True, n_jobs = -1,
-                                                random_state =50, max_features = "auto",
-                                                max_leaf_nodes = 30)
-                rfmodel.fit(X_train, y_train)
-
-                # Make predictions
-                rf_pred = rfmodel.predict(X_test)
-                print (metrics.accuracy_score(y_test, rf_pred))
-
-                rf_accuracy = round(metrics.accuracy_score(y_test, rf_pred)*100,2)
-
-                # ----------- XGBOOST ----------------------
-
-                from xgboost import XGBClassifier
-                model = XGBClassifier()
-                model.fit(X_train, y_train)
-                xgb_pred = model.predict(X_test)
-                metrics.accuracy_score(y_test, xgb_pred)
-
-                xgb_accuracy = round(metrics.accuracy_score(y_test, xgb_pred)*100,2)
-
-                Model_Comparison = pd.DataFrame({
-                    'Model': ['Logistic Regression', 'Decision Tree', 'Random Forest', 'XGBoost'],
-                    'Score': [logmodel_accuracy, dt_accuracy, rf_accuracy, xgb_accuracy]})
-                Model_Comparison_df = Model_Comparison.sort_values(by='Score', ascending=False)
-                Model_Comparison_df - Model_Comparison_df.set_index('Score')
-                Model_Comparison_df.reset_index()
-
-                from sklearn.metrics import confusion_matrix
-                from sklearn.metrics import classification_report, accuracy_score
-
-                algomodels = [logmodel_accuracy, dt_accuracy, rf_accuracy,  xgb_accuracy]
-
-                max_algo = np.max(algomodels)
-
-                print(max_algo)
-
-                if max_algo == logmodel_accuracy:
-                    y_hat_train = logmodel.predict(X_train)
-                    y_hat_test = logmodel.predict(X_test)
-                    
-                    conf_mat_logmodel = confusion_matrix(y_test,y_hat_test)
-                    conf_mat_logmodel
-                    
-                    
-                    print(classification_report(y_test,y_hat_test )) 
-                    print(accuracy_score(y_test, y_hat_test ))
-                elif max_algo == dt_accuracy:
-                    y_hat_train = dtmodel.predict(X_train)
-                    y_hat_test = dtmodel.predict(X_test)
-                
-                    conf_mat_dtmodel = confusion_matrix(y_test,y_hat_test)
-                    conf_mat_dtmodel
-                    
-
-                    print(classification_report(y_test,y_hat_test )) 
-                    print(accuracy_score(y_test, y_hat_test ))
-                elif max_algo == rf_accuracy:
-                    y_hat_train = rfmodel.predict(X_train)
-                    y_hat_test = rfmodel.predict(X_test)
-
-                    conf_mat_rfmodel = confusion_matrix(y_test,y_hat_test)
-                    conf_mat_rfmodel 
-                    
-
-                    print(classification_report(y_test,y_hat_test )) 
-                    print(accuracy_score(y_test, y_hat_test ))
-                elif max_algo == xgb_accuracy:
-                    y_hat_train = model.predict(X_train)
-                    y_hat_test = model.predict(X_test)
-
-                    conf_mat_xgbmodel = confusion_matrix(y_test,y_hat_test)
-                    conf_mat_xgbmodel    
-                    
-
-                    print(classification_report(y_test,y_hat_test )) 
-                    print(accuracy_score(y_test, y_hat_test ))
-
-                
-                # ------------- End of Algorithms -------------------
-                
                 current_user.dash = "full"
                 db.session.add(current_user)
                 db.session.commit()
@@ -766,11 +601,11 @@ def home():
                     graph22JSON=graph22JSON,
                     graph23JSON=graph23JSON,
                     graph24JSON=graph24JSON,
-                    # For Kalibo Churn
+                     # For Kalibo Churn
                     graph25JSON=graph25JSON,
                     graph26JSON=graph26JSON,
                     graph27SON=graph27JSON,
-                    graph28JSON=graph28JSON
+                    graph28JSON=graph28JSON,active=active, disconnected=disconnected
                     )
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
