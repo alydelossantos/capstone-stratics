@@ -8,7 +8,7 @@ from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
-from .models import User, Data, Otherdata, Sampledata, Strategies, Otherstrategies, Samplestrategies, Contact, Task
+from .models import User, Data, Strategies, Contact, Sampledata, Otherdata, Otherstrategies
 from flask_login import login_user, login_required, logout_user, current_user
 
 # Plotly Libraries
@@ -24,9 +24,6 @@ from .extensions import db
 views = Blueprint('views', __name__)
 
 kfull = "Kalibo Cable Television Network, Inc."
-knoc = "Kalibo Cable Television Network Inc."
-knop = "Kalibo Cable Television Network, Inc"
-knob = "Kalibo Cable Television Network Inc"
 knoinc = "Kalibo Cable Television Network"
 knonet = "Kalibo Cable Television"
 knotel = "Kalibo Cable"
@@ -37,7 +34,7 @@ abbrenoinc = "KCTN"
 @login_required
 def home():
     if current_user.explore == "sample":
-        cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
+        cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
         conn = cnx.connect()
         df = pd.read_sql_table('sampledata', con=cnx)
 
@@ -58,7 +55,6 @@ def home():
         # Pie Chart
         from plotly.offline import init_notebook_mode,iplot
         import plotly.graph_objects as go
-        import cufflinks as cf
         init_notebook_mode(connected=True)
 
         #Gender Distribution
@@ -249,7 +245,7 @@ def home():
                 x=plot_by_gender['gender'],
                 y=plot_by_gender['Churn'],
             width = [0.8],
-                marker = dict(
+                marker = dict(      
                     color=['#ed7071', '#ffa14a']
                 )
             )
@@ -358,6 +354,229 @@ def home():
         graph19JSON = json.dumps(cfig6, cls=plotly.utils.PlotlyJSONEncoder)
 
         # ------------ End of Churn Analytics ------------
+
+        # independent variable - all columns aside from 'Churn'
+        X = df.iloc[:,:-1].values
+        X
+
+        # dependent variable - Churn
+        y = df.iloc[:,20]
+        y
+
+        # Remove customer ID
+        df2 = df.iloc[:,1:]
+
+        # Convert predictor variables in a binary numeric variable
+        df2['Churn'].replace(to_replace='Yes', value=1, inplace=True)
+        df2['Churn'].replace(to_replace='No', value=0, inplace=True)
+
+        # Converting categorical variables into dummy variables
+        df_dummies = pd.get_dummies(df2)
+        df_dummies.head()
+
+        #Perform One Hot Encoding using get_dummies method
+        df= pd.get_dummies(df, columns = ['Contract','Dependents','DeviceProtection','gender',
+                                                                'InternetService','MultipleLines','OnlineBackup',
+                                                                'OnlineSecurity','PaperlessBilling','Partner',
+                                                                'PaymentMethod','PhoneService','SeniorCitizen',
+                                                                'StreamingMovies','StreamingTV','TechSupport'],
+                                    drop_first=True)
+
+        
+        from sklearn.preprocessing import StandardScaler
+        standardscaler = StandardScaler()
+        columns_for_fit_scaling = ['tenure', 'MonthlyCharges', 'TotalCharges']
+        df_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(df_dummies[columns_for_fit_scaling])
+
+
+        churners_number = len(df[df['Churn'] == 1])
+        print("Number of churners", churners_number)
+
+        churners = (df[df['Churn'] == 1])
+
+        non_churners = df[df['Churn'] == 0].sample(n=churners_number)
+        print("Number of non-churners", len(non_churners))
+        df2 = churners.append(non_churners)
+
+        try:
+            customer_id = df2['customerID'] # Store this as customer_id variable
+            del df2['customerID'] # Don't need in ML DF
+        except:
+            print("already removed customerID")
+
+
+        # Splitting Data into Train and Test
+        from sklearn.model_selection import train_test_split
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+
+        print("Number transactions X_train dataset: ", X_train.shape)
+        print("Number transactions X_train dataset: ", y_train.shape)
+        print("Number transactions X_train dataset: ", X_test.shape)
+        print("Number transactions X_train dataset: ", y_test.shape)
+
+
+        y = df_dummies['Churn'].values
+        X = df_dummies.drop(columns = ['Churn'])
+
+        # Scaling all the variables to a range of 0 to 1
+        from sklearn.preprocessing import MinMaxScaler
+        features = X.columns.values
+        scaler = MinMaxScaler(feature_range = (0,1))
+        scaler.fit(X)
+        X = pd.DataFrame(scaler.transform(X))
+        X.columns = features
+
+
+        from sklearn.model_selection import train_test_split
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
+
+
+        # Running logistic regression model
+        from sklearn.linear_model import LogisticRegression
+        import sklearn.metrics as metrics
+        logmodel = LogisticRegression(random_state=50)
+        result = logmodel.fit(X_train, y_train)
+
+        Xnew = X_test.values
+        pred = logmodel.predict(X_test)
+
+        logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
+        print (logmodel_accuracy)
+
+
+        proba = logmodel.predict_proba(Xnew)[:,1]
+
+        for i in range(len(Xnew)):
+            df['Churn Probability'] = print(proba[i])
+
+        for i in range(len(Xnew)):
+	        df['Churn Probability'][i] = proba[i]
+
+        display = df[(df['Churn Probability'].isnull())].index
+        df.drop(display, inplace=True)
+        df
+
+        # Create a Dataframe showcasing probability of Churn of each customer
+        df[['customerID','Churn Probability']]
+
+
+
+        # ---------- Decision Tree -------------
+
+        from sklearn.tree import DecisionTreeClassifier
+        dtmodel = DecisionTreeClassifier(criterion = 'gini', random_state=50)
+        dtmodel.fit(X_train, y_train)
+
+        dt_pred = dtmodel.predict(X_test)
+
+        dt_accuracy = round(metrics.accuracy_score(y_test, dt_pred)*100,2)
+
+
+        # ---------- RandomForest ----------------
+
+        from sklearn.ensemble import RandomForestClassifier
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
+        rfmodel = RandomForestClassifier(n_estimators=1000 , oob_score = True, n_jobs = -1,
+                                        random_state =50, max_features = "auto",
+                                        max_leaf_nodes = 30)
+        rfmodel.fit(X_train, y_train)
+
+        # Make predictions
+        rf_pred = rfmodel.predict(X_test)
+        print (metrics.accuracy_score(y_test, rf_pred))
+
+        rf_accuracy = round(metrics.accuracy_score(y_test, rf_pred)*100,2)
+
+
+
+        # ------------- XGBoost -------------------
+
+        from xgboost import XGBClassifier
+        model = XGBClassifier()
+        model.fit(X_train, y_train)
+        xgb_pred = model.predict(X_test)
+        metrics.accuracy_score(y_test, xgb_pred)
+
+        xgb_accuracy = round(metrics.accuracy_score(y_test, xgb_pred)*100,2)
+
+        # ----------- Model Comparison --------------
+
+        Model_Comparison = pd.DataFrame({
+            'Model': ['Logistic Regression', 'Decision Tree', 'Random Forest', 'XGBoost'],
+            'Score': [logmodel_accuracy, dt_accuracy, rf_accuracy, xgb_accuracy]})
+        Model_Comparison_df = Model_Comparison.sort_values(by='Score', ascending=False)
+        Model_Comparison_df - Model_Comparison_df.set_index('Score')
+        Model_Comparison_df.reset_index()
+
+
+        logtrainpred = logmodel.predict(X_train)
+        logtrainpred
+
+        algomodels = [logmodel_accuracy, dt_accuracy, rf_accuracy,  xgb_accuracy]
+
+        max_algo = np.max(algomodels)
+
+        print('Maximum value of the array is',max_algo)
+
+        from sklearn.metrics import confusion_matrix
+        from sklearn.metrics import classification_report, accuracy_score
+
+        algomodels = [logmodel_accuracy, dt_accuracy, rf_accuracy,  xgb_accuracy]
+
+        max_algo = np.max(algomodels)
+
+        print(max_algo)
+
+        if max_algo == logmodel_accuracy:
+            y_hat_train = logmodel.predict(X_train)
+            y_hat_test = logmodel.predict(X_test)
+            
+            conf_mat_logmodel = confusion_matrix(y_test,y_hat_test)
+            conf_mat_logmodel
+            
+            
+            print(classification_report(y_test,y_hat_test )) 
+            print(accuracy_score(y_test, y_hat_test ))
+        elif max_algo == dt_accuracy:
+            y_hat_train = dtmodel.predict(X_train)
+            y_hat_test = dtmodel.predict(X_test)
+        
+            conf_mat_dtmodel = confusion_matrix(y_test,y_hat_test)
+            conf_mat_dtmodel
+            
+
+            print(classification_report(y_test,y_hat_test )) 
+            print(accuracy_score(y_test, y_hat_test ))
+        elif max_algo == rf_accuracy:
+            y_hat_train = rfmodel.predict(X_train)
+            y_hat_test = rfmodel.predict(X_test)
+
+            conf_mat_rfmodel = confusion_matrix(y_test,y_hat_test)
+            conf_mat_rfmodel 
+            
+
+            print(classification_report(y_test,y_hat_test )) 
+            print(accuracy_score(y_test, y_hat_test ))
+        elif max_algo == xgb_accuracy:
+            y_hat_train = model.predict(X_train)
+            y_hat_test = model.predict(X_test)
+
+            conf_mat_xgbmodel = confusion_matrix(y_test,y_hat_test)
+            conf_mat_xgbmodel    
+            
+
+            print(classification_report(y_test,y_hat_test )) 
+            print(accuracy_score(y_test, y_hat_test ))
+
+
+        y_hat_train = logmodel.predict(X_train)
+        y_hat_test = logmodel.predict(X_test)
+
+        svc_accuracy = round(metrics.accuracy_score(y_test, y_hat_test)* 100, 2)
+
+        print (svc_accuracy)
+
+
         
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("home.html", user= current_user, image_file=image_file,
@@ -386,7 +605,7 @@ def home():
     elif current_user.explore == "customer":
         if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
             if db.session.query(Data).count() >=3 :
-                cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
+                cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
                 conn = cnx.connect()
                 df = pd.read_sql_table('data', con=cnx)
 
@@ -651,13 +870,13 @@ def home():
 
                 proba = logmodel.predict_proba(Xnew)[:,1]
 
-                # for i in range(len(Xnew)):
-	            #     df.to_sql(['Churn Probability'][i] = proba[i])
+                for i in range(len(Xnew)):
+	                df[(df['Churn Probability'][i] = proba[i])]
 
-                # display = df[(df['Churn Probability'].isnull())].index
-                # df.drop(display, inplace=True)
+                display = df[(df['Churn Probability'].isnull())].index
+                df.drop(display, inplace=True)
 
-                # df[['account_no','Churn Probability']]
+                df.to_html[['account_no','Churn Probability']]
                 # print(df)
 
                 # ------------ DECISION TREE ----------------
@@ -788,7 +1007,7 @@ def home():
                 return render_template("home.html", user= current_user, image_file=image_file)
         else:
             #if db.session.query(Otherdata).join(User).filter(User.id == current_user.id).count() >=3 :
-            cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
+            cnx = create_engine("postgresql://jzyiaknneqredi:b3f16c49a8b520b2d627ba916908f41bc0a507f7cac2efcb23fa3a8947d76fa8@ec2-35-169-43-5.compute-1.amazonaws.com:5432/dc0chgkng9ougq", echo=True)
             conn = cnx.connect()
             df = pd.read_sql_table('otherdata', con=cnx)
             dataf = df.loc[df['odata_id'] == current_user.id]
