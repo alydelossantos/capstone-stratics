@@ -276,34 +276,34 @@ def insert():
 		    count = 0
             rows = Data.query.count()
             if db.session.query(Data) == rows:
-            	count = rows + 1
-				Data.id = count
-				account_no = request.form['account_no']
-				subscriber = request.form['subscriber']
-				address = request.form['address']
-				zone = request.form['zone']
-				services = request.form['services']
-				monthly = request.form['monthly']
-				collector = request.form['collector']
-				status = request.form['status']
-				amount_paid = request.form['amount_paid']
-				ref_no = request.form['ref_no']
-				date_paid = request.form['date_paid']
-				category = request.form['category']
-				activation_date = request.form['activation_date']
-				disconnection_date = request.form['disconnection_date']
-				reactivation_date = request.form['reactivation_date']
-				churn = request.form['churn']
+                count = rows + 1
+                Data.id = count
+                account_no = request.form['account_no']
+                subscriber = request.form['subscriber']
+                address = request.form['address']
+                zone = request.form['zone']
+                services = request.form['services']
+                monthly = request.form['monthly']
+                collector = request.form['collector']
+                status = request.form['status']
+                amount_paid = request.form['amount_paid']
+                ref_no = request.form['ref_no']
+                date_paid = request.form['date_paid']
+                category = request.form['category']
+                activation_date = request.form['activation_date']
+                disconnection_date = request.form['disconnection_date']
+                reactivation_date = request.form['reactivation_date']
+                churn = request.form['churn']
 
-				datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
-							 collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
-							 disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
-				db.session.add(datas)
-				db.session.commit()
+                datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
+                            collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+                            disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
+                db.session.add(datas)
+                db.session.commit()
 
-				flash("Customer Record Added Successfully")
+                flash("Customer Record Added Successfully")
 
-				return redirect(url_for('auth.custman'))
+                return redirect(url_for('auth.custman'))
     else:
         sd = Otherdata \
             .query \
