@@ -218,7 +218,7 @@ def confirm_email(token):
         db.session.add(user)
         db.session.commit()
     login_user(user, remember=True)   
-    return redirect(url_for('views.home'))
+    return redirect(url_for('auth.signin'))
     return render_template(user= current_user)
   
 # Home Page
