@@ -382,15 +382,18 @@ def home():
         graph18JSON=graph18JSON,
         graph19JSON=graph19JSON
         )
+    elif current_user.explore == "empty":
 
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("home.html", user= current_user, image_file=image_file)
     elif current_user.explore == "customer":
-        active = Data \
-            .query \
-            .filter(Data.status == "Active").count()
-        disconnected = Data \
-            .query \
-            .filter(Data.status == "Disconnected").count()
         if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+            active = Data \
+                .query \
+                .filter(Data.status == "Active").count()
+            disconnected = Data \
+                .query \
+                .filter(Data.status == "Disconnected").count()
             if db.session.query(Data).count() >=3 :
                 cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
                 conn = cnx.connect()
@@ -630,7 +633,6 @@ def home():
             row_count = dataf.index
             rc = len(row_count)
             if rc >= 3:
-
                 # ------ Distribution -------
 
                 #Gender Distribution
@@ -824,10 +826,7 @@ def home():
                 db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
-    elif current_user.explore == "empty":
 
-        image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("home.html", user= current_user, image_file=image_file)
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("home.html", user= current_user, image_file=image_file)
 
