@@ -483,7 +483,7 @@
             <!-- END TABLE -->	
 		</div>
 		
-			{% elif current_user.explore == "sample" %}
+	{% elif current_user.explore == "sample" %}
 		<div class="strat-container-main">
 			<h3>Customers</b></h3>
 			<div class="strat-stat-container">
@@ -526,15 +526,13 @@
                                 </label>
                             </th>
                             <th>Customer ID</th>
-                            <th>Email</th>
                             <th>Gender</th>
                             <th>Senior Citizen</th>
-                            <th>State</th>
                             <th>Tenure</th>
                             <th>Internet Service</th>
                             <th>Monthly Charges</th>
                             <th>Total Charges</th>
-							<th>Churn</th>
+			    <th>Churn</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -562,12 +560,6 @@
                       						
                         {% endfor %} 
 					</tbody>
-			<div class="col-md-12">
-				<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
-					<button type="submit" class="au-btn au-btn-icon au-btn--red au-btn--small" style="width: 40px; font-size: 14px;color:white;padding: -1 0;">
-					<i class="bx bx-trash" style="margin-left: 5px;"></i>Delete</button>
-				</div>
-			</div>
                 </table>
 			</form>
             <!-- END TABLE -->	
