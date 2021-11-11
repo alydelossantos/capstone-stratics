@@ -605,7 +605,7 @@ def home():
                     graph25JSON=graph25JSON,
                     graph26JSON=graph26JSON,
                     graph27SON=graph27JSON,
-                    graph28JSON=graph28JSON,active=active, disconnected=disconnected,year=year
+                    graph28JSON=graph28JSON,active=active, disconnected=disconnected
                     )
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
