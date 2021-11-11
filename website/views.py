@@ -454,7 +454,6 @@ def home():
 
         display = df[(df['Churn Probability'].isnull())].index
         df.drop(display, inplace=True)
-        df
 
         # Create a Dataframe showcasing probability of Churn of each customer
         df[['customerID','Churn Probability']]
@@ -871,7 +870,10 @@ def home():
                 proba = logmodel.predict_proba(Xnew)[:,1]
 
                 for i in range(len(Xnew)):
-	                df[(df['Churn Probability'][i] = proba[i])]
+                    df['Churn Probability'] = print(proba[i])
+
+                for i in range(len(Xnew)):
+	                df['Churn Probability'][i] = proba[i]
 
                 display = df[(df['Churn Probability'].isnull())].index
                 df.drop(display, inplace=True)
