@@ -489,8 +489,101 @@ def home():
                 graph24JSON = json.dumps(fig5category, cls=plotly.utils.PlotlyJSONEncoder)
 
                 # ------ End for Kalibo DS Sales -----
-		
-            
+
+                 # ------ Kalibo DS Sales Churn  --------
+
+                #Churn
+                lab = df["churn"].value_counts().keys().tolist()
+                #values
+                val = df["churn"].value_counts().values.tolist()
+                trace = go.Pie(labels=lab, 
+                                values=val, 
+                                hole = 0.4,
+                                # Seting values to 
+                                hoverinfo="value")
+                data = [trace]
+
+                layout = go.Layout(dict(title="Churn",
+                            plot_bgcolor = "white",
+                            paper_bgcolor = "white",))
+                fig6churn = go.Figure(data = data,layout = layout)
+                graph25JSON = json.dumps(fig6churn, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+                # Churn Rate by Services
+                plot_by_gender = df.groupby('services').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_gender['services'],
+                        y=plot_by_gender['churn'],
+                    width = [0.8],
+                            marker = dict(
+                            color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Services",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig7services = go.Figure(data=plot_data, layout=layout)
+                graph26JSON = json.dumps(fig7services, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+                # Churn Rate by Zone
+                plot_by_payment = df.groupby('zone').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_payment['zone'],
+                        y=plot_by_payment['churn'],
+                    width = [0.8],
+                        marker = dict(
+                            color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Zone",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig8zone = go.Figure(data=plot_data, layout=layout)
+                graph27JSON = json.dumps(fig8zone, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Churn Rate by Category
+                plot_by_contract = df.groupby('category').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_contract['category'],
+                        y=plot_by_contract['churn'],
+                        width = [0.8],
+                        marker = dict(
+                            color=['#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Category",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig9contract = go.Figure(data=plot_data, layout=layout)
+                graph28JSON = json.dumps(fig9contract, cls=plotly.utils.PlotlyJSONEncoder)
+
+
                 current_user.dash = "full"
                 db.session.add(current_user)
                 db.session.commit()
@@ -501,7 +594,13 @@ def home():
                     graph21JSON=graph21JSON,
                     graph22JSON=graph22JSON,
                     graph23JSON=graph23JSON,
-                    graph24JSON=graph24JSON)
+                    graph24JSON=graph24JSON,
+                     # For Kalibo Churn
+                    graph25JSON=graph25JSON,
+                    graph26JSON=graph26JSON,
+                    graph27SON=graph27JSON,
+                    graph28JSON=graph28JSON,
+                    )
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
                 current_user.dash = "none"
