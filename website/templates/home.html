@@ -244,13 +244,17 @@
 
 				    </script>
   			{% elif current_user.explore == "customer" %}
+			
+			{% if current_user.cname == "Kalibo Cable"%}
+
+			
 				<!-- STATISTIC -->
 				      <section class="statistic statistic2">
 					<div class="container-fluid">
 					    <div class="row">
 						<div class="col-md-3 col-lg-4">
 						    <div class="statistic__item statistic__item--blue">
-							<h2 class="number">{{year}}</h2>
+							<h2 class="number">10,368</h2>
 							<span class="desc">average earnings</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-account-o"></i>
@@ -323,6 +327,51 @@
 						var graph24 = {{graph24JSON | safe}};
 						Plotly.plot('chart24',graph24,{});
 				    </script>
+			{% else %}
+			<!-- For Free Users -->
+
+			<div class="container-fluid" style = "padding-bottom: 20px">
+				<div class="row">
+				<div class="col-sm-4">
+					<div id='chart1'></div>
+				</div>
+				<div class="col-sm-8">
+					<div id='chart2'></div>
+				</div>
+				</div>
+			</div>
+			
+			<div class="container-fluid" style = "padding-bottom: 20px">
+				<div class="row">
+				<div class="col-sm-4">
+					<div id='chart3'></div>
+				</div>
+				<div class="col-sm-4">
+					<div id='chart4'></div>
+				</div>
+				</div>
+			</div>
+
+			<script type='text/javascript'>
+				var graph1 = {{graph1JSON | safe}};
+				Plotly.plot('chart1',graph1,{});
+
+				var graph2 = {{graph2JSON | safe}};
+				Plotly.plot('chart2',graph2,{});
+
+				var graph3 = {{graph3JSON | safe}};
+				Plotly.plot('chart3',graph3,{});
+
+				var graph4 = {{graph4JSON | safe}};
+				Plotly.plot('chart4',graph4,{});
+
+				var graph5 = {{graph5JSON | safe}};
+				Plotly.plot('chart5',graph5,{});
+			</script>
+
+			{% endif %}
+
+
 			{% elif current_user.explore == "empty" %}
 				  <section class="p-t-20">
 				    <div class="dboard-main-container">

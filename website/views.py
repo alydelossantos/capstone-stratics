@@ -384,9 +384,6 @@ def home():
         )
 
     elif current_user.explore == "customer":
-        year = Data \
-            .query \
-            .filter(Data.activation_date.year == 2018).count()
         active = Data \
             .query \
             .filter(Data.status == "Active").count()
@@ -608,7 +605,7 @@ def home():
                     graph25JSON=graph25JSON,
                     graph26JSON=graph26JSON,
                     graph27SON=graph27JSON,
-                    graph28JSON=graph28JSON,active=active, disconnected=disconnected,year=year
+                    graph28JSON=graph28JSON,active=active, disconnected=disconnected
                     )
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
@@ -634,69 +631,185 @@ def home():
             rc = len(row_count)
             if rc >= 3:
 
-                # Pie Chart
-                from plotly.offline import init_notebook_mode,iplot
-                import plotly.graph_objects as go
-                import cufflinks as cf
-                init_notebook_mode(connected=True)
+                # ------ Distribution -------
 
-                #labels
-                lab = dataf["collector"].value_counts().keys().tolist()
+                #Gender Distribution
+                lab = dataf["gender"].value_counts().keys().tolist()
                 #values
-                val = dataf["collector"].value_counts().values.tolist()
+                val = dataf["gender"].value_counts().values.tolist()
                 trace = go.Pie(labels=lab, 
                                 values=val, 
-                                marker=dict(colors=['red']), 
+                                marker=dict(colors=['#9da4d8', '#ed7071']),
+                                hole = 0.4,
                                 # Seting values to 
-                                hoverinfo="value"
-                            )
+                                hoverinfo="value")
                 data = [trace]
 
-                layout = go.Layout(title="Collector")
+                layout = go.Layout(dict(title="Gender Distribution",
+                            plot_bgcolor = "white",
+                            paper_bgcolor = "white",))
                 fig1 = go.Figure(data = data,layout = layout)
-                fig1.update_traces(hole=.4)
                 graph1JSON = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
 
-                # Histogram - Service
-                # defining data
-                trace = go.Histogram(x=dataf['services'],nbinsx=40,histnorm='percent')
+                #Province Distribution
+                lab = dataf["province"].value_counts().keys().tolist()
+                #values
+                val = dataf["province"].value_counts().values.tolist()
+                trace = go.Pie(labels=lab, 
+                                values=val, 
+                                marker=dict(colors=['#ffa14a', '#ed7071']),
+                                hole = 0.4,
+                                # Seting values to 
+                                hoverinfo="value")
                 data = [trace]
-                # defining layout
-                layout = go.Layout(title="Service Distribution")
-                # defining figure and plotting
+
+                layout = go.Layout(dict(title="Province Distribution",
+                            plot_bgcolor = "white",
+                            paper_bgcolor = "white",))
                 fig2 = go.Figure(data = data,layout = layout)
                 graph2JSON = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
 
-                # Histogram - State
+                # Histogram - Services
                 # defining data
-                trace = go.Histogram(x=dataf['address'],nbinsx=52)
+                trace = go.Histogram(x=dataf['services'],nbinsx=3,
+                                marker = dict(color = '#ed7071'))
                 data = [trace]
                 # defining layout
-                layout = go.Layout(title="Address")
+                layout = go.Layout(title="Services Distribution")
                 # defining figure and plotting
-                fig3 = go.Figure(data = data,layout = layout)
                 fig3 = go.Figure(data = data,layout = layout)
                 graph3JSON = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
 
-                # Histogram - Churn
+                # Histogram - Category 
                 # defining data
-                trace = go.Histogram(x=dataf['sstatus'],nbinsx=3)
+                trace = go.Histogram(
+                    x=dataf['category'],
+                    nbinsx=3,
+                    marker = dict(color = '#9da4d8')
+                    )
                 data = [trace]
                 # defining layout
-                layout = go.Layout(title="Churn Distribution")
+                layout = go.Layout(title="Category Distribution")
                 # defining figure and plotting
                 fig4 = go.Figure(data = data,layout = layout)
-                fig4 = go.Figure(data = data,layout = layout)
                 graph4JSON = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # --------- End of Distribution -----------
+
+                # --------- Start of Churn ----------------
+
+                # Churn Rate by Gender
+                plot_by_gender = dataf.groupby('gender').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_gender['gender'],
+                        y=plot_by_gender['churn'],
+                    width = [0.8],
+                        marker = dict(
+                            color=['#ed7071', '#ffa14a']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Gender",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig5 = go.Figure(data=plot_data, layout=layout)
+                graph5JSON = json.dumps(fig5, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Churn Rate by Services
+                plot_by_payment = dataf.groupby('services').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_payment['services'],
+                        y=plot_by_payment['churn'],
+                    width = [0.8],
+                        marker = dict(
+                            color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Services",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig6 = go.Figure(data=plot_data, layout=layout)
+                graph6JSON = json.dumps(fig6, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Churn Rate by Province
+                plot_by_contract = dataf.groupby('province').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_contract['province'],
+                        y=plot_by_contract['churn'],
+                        width = [0.8],
+                        marker = dict(
+                            color=['#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Province",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig7 = go.Figure(data=plot_data, layout=layout)
+                graph7JSON = json.dumps(fig7, cls=plotly.utils.PlotlyJSONEncoder)
+
+                # Churn Rate by Category
+                plot_by_payment = dataf.groupby('category').churn.mean().reset_index()
+                plot_data = [
+                    go.Bar(
+                        x=plot_by_payment['category'],
+                        y=plot_by_payment['churn'],
+                        width = [0.8],
+                        marker = dict(
+                            color=['#ed7071','#ffa14a', '#9da4d8', '#21ced2']
+                        )
+                    )
+                ]
+
+                layout=go.Layout(
+                    xaxis={"type": "category"},
+                    yaxis={"title": "Churn Rate"},
+                    title="Churn Rate by Category",
+                    plot_bgcolor = 'white',
+                    paper_bgcolor = 'white',
+                )
+
+                fig8 = go.Figure(data=plot_data, layout=layout)
+                graph8JSON = json.dumps(fig8, cls=plotly.utils.PlotlyJSONEncoder)
+                
+                # -------- End of Churn ------------
 
                 current_user.dash = "full"
                 db.session.add(current_user)
                 db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
-                return render_template("home.html", user= current_user, image_file=image_file, graph1JSON=graph1JSON, 
+                return render_template("home.html", user= current_user, image_file=image_file,
+                graph1JSON=graph1JSON, 
                 graph2JSON=graph2JSON, 
                 graph3JSON=graph3JSON,
-                graph4JSON=graph4JSON)
+                graph4JSON=graph4JSON,
+                graph5JSON=graph5JSON, 
+                graph6JSON=graph6JSON, 
+                graph7JSON=graph7JSON,
+                graph8JSON=graph8JSON
+                )
             elif rc < 3 and rc >= 1:
                 flash("Records must contain atleast 3 rows.", category="error")
                 current_user.dash = "none"
