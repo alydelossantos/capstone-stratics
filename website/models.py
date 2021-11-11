@@ -69,7 +69,7 @@ class Data(db.Model):
     def to_dict(self):
         return {
             'account_no': self.account_no,
-            'subscriber': self.subscriber
+            'subscriber': self.subscriber,
             'address' : self.address
         }
     
