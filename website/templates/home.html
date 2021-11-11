@@ -463,7 +463,7 @@
 					</div>
 					<div class="col-md-6 col-lg-4">
 						<div class="statistic__item statistic__item--green">
-						<h2 class="number">388,688</h2>
+						<h2 class="number">{{active}}</h2>
 						<span class="desc">Active</span>
 						<div class="icon">
 							<i class="zmdi zmdi-shopping-cart"></i>
@@ -472,7 +472,7 @@
 					</div>
 					<div class="col-md-6 col-lg-4">
 						<div class="statistic__item statistic__item--red">
-						<h2 class="number">$1,060,386</h2>
+						<h2 class="number">{{disconnected}}</h2>
 						<span class="desc">Disconnected</span>
 						<div class="icon">
 							<i class="zmdi zmdi-money"></i>
@@ -507,6 +507,7 @@
 				</div>
 			</div>
 
+			<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 			<script type='text/javascript'>
 				var graph25 = {{graph25JSON | safe}};
 				Plotly.plot('chart25',graph25,{});
