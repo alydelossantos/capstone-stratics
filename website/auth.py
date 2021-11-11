@@ -40,7 +40,14 @@ knotel = "Kalibo Cable"
 knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
- 
+@auth.route('/sample')
+def sample():
+	return render_template('table.html', title='Sample Data')
+	
+@auth.route('/sample/data')
+def sample_data():
+	return {'datas': [data.to_dict() for data in Data.query]}
+
 # Landing Page
 #About Page
 @auth.route('/about')
