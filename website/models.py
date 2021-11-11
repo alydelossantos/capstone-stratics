@@ -66,13 +66,6 @@ class Data(db.Model):
     reactivation_date = db.Column(db.String(100), nullable=True)
     churn = db.Column(db.Numeric)
     
-    def to_dict(self):
-        return {
-            'account_no': self.account_no,
-            'subscriber': self.subscriber,
-            'address' : self.address
-        }
-    
 class Otherdata(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     odata_id = db.Column(db.Integer, db.ForeignKey("user.id"))
