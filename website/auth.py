@@ -100,7 +100,6 @@ def signin():
                 if user.user_type == "user":
                     if user.email_confirmed == True:
                         if user.cname.lower() == kfull.lower() or user.cname.lower() == knoc.lower() or user.cname.lower() == knob.lower() or user.cname.lower() == knop.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbrenoinc.lower():
-                            user.cname = "Kalibo Cable"
                             user.ccode =  "11A392O"
                             user.user_status = True
                             db.session.add(user)
@@ -132,7 +131,10 @@ def checkcode():
         user_status = request.form.get("user_status")
         
         user = User.query.filter_by(email=email).first()
-        
+        if user.cname.lower() == kfull.lower() or user.cname.lower() == knoc.lower() or user.cname.lower() == knob.lower() or user.cname.lower() == knop.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbrenoinc.lower():
+            user.cname = "Kalibo Cable"
+            db.session.add(user)
+            db.session.commit()
         if user.ccode == ccode:
             login_user(user, remember=True)
             return redirect(url_for("views.home"))
@@ -348,7 +350,6 @@ def update(id):
             datas.collector = request.form['collector']
             datas.status = request.form['status']
             datas.amount_paid = request.form['amount_paid']
-            datas.ref_no = request.form['ref_no']
             datas.date_paid = request.form['date_paid']
             datas.category = request.form['category']
             datas.activation_date = request.form['activation_date']
@@ -368,7 +369,6 @@ def update(id):
             datas.collector = request.form['collector']
             datas.status = request.form['status']
             datas.amount_paid = request.form['amount_paid']
-            datas.ref_no = request.form['ref_no']
             datas.date_paid = request.form['date_paid']
             datas.category = request.form['category']
             datas.activation_date = request.form['activation_date']
