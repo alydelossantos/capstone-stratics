@@ -630,39 +630,6 @@ def home():
             row_count = dataf.index
             rc = len(row_count)
             if rc >= 3:
-                # independent variable
-                X = dataf.iloc[:,:1].values
-                X
-
-                # dependent variable - churn column
-                y = dataf.iloc[:,8]
-                y
-
-                # Counts number of null values - resulted that no values are missing.
-                null_columns=df.columns[dataf.isnull().any()]
-                dataf[null_columns].isnull().sum()
-
-                # Splitting Data into Train and Test
-                from sklearn.model_selection import train_test_split
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
-
-                # Zscore
-                from scipy import stats
-                zscore = np.abs(stats.zscore(df['monthly']))
-
-                # zscore values higher than 3 are outliers.
-                threshold = 3
-
-                dataf.corr(method='pearson')
-
-                # Create Pivot Table - compute for sum
-                pd.pivot_table(dataf, index=['address', 'services'], aggfunc = 'sum')
-
-                # Create Pivot Table - compute for mean
-                pd.pivot_table(dataf, index=['address', 'services'], aggfunc = 'mean')    
-
-                # Create Pivot Table - compute for count
-                pd.pivot_table(dataf, index=['address', 'services'], aggfunc = 'count')
 
                 # Pie Chart
                 from plotly.offline import init_notebook_mode,iplot
