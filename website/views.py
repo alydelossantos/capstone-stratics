@@ -447,59 +447,7 @@ def home():
 
         # Create a Dataframe showcasing probability of Churn of each customer
         df[['customerID','Churn Probability']]
-
-        # ---------- Decision Tree -------------
-
-        from sklearn.tree import DecisionTreeClassifier
-        dtmodel = DecisionTreeClassifier(criterion = 'gini', random_state=50)
-        dtmodel.fit(X_train, y_train)
-
-        dt_pred = dtmodel.predict(X_test)
-
-        dt_accuracy = round(metrics.accuracy_score(y_test, dt_pred)*100,2)
-
-
-        # ---------- RandomForest ----------------
-
-        from sklearn.ensemble import RandomForestClassifier
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
-        rfmodel = RandomForestClassifier(n_estimators=1000 , oob_score = True, n_jobs = -1,
-                                        random_state =50, max_features = "auto",
-                                        max_leaf_nodes = 30)
-        rfmodel.fit(X_train, y_train)
-
-        # Make predictions
-        rf_pred = rfmodel.predict(X_test)
-
-        rf_accuracy = round(metrics.accuracy_score(y_test, rf_pred)*100,2)
-
-
-
-        # ------------- XGBoost -------------------
-
-        from xgboost import XGBClassifier
-        model = XGBClassifier()
-        model.fit(X_train, y_train)
-        xgb_pred = model.predict(X_test)
-        metrics.accuracy_score(y_test, xgb_pred)
-
-        xgb_accuracy = round(metrics.accuracy_score(y_test, xgb_pred)*100,2)
-
-        # ----------- Model Comparison --------------
-
-        Model_Comparison = pd.DataFrame({
-            'Model': ['Logistic Regression', 'Decision Tree', 'Random Forest', 'XGBoost'],
-            'Score': [logmodel_accuracy, dt_accuracy, rf_accuracy, xgb_accuracy]})
-        Model_Comparison_df = Model_Comparison.sort_values(by='Score', ascending=False)
-        Model_Comparison_df - Model_Comparison_df.set_index('Score')
-        Model_Comparison_df.reset_index()
 	
-        logtrainpred = logmodel.predict(X_train)
-        logtrainpred
-
-        algomodels = [logmodel_accuracy, dt_accuracy, rf_accuracy,  xgb_accuracy]
-
-        max_algo = np.max(algomodels)
 
         from sklearn.metrics import confusion_matrix
         from sklearn.metrics import classification_report, accuracy_score
@@ -535,8 +483,7 @@ def home():
 
             conf_mat_xgbmodel = confusion_matrix(y_test,y_hat_test)
             conf_mat_xgbmodel    
-            
-        return render_template('model.html', tables=[Model_Comparison.to_html(classes='data')], titles=Model_Comparison.columns.values)
+
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("home.html", user= current_user, image_file=image_file,
         graph1JSON=graph1JSON, 
