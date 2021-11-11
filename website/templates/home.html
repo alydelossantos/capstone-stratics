@@ -147,7 +147,7 @@
 						</div>
 					  </div>
 					  
-					  <div class="container-fluid style = "padding-bottom: 20px"">
+					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart4'></div>
@@ -474,7 +474,8 @@
 							<div id='chart16'></div>
 						  </div>
 						</div>
-					</div>
+					</div> -->
+					
 					  
 					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
@@ -487,13 +488,13 @@
 						</div>
 					</div>
 					  
-					<div class="container-fluid" style = "padding-bottom: 20px">
+					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-12">
 							<div id='chart19'></div>
 						  </div>
 						</div>
-					</div>
+					</div> -->
 
 					<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 					<script type='text/javascript'>
@@ -518,7 +519,7 @@
 						var graph19 = {{graph19JSON | safe}};
 						Plotly.plot('chart19',graph19,{});
 						
-					</script> -->
+					</script>
 
   			{% elif current_user.explore == "customer" %}
 
