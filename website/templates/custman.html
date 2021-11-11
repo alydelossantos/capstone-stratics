@@ -191,13 +191,16 @@
 									<option class="redBg" value="Disconnected">Disconnected</option>
 								  </select>   
 								</div>
+								
 								<div class="col-sm-6">
-									<label>Churn</label><br>
-									<input type="radio" id="yes" name="churn" value="1">
-									<label for="yes"> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="radio" id="no" name="churn" value="0">
-									<label for="no"> No</label>
+								<label>Churn</label>
+								<select name="churn" class="custom-select">
+									<option value="0">Select if Subscribers Churn</option>
+									<option value="1">Yes</option>
+									<option value="0">No</option>
+								  </select>   
 								</div>
+								
 							</div>
 
 							<div class="modal-footer"> 
@@ -426,12 +429,13 @@
 												</div>
 												
 												<div class="col-sm-6">
-													<label>Churn</label><br>
-													<input type="radio" id="yes" name="churn" value="1">
-													<label for="yes"> Yes</label>
-													<input type="radio" id="no" name="churn" value="0">
-													<label for="no"> No</label>
-												</div>
+								<label>Churn</label>
+								<select name="churn" class="custom-select" value="{{row.churn}}">
+									<option value="0">Select if Subscribers Churn</option>
+									<option value="1">Yes</option>
+									<option value="0">No</option>
+								  </select>   
+								</div>
                                             </div>
 											
                                             <div class="modal-footer">
@@ -458,8 +462,8 @@
 											<label>Are you sure you want to delete Customer {{row.accnt_num}}?</label>
 										</div>  
 										<div class="modal-footer">
-											<button class="btn btn-primary" type="submit">Delete Customer</button>
 											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button class="btn btn-primary" type="submit">Delete Customer</button>
 										</div>
 									</form>
 								</div>    
