@@ -73,7 +73,7 @@ body {
     margin-left: -100px;
 }
 
-.picture img {
+.info .copy .picture img {
     width: 300px; 
 	height: 140px;
 }
