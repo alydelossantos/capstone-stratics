@@ -384,9 +384,6 @@ def home():
         )
 
     elif current_user.explore == "customer":
-        year = Data \
-            .query \
-            .filter(Data.activation_date.year == 2018).count()
         active = Data \
             .query \
             .filter(Data.status == "Active").count()
