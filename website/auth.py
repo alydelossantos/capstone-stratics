@@ -639,7 +639,7 @@ def newstrat():
             status = request.form['status']
             description = request.form['description']
             
-            my_strat = Strategies(name=name, act=act, platform=platform, startdate=startdate, 
+            my_strat = Samplestrategies(name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
             db.session.commit() 
