@@ -52,7 +52,7 @@
         {% endwith %}
 			
             <!-- HELLO CARD -->
-            <div class="card-container-main">
+            <div class="card-container-main" style="padding-top: 30px;">
               <div class="container-fluid">
                 <div class="card-inv">
                   <div class="dboard-card-body">
@@ -61,7 +61,7 @@
                     </div>
                     <div class="text">
                     <h2>Hi, {{current_user.fname}}!</h2>
-                    <p>Good luck in extracting meaningful insights!</p>
+                    <p>Have fun in extracting meaningful insights!</p>
                   </div>
                 </div>
               </div>
@@ -86,15 +86,15 @@
 					   <i class='bx bx-folder-open'></i>explore datasets</button>
 					  </div>
 						
-					  <div class="wrapper">
-						<input type="radio" name="slider" checked id="sales">
+					  <div class="wrapper container-fluid">
+						<!-- <input type="radio" name="slider" checked id="sales">
 						<input type="radio" name="slider" id="analytics">
-						<nav>
+						<nav> -->
 						  <label for="sales" class="sales">Sales Reports</label>
 						  <label for="analytics" class="analytics">Churn Analytics</label>
-						  <div class="slider"></div>
-						</nav>
-						<section>
+						  <!-- <div class="slider"></div> -->
+						<!-- </nav>
+						<section> -->
 						  <div class="content content-1">
 			    {% if current_user.explore == "sample" %}
 			<!-- STATISTIC -->
@@ -197,6 +197,16 @@
 						</div>
 					  </div>
 
+					  <div class="wrapper container-fluid">
+						<!-- <input type="radio" name="slider" checked id="sales">
+						<input type="radio" name="slider" id="analytics">
+						<nav> -->
+						  <!-- <label for="sales" class="sales">Sales Reports</label> -->
+						  <label for="analytics" class="analytics">Churn Analytics</label>
+						  <!-- <div class="slider"></div> -->
+						<!-- </nav>
+						<section> -->
+
 					  <!-- Try -->
 
 					  <div class="container-fluid" style = "padding-bottom: 20px">
@@ -213,7 +223,25 @@
 						</div>
 					</div>
 					  
-					  </body>
+					<div class="container-fluid" style = "padding-bottom: 20px">
+						<div class="row">
+						  <div class="col-sm-4">
+							<div id='chart17'></div>
+						  </div>
+						  <div class="col-sm-8">
+							<div id='chart18'></div>
+						  </div>
+						</div>
+					</div>
+					  
+					<div class="container-fluid" style = "padding-bottom: 20px">
+						<div class="row">
+						  <div class="col-sm-12">
+							<div id='chart19'></div>
+						  </div>
+						</div>
+					</div>
+
 					  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 					  <script type='text/javascript'>
 						var graph1 = {{graph1JSON | safe}};
@@ -263,6 +291,15 @@
 
 						var graph16 = {{graph16JSON | safe}};
 						Plotly.plot('chart16',graph16,{});
+
+						var graph17 = {{graph17JSON | safe}};
+						Plotly.plot('chart17',graph17,{});
+
+						var graph18 = {{graph18JSON | safe}};
+						Plotly.plot('chart18',graph18,{});
+
+						var graph19 = {{graph19JSON | safe}};
+						Plotly.plot('chart19',graph19,{});
 					  
 					  </script>
 
@@ -475,9 +512,8 @@
 						  </div>
 						</div>
 					</div> -->
-					
 					  
-					<div class="container-fluid" style = "padding-bottom: 20px">
+					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart17'></div>
@@ -486,7 +522,7 @@
 							<div id='chart18'></div>
 						  </div>
 						</div>
-					</div>
+					</div> -->
 					  
 					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
@@ -496,7 +532,7 @@
 						</div>
 					</div> -->
 
-					<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+					<!-- <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 					<script type='text/javascript'>
 
 						// For Churn
@@ -519,7 +555,7 @@
 						var graph19 = {{graph19JSON | safe}};
 						Plotly.plot('chart19',graph19,{});
 						
-					</script>
+					</script> -->
 
   			{% elif current_user.explore == "customer" %}
 
