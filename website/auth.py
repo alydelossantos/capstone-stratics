@@ -648,7 +648,9 @@ def newstrat():
             status = request.form['status']
             description = request.form['description']
             row = Samplestrategies.query.count()
-            id = row + 1
+			count = Samplestrategies.filter(Samplestrategies.id >= row).count()
+            if count >= 1:
+				id = row + count
             my_strat = Samplestrategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
@@ -669,7 +671,9 @@ def newstrat():
                 status = request.form['status']
                 description = request.form['description']
                 row = Strategies.query.count()
-                id = row + 1
+				count = Strategies.filter(Strategies.id >= row).count()
+				if count >= 1:
+					id = row + count
                 my_strat = Strategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
                             enddate=enddate, status=status, description=description)
                 db.session.add(my_strat)
