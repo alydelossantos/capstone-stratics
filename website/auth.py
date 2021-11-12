@@ -660,7 +660,7 @@ def newstrat():
             
             return redirect(url_for('auth.strat'))
 			
-    elif current_user.explore == "sample" or current_user.explore == "empty":
+    elif current_user.explore == "customer" or current_user.explore == "empty":
         if current_user.cname == "Kalibo Cable":
             if request.method == 'POST':
                 name = request.form['name']
