@@ -315,7 +315,8 @@
                                                     <h1>{{row.subscriber}}</h1>
 							<h4 style="font-weight:500">Accnt. No. {{row.account_no}}</h4>
 							<h4 style="font-weight:500">Ref. No. {{row.ref_no}}</h4>
-							<p>{{row.address}}, {{row.zone}}</p>
+							<p>{{row.address}}</p>
+							<p>Zone: {{row.zone}}</p>
 													
                                                 </div>
 
@@ -386,48 +387,29 @@
 														<option value="Vincent">Vincent</option>
 													</select>    
 												</div>
-
-                                                <div class="col-sm-6">
-													<label>Category</label>
-													<select name="category" class="custom-select" value="{{row.category}}">
-														<option value="0">Select Category</option>
-														<option value="RS">RS</option>
-														<option value="GV">GV</option>
-														<option value="CS">CS</option>
-													</select>    
-												</div>
-                                            </div>					
-											
-											<div class="form-group row">
-												<div class="col-sm-6">
-													<label>Activation Date</label>
-													<input type="date" class="form-control" name="activation_date" required="1" value="{{row.activation_date}}">     
-												</div>
-												
 												<div class="col-sm-6">
 													<label>Amount Paid</label>
 													<input type="text" class="form-control" name="amount_paid" required="1" value="Php {{row.amount_paid}}">     
 												</div>
-												
-                                            </div>
+
+                                                
+                                            </div>					
 											
 											<div class="form-group row">
-												<div class="col-sm-6">
+											<div class="col-sm-6">
 													<label>Disconnection Date</label>
 													<input type="date" class="form-control" name="disconnection_date" value="{{row.disconnection_date}}">     
-												</div>
-												
+												</div>	
 												<div class="col-sm-6">
 													<label>Reactivation Date</label>
 													<input type="date" class="form-control" name="reactivation_date" value="{{row.reactivation_date}}">     
 												</div>
+												
+												
                                             </div>
 											
 											<div class="form-group row">
-                                                <div class="col-sm-6">
-     
-												</div>
-												
+									
 												<div class="col-sm-6">
 								<label>Churn</label>
 								<select name="churn" class="custom-select" value="{{row.churn}}">
@@ -436,8 +418,12 @@
 									<option value=0>No</option>
 								  </select>   
 								</div>
+							<div class="col-sm-6">
+     
+												</div>					
+												
                                             </div>
-											
+				
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button class="btn btn-primary" type="submit">Update Customer</button>

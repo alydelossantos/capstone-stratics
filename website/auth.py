@@ -290,11 +290,7 @@ def insert():
             reactivation_date = request.form['reactivation_date']
             churn = request.form['churn']
             row = Data.query.count()
-<<<<<<< HEAD
-	        id = row + 1
-=======
-	    	id = row + 1
->>>>>>> 59ccd14a4cd2733c9f88868f9fb36814e7919cd7
+            id = row + 1
             datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
 						collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
 						disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
@@ -348,8 +344,8 @@ def update(id):
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             datas = Data.query.get(request.form.get('id'))
-            datas.services = request.form['services']
             datas.monthly = request.form['monthly']
+            datas.services = request.form['services']
             datas.collector = request.form['collector']
             datas.status = request.form['status']
             datas.amount_paid = request.form['amount_paid']
@@ -366,18 +362,18 @@ def update(id):
             return redirect(url_for('auth.custman'))
     else:
         if request.method == 'POST':
-            datas = Otherdata.query.get(request.form.get('id'))
-            datas.services = request.form['services']
-            datas.monthly = request.form['monthly']
-            datas.collector = request.form['collector']
-            datas.status = request.form['status']
-            datas.amount_paid = request.form['amount_paid']
-            datas.date_paid = request.form['date_paid']
-            datas.category = request.form['category']
-            datas.activation_date = request.form['activation_date']
-            datas.disconnection_date = request.form['disconnection_date']
-            datas.reactivation_date = request.form['reactivation_date']
-            datas.churn = request.form['churn']
+            odatas = Otherdata.query.get(request.form.get('id'))
+            odatas.services = request.form['services']
+            odatas.monthly = request.form['monthly']
+            odatas.collector = request.form['collector']
+            odatas.status = request.form['status']
+            odatas.amount_paid = request.form['amount_paid']
+            odatas.date_paid = request.form['date_paid']
+            odatas.category = request.form['category']
+            odatas.activation_date = request.form['activation_date']
+            odatas.disconnection_date = request.form['disconnection_date']
+            odatas.reactivation_date = request.form['reactivation_date']
+            odatas.churn = request.form['churn']
             
             db.session.commit()
             
@@ -643,8 +639,9 @@ def newstrat():
             enddate = request.form['enddate']
             status = request.form['status']
             description = request.form['description']
-            
-            my_strat = Samplestrategies(name=name, act=act, platform=platform, startdate=startdate, 
+            row = Samplestrategies.query.count()
+            id = row + 1
+            my_strat = Samplestrategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
             db.session.commit() 
@@ -661,8 +658,9 @@ def newstrat():
             enddate = request.form['enddate']
             status = request.form['status']
             description = request.form['description']
-            
-            my_strat = Strategies(name=name, act=act, platform=platform, startdate=startdate, 
+            row = Strategies.query.count()
+            id = row + 1
+            my_strat = Strategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
             db.session.commit() 
