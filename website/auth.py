@@ -366,16 +366,11 @@ def update(id):
     if current_user.cname == "Kalibo Cable":
         if request.method == 'POST':
             datas = Data.query.get(request.form.get('id'))
-            datas.account_no = request.form['account_no']
-            datas.subscriber = request.form['subscriber']
-            datas.address = request.form['address']
-            datas.zone = request.form['zone']
             datas.services = request.form['services']
             datas.monthly = request.form['monthly']
             datas.collector = request.form['collector']
             datas.status = request.form['status']
             datas.amount_paid = request.form['amount_paid']
-            datas.ref_no = request.form['ref_no']
             datas.date_paid = request.form['date_paid']
             datas.category = request.form['category']
             datas.activation_date = request.form['activation_date']
@@ -391,16 +386,11 @@ def update(id):
     else:
         if request.method == 'POST':
             odatas = Otherdata.query.get(request.form.get('id'))
-            odatas.account_no = request.form['account_no']
-            odatas.subscriber = request.form['subscriber']
-            odatas.address = request.form['address']
-            odatas.zone = request.form['zone']
             odatas.services = request.form['services']
             odatas.monthly = request.form['monthly']
             odatas.collector = request.form['collector']
             odatas.status = request.form['status']
             odatas.amount_paid = request.form['amount_paid']
-            odatas.ref_no = request.form['ref_no']
             odatas.date_paid = request.form['date_paid']
             odatas.category = request.form['category']
             odatas.activation_date = request.form['activation_date']
