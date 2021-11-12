@@ -386,17 +386,17 @@ def update(id):
     else:
         if request.method == 'POST':
             odatas = Otherdata.query.get(request.form.get('id'))
-			odatas.services = request.form['services']
-			odatas.monthly = request.form['monthly']
-			odatas.collector = request.form['collector']
-			odatas.status = request.form['status']
-			odatas.amount_paid = request.form['amount_paid']
-			odatas.date_paid = request.form['date_paid']
-			odatas.category = request.form['category']
-			odatas.activation_date = request.form['activation_date']
-			odatas.disconnection_date = request.form['disconnection_date']
-			odatas.reactivation_date = request.form['reactivation_date']
-			odatas.churn = request.form['churn']
+            odatas.services = request.form['services']
+            odatas.monthly = request.form['monthly']
+            odatas.collector = request.form['collector']
+            odatas.status = request.form['status']
+            odatas.amount_paid = request.form['amount_paid']
+            odatas.date_paid = request.form['date_paid']
+            odatas.category = request.form['category']
+            odatas.activation_date = request.form['activation_date']
+            odatas.disconnection_date = request.form['disconnection_date']
+            odatas.reactivation_date = request.form['reactivation_date']
+            odatas.churn = request.form['churn']
             
             db.session.commit()
             
@@ -596,7 +596,7 @@ def delete_task(task_id):
 @auth.route('/strategies', methods=["GET", "POST"])
 @login_required
 def strat():
-	if current_user.explore == "sample":
+    if current_user.explore == "sample":
         statc = Samplestrategies \
             .query \
             .filter(Samplestrategies.status == "complete").count()
@@ -622,7 +622,7 @@ def strat():
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
     
-	else:
+    else:
         sd = Otherstrategies \
             .query \
             .join(User) \
@@ -655,7 +655,7 @@ def strat():
 @auth.route('/strategies/insert', methods = ['POST'])
 @login_required
 def newstrat():
-	if current_user.explore == "sample":
+    if current_user.explore == "sample":
         if request.method == 'POST':
             name = request.form['name']
             act = request.form['act']
@@ -742,7 +742,7 @@ def newstrat():
 @auth.route('/strategies/update/<id>', methods = ['GET', 'POST'])
 @login_required
 def updatestrat(id):
-	if current_user.explore == "sample":
+    if current_user.explore == "sample":
         if request.method == 'POST':
             my_strat = Samplestrategies.query.get(request.form.get('id'))
             my_strat.name = request.form['name']
@@ -803,7 +803,7 @@ def updatestrat(id):
 @auth.route('/strategies/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
 def deletestrat(id):
-	if current_user.explore == "sampele":
+    if current_user.explore == "sample":
         my_data = Samplestrategies.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
@@ -831,7 +831,7 @@ def deletestrat(id):
 @auth.route('/strategies/delete-selected', methods = ['GET', 'POST'])
 @login_required
 def deletestratcheck():
-	if current_user.explore == "sample":
+    if current_user.explore == "sample":
         if request.method == "POST":
             for getid in request.form.getlist("mycheckbox"):
                 print(getid)
