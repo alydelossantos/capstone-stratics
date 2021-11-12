@@ -88,10 +88,8 @@
 						
 					  <div class="wrapper">
 						<input type="radio" name="slider" checked id="sales">
-						<input type="radio" name="slider" id="analytics">
 						<nav>
 						  <label for="sales" class="sales">Sales and Churn Analytics Reports</label>
-						  <label for="analytics" class="analytics">Churn Analytics</label>
 						  <div class="slider"></div>
 						</nav>
 						<section>
@@ -316,8 +314,8 @@
 						</div>
 						<div class="col-md-6 col-lg-4">
 						    <div class="statistic__item statistic__item--green">
-							<h2 class="number">388,688</h2>
-							<span class="desc">subscribers gained</span>
+							<h2 class="number">{{active}}</h2>
+							<span class="desc">active</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-shopping-cart"></i>
 							</div>
@@ -325,8 +323,8 @@
 						</div>
 						<div class="col-md-6 col-lg-4">
 						    <div class="statistic__item statistic__item--red">
-							<h2 class="number">$1,060,386</h2>
-							<span class="desc">subscribers loss</span>
+							<h2 class="number">{{disconnected}}</h2>
+							<span class="desc">disconnected</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-money"></i>
 							</div>
@@ -404,17 +402,17 @@
 						var graph24 = {{graph24JSON | safe}};
 						Plotly.plot('chart24',graph24,{});
 
-						// var graph1 = {{graph1JSON | safe}};
-						// Plotly.plot('chart1',graph1,{});
+						var graph1 = {{graph1JSON | safe}};
+						Plotly.plot('chart1',graph1,{});
 		
-						// var graph2 = {{graph2JSON | safe}};
-						// Plotly.plot('chart2',graph2,{});
+						var graph2 = {{graph2JSON | safe}};
+						Plotly.plot('chart2',graph2,{});
 		
-						// var graph3 = {{graph3JSON | safe}};
-						// Plotly.plot('chart3',graph3,{});
+						var graph3 = {{graph3JSON | safe}};
+						Plotly.plot('chart3',graph3,{});
 		
-						// var graph4 = {{graph4JSON | safe}};
-						// Plotly.plot('chart4',graph4,{});
+						var graph4 = {{graph4JSON | safe}};
+						Plotly.plot('chart4',graph4,{});
 				    </script>
 			{% else %}
 			<!-- For Free Users -->
