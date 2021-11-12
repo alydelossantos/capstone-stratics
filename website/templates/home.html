@@ -135,27 +135,27 @@
 
 					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
-						  <div class="col-sm-4">
+						  <div class="col-sm-6">
 							<div id='chart1'></div>
 						  </div>
-						  <div class="col-sm-4">
+						  <div class="col-sm-6">
 							<div id='chart2'></div>
-						  </div>
-						  <div class="col-sm-4">
-							<div id='chart3'></div>
-						  </div>
+						  </div>						  
 						</div>
 					  </div>
 					  
 					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
-						  <div class="col-sm-4">
+							<div class="col-sm-4">
+								<div id='chart3'></div>
+							  </div>
+						  <div class="col-sm-3">
 							<div id='chart4'></div>
 						  </div>
-						  <div class="col-sm-4">
+						  <div class="col-sm-3">
 							<div id='chart5'></div>
 						  </div>
-						  <div class="col-sm-4">
+						  <div class="col-sm-3">
 							<div id='chart6'></div>
 						  </div>
 						</div>
@@ -191,7 +191,7 @@
 					  
 					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
-						  <div class="col-sm-8">
+						  <div class="col-sm-">
 							<div id='chart13'></div>
 						  </div>
 						</div>
@@ -223,7 +223,6 @@
 						  </div>
 						</div>
 					</div>
-
 					  
 					<div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
@@ -489,6 +488,8 @@
 					    </div>
 					</div>
 				</section>
+
+				<!-- ALREADY TRANSFERRED -->
 				<!-- END STATISTIC-->
 
 					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
@@ -506,7 +507,7 @@
 					</div> -->
 					
 					  
-					<div class="container-fluid" style = "padding-bottom: 20px">
+					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						  <div class="col-sm-4">
 							<div id='chart17'></div>
@@ -515,7 +516,7 @@
 							<div id='chart18'></div>
 						  </div>
 						</div>
-					</div>
+					</div> -->
 					  
 					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
@@ -525,7 +526,7 @@
 						</div>
 					</div> -->
 
-					<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+					<!-- <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 					<script type='text/javascript'>
 
 						// For Churn
@@ -548,7 +549,7 @@
 						var graph19 = {{graph19JSON | safe}};
 						Plotly.plot('chart19',graph19,{});
 						
-					</script>
+					</script> -->
 
   			{% elif current_user.explore == "customer" %}
 
@@ -591,10 +592,10 @@
 			<div class="container-fluid" style = "padding-bottom: 20px">
 				<div class="row">
 				<div class="col-sm-6">
-					<div id='chart25'></div>
+					<div id='chart1'></div>
 				</div>
 				<div class="col-sm-6">
-					<div id='chart26'></div>
+					<div id='chart2'></div>
 				</div>
 				</div>
 			</div>
@@ -602,27 +603,27 @@
 			<div class="container-fluid" style = "padding-bottom: 20px">
 				<div class="row">
 				<div class="col-sm-6">
-					<div id='chart27'></div>
+					<div id='chart3'></div>
 				</div>
 				<div class="col-sm-6">
-					<div id='chart28'></div>
+					<div id='chart4'></div>
 				</div>
 				</div>
 			</div>
 
 			<!-- <script src='https://cdn.plot.ly/plotly-latest.min.js'></script> -->
 			<script type='text/javascript'>
-				var graph25 = {{graph25JSON | safe}};
-				Plotly.plot('chart25',graph25,{});
+				var graph1 = {{graph1JSON | safe}};
+				Plotly.plot('chart1',graph1,{});
 
-				var graph26 = {{graph26JSON | safe}};
-				Plotly.plot('chart26',graph26,{});
+				var graph2 = {{graph2JSON | safe}};
+				Plotly.plot('chart2',graph2,{});
 
-				var graph27 = {{graph27JSON | safe}};
-				Plotly.plot('chart27',graph27,{});
+				var graph3 = {{graph3JSON | safe}};
+				Plotly.plot('chart3',graph3,{});
 
-				var graph28 = {{graph28JSON | safe}};
-				Plotly.plot('chart28',graph28,{});
+				var graph4 = {{graph4JSON | safe}};
+				Plotly.plot('chart4',graph4,{});
 			</script>
 				  
 			{% elif current_user.explore == "empty" %}
