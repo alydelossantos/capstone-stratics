@@ -368,7 +368,6 @@ def update(id):
             datas = Data.query.get(request.form.get('id'))
             datas.services = request.form['services']
             datas.monthly = request.form['monthly']
-            datas.collector = request.form['collector']
             datas.status = request.form['status']
             datas.amount_paid = request.form['amount_paid']
             datas.date_paid = request.form['date_paid']
@@ -388,7 +387,6 @@ def update(id):
             odatas = Otherdata.query.get(request.form.get('id'))
             odatas.services = request.form['services']
             odatas.monthly = request.form['monthly']
-            odatas.collector = request.form['collector']
             odatas.status = request.form['status']
             odatas.amount_paid = request.form['amount_paid']
             odatas.date_paid = request.form['date_paid']
