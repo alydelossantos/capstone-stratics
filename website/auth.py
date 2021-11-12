@@ -344,8 +344,8 @@ def update(id):
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
             datas = Data.query.get(request.form.get('id'))
-            datas.services = request.form['services']
             datas.monthly = request.form['monthly']
+            datas.services = request.form['services']
             datas.collector = request.form['collector']
             datas.status = request.form['status']
             datas.amount_paid = request.form['amount_paid']
@@ -362,18 +362,18 @@ def update(id):
             return redirect(url_for('auth.custman'))
     else:
         if request.method == 'POST':
-            datas = Otherdata.query.get(request.form.get('id'))
-            datas.services = request.form['services']
-            datas.monthly = request.form['monthly']
-            datas.collector = request.form['collector']
-            datas.status = request.form['status']
-            datas.amount_paid = request.form['amount_paid']
-            datas.date_paid = request.form['date_paid']
-            datas.category = request.form['category']
-            datas.activation_date = request.form['activation_date']
-            datas.disconnection_date = request.form['disconnection_date']
-            datas.reactivation_date = request.form['reactivation_date']
-            datas.churn = request.form['churn']
+            odatas = Otherdata.query.get(request.form.get('id'))
+            odatas.services = request.form['services']
+            odatas.monthly = request.form['monthly']
+            odatas.collector = request.form['collector']
+            odatas.status = request.form['status']
+            odatas.amount_paid = request.form['amount_paid']
+            odatas.date_paid = request.form['date_paid']
+            odatas.category = request.form['category']
+            odatas.activation_date = request.form['activation_date']
+            odatas.disconnection_date = request.form['disconnection_date']
+            odatas.reactivation_date = request.form['reactivation_date']
+            odatas.churn = request.form['churn']
             
             db.session.commit()
             
