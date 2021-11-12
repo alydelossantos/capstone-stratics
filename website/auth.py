@@ -340,8 +340,6 @@ def insert():
                     
                     return redirect(url_for('auth.custman'))
                     return render_template(sd=sd)
-                return redirect(url_for('auth.custman'))
-                return render_template(sd=sd)
 
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
@@ -652,7 +650,7 @@ def newstrat():
             status = request.form['status']
             description = request.form['description']
             row = Samplestrategies.query.count()
-            count = Samplestrategies.filter(Samplestrategies.id >= row).count()
+            count = Samplestrategies.query.filter(Samplestrategies.id >= row).count()
             if count >= 1:
                 id = row + count
             my_strat = Samplestrategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
@@ -675,7 +673,7 @@ def newstrat():
                 status = request.form['status']
                 description = request.form['description']
                 row = Strategies.query.count()
-                count = Strategies.filter(Strategies.id >= row).count()
+                count = Strategies.query.filter(Strategies.id >= row).count()
                 if count >= 1:
                     id = row + count
                 my_strat = Strategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
@@ -725,8 +723,6 @@ def newstrat():
 				
                 return redirect(url_for('auth.strat'))
                 return render_template(sd=sd)
-            return redirect(url_for('auth.strat'))
-            return render_template(sd=sd)
             
 @auth.route('/strategies/update/<id>', methods = ['GET', 'POST'])
 @login_required
