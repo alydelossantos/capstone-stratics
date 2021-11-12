@@ -400,6 +400,7 @@
                                         <form action="/customer-management/update/{{row.id}}" method="POST">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+							<input type="hidden"  name="id" value="{{row.id}}">
                                                     <h1>{{row.subscriber}}</h1>
 													<h4 style="font-weight:500">Accnt. No. {{row.account_no}}</h4>
 													<h4 style="font-weight:500">Ref. No. {{row.ref_no}}</h4>
