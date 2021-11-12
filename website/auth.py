@@ -341,7 +341,7 @@ def insert():
                     return redirect(url_for('auth.custman'))
                     return render_template(sd=sd)
             return redirect(url_for('auth.custman'))
-            return render_template(sd=sd)  
+            return render_template(sd=sd)
 
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
@@ -780,8 +780,8 @@ def updatestrat(id):
                     db.session.commit()
                     flash("Strategy Updated Successfully", category="notlimit")
                     return redirect(url_for('auth.strat'))
+            return redirect(url_for('auth.strat'))
  
-
 #This route is for deleting our strat
 @auth.route('/strategies/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
