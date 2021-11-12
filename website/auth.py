@@ -290,8 +290,8 @@ def insert():
                 reactivation_date = request.form['reactivation_date']
                 churn = request.form['churn']
                 row = Data.query.count()
-                count = Data.query.filter_by(Data.id > row).count()
-                if count > 1:
+                count = Data.query.filter(Data.id >= row).count()
+                if count >= 1:
                     id = row + count
                 datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
                             collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
