@@ -349,7 +349,7 @@ def update(id):
 	if current_user.explore == "customer" or current_user.explore == "empty":
 		if current_user.cname == "Kalibo Cable":
 			if request.method == 'POST':
-			    datas = Data.query.get(request.form.get('id'))
+                datas = Data.query.get(request.form.get('id'))
                 datas.account_no = request.form['account_no']
                 datas.subscriber = request.form['subscriber']
                 datas.address = request.form['address']
