@@ -343,7 +343,7 @@ def insert():
 def update(id):
     if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
         if request.method == 'POST':
-			datas = Data.query.get(request.form.get('id')
+            datas = Data.query.get(request.form.get('id'))
             datas.monthly = request.form['monthly']
             datas.services = request.form['services']
             datas.collector = request.form['collector']

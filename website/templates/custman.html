@@ -16,7 +16,6 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
         <!-- Export -->
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
         
 		{% block title %} Stratics | Customer Management {% endblock %}
@@ -337,14 +336,14 @@
 
                                                 <div class="col-sm-6">
 							<label>Date Paid</label>
-							<input type="date" class="form-control" name="date_paid" required="1" value="{{row.date_paid}}">     
+							<input type="date" class="form-control" name="date_paid" value="{{row.date_paid}}">     
 						</div>
                                             </div> 
 											
 					<div class="form-group row">
 					<div class="col-sm-6">
 							<label>Monthly Payment</label>
-							<input type="text" class="form-control" name="monthly" required="1" value="{{row.monthly}}">   
+							<input type="text" class="form-control" name="monthly" value="{{row.monthly}}">   
 						</div>
 
 					   <div class="col-sm-6">
@@ -368,7 +367,7 @@
                                                 
 											   <div class="col-sm-6">
 													<label>Activation Date</label>
-													<input type="date" class="form-control" name="activation_date" required="1" value="{{row.activation_date}}">     
+													<input type="date" class="form-control" name="activation_date" value="{{row.activation_date}}">     
 												</div>
                                             </div>
 											
@@ -385,7 +384,7 @@
 												</div>
 												<div class="col-sm-6">
 													<label>Amount Paid</label>
-													<input type="text" class="form-control" name="amount_paid" required="1" value="{{row.amount_paid}}">     
+													<input type="text" class="form-control" name="amount_paid" value="{{row.amount_paid}}">     
 												</div>
 
                                                 
@@ -409,7 +408,6 @@
 												<div class="col-sm-6">
 								<label>Churn</label>
 								<select name="churn" class="custom-select" value="{{row.churn}}">
-									<option>Select if Subscribers Churn</option>
 									<option value=1>Yes</option>
 									<option value=0>No</option>
 								  </select>   
@@ -568,10 +566,10 @@
         <!-- Sort/Search Table JS -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-		<script src ="{{url_for('static', filename = 'js/app_ajax.js')}}"></script>
-		
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>        
+
+        <!-- Export JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
