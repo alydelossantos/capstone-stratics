@@ -155,43 +155,45 @@
 						  <div class="col-sm-3">
 							<div id='chart5'></div>
 						  </div>
-						  <div class="col-sm-3">
-							<div id='chart6'></div>
-						  </div>
+						  
 						</div>
 					  </div>
 					  
 					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
+							<div class="col-sm-4">
+								<div id='chart6'></div>
+							  </div>
 						  <div class="col-sm-4">
 							<div id='chart7'></div>
 						  </div>
 						  <div class="col-sm-4">
 							<div id='chart8'></div>
 						  </div>
-						  <div class="col-sm-4">
-							<div id='chart9'></div>
-						  </div>
 						</div>
 					  </div>
 					  
 					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
-						  <div class="col-sm-4">
+							<div class="col-sm-3">
+								<div id='chart9'></div>
+							  </div>
+						  <div class="col-sm-3">
 							<div id='chart10'></div>
 						  </div>
-						  <div class="col-sm-4">
+						  <div class="col-sm-3">
 							<div id='chart11'></div>
 						  </div>
-						  <div class="col-sm-4">
-							<div id='chart12'></div>
-						  </div>
+						 
 						</div>
 					  </div>
 					  
 					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
-						  <div class="col-sm-">
+							<div class="col-sm-6">
+								<div id='chart12'></div>
+							  </div>
+						  <div class="col-sm-6">
 							<div id='chart13'></div>
 						  </div>
 						</div>
@@ -365,7 +367,7 @@
 
 					<!-- Kalibo Churn -->
 
-					<div class="container-fluid" style = "padding-bottom: 20px">
+					<!-- <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
 						<div class="col-sm-6">
 							<div id='chart1'></div>
@@ -385,7 +387,7 @@
 							<div id='chart4'></div>
 						</div>
 						</div>
-					</div>					
+					</div>					 -->
 
 					<script type='text/javascript'>
 						var graph20 = {{graph20JSON | safe}};
@@ -403,17 +405,17 @@
 						var graph24 = {{graph24JSON | safe}};
 						Plotly.plot('chart24',graph24,{});
 
-						var graph1 = {{graph1JSON | safe}};
-						Plotly.plot('chart1',graph1,{});
+						// var graph1 = {{graph1JSON | safe}};
+						// Plotly.plot('chart1',graph1,{});
 		
-						var graph2 = {{graph2JSON | safe}};
-						Plotly.plot('chart2',graph2,{});
+						// var graph2 = {{graph2JSON | safe}};
+						// Plotly.plot('chart2',graph2,{});
 		
-						var graph3 = {{graph3JSON | safe}};
-						Plotly.plot('chart3',graph3,{});
+						// var graph3 = {{graph3JSON | safe}};
+						// Plotly.plot('chart3',graph3,{});
 		
-						var graph4 = {{graph4JSON | safe}};
-						Plotly.plot('chart4',graph4,{});
+						// var graph4 = {{graph4JSON | safe}};
+						// Plotly.plot('chart4',graph4,{});
 				    </script>
 			{% else %}
 			<!-- For Free Users -->
