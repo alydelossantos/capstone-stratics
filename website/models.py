@@ -48,7 +48,7 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
     
 class Data(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key = True, unique =True )
     account_no = db.Column(db.String(100))
     subscriber = db.Column(db.String(100))
     address = db.Column(db.String(225))
