@@ -69,8 +69,11 @@ body {
 	height: 340px;
 	background-image: url('/static/images/ui-su.png');
 	background-size: cover;
-    background-repeat: no-repeat;
+    	background-repeat: no-repeat;
 	text-align: center;
+	justify-content: center;
+	align-items: center;margin-left: -100px;
+}
 
 
 .info .copy .picture img {
