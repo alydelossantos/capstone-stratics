@@ -730,47 +730,47 @@ def updatestrat(id):
             db.session.commit()
             flash("Strategy Updated Successfully", category="notlimit")
             return redirect(url_for('auth.strat'))
-	elif current_user.explore == "customer" or current_user.explore == "empty" :
-		if current_user.cname == "Kalibo Cable":
-			if request.method == 'POST':
-				my_strat = Strategies.query.get(request.form.get('id'))
-				my_strat.name = request.form['name']
-				my_strat.act = request.form['act']
-				my_strat.platform = request.form['platform']
-				my_strat.startdate = request.form['startdate']
-				my_strat.enddate = request.form['enddate']
-				my_strat.status = request.form['status']
-				my_strat.description = request.form['description']
+    elif current_user.explore == "customer" or current_user.explore == "empty" :
+        if current_user.cname == "Kalibo Cable":
+            if request.method == 'POST':
+                my_strat = Strategies.query.get(request.form.get('id'))
+                my_strat.name = request.form['name']
+                my_strat.act = request.form['act']
+                my_strat.platform = request.form['platform']
+                my_strat.startdate = request.form['startdate']
+                my_strat.enddate = request.form['enddate']
+                my_strat.status = request.form['status']
+                my_strat.description = request.form['description']
 				
-				db.session.commit()
-				flash("Strategy Updated Successfully", category="notlimit")
-				return redirect(url_for('auth.strat')) 
-			else:
-				statc = Otherstrategies \
-					.query \
-					.join(User) \
-					.filter(Otherstrategies.status == "complete") \
-					.filter(User.id==current_user.id).count()
-				print(statc)
-				statss = Otherstrategies \
-					.query \
-					.join(User) \
-					.filter(Otherstrategies.status == "ongoing") \
-					.filter(User.id==current_user.id).count()
-				print(statss)
-				if request.method == 'POST':
-					my_strat = Otherstrategies.query.get(request.form.get('id'))
-					my_strat.name = request.form['name']
-					my_strat.act = request.form['act']
-					my_strat.platform = request.form['platform']
-					my_strat.startdate = request.form['startdate']
-					my_strat.enddate = request.form['enddate']
-					my_strat.status = request.form['status']
-					my_strat.description = request.form['description']
-					
-					db.session.commit()
-					flash("Strategy Updated Successfully", category="notlimit")
-					return redirect(url_for('auth.strat'))
+                db.session.commit()
+                flash("Strategy Updated Successfully", category="notlimit")
+                return redirect(url_for('auth.strat')) 
+            else:
+                statc = Otherstrategies \
+                    .query \
+                    .join(User) \
+                    .filter(Otherstrategies.status == "complete") \
+                    .filter(User.id==current_user.id).count()
+                print(statc)
+                statss = Otherstrategies \
+                    .query \
+                    .join(User) \
+                    .filter(Otherstrategies.status == "ongoing") \
+                    .filter(User.id==current_user.id).count()
+                print(statss)
+                if request.method == 'POST':
+                    my_strat = Otherstrategies.query.get(request.form.get('id'))
+                    my_strat.name = request.form['name']
+                    my_strat.act = request.form['act']
+                    my_strat.platform = request.form['platform']
+                    my_strat.startdate = request.form['startdate']
+                    my_strat.enddate = request.form['enddate']
+                    my_strat.status = request.form['status']
+                    my_strat.description = request.form['description']
+                    
+                    db.session.commit()
+                    flash("Strategy Updated Successfully", category="notlimit")
+                    return redirect(url_for('auth.strat'))
  
 
 #This route is for deleting our strat
