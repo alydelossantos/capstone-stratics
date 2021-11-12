@@ -104,7 +104,7 @@ def home():
         # Histogram - Dependents
         # defining data
         trace = go.Histogram(x=df['Dependents'],nbinsx=3,
-                        marker = dict(color = '#ed7071'))
+                        marker = dict(color = '#fc636b'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Dependents Distribution")
@@ -118,7 +118,7 @@ def home():
         trace = go.Histogram(
             x=df['Partner'],
             nbinsx=3,
-            marker = dict(color = '#9da4d8')
+            marker = dict(color = '#ffb900')
             )
         data = [trace]
         # defining layout
@@ -130,7 +130,7 @@ def home():
 
         # Histogram - Device Protection
         # defining data
-        trace = go.Histogram(x=df['DeviceProtection'],nbinsx=3,marker = dict(color = '#6D9886'))
+        trace = go.Histogram(x=df['DeviceProtection'],nbinsx=3,marker = dict(color = '#6a67ce'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Device Protection Distribution")
@@ -141,7 +141,7 @@ def home():
 
         # Histogram - Multiple Lines
         # defining data
-        trace = go.Histogram(x=df['MultipleLines'],nbinsx=3,marker = dict(color = '#6D9886'))
+        trace = go.Histogram(x=df['MultipleLines'],nbinsx=3,marker = dict(color = '#1aafd0'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Multiple Lines Distribution")
@@ -151,7 +151,7 @@ def home():
 
         # Histogram - Online Backup
         # defining data
-        trace = go.Histogram(x=df['OnlineBackup'],nbinsx=3,marker = dict(color = '#6D9886'))
+        trace = go.Histogram(x=df['OnlineBackup'],nbinsx=3,marker = dict(color = '#3be8b0'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Online Backup Distribution")
@@ -162,7 +162,7 @@ def home():
 
         # Histogram - Online Security
         # defining data
-        trace = go.Histogram(x=df['OnlineSecurity'],nbinsx=3,marker = dict(color = '#6D9886'))
+        trace = go.Histogram(x=df['OnlineSecurity'],nbinsx=3,marker = dict(color = '#fc636b'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Online Security Distribution")
@@ -173,7 +173,7 @@ def home():
 
         # Histogram - Paperless Billing
         # defining data
-        trace = go.Histogram(x=df['PaperlessBilling'],nbinsx=3,marker = dict(color = '#6D9886'))
+        trace = go.Histogram(x=df['PaperlessBilling'],nbinsx=3,marker = dict(color = '#ffb900'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Paperless Billing Distribution")
@@ -184,7 +184,7 @@ def home():
 
         # Histogram - Phone Service
         # defining data
-        trace = go.Histogram(x=df['PhoneService'],nbinsx=3,marker = dict(color = '#6D9886'))
+        trace = go.Histogram(x=df['PhoneService'],nbinsx=3,marker = dict(color = '#6a67ce'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Phone Service Distribution")
@@ -195,7 +195,7 @@ def home():
 
         # Histogram - Streaming Movies
         # defining data
-        trace = go.Histogram(x=df['StreamingMovies'],nbinsx=3,marker = dict(color = '#6D9886'))
+        trace = go.Histogram(x=df['StreamingMovies'],nbinsx=3,marker = dict(color = '#1aafd0'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Streaming Movies Distribution")
@@ -206,7 +206,7 @@ def home():
 
         # Histogram - Streaming TV
         # defining data
-        trace = go.Histogram(x=df['StreamingTV'],nbinsx=3,marker = dict(color = '#6D9886'))
+        trace = go.Histogram(x=df['StreamingTV'],nbinsx=3,marker = dict(color = '#3be8b0'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Streaming TV Distribution")
@@ -216,7 +216,7 @@ def home():
 
         # Histogram - Tech Support
         # defining data
-        trace = go.Histogram(x=df['TechSupport'],nbinsx=3,marker = dict(color = '#6D9886'))
+        trace = go.Histogram(x=df['TechSupport'],nbinsx=3,marker = dict(color = '#fc636b'))
         data = [trace]
         # defining layout
         layout = go.Layout(title="Technical Support Distribution")
@@ -475,7 +475,7 @@ def home():
                 trace = go.Histogram(
                     x=kctn['collector'],
                     nbinsx=3,
-                    marker = dict(color = '#9da4d8')
+                    marker = dict(color = '#ffb900')
                     )
                 data = [trace]
                 # defining layout
@@ -490,7 +490,7 @@ def home():
                 trace = go.Histogram(
                     x=kctn['category'],
                     nbinsx=3,
-                    marker = dict(color = '#9da4d8')
+                    marker = dict(color = '#1aafd0')
                     )
                 data = [trace]
                 # defining layout
@@ -551,7 +551,7 @@ def home():
                         y=plot_by_payment['churn'],
                     width = [0.8],
                         marker = dict(
-                            color=['#fc636b', '#ffb900', '#6a67ce', '#1aafd0', '#3be8b0']
+                            color=['#fc636b', '#ffb900', '#6a67ce', '#1aafd0', '#3be8b0, #fc636b', '#ffb900', '#6a67ce', '#1aafd0', '#3be8b0']
                         )
                     )
                 ]
