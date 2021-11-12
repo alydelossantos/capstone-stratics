@@ -639,8 +639,9 @@ def newstrat():
             enddate = request.form['enddate']
             status = request.form['status']
             description = request.form['description']
-            
-            my_strat = Samplestrategies(name=name, act=act, platform=platform, startdate=startdate, 
+            row = Samplestrategies.query.count()
+            id = row + 1
+            my_strat = Samplestrategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
             db.session.commit() 
@@ -657,8 +658,9 @@ def newstrat():
             enddate = request.form['enddate']
             status = request.form['status']
             description = request.form['description']
-            
-            my_strat = Strategies(name=name, act=act, platform=platform, startdate=startdate, 
+            row = Strategies.query.count()
+            id = row + 1
+            my_strat = Strategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
             db.session.commit() 
