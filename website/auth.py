@@ -668,7 +668,8 @@ def newstrat():
             count = Samplestrategies.query.filter(Samplestrategies.id >= row).count()
             if count >= 1:
                 sid = row + count
-            my_strat = Samplestrategies(id=sid,name=name, act=act, platform=platform, startdate=startdate, 
+            id = sid
+            my_strat = Samplestrategies(id=id,name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
             db.session.commit() 
