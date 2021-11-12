@@ -386,11 +386,16 @@ def update(id):
     else:
         if request.method == 'POST':
             odatas = Otherdata.query.get(request.form.get('id'))
+            odatas.account_no = request.form['account_no']
+            odatas.subscriber = request.form['subscriber']
+            odatas.address = request.form['address']
+            odatas.zone = request.form['zone']
             odatas.services = request.form['services']
             odatas.monthly = request.form['monthly']
             odatas.collector = request.form['collector']
             odatas.status = request.form['status']
             odatas.amount_paid = request.form['amount_paid']
+            odatas.ref_no = request.form['ref_no']
             odatas.date_paid = request.form['date_paid']
             odatas.category = request.form['category']
             odatas.activation_date = request.form['activation_date']
