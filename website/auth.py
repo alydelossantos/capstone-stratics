@@ -331,12 +331,15 @@ def insert():
 						db.session.add(sdatas)
 						db.session.commit()   
 						flash("Customer Record Added Successfully", category="notlimit")
-					else:
+					    return redirect(url_for('auth.custman'))
+                        return render_template(sd=sd)
+                    else:
 						db.session.commit()
 						flash("You have exceeded to the number of inputted customer records!", category="limit")
 					
 					return redirect(url_for('auth.custman'))
 					return render_template(sd=sd)
+                
 
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
