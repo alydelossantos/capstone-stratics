@@ -730,7 +730,7 @@ def newstrat():
             
             if sd <= 10:
                 my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
-                        enddate=enddate, status=status, description=description, ostrat_id=user.id)
+                        enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
                 db.session.add(my_strat)
                 db.session.commit()   
                 flash("Strategy Added Successfully", category="notlimit")
