@@ -132,7 +132,7 @@
 									<select size = 3 name="province" class="custom-select">
 										<option value="0">Select Province</option>
 										<option value="Abra">Abra</option>
-										<option value="	Agusan del Norte">Agusan del Norte</option>
+										<option value="Agusan del Norte">Agusan del Norte</option>
 										<option value="Agusan del Sur">Agusan del Sur</option>
 										<option value="Aklan">Aklan</option>
 										<option value="Albay">Albay</option>
@@ -264,10 +264,10 @@
 								</div>
 								<div class="col-sm-6">
 									<label>Churn</label><br>
-									<input type="radio" id="yes" name="churn" value="1">
-									<label for="yes"> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="radio" id="no" name="churn" value="0">
-									<label for="no"> No</label>
+									<select name="churn" class="custom-select" >
+									<option value=0>Non Churner</option>
+									<option value=1>Churner</option>
+								  </select>
 								</div>
 							</div>
 
@@ -398,7 +398,6 @@
 						<div class="col-sm-6">
 							<label>Services</label>
 							<select name="services" class="custom-select" value="{{row.services}}">
-								<option value="0">Select Services</option>
 								<option value="Digital HD">Digital HD</option>
 								<option value="Internet with HD">Internet with HD</option>
 								<option value="Internet Only">Internet Only</option>
@@ -407,20 +406,19 @@
 
 						<div class="col-sm-6">
 							<label>Date Paid</label>
-							<input type="date" class="form-control" name="date_paid" required="1" value="{{row.date_paid}}">     
+							<input type="date" class="form-control" name="date_paid" value="{{row.date_paid}}">     
 						</div>
 					</div> 
 											
 					<div class="form-group row">
 					<div class="col-sm-6">
 							<label>Monthly Payment</label>
-							<input type="text" class="form-control" name="monthly" required="1" value="Php {{row.monthly}}">   
+							<input type="text" class="form-control" name="monthly" value="{{row.monthly}}">   
 						</div>
 
 					   <div class="col-sm-6">
 							<label>Category</label>
 							<select name="category" class="custom-select" value="{{row.category}}">
-								<option value="0">Select Category</option>
 								<option value="RS">RS</option>
 								<option value="GV">GV</option>
 								<option value="CS">CS</option>
@@ -432,7 +430,6 @@
                                                 <div class="col-sm-6">
 													<label>Status</label>
 													<select name="status" class="custom-select" value="{{row.status}}">
-														<option value="0">Select Status</option>
 														<option class="greenBg" value="Active">Active</option>
 														<option class="redBg" value="Disconnected">Disconnected</option>
 													  </select>   
@@ -440,14 +437,14 @@
                                                 
 											   <div class="col-sm-6">
 													<label>Activation Date</label>
-													<input type="date" class="form-control" name="activation_date" required="1" value="{{row.activation_date}}">     
+													<input type="date" class="form-control" name="activation_date" value="{{row.activation_date}}">     
 												</div>
                                             </div>
 											
 											<div class="form-group row">
 												<div class="col-sm-6">
 													<label>Amount Paid</label>
-													<input type="text" class="form-control" name="amount_paid" required="1" value="Php {{row.amount_paid}}">     
+													<input type="text" class="form-control" name="amount_paid" value="{{row.amount_paid}}">     
 												</div>
 												
 												<div class="col-sm-6">
@@ -466,10 +463,10 @@
 												
 												<div class="col-sm-6">
 													<label>Churn</label><br>
-													<input type="radio" id="yes" name="churn" value="1">
-													<label for="yes"> Yes</label>
-													<input type="radio" id="no" name="churn" value="0">
-													<label for="no"> No</label>
+													<select name="churn" class="custom-select" value="{{row.churn}}">
+														<option value=0>Non Churner</option>
+														<option value=1>Churner</option>
+													  </select>
 												</div>
                                             </div>
 											
