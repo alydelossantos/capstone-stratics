@@ -383,7 +383,7 @@ def home():
         graph16JSON=graph16JSON,
         graph17JSON=graph17JSON,
         graph18JSON=graph18JSON,
-        graph19JSON=graph19JSON
+        graph19JSON=graph19JSON,
         )
 
     elif current_user.explore == "customer":
@@ -393,13 +393,13 @@ def home():
         disconnected = Data \
             .query \
             .filter(Data.status == "Disconnected").count()
-        if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
+        if current_user.cname == "Kalibo Cable":
             if db.session.query(Data).count() >=3 :
                 cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
                 conn = cnx.connect()
                 df = pd.read_sql_table('data', con=cnx)
 
-                    # Check for missing values
+                # Check for missing values
                 df.isna().any()
                 # Fill missing values with NaN
                 df.fillna('Null')
@@ -592,10 +592,6 @@ def home():
                 fig9contract = go.Figure(data=plot_data, layout=layout)
                 graph28JSON = json.dumps(fig9contract, cls=plotly.utils.PlotlyJSONEncoder)
 
-
-                current_user.dash = "full"
-                db.session.add(current_user)
-                db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file,
                     # For Kalibo Sales
@@ -607,8 +603,8 @@ def home():
                      # For Kalibo Churn
                     graph25JSON=graph25JSON,
                     graph26JSON=graph26JSON,
-                    graph27SON=graph28JSON,
-                    graph28JSON=graph28JSON,active=active, disconnected=disconnected
+                    graph27SON=graph27JSON,
+                    graph28JSON=graph28JSON,active=active, disconnected=disconnected,
                     )
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
@@ -625,7 +621,12 @@ def home():
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
         else:
-            #if db.session.query(Otherdata).join(User).filter(User.id == current_user.id).count() >=3 :
+            active = Otherdata \
+                .query \
+                .filter(Otherdata.status == "Active").count()
+            disconnected = Otherdata \
+                .query \
+                .filter(Otherdata.status == "Disconnected").count()
             cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
             conn = cnx.connect()
             df = pd.read_sql_table('otherdata', con=cnx)
@@ -670,7 +671,7 @@ def home():
                             plot_bgcolor = "white",
                             paper_bgcolor = "white",))
                 fig2 = go.Figure(data = data,layout = layout)
-                graph2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
+                graph2JSON = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
 
                 # Histogram - Services
                 # defining data
@@ -681,7 +682,7 @@ def home():
                 layout = go.Layout(title="Services Distribution")
                 # defining figure and plotting
                 fig3 = go.Figure(data = data,layout = layout)
-                graph3 = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
+                graph3JSON = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
 
                 # Histogram - Category 
                 # defining data
@@ -811,7 +812,9 @@ def home():
                 graph5JSON=graph5JSON, 
                 graph6JSON=graph6JSON, 
                 graph7JSON=graph7JSON,
-                graph8JSON=graph8JSON
+                graph8JSON=graph8JSON,
+                active=active,
+                disconnected=disconnected,
                 )
 
             elif rc < 3 and rc >= 1:
