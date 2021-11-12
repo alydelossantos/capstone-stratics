@@ -350,17 +350,22 @@ def update(id):
 		if current_user.cname == "Kalibo Cable":
 			if request.method == 'POST':
 				datas = Data.query.get(request.form.get('id'))
-				datas.monthly = request.form['monthly']
-				datas.services = request.form['services']
-				datas.collector = request.form['collector']
-				datas.status = request.form['status']
-				datas.amount_paid = request.form['amount_paid']
-				datas.date_paid = request.form['date_paid']
-				datas.category = request.form['category']
-				datas.activation_date = request.form['activation_date']
-				datas.disconnection_date = request.form['disconnection_date']
-				datas.reactivation_date = request.form['reactivation_date']
-				datas.churn = request.form['churn']
+                datas.account_no = request.form['account_no']
+                datas.subscriber = request.form['subscriber']
+                datas.address = request.form['address']
+                datas.zone = request.form['zone']
+                datas.services = request.form['services']
+                datas.monthly = request.form['monthly']
+                datas.collector = request.form['collector']
+                datas.status = request.form['status']
+                datas.amount_paid = request.form['amount_paid']
+                datas.ref_no = request.form['ref_no']
+                datas.date_paid = request.form['date_paid']
+                datas.category = request.form['category']
+                datas.activation_date = request.form['activation_date']
+                datas.disconnection_date = request.form['disconnection_date']
+                datas.reactivation_date = request.form['reactivation_date']
+                datas.churn = request.form['churn']
 				db.session.commit()
 				
 				flash("Customer Record Updated Successfully")
@@ -782,7 +787,7 @@ def updatestrat(id):
                     db.session.commit()
                     flash("Strategy Updated Successfully", category="notlimit")
                     return redirect(url_for('auth.strat'))
-        return redirect(url_for('auth.strat'))
+                return redirect(url_for('auth.strat'))
  
 #This route is for deleting our strat
 @auth.route('/strategies/delete/<id>/', methods = ['GET', 'POST'])
