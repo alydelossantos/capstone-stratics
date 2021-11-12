@@ -1,4 +1,3 @@
-
 import os
 import secrets
 import smtplib
@@ -232,8 +231,8 @@ def sidebarpic():
 @login_required
 def custman():
     if current_user.explore == "customer" or current_user.explore == "empty":
-        if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-            all_data = Data.query.all()
+        if current_user.cname == "Kalibo Cable":
+			all_data = Data.query.all()
             
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
@@ -242,7 +241,7 @@ def custman():
                 .query \
                 .join(User) \
                 .filter(User.id==current_user.id).count()
-            print(sd)
+
             if request.method == "POST":
                 account_no = request.form['account_no']
                 subscriber = request.form['subscriber']
@@ -271,157 +270,161 @@ def custman():
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
 def insert():
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-        if request.method == 'POST':
-            account_no = request.form['account_no']
-            subscriber = request.form['subscriber']
-            address = request.form['address']
-            zone = request.form['zone']
-            services = request.form['services']
-            monthly = request.form['monthly']
-            collector = request.form['collector']
-            status = request.form['status']
-            amount_paid = request.form['amount_paid']
-            ref_no = request.form['ref_no']
-            date_paid = request.form['date_paid']
-            category = request.form['category']
-            activation_date = request.form['activation_date']
-            disconnection_date = request.form['disconnection_date']
-            reactivation_date = request.form['reactivation_date']
-            churn = request.form['churn']
-            row = Data.query.count()
-            id = row + 1
-            datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
-						collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
-						disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
-            db.session.add(datas)
-            db.session.commit()
-            
-            flash("Customer Record Added Successfully")
-            return redirect(url_for('auth.custman'))
+	if current_user.explore == "customer" or current_user.explore == "empty":
+		if current_user.cname == "Kalibo Cable":
+			if request.method == 'POST':
+				account_no = request.form['account_no']
+				subscriber = request.form['subscriber']
+				address = request.form['address']
+				zone = request.form['zone']
+				services = request.form['services']
+				monthly = request.form['monthly']
+				collector = request.form['collector']
+				status = request.form['status']
+				amount_paid = request.form['amount_paid']
+				ref_no = request.form['ref_no']
+				date_paid = request.form['date_paid']
+				category = request.form['category']
+				activation_date = request.form['activation_date']
+				disconnection_date = request.form['disconnection_date']
+				reactivation_date = request.form['reactivation_date']
+				churn = request.form['churn']
+				row = Data.query.count()
+				id = row + 1
+				datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
+							collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+							disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
+				db.session.add(datas)
+				db.session.commit()
+				
+				flash("Customer Record Added Successfully")
+				return redirect(url_for('auth.custman'))
     
-    else:
-        sd = Otherdata \
-            .query \
-            .join(User) \
-            .filter(User.id==current_user.id).count()
+			else:
+				sd = Otherdata \
+					.query \
+					.join(User) \
+					.filter(User.id==current_user.id).count()
 
-        if request.method == 'POST':
-            account_no = request.form['account_no']
-            subscriber = request.form['subscriber']
-            gender = request.form['gender']
-            address = request.form['address']
-            province = request.form['province']
-            services = request.form['services']
-            monthly = request.form['monthly']
-            status = request.form['status']
-            amount_paid = request.form['amount_paid']
-            ref_no = request.form['ref_no']
-            date_paid = request.form['date_paid']
-            category = request.form['category']
-            activation_date = request.form['activation_date']
-            disconnection_date = request.form['disconnection_date']
-            reactivation_date = request.form['reactivation_date']
-            churn = request.form['churn']
-            
-            if sd <= 10:
-                sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
-                         status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
-                         disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn, odata_id=current_user.id)
-                db.session.add(sdatas)
-                db.session.commit()   
-                flash("Customer Record Added Successfully", category="notlimit")
-            else:
-                db.session.commit()
-                flash("You have exceeded to the number of inputted customer records!", category="limit")
-            
-            return redirect(url_for('auth.custman'))
-            return render_template(sd=sd)
+				if request.method == 'POST':
+					account_no = request.form['account_no']
+					subscriber = request.form['subscriber']
+					gender = request.form['gender']
+					address = request.form['address']
+					province = request.form['province']
+					services = request.form['services']
+					monthly = request.form['monthly']
+					status = request.form['status']
+					amount_paid = request.form['amount_paid']
+					ref_no = request.form['ref_no']
+					date_paid = request.form['date_paid']
+					category = request.form['category']
+					activation_date = request.form['activation_date']
+					disconnection_date = request.form['disconnection_date']
+					reactivation_date = request.form['reactivation_date']
+					churn = request.form['churn']
+					
+					if sd <= 10:
+						sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
+								 status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+								 disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn, odata_id=current_user.id)
+						db.session.add(sdatas)
+						db.session.commit()   
+						flash("Customer Record Added Successfully", category="notlimit")
+					else:
+						db.session.commit()
+						flash("You have exceeded to the number of inputted customer records!", category="limit")
+					
+					return redirect(url_for('auth.custman'))
+					return render_template(sd=sd)
 
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
 def update(id):
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-        if request.method == 'POST':
-            datas = Data.query.get(request.form.get('id'))
-            datas.monthly = request.form['monthly']
-            datas.services = request.form['services']
-            datas.collector = request.form['collector']
-            datas.status = request.form['status']
-            datas.amount_paid = request.form['amount_paid']
-            datas.date_paid = request.form['date_paid']
-            datas.category = request.form['category']
-            datas.activation_date = request.form['activation_date']
-            datas.disconnection_date = request.form['disconnection_date']
-            datas.reactivation_date = request.form['reactivation_date']
-            datas.churn = request.form['churn']
-            db.session.commit()
-            
-            flash("Customer Record Updated Successfully")
-     
-            return redirect(url_for('auth.custman'))
-    else:
-        if request.method == 'POST':
-            odatas = Otherdata.query.get(request.form.get('id'))
-            odatas.services = request.form['services']
-            odatas.monthly = request.form['monthly']
-            odatas.collector = request.form['collector']
-            odatas.status = request.form['status']
-            odatas.amount_paid = request.form['amount_paid']
-            odatas.date_paid = request.form['date_paid']
-            odatas.category = request.form['category']
-            odatas.activation_date = request.form['activation_date']
-            odatas.disconnection_date = request.form['disconnection_date']
-            odatas.reactivation_date = request.form['reactivation_date']
-            odatas.churn = request.form['churn']
-            
-            db.session.commit()
-            
-            flash("Customer Record Updated Successfully")
-     
-            return redirect(url_for('auth.custman'))
+	if current_user.explore == "customer" or current_user.explore == "empty":
+		if current_user.cname == "Kalibo Cable":
+			if request.method == 'POST':
+				datas = Data.query.get(request.form.get('id'))
+				datas.monthly = request.form['monthly']
+				datas.services = request.form['services']
+				datas.collector = request.form['collector']
+				datas.status = request.form['status']
+				datas.amount_paid = request.form['amount_paid']
+				datas.date_paid = request.form['date_paid']
+				datas.category = request.form['category']
+				datas.activation_date = request.form['activation_date']
+				datas.disconnection_date = request.form['disconnection_date']
+				datas.reactivation_date = request.form['reactivation_date']
+				datas.churn = request.form['churn']
+				db.session.commit()
+				
+				flash("Customer Record Updated Successfully")
+		 
+				return redirect(url_for('auth.custman'))
+		else:
+			if request.method == 'POST':
+				odatas = Otherdata.query.get(request.form.get('id'))
+				odatas.services = request.form['services']
+				odatas.monthly = request.form['monthly']
+				odatas.collector = request.form['collector']
+				odatas.status = request.form['status']
+				odatas.amount_paid = request.form['amount_paid']
+				odatas.date_paid = request.form['date_paid']
+				odatas.category = request.form['category']
+				odatas.activation_date = request.form['activation_date']
+				odatas.disconnection_date = request.form['disconnection_date']
+				odatas.reactivation_date = request.form['reactivation_date']
+				odatas.churn = request.form['churn']
+				
+				db.session.commit()
+				
+				flash("Customer Record Updated Successfully")
+		 
+				return redirect(url_for('auth.custman'))
 
 #This route is for deleting our customer
 @auth.route('/customer-management/delete/<id>/', methods = ['GET', 'POST'])
 @login_required
 def delete(id):
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-        my_data = Data.query.get(id)
-        db.session.delete(my_data)
-        db.session.commit()
-        flash("Customer Record Deleted Successfully")
-     
-        return redirect(url_for('auth.custman'))
-    else:
-        my_data = Otherdata.query.get(id)
-        db.session.delete(my_data)
-        db.session.commit()
-        flash("Customer Record Deleted Successfully")
-     
-        return redirect(url_for('auth.custman'))
+	if current_user.explore == "customer":
+		if current_user.cname == "Kalibo Cable":
+			my_data = Data.query.get(id)
+			db.session.delete(my_data)
+			db.session.commit()
+			flash("Customer Record Deleted Successfully")
+		 
+			return redirect(url_for('auth.custman'))
+		else:
+			my_data = Otherdata.query.get(id)
+			db.session.delete(my_data)
+			db.session.commit()
+			flash("Customer Record Deleted Successfully")
+		 
+			return redirect(url_for('auth.custman'))
  
 #This route is for deleting our customer in checkbox
 @auth.route('/customer-management/delete-selected', methods = ['GET', 'POST'])
 @login_required
 def deletecheck():
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-        if request.method == "POST":
-            for getid in request.form.getlist("mycheckbox"):
-                print(getid)
-                db.session.query(Data).filter(Data.id ==getid).delete()
-            db.session.commit()
-            flash("Customer Records Deleted Successfully")
-                     
-            return redirect(url_for('auth.custman'))
-    else:
-        if request.method == "POST":
-            for getid in request.form.getlist("mycheckbox"):
-                print(getid)
-                db.session.query(Otherdata).filter(Otherdata.id ==getid).delete()
-            db.session.commit()
-            flash("Customer Records Deleted Successfully")
-                     
-            return redirect(url_for('auth.custman'))
+	if current_user.explore == "customer":
+		if current_user.cname == "Kalibo Cable":
+			if request.method == "POST":
+				for getid in request.form.getlist("mycheckbox"):
+					print(getid)
+					db.session.query(Data).filter(Data.id ==getid).delete()
+				db.session.commit()
+				flash("Customer Records Deleted Successfully")
+						 
+				return redirect(url_for('auth.custman'))
+		else:
+			if request.method == "POST":
+				for getid in request.form.getlist("mycheckbox"):
+					print(getid)
+					db.session.query(Otherdata).filter(Otherdata.id ==getid).delete()
+				db.session.commit()
+				flash("Customer Records Deleted Successfully")
+						 
+				return redirect(url_for('auth.custman'))
   
 # End of Customer Management    
 
@@ -573,8 +576,8 @@ def delete_task(task_id):
 @login_required
 def strat():
     if current_user.explore == "customer" or current_user.explore == "empty":
-        if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-            statc = Strategies \
+        if current_user.cname == "Kalibo Cable":
+			statc = Strategies \
                 .query \
                 .filter(Strategies.status == "complete").count()
 
@@ -649,64 +652,66 @@ def newstrat():
             flash("Strategy Added Successfully")
             
             return redirect(url_for('auth.strat'))
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-        if request.method == 'POST':
-            name = request.form['name']
-            act = request.form['act']
-            platform = request.form['platform']
-            startdate = request.form['startdate']
-            enddate = request.form['enddate']
-            status = request.form['status']
-            description = request.form['description']
-            row = Strategies.query.count()
-            id = row + 1
-            my_strat = Strategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
-                        enddate=enddate, status=status, description=description)
-            db.session.add(my_strat)
-            db.session.commit() 
-            
-            flash("Strategy Added Successfully")
-            
-            return redirect(url_for('auth.strat'))
-    else:
-        sd = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(User.id==current_user.id).count()
+			
+	elif current_user.explore == "sample" or current_user.explore == "empty":
+		if current_user.cname = "Kalibo Cable":
+			if request.method == 'POST':
+				name = request.form['name']
+				act = request.form['act']
+				platform = request.form['platform']
+				startdate = request.form['startdate']
+				enddate = request.form['enddate']
+				status = request.form['status']
+				description = request.form['description']
+				row = Strategies.query.count()
+				id = row + 1
+				my_strat = Strategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
+							enddate=enddate, status=status, description=description)
+				db.session.add(my_strat)
+				db.session.commit() 
+				
+				flash("Strategy Added Successfully")
+				
+				return redirect(url_for('auth.strat'))
+		else:
+			sd = Otherstrategies \
+				.query \
+				.join(User) \
+				.filter(User.id==current_user.id).count()
 
-        statc = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "complete") \
-            .filter(User.id==current_user.id).count()
+			statc = Otherstrategies \
+				.query \
+				.join(User) \
+				.filter(Otherstrategies.status == "complete") \
+				.filter(User.id==current_user.id).count()
 
-        statss = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "ongoing") \
-            .filter(User.id==current_user.id).count()
+			statss = Otherstrategies \
+				.query \
+				.join(User) \
+				.filter(Otherstrategies.status == "ongoing") \
+				.filter(User.id==current_user.id).count()
 
-        if request.method == 'POST':
-            name = request.form['name']
-            act = request.form['act']
-            platform = request.form['platform']
-            startdate = request.form['startdate']
-            enddate = request.form['enddate']
-            status = request.form['status']
-            description = request.form['description']
-            
-            if sd <= 10:
-                my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
-                        enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
-                db.session.add(my_strat)
-                db.session.commit()   
-                flash("Strategy Added Successfully", category="notlimit")
-            else:
-                db.session.commit()
-                flash("You have exceeded to the number of inputted strategy records!", category="limit")
-            
-            return redirect(url_for('auth.strat'))
-            return render_template(sd=sd)
+			if request.method == 'POST':
+				name = request.form['name']
+				act = request.form['act']
+				platform = request.form['platform']
+				startdate = request.form['startdate']
+				enddate = request.form['enddate']
+				status = request.form['status']
+				description = request.form['description']
+				
+				if sd <= 10:
+					my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
+							enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
+					db.session.add(my_strat)
+					db.session.commit()   
+					flash("Strategy Added Successfully", category="notlimit")
+				else:
+					db.session.commit()
+					flash("You have exceeded to the number of inputted strategy records!", category="limit")
+				
+				return redirect(url_for('auth.strat'))
+				return render_template(sd=sd)
             
 @auth.route('/strategies/update/<id>', methods = ['GET', 'POST'])
 @login_required
@@ -725,47 +730,47 @@ def updatestrat(id):
             db.session.commit()
             flash("Strategy Updated Successfully", category="notlimit")
             return redirect(url_for('auth.strat'))
-
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-        if request.method == 'POST':
-            my_strat = Strategies.query.get(request.form.get('id'))
-            my_strat.name = request.form['name']
-            my_strat.act = request.form['act']
-            my_strat.platform = request.form['platform']
-            my_strat.startdate = request.form['startdate']
-            my_strat.enddate = request.form['enddate']
-            my_strat.status = request.form['status']
-            my_strat.description = request.form['description']
-            
-            db.session.commit()
-            flash("Strategy Updated Successfully", category="notlimit")
-            return redirect(url_for('auth.strat')) 
-    else:
-        statc = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "complete") \
-            .filter(User.id==current_user.id).count()
-        print(statc)
-        statss = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "ongoing") \
-            .filter(User.id==current_user.id).count()
-        print(statss)
-        if request.method == 'POST':
-            my_strat = Otherstrategies.query.get(request.form.get('id'))
-            my_strat.name = request.form['name']
-            my_strat.act = request.form['act']
-            my_strat.platform = request.form['platform']
-            my_strat.startdate = request.form['startdate']
-            my_strat.enddate = request.form['enddate']
-            my_strat.status = request.form['status']
-            my_strat.description = request.form['description']
-            
-            db.session.commit()
-            flash("Strategy Updated Successfully", category="notlimit")
-            return redirect(url_for('auth.strat'))
+	elif current_user.explore == "customer" or current_user.explore == "empty" :
+		if current_user.cname == "Kalibo Cable":
+			if request.method == 'POST':
+				my_strat = Strategies.query.get(request.form.get('id'))
+				my_strat.name = request.form['name']
+				my_strat.act = request.form['act']
+				my_strat.platform = request.form['platform']
+				my_strat.startdate = request.form['startdate']
+				my_strat.enddate = request.form['enddate']
+				my_strat.status = request.form['status']
+				my_strat.description = request.form['description']
+				
+				db.session.commit()
+				flash("Strategy Updated Successfully", category="notlimit")
+				return redirect(url_for('auth.strat')) 
+			else:
+				statc = Otherstrategies \
+					.query \
+					.join(User) \
+					.filter(Otherstrategies.status == "complete") \
+					.filter(User.id==current_user.id).count()
+				print(statc)
+				statss = Otherstrategies \
+					.query \
+					.join(User) \
+					.filter(Otherstrategies.status == "ongoing") \
+					.filter(User.id==current_user.id).count()
+				print(statss)
+				if request.method == 'POST':
+					my_strat = Otherstrategies.query.get(request.form.get('id'))
+					my_strat.name = request.form['name']
+					my_strat.act = request.form['act']
+					my_strat.platform = request.form['platform']
+					my_strat.startdate = request.form['startdate']
+					my_strat.enddate = request.form['enddate']
+					my_strat.status = request.form['status']
+					my_strat.description = request.form['description']
+					
+					db.session.commit()
+					flash("Strategy Updated Successfully", category="notlimit")
+					return redirect(url_for('auth.strat'))
  
 
 #This route is for deleting our strat
@@ -779,20 +784,21 @@ def deletestrat(id):
         flash("Strategy Deleted Successfully")
         
         return redirect(url_for('auth.strat'))
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-        my_data = Strategies.query.get(id)
-        db.session.delete(my_data)
-        db.session.commit()
-        flash("Strategy Deleted Successfully")
-        
-        return redirect(url_for('auth.strat'))
-    else:
-        my_data = Otherstrategies.query.get(id)
-        db.session.delete(my_data)
-        db.session.commit()
-        flash("Strategy Deleted Successfully")
-        
-        return redirect(url_for('auth.strat'))
+	elif current_user.explore == "customer":
+		if current_user.cname == "Kalibo Cable":
+			my_data = Strategies.query.get(id)
+			db.session.delete(my_data)
+			db.session.commit()
+			flash("Strategy Deleted Successfully")
+			
+			return redirect(url_for('auth.strat'))
+		else:
+			my_data = Otherstrategies.query.get(id)
+			db.session.delete(my_data)
+			db.session.commit()
+			flash("Strategy Deleted Successfully")
+			
+			return redirect(url_for('auth.strat'))
 
 #This route is for deleting our strategy in checkbox
 @auth.route('/strategies/delete-selected', methods = ['GET', 'POST'])
@@ -807,24 +813,25 @@ def deletestratcheck():
             flash("Strategy Deleted Successfully")
                      
             return redirect(url_for('auth.strat'))
-    if current_user.cname.lower() == kfull.lower() or current_user.cname.lower() == knoc.lower() or current_user.cname.lower() == knob.lower() or current_user.cname.lower() == knop.lower() or current_user.cname.lower() == knoinc.lower() or current_user.cname.lower() == knonet.lower() or current_user.cname.lower() == knotel.lower() or current_user.cname.lower() == knocable.lower() or current_user.cname.lower() == abbrenoinc.lower():
-        if request.method == "POST":
-            for getid in request.form.getlist("mycheckbox"):
-                print(getid)
-                db.session.query(Strategies).filter(Strategies.id ==getid).delete()
-            db.session.commit()
-            flash("Strategy Deleted Successfully")
-                     
-            return redirect(url_for('auth.strat'))
-    else:
-        if request.method == "POST":
-            for getid in request.form.getlist("mycheckbox"):
-                print(getid)
-                db.session.query(Otherstrategies).filter(Otherstrategies.id ==getid).delete()
-            db.session.commit()
-            flash("Strategy Deleted Successfully")
-                     
-            return redirect(url_for('auth.strat'))
+	elif current_user.explore == "customer":
+		if current_user.cname == "Kalibo Cable":
+			if request.method == "POST":
+				for getid in request.form.getlist("mycheckbox"):
+					print(getid)
+					db.session.query(Strategies).filter(Strategies.id ==getid).delete()
+				db.session.commit()
+				flash("Strategy Deleted Successfully")
+						 
+				return redirect(url_for('auth.strat'))
+		else:
+			if request.method == "POST":
+				for getid in request.form.getlist("mycheckbox"):
+					print(getid)
+					db.session.query(Otherstrategies).filter(Otherstrategies.id ==getid).delete()
+				db.session.commit()
+				flash("Strategy Deleted Successfully")
+						 
+				return redirect(url_for('auth.strat'))
     
 # End of Strategies
 
