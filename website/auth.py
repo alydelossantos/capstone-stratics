@@ -290,7 +290,9 @@ def insert():
 				reactivation_date = request.form['reactivation_date']
 				churn = request.form['churn']
 				row = Data.query.count()
-				id = row + 1
+				count = Data.query.filter_by(Data.id > row).count()
+				if count > 1:
+					id = row + count
 				datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
 							collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
 							disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
@@ -331,8 +333,8 @@ def insert():
 						db.session.add(sdatas)
 						db.session.commit()   
 						flash("Customer Record Added Successfully", category="notlimit")
-					    return redirect(url_for('auth.custman'))
-                        return render_template(sd=sd)
+					        return redirect(url_for('auth.custman'))
+					        return render_template(sd=sd)
                     else:
 						db.session.commit()
 						flash("You have exceeded to the number of inputted customer records!", category="limit")
