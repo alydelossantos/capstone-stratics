@@ -329,7 +329,6 @@
 						<div class="col-sm-6">
 							<label>Services</label>
 							<select name="services" class="custom-select" value="{{row.services}}">
-								<option value="0">Select Services</option>
 								<option value="Digital HD">Digital HD</option>
 								<option value="Internet with HD">Internet with HD</option>
 								<option value="Internet Only">Internet Only</option>
@@ -345,13 +344,12 @@
 					<div class="form-group row">
 					<div class="col-sm-6">
 							<label>Monthly Payment</label>
-							<input type="text" class="form-control" name="monthly" required="1" value="Php {{row.monthly}}">   
+							<input type="text" class="form-control" name="monthly" required="1" value="{{row.monthly}}">   
 						</div>
 
 					   <div class="col-sm-6">
 							<label>Category</label>
 							<select name="category" class="custom-select" value="{{row.category}}">
-								<option value="0">Select Category</option>
 								<option value="RS">RS</option>
 								<option value="GV">GV</option>
 								<option value="CS">CS</option>
@@ -359,11 +357,10 @@
 						</div>
                                             </div>
 											
-											<div class="form-group row">
+																									<div class="form-group row">
                                                 <div class="col-sm-6">
 													<label>Status</label>
 													<select name="status" class="custom-select" value="{{row.status}}">
-														<option value="0">Select Status</option>
 														<option value="Active">Active</option>
 														<option value="Disconnected">Disconnected</option>
 													  </select>   
@@ -379,7 +376,6 @@
                                                 <div class="col-sm-6">
 													<label>Collector</label>
 													<select name="collector" class="custom-select" value="{{row.collector}}">
-														<option value="0">Select Collector</option>
 														<option value="Kalibo Office">Kalibo Office</option>
 														<option value="Cymore">Cymore</option>
 														<option value="Wilsol">Wilsol</option>
@@ -389,7 +385,7 @@
 												</div>
 												<div class="col-sm-6">
 													<label>Amount Paid</label>
-													<input type="text" class="form-control" name="amount_paid" required="1" value="Php {{row.amount_paid}}">     
+													<input type="text" class="form-control" name="amount_paid" required="1" value="{{row.amount_paid}}">     
 												</div>
 
                                                 
