@@ -90,7 +90,7 @@
 						<input type="radio" name="slider" checked id="sales">
 						<input type="radio" name="slider" id="analytics">
 						<nav>
-						  <label for="sales" class="sales">Sales Reports</label>
+						  <label for="sales" class="sales">Sales and Churn Analytics Reports</label>
 						  <label for="analytics" class="analytics">Churn Analytics</label>
 						  <div class="slider"></div>
 						</nav>
@@ -213,6 +213,26 @@
 						</div>
 					</div>
 					  
+					<div class="container-fluid" style = "padding-bottom: 20px">
+						<div class="row">
+						  <div class="col-sm-4">
+							<div id='chart17'></div>
+						  </div>
+						  <div class="col-sm-8">
+							<div id='chart18'></div>
+						  </div>
+						</div>
+					</div>
+
+					  
+					<div class="container-fluid" style = "padding-bottom: 20px">
+						<div class="row">
+						  <div class="col-sm-12">
+							<div id='chart19'></div>
+						  </div>
+						</div>
+					</div>
+					  
 					  </body>
 					  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 					  <script type='text/javascript'>
@@ -263,6 +283,15 @@
 
 						var graph16 = {{graph16JSON | safe}};
 						Plotly.plot('chart16',graph16,{});
+
+						var graph17 = {{graph17JSON | safe}};
+						Plotly.plot('chart17',graph17,{});
+
+						var graph18 = {{graph18JSON | safe}};
+						Plotly.plot('chart18',graph18,{});
+
+						var graph19 = {{graph19JSON | safe}};
+						Plotly.plot('chart19',graph19,{});
 					  
 					  </script>
 
