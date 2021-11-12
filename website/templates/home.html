@@ -386,32 +386,36 @@
 					  </div>
 					  </div>
 
-					  var graphs1 = {{graphs1JSON | safe}};
-					  Plotly.plot('charts1',graphs1,{});
-					
-					  var graphs2 = {{graphs2JSON | safe}};
-					  Plotly.plot('charts2',graphs2,{});
-					
-					  var graphs3 = {{graphs3JSON | safe}};
-					  Plotly.plot('charts3',graphs3,{});
-					
-					  var graphs4 = {{graphs4JSON | safe}};
-					  Plotly.plot('charts4',graphs4,{});
-					
-					  var graphs5 = {{graphs5JSON | safe}};
-					  Plotly.plot('charts5',graphs5,{});
-					
-					  var graphs6 = {{graphs6JSON | safe}};
-					  Plotly.plot('charts6',graphs6,{});
-					
-					  var graphs7 = {{graphs7JSON | safe}};
-					  Plotly.plot('charts7',graphs7,{});
-					
-					  var graphs8 = {{graphs8JSON | safe}};
-					  Plotly.plot('charts8',graphs8,{});
-					
-					  var graphs9 = {{graphs9JSON | safe}};
-					  Plotly.plot('charts9',graphs9,{});					
+					  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+					  <script type='text/javascript'>
+
+						var graphs1 = {{graphs1JSON | safe}};
+						Plotly.plot('charts1',graphs1,{});
+						
+						var graphs2 = {{graphs2JSON | safe}};
+						Plotly.plot('charts2',graphs2,{});
+						
+						var graphs3 = {{graphs3JSON | safe}};
+						Plotly.plot('charts3',graphs3,{});
+						
+						var graphs4 = {{graphs4JSON | safe}};
+						Plotly.plot('charts4',graphs4,{});
+						
+						var graphs5 = {{graphs5JSON | safe}};
+						Plotly.plot('charts5',graphs5,{});
+						
+						var graphs6 = {{graphs6JSON | safe}};
+						Plotly.plot('charts6',graphs6,{});
+						
+						var graphs7 = {{graphs7JSON | safe}};
+						Plotly.plot('charts7',graphs7,{});
+						
+						var graphs8 = {{graphs8JSON | safe}};
+						Plotly.plot('charts8',graphs8,{});
+						
+						var graphs9 = {{graphs9JSON | safe}};
+						Plotly.plot('charts9',graphs9,{});
+					  </script>				
 					
 			{% else %}
 			<!-- For Free Users -->
