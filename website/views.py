@@ -516,7 +516,7 @@ def home():
                             plot_bgcolor = "white",
                             paper_bgcolor = "white",))
                 fig6churn = go.Figure(data = data,layout = layout)
-                graph1JSON = json.dumps(fig6churn, cls=plotly.utils.PlotlyJSONEncoder)
+                graph25JSON = json.dumps(fig6churn, cls=plotly.utils.PlotlyJSONEncoder)
 
 
                 # Churn Rate by Services
@@ -541,7 +541,7 @@ def home():
                 )
 
                 fig7services = go.Figure(data=plot_data, layout=layout)
-                graph2JSON = json.dumps(fig7services, cls=plotly.utils.PlotlyJSONEncoder)
+                graph26JSON = json.dumps(fig7services, cls=plotly.utils.PlotlyJSONEncoder)
 
 
                 # Churn Rate by Zone
@@ -566,7 +566,7 @@ def home():
                 )
 
                 fig8zone = go.Figure(data=plot_data, layout=layout)
-                graph3JSON = json.dumps(fig8zone, cls=plotly.utils.PlotlyJSONEncoder)
+                graph27JSON = json.dumps(fig8zone, cls=plotly.utils.PlotlyJSONEncoder)
 
                 # Churn Rate by Category
                 plot_by_contract = df.groupby('category').churn.mean().reset_index()
@@ -590,7 +590,7 @@ def home():
                 )
 
                 fig9contract = go.Figure(data=plot_data, layout=layout)
-                graph4JSON = json.dumps(fig9contract, cls=plotly.utils.PlotlyJSONEncoder)
+                graph28JSON = json.dumps(fig9contract, cls=plotly.utils.PlotlyJSONEncoder)
 
 
                 current_user.dash = "full"
@@ -605,10 +605,10 @@ def home():
                     graph23JSON=graph23JSON,
                     graph24JSON=graph24JSON,
                      # For Kalibo Churn
-                    graph1JSON=graph1JSON,
-                    graph2JSON=graph2JSON,
-                    graph3SON=graph3JSON,
-                    graph4JSON=graph4JSON,active=active, disconnected=disconnected
+                    graph25JSON=graph25JSON,
+                    graph26JSON=graph26JSON,
+                    graph27SON=graph28JSON,
+                    graph28JSON=graph28JSON,active=active, disconnected=disconnected
                     )
             elif db.session.query(Data).count() < 3 and db.session.query(Data).count() >= 1 :
                 flash("Records must contain atleast 3 rows.", category="error")
@@ -670,7 +670,7 @@ def home():
                             plot_bgcolor = "white",
                             paper_bgcolor = "white",))
                 fig2 = go.Figure(data = data,layout = layout)
-                graph2JSON = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
+                graph2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
 
                 # Histogram - Services
                 # defining data
@@ -681,7 +681,7 @@ def home():
                 layout = go.Layout(title="Services Distribution")
                 # defining figure and plotting
                 fig3 = go.Figure(data = data,layout = layout)
-                graph3JSON = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
+                graph3 = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
 
                 # Histogram - Category 
                 # defining data
