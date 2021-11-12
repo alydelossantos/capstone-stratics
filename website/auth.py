@@ -577,7 +577,7 @@ def delete_task(task_id):
 def strat():
     if current_user.explore == "customer" or current_user.explore == "empty":
         if current_user.cname == "Kalibo Cable":
-			statc = Strategies \
+            statc = Strategies \
                 .query \
                 .filter(Strategies.status == "complete").count()
 
@@ -653,65 +653,65 @@ def newstrat():
             
             return redirect(url_for('auth.strat'))
 			
-	elif current_user.explore == "sample" or current_user.explore == "empty":
-		if current_user.cname = "Kalibo Cable":
-			if request.method == 'POST':
-				name = request.form['name']
-				act = request.form['act']
-				platform = request.form['platform']
-				startdate = request.form['startdate']
-				enddate = request.form['enddate']
-				status = request.form['status']
-				description = request.form['description']
-				row = Strategies.query.count()
-				id = row + 1
-				my_strat = Strategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
-							enddate=enddate, status=status, description=description)
-				db.session.add(my_strat)
-				db.session.commit() 
+    elif current_user.explore == "sample" or current_user.explore == "empty":
+        if current_user.cname == "Kalibo Cable":
+            if request.method == 'POST':
+                name = request.form['name']
+                act = request.form['act']
+                platform = request.form['platform']
+                startdate = request.form['startdate']
+                enddate = request.form['enddate']
+                status = request.form['status']
+                description = request.form['description']
+                row = Strategies.query.count()
+                id = row + 1
+                my_strat = Strategies(id=id, name=name, act=act, platform=platform, startdate=startdate, 
+                            enddate=enddate, status=status, description=description)
+                db.session.add(my_strat)
+                db.session.commit() 
+                
+                flash("Strategy Added Successfully")
 				
-				flash("Strategy Added Successfully")
-				
-				return redirect(url_for('auth.strat'))
-		else:
-			sd = Otherstrategies \
+                return redirect(url_for('auth.strat'))
+        else:
+            sd = Otherstrategies \
 				.query \
 				.join(User) \
 				.filter(User.id==current_user.id).count()
 
-			statc = Otherstrategies \
+            statc = Otherstrategies \
 				.query \
 				.join(User) \
 				.filter(Otherstrategies.status == "complete") \
 				.filter(User.id==current_user.id).count()
 
-			statss = Otherstrategies \
+            statss = Otherstrategies \
 				.query \
 				.join(User) \
 				.filter(Otherstrategies.status == "ongoing") \
 				.filter(User.id==current_user.id).count()
 
-			if request.method == 'POST':
-				name = request.form['name']
-				act = request.form['act']
-				platform = request.form['platform']
-				startdate = request.form['startdate']
-				enddate = request.form['enddate']
-				status = request.form['status']
-				description = request.form['description']
+            if request.method == 'POST':
+                name = request.form['name']
+                act = request.form['act']
+                platform = request.form['platform']
+                startdate = request.form['startdate']
+                enddate = request.form['enddate']
+                status = request.form['status']
+                description = request.form['description']
 				
-				if sd <= 10:
-					my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
-							enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
-					db.session.add(my_strat)
-					db.session.commit()   
-					flash("Strategy Added Successfully", category="notlimit")
-				else:
-					db.session.commit()
-					flash("You have exceeded to the number of inputted strategy records!", category="limit")
+                if sd <= 10:
+                    my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
+                            enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
+                    db.session.add(my_strat)
+                    db.session.commit()   
+                    flash("Strategy Added Successfully", category="notlimit")
+                else:
+                    db.session.commit()
+                    flash("You have exceeded to the number of inputted strategy records!", category="limit")
 				
-				return redirect(url_for('auth.strat'))
-				return render_template(sd=sd)
+                return redirect(url_for('auth.strat'))
+                return render_template(sd=sd)
             
 @auth.route('/strategies/update/<id>', methods = ['GET', 'POST'])
 @login_required
@@ -784,21 +784,21 @@ def deletestrat(id):
         flash("Strategy Deleted Successfully")
         
         return redirect(url_for('auth.strat'))
-	elif current_user.explore == "customer":
-		if current_user.cname == "Kalibo Cable":
-			my_data = Strategies.query.get(id)
-			db.session.delete(my_data)
-			db.session.commit()
-			flash("Strategy Deleted Successfully")
+    elif current_user.explore == "customer":
+        if current_user.cname == "Kalibo Cable":
+            my_data = Strategies.query.get(id)
+            db.session.delete(my_data)
+            db.session.commit()
+            flash("Strategy Deleted Successfully")
 			
-			return redirect(url_for('auth.strat'))
-		else:
-			my_data = Otherstrategies.query.get(id)
-			db.session.delete(my_data)
-			db.session.commit()
-			flash("Strategy Deleted Successfully")
+            return redirect(url_for('auth.strat'))
+        else:
+            my_data = Otherstrategies.query.get(id)
+            db.session.delete(my_data)
+            db.session.commit()
+            flash("Strategy Deleted Successfully")
 			
-			return redirect(url_for('auth.strat'))
+        return redirect(url_for('auth.strat'))
 
 #This route is for deleting our strategy in checkbox
 @auth.route('/strategies/delete-selected', methods = ['GET', 'POST'])
@@ -813,25 +813,26 @@ def deletestratcheck():
             flash("Strategy Deleted Successfully")
                      
             return redirect(url_for('auth.strat'))
-	elif current_user.explore == "customer":
-		if current_user.cname == "Kalibo Cable":
-			if request.method == "POST":
-				for getid in request.form.getlist("mycheckbox"):
-					print(getid)
-					db.session.query(Strategies).filter(Strategies.id ==getid).delete()
-				db.session.commit()
-				flash("Strategy Deleted Successfully")
-						 
-				return redirect(url_for('auth.strat'))
-		else:
-			if request.method == "POST":
-				for getid in request.form.getlist("mycheckbox"):
-					print(getid)
-					db.session.query(Otherstrategies).filter(Otherstrategies.id ==getid).delete()
-				db.session.commit()
-				flash("Strategy Deleted Successfully")
-						 
-				return redirect(url_for('auth.strat'))
+            
+    elif current_user.explore == "customer":
+        if current_user.cname == "Kalibo Cable":
+            if request.method == "POST":
+                for getid in request.form.getlist("mycheckbox"):
+                    print(getid)
+                    db.session.query(Strategies).filter(Strategies.id ==getid).delete()
+                db.session.commit()
+                flash("Strategy Deleted Successfully")
+				
+                return redirect(url_for('auth.strat'))
+        else:
+            if request.method == "POST":
+                for getid in request.form.getlist("mycheckbox"):
+                    print(getid)
+                    db.session.query(Otherstrategies).filter(Otherstrategies.id ==getid).delete()
+                db.session.commit()
+                flash("Strategy Deleted Successfully")
+                            
+                return redirect(url_for('auth.strat'))
     
 # End of Strategies
 
