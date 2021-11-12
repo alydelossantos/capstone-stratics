@@ -333,7 +333,6 @@ def insert():
             subscriber = request.form['subscriber']
             gender = request.form['gender']
             address = request.form['address']
-            collector = request.form['collector']
             province = request.form['province']
             services = request.form['services']
             monthly = request.form['monthly']
@@ -348,7 +347,7 @@ def insert():
             churn = request.form['churn']
             
             if sd <= 10:
-                sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, collector=collector, services=services, monthly=monthly,
+                sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
 						status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
 						disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn, odata_id=current_user.id)
                 db.session.add(sdatas)
