@@ -551,7 +551,7 @@ def home():
                         y=plot_by_payment['churn'],
                     width = [0.8],
                         marker = dict(
-                            color=['#fc636b', '#ffb900', '#6a67ce', '#1aafd0', '#3be8b0, #fc636b', '#ffb900', '#6a67ce', '#1aafd0', '#3be8b0']
+                            color=['#fc636b', '#ffb900', '#6a67ce', '#1aafd0', '#3be8b0', '#fc636b', '#ffb900', '#6a67ce', '#1aafd0', '#3be8b0']
                         )
                     )
                 ]
