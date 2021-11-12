@@ -346,9 +346,9 @@ def insert():
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
 def update(id):
-	if current_user.explore == "customer" or current_user.explore == "empty":
-		if current_user.cname == "Kalibo Cable":
-			if request.method == 'POST':
+    if current_user.explore == "customer" or current_user.explore == "empty":
+        if current_user.cname == "Kalibo Cable":
+            if request.method == 'POST':
                 datas = Data.query.get(request.form.get('id'))
                 datas.account_no = request.form['account_no']
                 datas.subscriber = request.form['subscriber']
