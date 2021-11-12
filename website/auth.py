@@ -289,8 +289,9 @@ def insert():
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
             churn = request.form['churn']
-            
-            datas = Data(account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
+            row = Data.query.count()
+	    id = row + 1
+            datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
 						collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
 						disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
             db.session.add(datas)
