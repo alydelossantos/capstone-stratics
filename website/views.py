@@ -60,9 +60,9 @@ def home():
                     le_count +=1
 
         # Pie Chart
-        from plotly.offline import init_notebook_mode,iplot
-        import plotly.graph_objects as go
-        init_notebook_mode(connected=True)
+        # from plotly.offline import init_notebook_mode,iplot
+        # import plotly.graph_objects as go
+        # init_notebook_mode(connected=True)
 
         #Gender Distribution
         lab = df["gender"].value_counts().keys().tolist()
@@ -399,11 +399,11 @@ def home():
                 conn = cnx.connect()
                 kctn = pd.read_sql_table('data', con=cnx)
 
-                # Pie Chart
-                from plotly.offline import init_notebook_mode,iplot
-                import plotly.graph_objects as go
-                import cufflinks as cf
-                init_notebook_mode(connected=True)
+                # # Pie Chart
+                # from plotly.offline import init_notebook_mode,iplot
+                # import plotly.graph_objects as go
+                # import cufflinks as cf
+                # init_notebook_mode(connected=True)
 
                 # Check for missing values
                 kctn.isna().any()
