@@ -270,75 +270,77 @@ def custman():
 @auth.route('/customer-management/insert', methods = ['POST'])
 @login_required
 def insert():
-	if current_user.explore == "customer" or current_user.explore == "empty":
-		if current_user.cname == "Kalibo Cable":
-			if request.method == 'POST':
-				account_no = request.form['account_no']
-				subscriber = request.form['subscriber']
-				address = request.form['address']
-				zone = request.form['zone']
-				services = request.form['services']
-				monthly = request.form['monthly']
-				collector = request.form['collector']
-				status = request.form['status']
-				amount_paid = request.form['amount_paid']
-				ref_no = request.form['ref_no']
-				date_paid = request.form['date_paid']
-				category = request.form['category']
-				activation_date = request.form['activation_date']
-				disconnection_date = request.form['disconnection_date']
-				reactivation_date = request.form['reactivation_date']
-				churn = request.form['churn']
-				row = Data.query.count()
-				id = row + 1
-				datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
-							collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
-							disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
-				db.session.add(datas)
-				db.session.commit()
-				
-				flash("Customer Record Added Successfully")
-				return redirect(url_for('auth.custman'))
-    
-			else:
-				sd = Otherdata \
-					.query \
-					.join(User) \
-					.filter(User.id==current_user.id).count()
+    if current_user.explore == "customer" or current_user.explore == "empty":
+        if current_user.cname == "Kalibo Cable":
+            if request.method == 'POST':
+                account_no = request.form['account_no']
+                subscriber = request.form['subscriber']
+                address = request.form['address']
+                zone = request.form['zone']
+                services = request.form['services']
+                monthly = request.form['monthly']
+                collector = request.form['collector']
+                status = request.form['status']
+                amount_paid = request.form['amount_paid']
+                ref_no = request.form['ref_no']
+                date_paid = request.form['date_paid']
+                category = request.form['category']
+                activation_date = request.form['activation_date']
+                disconnection_date = request.form['disconnection_date']
+                reactivation_date = request.form['reactivation_date']
+                churn = request.form['churn']
+                row = Data.query.count()
+                count = Data.query.filter(Data.id >= row).count()
+                if count >= 1:
+                    id = row + count
+                datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
+                            collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+                            disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
+                db.session.add(datas)
+                db.session.commit()
+                
+                flash("Customer Record Added Successfully")
+                return redirect(url_for('auth.custman'))
 
-				if request.method == 'POST':
-					account_no = request.form['account_no']
-					subscriber = request.form['subscriber']
-					gender = request.form['gender']
-					address = request.form['address']
-					province = request.form['province']
-					services = request.form['services']
-					monthly = request.form['monthly']
-					status = request.form['status']
-					amount_paid = request.form['amount_paid']
-					ref_no = request.form['ref_no']
-					date_paid = request.form['date_paid']
-					category = request.form['category']
-					activation_date = request.form['activation_date']
-					disconnection_date = request.form['disconnection_date']
-					reactivation_date = request.form['reactivation_date']
-					churn = request.form['churn']
-					
-					if sd <= 10:
-						sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
-								 status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
-								 disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn, odata_id=current_user.id)
-						db.session.add(sdatas)
-						db.session.commit()   
-						flash("Customer Record Added Successfully", category="notlimit")
-					    return redirect(url_for('auth.custman'))
+            else:
+                sd = Otherdata \
+                    .query \
+                    .join(User) \
+                    .filter(User.id==current_user.id).count()
+                
+                if request.method == 'POST':
+                    account_no = request.form['account_no']
+                    subscriber = request.form['subscriber']
+                    gender = request.form['gender']
+                    address = request.form['address']
+                    province = request.form['province']
+                    services = request.form['services']
+                    monthly = request.form['monthly']
+                    status = request.form['status']
+                    amount_paid = request.form['amount_paid']
+                    ref_no = request.form['ref_no']
+                    date_paid = request.form['date_paid']
+                    category = request.form['category']
+                    activation_date = request.form['activation_date']
+                    disconnection_date = request.form['disconnection_date']
+                    reactivation_date = request.form['reactivation_date']
+                    churn = request.form['churn']
+                    
+                    if sd <= 10:
+                        sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
+                                    status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+                                    disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn, odata_id=current_user.id)
+                        db.session.add(sdatas)
+                        db.session.commit()
+                        flash("Customer Record Added Successfully", category="notlimit")
+                        return redirect(url_for('auth.custman'))
                         return render_template(sd=sd)
                     else:
-						db.session.commit()
-						flash("You have exceeded to the number of inputted customer records!", category="limit")
-					
-					return redirect(url_for('auth.custman'))
-					return render_template(sd=sd)
+                        db.session.commit()
+                        flash("You have exceeded to the number of inputted customer records!", category="limit")
+                    
+                    return redirect(url_for('auth.custman'))
+                    return render_template(sd=sd)
                 
 
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
