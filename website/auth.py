@@ -691,7 +691,8 @@ def newstrat():
             count = Strategies.query.filter(Strategies.id >= row).count()
             if count >= 1:
                 ssid = row + count
-            my_strat = Strategies(id=ssid,name=name, act=act, platform=platform, startdate=startdate, 
+                my_strat = Strategies(ssid=ssid)
+            my_strat = Strategies(name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
             db.session.commit() 
@@ -699,7 +700,7 @@ def newstrat():
             flash("Strategy Added Successfully")
             
             return redirect(url_for('auth.strat'))
-			
+		
     else:
         sd = Otherstrategies \
             .query \
