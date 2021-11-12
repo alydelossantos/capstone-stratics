@@ -349,7 +349,7 @@ def update(id):
 	if current_user.explore == "customer" or current_user.explore == "empty":
 		if current_user.cname == "Kalibo Cable":
 			if request.method == 'POST':
-				datas = Data.query.get(request.form.get('id'))
+			    datas = Data.query.get(request.form.get('id'))
                 datas.account_no = request.form['account_no']
                 datas.subscriber = request.form['subscriber']
                 datas.address = request.form['address']
@@ -366,31 +366,30 @@ def update(id):
                 datas.disconnection_date = request.form['disconnection_date']
                 datas.reactivation_date = request.form['reactivation_date']
                 datas.churn = request.form['churn']
-				db.session.commit()
-				
-				flash("Customer Record Updated Successfully")
-		 
-				return redirect(url_for('auth.custman'))
-		else:
-			if request.method == 'POST':
-				odatas = Otherdata.query.get(request.form.get('id'))
-				odatas.services = request.form['services']
-				odatas.monthly = request.form['monthly']
-				odatas.collector = request.form['collector']
-				odatas.status = request.form['status']
-				odatas.amount_paid = request.form['amount_paid']
-				odatas.date_paid = request.form['date_paid']
-				odatas.category = request.form['category']
-				odatas.activation_date = request.form['activation_date']
-				odatas.disconnection_date = request.form['disconnection_date']
-				odatas.reactivation_date = request.form['reactivation_date']
-				odatas.churn = request.form['churn']
-				
-				db.session.commit()
-				
-				flash("Customer Record Updated Successfully")
-		 
-				return redirect(url_for('auth.custman'))
+                db.session.commit()
+                
+                flash("Customer Record Updated Successfully")
+                
+                return redirect(url_for('auth.custman'))
+
+        else:
+            if request.method == 'POST':
+                    odatas = Otherdata.query.get(request.form.get('id'))
+                    odatas.services = request.form['services']
+                    odatas.monthly = request.form['monthly']
+                    odatas.collector = request.form['collector']
+                    odatas.status = request.form['status']
+                    odatas.amount_paid = request.form['amount_paid']
+                    odatas.date_paid = request.form['date_paid']
+                    odatas.category = request.form['category']
+                    odatas.activation_date = request.form['activation_date']
+                    odatas.disconnection_date = request.form['disconnection_date']
+                    odatas.reactivation_date = request.form['reactivation_date']
+                    odatas.churn = request.form['churn']
+                    db.session.commit()
+                    
+                    flash("Customer Record Updated Successfully")
+                    return redirect(url_for('auth.custman'))
 
 #This route is for deleting our customer
 @auth.route('/customer-management/delete/<id>/', methods = ['GET', 'POST'])
