@@ -290,11 +290,7 @@ def insert():
             reactivation_date = request.form['reactivation_date']
             churn = request.form['churn']
             row = Data.query.count()
-<<<<<<< HEAD
-	        id = row + 1
-=======
-	    	id = row + 1
->>>>>>> 59ccd14a4cd2733c9f88868f9fb36814e7919cd7
+            id = row + 1
             datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
 						collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
 						disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
