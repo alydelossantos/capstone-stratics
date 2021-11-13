@@ -97,6 +97,7 @@ def signin():
         user = User.query.filter_by(email=email).first()
         if user:
             if user.password == password:
+                '''
                 if user.user_type == "user":
                     if user.email_confirmed == True:
                         if user.cname.lower() == kfull.lower() or user.cname.lower() == knoc.lower() or user.cname.lower() == knob.lower() or user.cname.lower() == knop.lower() or user.cname.lower() == knoinc.lower() or user.cname.lower() == knonet.lower() or user.cname.lower() == knotel.lower() or user.cname.lower() == knocable.lower() or user.cname.lower() == abbrenoinc.lower():
@@ -115,7 +116,12 @@ def signin():
                     else:
                       flash("Please confirm your account!", category="error")
                 else:
-                    flash("You do not have an access to this webpage.", category="error")
+                    flash("You do not have an access to this webpage.", category="error")'''
+                login_user(user, remember=True)
+                user.user_status = True
+                db.session.add(user)
+                db.session.commit()
+                return redirect(url_for("views.home"))
             else:
                 flash("Password Incorrect. Please try again", category="error")
         else:
@@ -176,9 +182,12 @@ def signup():
             new_user = User(fname=fname, lname=lname, uname=uname, email=email, cname=cname, password=password, user_type=user_type)
             db.session.add(new_user)
             db.session.commit()
+            return redirect(url_for("auth.signin"))
+            '''
             send_confirmation_email(new_user.email)
             flash("Thank you for registering! Please check your email to confirm your account.", category="success")
             return redirect(url_for("auth.signin"))
+            '''
     return render_template("signup.html", user= current_user)
  
 def send_email(subject, recipients, html_body):
