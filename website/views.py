@@ -40,11 +40,12 @@ abbrenoinc = "KCTN"
 @views.route('/home', methods=["GET", "POST"])
 @login_required
 def home():
+    '''
+    cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
+    conn = cnx.connect()
     if current_user.explore == "sample":
         # avg = db.session.query(func.avg(Sampledata.MonthlyCharges).label('average'))
         total = db.session.query(Sampledata).count()
-        cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
-        conn = cnx.connect()
         df = pd.read_sql_table('sampledata', con=cnx)
 
         # Label Encoder
@@ -400,8 +401,6 @@ def home():
                 .query \
                 .filter(Data.status == "Disconnected").count()
             if db.session.query(Data).count() >=3 :
-                cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
-                conn = cnx.connect()
                 kctn = pd.read_sql_table('data', con=cnx)
 
                 # # Pie Chart
@@ -634,8 +633,6 @@ def home():
             disconnected = Otherdata \
                 .query \
                 .filter(Otherdata.status == "Disconnected").count()
-            cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
-            conn = cnx.connect()
             df = pd.read_sql_table('otherdata', con=cnx)
             dataf = df.loc[df['odata_id'] == current_user.id]
             row_count = dataf.index
@@ -838,7 +835,8 @@ def home():
                 db.session.commit()
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
-    elif current_user.explore == "empty":
+                '''
+    if current_user.explore == "sample":
 
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("home.html", user= current_user, image_file=image_file)
