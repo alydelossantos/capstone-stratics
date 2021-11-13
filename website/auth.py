@@ -308,10 +308,6 @@ def insert():
                 id = row + count
                 datas = Data(id=id)
 
-            elif count < 1:
-                id = 1
-                datas = Data(id=id)
-
             datas = Data(account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
 					collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
 					disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
