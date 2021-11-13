@@ -41,7 +41,7 @@ abbrenoinc = "KCTN"
 @login_required
 def home():
     if current_user.explore == "sample":
-        avg = db.session.query(Sampledata).filter_by(Sampledata.MonthlyCharges > 0).avg()
+        avg = db.session.query(Sampledata).filter_by(Sampledata.MonthlyCharges).avg()
         total = db.session.query(Sampledata).count()
         cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
         conn = cnx.connect()
