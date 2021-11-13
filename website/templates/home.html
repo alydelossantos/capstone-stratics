@@ -101,8 +101,8 @@
 					    <div class="row">
 						<div class="col-md-3 col-lg-4">
 						    <div class="statistic__item statistic__item--blue">
-							<h2 class="number">10,368</h2>
-							<span class="desc">average earnings</span>
+							<h2 class="number">{{total}}</h2>
+							<span class="desc">total no. of subscribers</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-account-o"></i>
 							</div>
@@ -110,8 +110,8 @@
 						</div>
 						<div class="col-md-6 col-lg-4">
 						    <div class="statistic__item statistic__item--green">
-							<h2 class="number">388,688</h2>
-							<span class="desc">subscribers gained</span>
+							<h2 class="number">{{active}}</h2>
+							<span class="desc">active subscribers</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-shopping-cart"></i>
 							</div>
@@ -119,8 +119,8 @@
 						</div>
 						<div class="col-md-6 col-lg-4">
 						    <div class="statistic__item statistic__item--red">
-							<h2 class="number">$1,060,386</h2>
-							<span class="desc">subscribers loss</span>
+							<h2 class="number">{{disconnected}}</h2>
+							<span class="desc">disconnected subscribers</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-money"></i>
 							</div>
@@ -305,8 +305,8 @@
 					    <div class="row">
 						<div class="col-md-3 col-lg-4">
 						    <div class="statistic__item statistic__item--blue">
-							<h2 class="number">10,368</h2>
-							<span class="desc">average earnings</span>
+							<h2 class="number">{{total}}</h2>
+							<span class="desc">total no. of subscribers</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-account-o"></i>
 							</div>
@@ -315,7 +315,7 @@
 						<div class="col-md-6 col-lg-4">
 						    <div class="statistic__item statistic__item--green">
 							<h2 class="number">{{active}}</h2>
-							<span class="desc">active</span>
+							<span class="desc">active subscribers</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-shopping-cart"></i>
 							</div>
@@ -324,7 +324,7 @@
 						<div class="col-md-6 col-lg-4">
 						    <div class="statistic__item statistic__item--red">
 							<h2 class="number">{{disconnected}}</h2>
-							<span class="desc">disconnected</span>
+							<span class="desc">disconnected subscribers</span>
 							<div class="icon">
 							    <i class="zmdi zmdi-money"></i>
 							</div>
@@ -419,7 +419,42 @@
 					
 			{% else %}
 			<!-- For Free Users -->
-
+			<!-- STATISTIC -->
+				      <section class="statistic statistic2">
+					<div class="container-fluid">
+					    <div class="row">
+						<div class="col-md-3 col-lg-4">
+						    <div class="statistic__item statistic__item--blue">
+							<h2 class="number">{{total}}</h2>
+							<span class="desc">total no. of subscribers</span>
+							<div class="icon">
+							    <i class="zmdi zmdi-account-o"></i>
+							</div>
+						    </div>
+						</div>
+						<div class="col-md-6 col-lg-4">
+						    <div class="statistic__item statistic__item--green">
+							<h2 class="number">{{active}}</h2>
+							<span class="desc">active subscribers</span>
+							<div class="icon">
+							    <i class="zmdi zmdi-shopping-cart"></i>
+							</div>
+						    </div>
+						</div>
+						<div class="col-md-6 col-lg-4">
+						    <div class="statistic__item statistic__item--red">
+							<h2 class="number">{{disconnected}}</h2>
+							<span class="desc">disconnected subscribers</span>
+							<div class="icon">
+							    <i class="zmdi zmdi-money"></i>
+							</div>
+						    </div>
+						</div>
+					    </div>
+					</div>
+				    </section>
+				    <!-- END STATISTIC-->
+		      
 			<div class="container-fluid" style = "padding-bottom: 20px">
 				<div class="row">
 				<div class="col-sm-4">
