@@ -577,33 +577,33 @@
                   </div>
 
                   <div class="modal-body">
-				           <form action="/home/explore-dataset" method="POST">
+				   <form action="/home/explore-dataset" method="POST">
                     <div class="form-group row">
                       <div class="row-fluid">
                         <div class="pricing-table row-fluid text-center">
                           <div class="span4">
                             <div class="plan">
-                              <button class="plan-action">
+                              <button class="plan-action" type="submit" value="customer" name="explore">
                                 <img src="{{url_for('static', filename='images/explore-1.svg')}}" alt="customer">
-                              </button>
-                              <button class="plan-name"><input type="submit" value="customer" name="explore">
-                              <!--  <h2>Customer Management</h2> -->
-                              </button>
+                              <div class="plan-name">
+							  Customer Dataset
+                              </div>
+							  </button>
                             </div>
                           </div>
                         
                           <div class="span4">
                             <div class="plan">
-                              <button class="plan-action">
+                              <button class="plan-action" type="submit" value="sample" name="explore">
                                 <img src="{{url_for('static', filename='images/explore.svg')}}" alt="sample">
-                              </button>
-                              <button class="plan-name"><input type="submit" value="sample" name="explore">
-                              <!--  <h2>Sample<br>Data</h2> -->
-                              </button>
-                            </div>    
-                           </div>
+                              <div class="plan-name">
+							 Sample Dataset
+                              </div>
+							  </button>
+                            </div>
+                          </div>
                         </form>
-					            </div>
+					  </div>
                     </div>
                   </div>
                 </div>
@@ -615,8 +615,8 @@
               </div>
             </div>
 
-
           <!-- END OF EXPLORE DATASET MODAL -->
+		
 		
           <!-- EDIT DASHBOARD MODAL -->
 
