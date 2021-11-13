@@ -566,7 +566,7 @@
 					
             <!-- END OF DASHBOARD CONTAINER -->
     
-            <!-- EXPLORE DATASET MODAL -->
+                       <!-- EXPLORE DATASET MODAL -->
 
 			      	
             <div class="modal fade" id="medmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
@@ -577,33 +577,33 @@
                   </div>
 
                   <div class="modal-body">
-				   <form action="/home/explore-dataset" method="POST">
+				           <form action="/home/explore-dataset" method="POST">
                     <div class="form-group row">
                       <div class="row-fluid">
                         <div class="pricing-table row-fluid text-center">
                           <div class="span4">
                             <div class="plan">
-                              <button class="plan-action" type="submit" value="customer" name="explore">
+                              <button class="plan-action">
                                 <img src="{{url_for('static', filename='images/explore-1.svg')}}" alt="customer">
-                              <div class="plan-name">
-							  Customer Dataset
-                              </div>
-							  </button>
+                              </button>
+                              <button class="plan-name"><input type="submit" value="customer" name="explore">
+                              <!--  <h2>Customer Management</h2> -->
+                              </button>
                             </div>
                           </div>
                         
                           <div class="span4">
                             <div class="plan">
-                              <button class="plan-action" type="submit" value="sample" name="explore">
+                              <button class="plan-action">
                                 <img src="{{url_for('static', filename='images/explore.svg')}}" alt="sample">
-                              <div class="plan-name">
-							 Sample Dataset
-                              </div>
-							  </button>
-                            </div>
-                          </div>
+                              </button>
+                              <button class="plan-name"><input type="submit" value="sample" name="explore">
+                              <!--  <h2>Sample<br>Data</h2> -->
+                              </button>
+                            </div>    
+                           </div>
                         </form>
-					  </div>
+					            </div>
                     </div>
                   </div>
                 </div>
@@ -615,9 +615,8 @@
               </div>
             </div>
 
+
           <!-- END OF EXPLORE DATASET MODAL -->
-		
-		
           <!-- EDIT DASHBOARD MODAL -->
 
             <div class="modal fade" id="edmodal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
