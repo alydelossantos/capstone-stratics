@@ -42,7 +42,7 @@ abbrenoinc = "KCTN"
 def home():
     if current_user.explore == "sample":
         avg = db.session.query(Sampledata).filter_by(Sampledata.MonthlyCharges > 0).avg()
-        total = Sampledata.query.count()
+        total = db.session.query(Sampledata).count()
         cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
         conn = cnx.connect()
         df = pd.read_sql_table('sampledata', con=cnx)
@@ -392,7 +392,7 @@ def home():
 
     elif current_user.explore == "customer":
         if current_user.cname == "Kalibo Cable":
-            total = db.session.query.(Data).count()
+            total = db.session.query(Data).count()
             active = Data \
                 .query \
                 .filter(Data.status == "Active").count()
@@ -627,7 +627,7 @@ def home():
                 image_file = url_for('static', filename='images/' + current_user.image_file)
                 return render_template("home.html", user= current_user, image_file=image_file)
         else:
-            total = db.session.query.(Otherdata).count()
+            total = db.session.query(Otherdata).count()
             active = Otherdata \
                 .query \
                 .filter(Otherdata.status == "Active").count()
