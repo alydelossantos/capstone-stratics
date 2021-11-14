@@ -846,7 +846,7 @@ def home():
 @views.route('/churn-analysis', methods=["GET", "POST"])
 @login_required
 def churnanalytics():
-	if current_user.explore == "sample":
+    if current_user.explore == "sample":
         kctn = pd.read_sql_table('sampledata', con=cnx)
         kctn.head()
 
