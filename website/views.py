@@ -23,7 +23,6 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import scipy as sp
 
-from .extensions import db
 views = Blueprint('views', __name__)
 
 kfull = "Kalibo Cable Television Network, Inc."
