@@ -44,10 +44,9 @@ conn = cnx.connect()
 def home():
     if current_user.explore == "sample":
         total = db.session.query(Sampledata).count()
-        ave = db.session.query(db.func.avg(Sampledata.MonthlyCharges).label("average")).all()
         avg = ave()
         avg = 64.76
-        ave = db.session.query(func.avg(Sampledata.(TotalCharges).all()
+        ave = db.session.query(func.avg(Sampledata.(TotalCharges)).all()
         df = pd.read_sql_table('sampledata', con=cnx)
 
 
@@ -930,11 +929,12 @@ def churnanalytics():
 
         for i in range(len(Xnew)):
             kctn['Churn Probability'] = proba[i]
-
-        # Create a Dataframe showcasing probability of Churn of each customer
-        kctn[['account_no','Churn Probability']]
+        
+        pred = kctn[['account_no','Churn Probability']]
+        df_list = pred.values.tolist()
+        
         image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("churn-analysis.html", user= current_user, image_file=image_file)
+        return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=df_list)
     elif current_user.explore == "customer":
         if current_user.cname == "Kalibo Cable":
             kctn = pd.read_sql_table('data', con=cnx)
