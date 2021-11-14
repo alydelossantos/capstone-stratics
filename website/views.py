@@ -933,7 +933,7 @@ def churnanalytics():
         
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd)
-    elif current_user.explore == "customer":
+    '''elif current_user.explore == "customer":
         if current_user.cname == "Kalibo Cable":
             kctn = pd.read_sql_table('data', con=cnx)
             kctn.head()
@@ -1105,7 +1105,7 @@ def churnanalytics():
             # Create a Dataframe showcasing probability of Churn of each customer
             kctn[['account_no','Churn Probability']]
             image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("churn-analysis.html", user= current_user, image_file=image_file)
+            return render_template("churn-analysis.html", user= current_user, image_file=image_file)'''
 
 @views.route('/home/dashboard-name/edit', methods=["GET", "POST"])
 @login_required
