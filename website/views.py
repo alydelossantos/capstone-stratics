@@ -43,7 +43,7 @@ def home():
     conn = cnx.connect()
     if current_user.explore == "sample":
         total = db.session.query(Sampledata).count()
-        ave = db.session.query(func.avg(Sampledata.MonthlyCharges).label("average"))
+        ave = db.session.query(db.func.avg(Sampledata.MonthlyCharges).label("average")).all()
         avg = ave
         df = pd.read_sql_table('sampledata', con=cnx)
 
