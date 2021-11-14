@@ -922,13 +922,13 @@ def churnanalytics():
         pred = logmodel.predict(X_test)
 
         logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
-        print (logmodel_accuracy)
+        print(logmodel_accuracy)
 
         proba = logmodel.predict_proba(Xnew)[:,1]
 
         for i in range(len(Xnew)):
-            kctn['Churn Probability'] = print(proba[i])
-        
+            kctn['Churn Probability'][i] = print(proba[i])
+            
         predi = pd.DataFrame(kctn[['account_no','Churn Probability']])
         predd = predi.values.tolist()
         
