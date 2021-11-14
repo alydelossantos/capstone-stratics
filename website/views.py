@@ -929,11 +929,10 @@ def churnanalytics():
         for i in range(len(Xnew)):
             kctn['Churn Probability'] = proba[i]
         
-        predd = kctn[['account_no','Churn Probability']]
-        df_list = predd.tolist()
+        predd = kctn[['account_no','Churn Probability']].values.tolist()
         
         image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=df_list)
+        return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd)
     elif current_user.explore == "customer":
         if current_user.cname == "Kalibo Cable":
             kctn = pd.read_sql_table('data', con=cnx)
