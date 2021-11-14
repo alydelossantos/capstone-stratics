@@ -930,7 +930,7 @@ def churnanalytics():
         for i in range(len(Xnew)):
             kctn['Churn Probability'] = proba[i]
         
-        pred = kctn[['account_no','Churn Probability']]
+        predd = kctn[['account_no','Churn Probability']]
         df_list = pred.values.tolist()
         
         image_file = url_for('static', filename='images/' + current_user.image_file)
