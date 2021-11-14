@@ -46,7 +46,7 @@
                             <th>Amount Paid</th>
                             <th>Monthly</th>
                             <th>Churn Probability</th>
-                            <th></th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,14 +57,15 @@
 				<td>{{amount_paid}}</td>
 				<td>{{monthly}}</td>
 				<td>{{proba}}</td>
-				<!--
-				<td> {% if row.churn == 0 %}
-					<li style = list-style-type:none; class="block-active">Non Churner</li>
-					{% else %}
-					<li style = list-style-type:none; class="block-inactive">Churner</li>
+				<td>
+				{% if proba <= 0.50 and proba >= 0.0 %}
+					<li style = list-style-type:none; class="block-complete">Active</li>
+					{% elif proba <= 0.69 and proba >= 0.51  %}
+					<li style = list-style-type:none; class="block-ongoing">Declining</li>
+					{% elif proba <= 1 and proba >= 0.70  %}
+					<li style = list-style-type:none; class="block-inactive">Churning</li>
 					{% endif %}
-				</td>-->
-				<td></td>
+					</td>
                         </tr>			
                         {% endfor %}
                     </tbody>
