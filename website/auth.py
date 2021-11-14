@@ -137,6 +137,7 @@ def confirm_email(token):
 # Admin Page
 
 # User Profile
+
 @auth.route('/user-profile/edit',methods = ['GET', 'POST']) # Edit User Profile
 @login_required
 def edit():
@@ -180,6 +181,17 @@ def save_picture(form_picture):
     i.thumbnail(output_size)
     i.save(picture_path)
     return picture_fn
+
+#saving attachments to attachment folder
+def save_file(form_file):
+    print(form_file.filename)
+    _, f_ext = os.path.splitext(form_file.filename)
+    file_fn = _ + f_ext
+    file_path = os.path.join(auth.root_path, 'static/attachments',file_fn)
+    print(file_path,"kkk")
+    form_file.save(file_path)
+    print (file_fn, 'xxx')
+    return file_path
 
 #SEND EMAIL FOR INQUIRIES
 @auth.route('/inquiries/send-email/<id>', methods = ['GET','POST'])
