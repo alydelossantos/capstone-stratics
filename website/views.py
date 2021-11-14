@@ -44,7 +44,7 @@ def home():
     if current_user.explore == "sample":
         total = db.session.query(Sampledata).count()
         ave = db.session.query(func.avg(Sampledata.MonthlyCharges).label("average"))
-        avg = ave.average
+        avg = ave
         df = pd.read_sql_table('sampledata', con=cnx)
 
         # Label Encoder
