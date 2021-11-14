@@ -932,8 +932,8 @@ def churnanalytics():
         for i in range(len(Xnew)):
             kctn['Churn Probability'][i] = proba[i]
             if i <= len(Xnew):
-                predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
-        cust = kctn['account_no'].count()
+                predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']][i].values.tolist()
+        cust = len(Xnew)
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
     image_file = url_for('static', filename='images/' + current_user.image_file)
