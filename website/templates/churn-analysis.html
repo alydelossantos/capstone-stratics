@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-  
-  {% for account_no, proba  in my_list %}
-  <tr>
-    <td>{{ account_no }}</td>
-    <td>{{ proba }}</td>
-  </tr>
+    <table>
+      <th>Account No.</th>
+      <th>Churn Probability</th>
+    {% for account_no, proba  in my_list %}
+    <tr>
+      <td>{{ account_no }}</td>
+      <td>{{ proba }}</td>
+    </tr>
+  </table>
   {% endfor %}
 {% endblock %}
