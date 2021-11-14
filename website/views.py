@@ -36,11 +36,12 @@ knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
 
+cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
+conn = cnx.connect()
+
 @views.route('/home', methods=["GET", "POST"])
 @login_required
 def home():
-    cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
-    conn = cnx.connect()
     if current_user.explore == "sample":
         total = db.session.query(Sampledata).count()
         ave = db.session.query(db.func.avg(Sampledata.MonthlyCharges).label("average")).all()
@@ -841,6 +842,96 @@ def home():
         return render_template("home.html", user= current_user, image_file=image_file)
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("home.html", user= current_user, image_file=image_file)
+
+@views.route('/churn-analysis', methods=["GET", "POST"])
+@login_required
+def churnanalytics():
+    kctn = pd.read_sql_table('data', con=cnx)
+    kctn.head()
+
+    # Convert dates to datetype
+    kctn.activation_date = pd.to_datetime(kctn.activation_date)
+    kctn.disconnection_date = pd.to_datetime(kctn.disconnection_date)
+    kctn.reactivation_date = pd.to_datetime(kctn.reactivation_date)
+    kctn.date_paid = pd.to_datetime(kctn.date_paid)
+
+    kctn['disconnection_date'] = kctn['disconnection_date'].dt.strftime('%m-%d-%Y')
+    kctn['reactivation_date'] = kctn['reactivation_date'].dt.strftime('%m-%d-%Y')
+    kctn['activation_date'] = kctn['activation_date'].dt.strftime('%m-%d-%Y')
+    kctn['date_paid'] = kctn['date_paid'].dt.strftime('%m-%d-%Y')
+
+    # Remove Account Number-Address
+    kctn2 = kctn.iloc[:,3:]
+    # Remove Reference Number
+    del kctn2['ref_no']
+    del kctn2['date_paid']
+    del kctn2['activation_date']
+    del kctn2['disconnection_date']
+    del kctn2['reactivation_date']
+
+    # independent variable - all columns aside from 'Churn'
+    X = kctn2.iloc[:,:-1].values
+    # dependent variable - Churn
+    y = kctn2.iloc[:,7]
+
+    # Convert predictor variables in a binary numeric variable
+    kctn2['status'].replace(to_replace='Active', value=1, inplace=True)
+    kctn2['status'].replace(to_replace='Disconnected', value=0, inplace=True)
+
+    # Converting categorical variables into dummy variables
+    kctn_dummies = pd.get_dummies(kctn2)
+    kctn_dummies.head()
+
+    from sklearn.preprocessing import StandardScaler
+    standardscaler = StandardScaler()
+    columns_for_fit_scaling = ['monthly', 'amount_paid']
+    kctn_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(kctn_dummies[columns_for_fit_scaling])
+
+    # Splitting Data into Train and Test
+    from sklearn.model_selection import train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,  random_state=101)
+
+    print("Number transactions X_train dataset: ", X_train.shape)
+    print("Number transactions X_train dataset: ", y_train.shape)
+    print("Number transactions X_train dataset: ", X_test.shape)
+    print("Number transactions X_train dataset: ", y_test.shape)
+
+    y = kctn_dummies['churn'].values
+    X = kctn_dummies.drop(columns = ['churn'])
+
+    # Scaling all the variables to a range of 0 to 1
+    from sklearn.preprocessing import MinMaxScaler
+    features = X.columns.values
+    scaler = MinMaxScaler(feature_range = (0,1))
+    scaler.fit(X)
+    X = pd.DataFrame(scaler.transform(X))
+    X.columns = features
+
+    from sklearn.model_selection import train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
+
+    # Running logistic regression model
+    from sklearn.linear_model import LogisticRegression
+    import sklearn.metrics as metrics
+    logmodel = LogisticRegression(random_state=50)
+    result = logmodel.fit(X_train, y_train)
+
+    Xnew = X_test.values
+    pred = logmodel.predict(X_test)
+
+    logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
+    print (logmodel_accuracy)
+
+    proba = logmodel.predict_proba(Xnew)[:,1]
+
+    for i in range(len(Xnew)):
+	    kctn['Churn Probability'] = proba[i]
+
+    # Create a Dataframe showcasing probability of Churn of each customer
+    kctn[['account_no','Churn Probability']]
+
+
+    return redirect(url_for('churn-analysis.html'))
 
 
 @views.route('/home/dashboard-name/edit', methods=["GET", "POST"])
