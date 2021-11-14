@@ -44,8 +44,8 @@ conn = cnx.connect()
 def home():
     if current_user.explore == "sample":
         total = db.session.query(Sampledata).count()
-        ave = db.session.query(db.func.avg(Sampledata.MonthlyCharges).label("average")).all()
-        avg = ave
+        avg = 64.76
+        ave = db.session.query(func.avg(Sampledata.TotalCharges).all()
         df = pd.read_sql_table('sampledata', con=cnx)
 
         # Label Encoder
@@ -388,7 +388,7 @@ def home():
         graph18JSON=graph18JSON,
         graph19JSON=graph19JSON,
         total=total,
-        avg=avg,
+        avg=avg,ave=ave,
         )
 
     elif current_user.explore == "customer":
