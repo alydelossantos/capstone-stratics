@@ -467,6 +467,31 @@ def edit():
             return render_template("profile.html", user= current_user, image_file = image_file)
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("edit.html", user= current_user, image_file = image_file)
+# User Profile
+
+@auth.route('/user-profile/edit',methods = ['GET', 'POST']) # Edit User Profile
+@login_required
+def edit():
+        if request.method == 'POST':
+            if request.files['image_file']:
+                picture_file = save_picture(request.files['image_file'])
+                current_user.image_file = picture_file
+            current_user.fname = request.form['fname']
+            current_user.lname = request.form['lname']
+            current_user.cp = request.form['cp']
+            current_user.address = request.form['address']
+            current_user.bday = request.form['bday']
+            current_user.about = request.form['about']
+            current_user.fb = request.form['fb']
+            current_user.ig = request.form['ig']
+            current_user.tw = request.form['tw']
+            current_user.linkedin = request.form['linkedin']
+            db.session.commit()
+            flash("User Profile Updated Successfully")
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("profile.html", user= current_user, image_file = image_file)
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+        return render_template("edit.html", user= current_user, image_file = image_file)
 
 @auth.route('/user-profile',methods = ['GET', 'POST'])
 @login_required
