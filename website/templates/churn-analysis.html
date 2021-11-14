@@ -3,15 +3,6 @@
 {% block content %}
 <html>
 <body>
-    <table>
-      <th>Account No.</th>
-      <th>Churn Probability</th>
-    {% for account_no, proba  in my_list %}
-    <tr>
-      <td>{{ account_no }}</td>
-      <td>{{ proba }}</td>
-    </tr>
-  </table>
 
   <div class="table-responsive table-responsive-data2">
                 <table class="table table-data2" id="mytable">
@@ -24,20 +15,19 @@
                                 </label>
                             </th>
                             <th>Account No.</th>
-                            <th>Subscriber Name</th>
-                            <th>Monthly</th>
-                            <th>Amount Paid</th>
                             <th>Churn Probability</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
+			   <td></td>
                       {% for account_no, proba  in my_list %}
+		    	<tr>
                             <td>{{account_no}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
                             <td>{{proba}}</td>
+			    </tr>
+		    {% endfor %}
+		    	<td></td>
 </table>
 </div>
         <script type = "text/javascript" src ="{{url_for('static', filename = 'js/jquery-3.2.1.min.js')}}"></script>
