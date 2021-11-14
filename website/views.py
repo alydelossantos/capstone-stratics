@@ -847,8 +847,8 @@ def home():
 @views.route('/churn-analysis', methods=["GET", "POST"])
 @login_required
 def churnanalytics():
-    if current_user.explore == "sample":
-        kctn = pd.read_sql_table('sampledata', con=cnx)
+    if current_user.explore == "customer":
+        kctn = pd.read_sql_table('data', con=cnx)
         kctn.head()
 
         # Convert dates to datetype
@@ -929,7 +929,7 @@ def churnanalytics():
         for i in range(len(Xnew)):
             kctn['Churn Probability'] = proba[i]
         
-        predd = kctn[['account_no','Churn Probability']].tolist()
+        predd = kctn[['account_no','Churn Probability']].values.tolist()
         
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd)
