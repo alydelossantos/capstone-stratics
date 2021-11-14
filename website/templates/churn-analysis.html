@@ -20,14 +20,16 @@
                         </tr>
                     </thead>
                     <tbody>
-			   <td></td>
                       {% for account_no, proba  in my_list %}
 		    	<tr>
+				
+			   <td></td>
                             <td>{{account_no}}</td>
                             <td>{{proba}}</td>
+			   <td></td>
 			    </tr>
 		    {% endfor %}
-		    	<td></td>
+			</tbody>
 </table>
 </div>
         <script type = "text/javascript" src ="{{url_for('static', filename = 'js/jquery-3.2.1.min.js')}}"></script>
