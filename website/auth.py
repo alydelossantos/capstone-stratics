@@ -545,7 +545,7 @@ def send():
                 smtp.send_message(msg)
                 Task.query.delete()
                 db.session.commit()
-		flash('Message successfully sent.')
+                flash('Message successfully sent.')
                 return redirect(url_for('auth.send'))
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template('email-marketing.html', tasks=tasks, recepients = recepients, user= current_user, image_file = image_file)
