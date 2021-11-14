@@ -946,6 +946,12 @@ def dashname():
         current_user.dname = request.form['dname']
         db.session.commit()
         return redirect(url_for('views.home'))
+    
+@views.route('/churn-analysis', methods=["GET", "POST"])
+@login_required
+def churn():
+    return render_template("churn_analysis.html", user= current_user)
+
 
 @views.route('/home/explore-dataset', methods=["GET", "POST"])    
 @login_required
