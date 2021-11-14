@@ -24,13 +24,13 @@
 		<body>
 	{% if current_user.explore == "customer" or current_user.explore == "empty" %}
 		<div class="strat-container-main">
-			<h3>Customers</b></h3>
+			<h3>Churn Analysis</b></h3>
 			<div class="strat-stat-container">
 				<div class="strat-row">
 					<div class="strat-column-head">
 					<div class="strat-card-head">
 						<h4>Customers</h4>
-						<p class='card-strat-large primary'>100</p>
+						<p class='card-strat-large primary'>{{cust}}</p>
 					</div>
 					</div>
 				</div>
@@ -46,7 +46,9 @@
                             <th>Amount Paid</th>
                             <th>Monthly</th>
                             <th>Churn Probability</th>
+			    <th>Churn Score</th>
                             <th>Description</th>
+				
                         </tr>
                     </thead>
                     <tbody>
@@ -57,6 +59,15 @@
 				<td>{{amount_paid}}</td>
 				<td>{{monthly}}</td>
 				<td>{{proba}}</td>
+				<td>
+				{% if proba <= 0.50 and proba >= 0.0 %}
+					Low
+					{% elif proba <= 0.69 and proba >= 0.51  %}
+					Medium
+					{% elif proba <= 1 and proba >= 0.70  %}
+					High
+					{% endif %}
+					</td>
 				<td>
 				{% if proba <= 0.50 and proba >= 0.0 %}
 					<li style = list-style-type:none; class="block-complete">Active</li>
