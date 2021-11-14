@@ -927,9 +927,9 @@ def churnanalytics():
         proba = logmodel.predict_proba(Xnew)[:,1]
 
         for i in range(len(Xnew)):
-            kctn['Churn Probability'][i] = proba[i]
+            kctn['Churn Probability'] = proba[i]
         
-        predi = pd.DataFrame(kctn[['account_no','Churn Probability']])
+        predi = pd.DataFrame(kctn[['Churn Probability']])
         predd = predi.values.tolist()
         
         image_file = url_for('static', filename='images/' + current_user.image_file)
