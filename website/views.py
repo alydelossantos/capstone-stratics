@@ -46,7 +46,7 @@ def home():
         total = db.session.query(Sampledata).count()
         avg = ave()
         avg = 64.76
-        ave = db.session.query(func.avg(Sampledata.(TotalCharges)).all()
+        ave = db.session.query(func.avg(Sampledata.TotalCharges)).all()
         df = pd.read_sql_table('sampledata', con=cnx)
 
 
