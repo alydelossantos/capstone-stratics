@@ -45,8 +45,9 @@ def home():
     if current_user.explore == "sample":
         total = db.session.query(Sampledata).count()
         ave = db.session.query(db.func.avg(Sampledata.MonthlyCharges).label("average")).all()
-        avg = ave
+        avg = ave()
         df = pd.read_sql_table('sampledata', con=cnx)
+
 
         # Label Encoder
         from sklearn.preprocessing import LabelEncoder
