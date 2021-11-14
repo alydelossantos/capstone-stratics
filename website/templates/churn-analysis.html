@@ -4,8 +4,9 @@
     <table>
       <th>Account No.</th>
       <th>Churn Probability</th>
-    {% for proba  in my_list %}
+    {% for account_no, proba  in my_list %}
     <tr>
+      <td>{{ account_no }}</td>
       <td>{{ proba }}</td>
     </tr>
   </table>
