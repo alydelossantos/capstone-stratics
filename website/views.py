@@ -43,7 +43,7 @@ def home():
     conn = cnx.connect()
     if current_user.explore == "sample":
         total = db.session.query(Sampledata).count()
-        avg = db.session.query.with_entities(func.avg(Sampledata.MonthlyCharges))
+        avg = db.session.query.(Sampledata).filter(Sampledata.MonthlyCharges).avg()
         df = pd.read_sql_table('sampledata', con=cnx)
 
         # Label Encoder
