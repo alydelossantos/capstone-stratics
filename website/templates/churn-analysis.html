@@ -23,7 +23,133 @@
 		</head>
 		<body>
 	{% if current_user.explore == "customer" or current_user.explore == "empty" %}
+		{% if current_user.cname == "Kalibo Cable" %}
 		<div class="strat-container-main">
+			<h3>Churn Analysis</b></h3>
+			<div class="strat-stat-container">
+				<div class="strat-row">
+					<div class="strat-column-head">
+					<div class="strat-card-head">
+						<h4>Customers</h4>
+						<p class='card-strat-large primary'>{{cust}}</p>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>           
+         
+		<div class="row">
+		<div class="table-responsive table-responsive-data2">
+                <table class="table table-data2" id="mytable">
+                    <thead>
+                        <tr>
+                            <th>Account No.</th>
+                            <th>Amount Paid</th>
+                            <th>Monthly</th>
+                            <th>Churn Probability</th>
+			    <th>Churn Score</th>
+                            <th>Description</th>
+				
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for account_no, amount_paid, monthly, proba in my_list %}
+                        <tr class="tr-shadow">
+
+                            	<td>{{account_no}}</td>
+				<td>{{amount_paid}}</td>
+				<td>{{monthly}}</td>
+				<td>{{proba}}</td>
+				<td>
+				{% if proba <= 0.50 and proba >= 0.0 %}
+					Low
+					{% elif proba <= 0.69 and proba >= 0.51  %}
+					Medium
+					{% elif proba <= 1 and proba >= 0.70  %}
+					High
+					{% endif %}
+					</td>
+				<td>
+				{% if proba <= 0.50 and proba >= 0.0 %}
+					<li style = list-style-type:none; class="block-complete">Active</li>
+					{% elif proba <= 0.69 and proba >= 0.51  %}
+					<li style = list-style-type:none; class="block-ongoing">Declining</li>
+					{% elif proba <= 1 and proba >= 0.70  %}
+					<li style = list-style-type:none; class="block-inactive">Churning</li>
+					{% endif %}
+					</td>
+                        </tr>			
+                        {% endfor %}
+                    </tbody>
+                </table>
+            <!-- END TABLE -->	
+		</div>
+	</div>
+    	{% else %}
+	    		<div class="strat-container-main">
+			<h3>Churn Analysis</b></h3>
+			<div class="strat-stat-container">
+				<div class="strat-row">
+					<div class="strat-column-head">
+					<div class="strat-card-head">
+						<h4>Customers</h4>
+						<p class='card-strat-large primary'>{{cust}}</p>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>           
+         
+		<div class="row">
+		<div class="table-responsive table-responsive-data2">
+                <table class="table table-data2" id="mytable">
+                    <thead>
+                        <tr>
+                            <th>Account No.</th>
+                            <th>Amount Paid</th>
+                            <th>Monthly</th>
+                            <th>Churn Probability</th>
+			    <th>Churn Score</th>
+                            <th>Description</th>
+				
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for account_no, amount_paid, monthly, proba in my_list %}
+                        <tr class="tr-shadow">
+
+                            	<td>{{account_no}}</td>
+				<td>{{amount_paid}}</td>
+				<td>{{monthly}}</td>
+				<td>{{proba}}</td>
+				<td>
+				{% if proba <= 0.50 and proba >= 0.0 %}
+					Low
+					{% elif proba <= 0.69 and proba >= 0.51  %}
+					Medium
+					{% elif proba <= 1 and proba >= 0.70  %}
+					High
+					{% endif %}
+					</td>
+				<td>
+				{% if proba <= 0.50 and proba >= 0.0 %}
+					<li style = list-style-type:none; class="block-complete">Active</li>
+					{% elif proba <= 0.69 and proba >= 0.51  %}
+					<li style = list-style-type:none; class="block-ongoing">Declining</li>
+					{% elif proba <= 1 and proba >= 0.70  %}
+					<li style = list-style-type:none; class="block-inactive">Churning</li>
+					{% endif %}
+					</td>
+                        </tr>			
+                        {% endfor %}
+                    </tbody>
+                </table>
+            <!-- END TABLE -->	
+		</div>
+	</div>
+    	{% endif %}
+    	{% elif current_user.explore == "sample" %}
+				<div class="strat-container-main">
 			<h3>Churn Analysis</b></h3>
 			<div class="strat-stat-container">
 				<div class="strat-row">
@@ -83,15 +209,14 @@
                 </table>
             <!-- END TABLE -->	
 		</div>
-</div>
-
+		</div>
 		{% endif %}	
-		  <script type = "text/javascript" src ="{{url_for('static', filename = 'js/jquery-3.2.1.min.js')}}"></script>
-		  <script type = "text/javascript" src ="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
-		  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-		  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> 
-          <script type = "text/javascript" src ="{{url_for('static', filename = 'js/tables.js')}}"></script>
+	<script type = "text/javascript" src ="{{url_for('static', filename = 'js/jquery-3.2.1.min.js')}}"></script>
+	<script type = "text/javascript" src ="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> 
+	<script type = "text/javascript" src ="{{url_for('static', filename = 'js/tables.js')}}"></script>
         
         <!-- Sort/Search Table JS -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
