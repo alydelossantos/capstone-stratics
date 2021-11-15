@@ -848,216 +848,207 @@ def home():
 @login_required
 def churnanalytics():
     if current_user.explore == "customer":
-        kctn = pd.read_sql_table('data', con=cnx)
-        kctn.head()
+        if current_user.cname == "Kalibo Cable":
+            kctn = pd.read_sql_table('data', con=cnx)
+            kctn.head()
 
-        # Convert dates to datetype
-        kctn.activation_date = pd.to_datetime(kctn.activation_date)
-        kctn.disconnection_date = pd.to_datetime(kctn.disconnection_date)
-        kctn.reactivation_date = pd.to_datetime(kctn.reactivation_date)
-        kctn.date_paid = pd.to_datetime(kctn.date_paid)
+            # Convert dates to datetype
+            kctn.activation_date = pd.to_datetime(kctn.activation_date)
+            kctn.disconnection_date = pd.to_datetime(kctn.disconnection_date)
+            kctn.reactivation_date = pd.to_datetime(kctn.reactivation_date)
+            kctn.date_paid = pd.to_datetime(kctn.date_paid)
 
-        kctn['disconnection_date'] = kctn['disconnection_date'].dt.strftime('%m-%d-%Y')
-        kctn['reactivation_date'] = kctn['reactivation_date'].dt.strftime('%m-%d-%Y')
-        kctn['activation_date'] = kctn['activation_date'].dt.strftime('%m-%d-%Y')
-        kctn['date_paid'] = kctn['date_paid'].dt.strftime('%m-%d-%Y')
+            kctn['disconnection_date'] = kctn['disconnection_date'].dt.strftime('%m-%d-%Y')
+            kctn['reactivation_date'] = kctn['reactivation_date'].dt.strftime('%m-%d-%Y')
+            kctn['activation_date'] = kctn['activation_date'].dt.strftime('%m-%d-%Y')
+            kctn['date_paid'] = kctn['date_paid'].dt.strftime('%m-%d-%Y')
 
-        # Remove Account Number-Address
-        kctn2 = kctn.iloc[:,3:]
-        # Remove Reference Number
-        del kctn2['ref_no']
-        del kctn2['date_paid']
-        del kctn2['activation_date']
-        del kctn2['disconnection_date']
-        del kctn2['reactivation_date']
+            # Remove Account Number-Address
+            kctn2 = kctn.iloc[:,3:]
+            # Remove Reference Number
+            del kctn2['ref_no']
+            del kctn2['date_paid']
+            del kctn2['activation_date']
+            del kctn2['disconnection_date']
+            del kctn2['reactivation_date']
 
-        # independent variable - all columns aside from 'Churn'
-        X = kctn2.iloc[:,:-1].values
-        # dependent variable - Churn
-        y = kctn2.iloc[:,7]
+            # independent variable - all columns aside from 'Churn'
+            X = kctn2.iloc[:,:-1].values
+            # dependent variable - Churn
+            y = kctn2.iloc[:,7]
 
-        # Convert predictor variables in a binary numeric variable
-        kctn2['status'].replace(to_replace='Active', value=1, inplace=True)
-        kctn2['status'].replace(to_replace='Disconnected', value=0, inplace=True)
+            # Convert predictor variables in a binary numeric variable
+            kctn2['status'].replace(to_replace='Active', value=1, inplace=True)
+            kctn2['status'].replace(to_replace='Disconnected', value=0, inplace=True)
 
-        # Converting categorical variables into dummy variables
-        kctn_dummies = pd.get_dummies(kctn2)
-        kctn_dummies.head()
+            # Converting categorical variables into dummy variables
+            kctn_dummies = pd.get_dummies(kctn2)
+            kctn_dummies.head()
 
-        from sklearn.preprocessing import StandardScaler
-        standardscaler = StandardScaler()
-        columns_for_fit_scaling = ['monthly', 'amount_paid']
-        kctn_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(kctn_dummies[columns_for_fit_scaling])
+            from sklearn.preprocessing import StandardScaler
+            standardscaler = StandardScaler()
+            columns_for_fit_scaling = ['monthly', 'amount_paid']
+            kctn_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(kctn_dummies[columns_for_fit_scaling])
 
-        # Splitting Data into Train and Test
-        from sklearn.model_selection import train_test_split
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,  random_state=101)
+            # Splitting Data into Train and Test
+            from sklearn.model_selection import train_test_split
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,  random_state=101)
 
-        print("Number transactions X_train dataset: ", X_train.shape)
-        print("Number transactions X_train dataset: ", y_train.shape)
-        print("Number transactions X_train dataset: ", X_test.shape)
-        print("Number transactions X_train dataset: ", y_test.shape)
+            y = kctn_dummies['churn'].values
+            X = kctn_dummies.drop(columns = ['churn'])
 
-        y = kctn_dummies['churn'].values
-        X = kctn_dummies.drop(columns = ['churn'])
+            # Scaling all the variables to a range of 0 to 1
+            from sklearn.preprocessing import MinMaxScaler
+            features = X.columns.values
+            scaler = MinMaxScaler(feature_range = (0,1))
+            scaler.fit(X)
+            X = pd.DataFrame(scaler.transform(X))
+            X.columns = features
 
-        # Scaling all the variables to a range of 0 to 1
-        from sklearn.preprocessing import MinMaxScaler
-        features = X.columns.values
-        scaler = MinMaxScaler(feature_range = (0,1))
-        scaler.fit(X)
-        X = pd.DataFrame(scaler.transform(X))
-        X.columns = features
+            from sklearn.model_selection import train_test_split
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
 
-        from sklearn.model_selection import train_test_split
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
+            # Running logistic regression model
+            from sklearn.linear_model import LogisticRegression
+            import sklearn.metrics as metrics
+            logmodel = LogisticRegression(random_state=50)
+            result = logmodel.fit(X_train, y_train)
 
-        # Running logistic regression model
-        from sklearn.linear_model import LogisticRegression
-        import sklearn.metrics as metrics
-        logmodel = LogisticRegression(random_state=50)
-        result = logmodel.fit(X_train, y_train)
+            Xnew = X_test.values
+            pred = logmodel.predict(X_test)
 
-        Xnew = X_test.values
-        pred = logmodel.predict(X_test)
+            logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
+            print(logmodel_accuracy)
 
-        logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
-        print(logmodel_accuracy)
+            proba = logmodel.predict_proba(Xnew)[:,1]
 
-        proba = logmodel.predict_proba(Xnew)[:,1]
+            for i in range(len(Xnew)):
+                kctn['Churn Probability'] = proba[i]
 
-        for i in range(len(Xnew)):
-            kctn['Churn Probability'] = proba[i]
+            for i in range(len(Xnew)):
+                kctn['Churn Probability'][i] = proba[i]
+                if i <= len(Xnew):
+                    predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
+            cust = kctn['Churn Probability'].count()
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
+        else:
+            dataf = pd.read_sql_table('otherdata', con=cnx)
 
-        for i in range(len(Xnew)):
-            kctn['Churn Probability'][i] = proba[i]
-            if i <= len(Xnew):
-                predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
-        cust = kctn['Churn Probability'].count()
+            # Check for missing values
+            dataf.isna().any()
 
+            # Convert dates to datetype
+            dataf.activation_date = pd.to_datetime(dataf.activation_date)
+            dataf.disconnection_date = pd.to_datetime(dataf.disconnection_date)
+            dataf.reactivation_date = pd.to_datetime(dataf.reactivation_date)
+            dataf.date_paid = pd.to_datetime(dataf.date_paid)
 
-    # ------------------ New Insert ----------------------
+            dataf['disconnection_date'] = dataf['disconnection_date'].dt.strftime('%m-%d-%Y')
+            dataf['reactivation_date'] = dataf['reactivation_date'].dt.strftime('%m-%d-%Y')
+            dataf['activation_date'] = dataf['activation_date'].dt.strftime('%m-%d-%Y')
+            dataf['date_paid'] = dataf['date_paid'].dt.strftime('%m-%d-%Y')
 
+            # Calculate average and fill missing values
+            na_cols = dataf.isna().any()
+            na_cols = na_cols[na_cols == True].reset_index()
+            na_cols = na_cols["index"].tolist()
 
-    elif current_user.explore == "sample":
-        dataf = pd.read_sql_table('otherdata', con=cnx)
-
-        # Check for missing values
-        dataf.isna().any()
-
-        # Convert dates to datetype
-        dataf.activation_date = pd.to_datetime(dataf.activation_date)
-        dataf.disconnection_date = pd.to_datetime(dataf.disconnection_date)
-        dataf.reactivation_date = pd.to_datetime(dataf.reactivation_date)
-        dataf.date_paid = pd.to_datetime(dataf.date_paid)
-
-        dataf['disconnection_date'] = dataf['disconnection_date'].dt.strftime('%m-%d-%Y')
-        dataf['reactivation_date'] = dataf['reactivation_date'].dt.strftime('%m-%d-%Y')
-        dataf['activation_date'] = dataf['activation_date'].dt.strftime('%m-%d-%Y')
-        dataf['date_paid'] = dataf['date_paid'].dt.strftime('%m-%d-%Y')
-
-        # Calculate average and fill missing values
-        na_cols = dataf.isna().any()
-        na_cols = na_cols[na_cols == True].reset_index()
-        na_cols = na_cols["index"].tolist()
-
-        for col in dataf.columns[1:]:
-            if col in na_cols:
-                if dataf[col].dtype != 'object':
-                    dataf[col] = dataf[col].fillna(dataf[col].mean()).round(0)
+            for col in dataf.columns[1:]:
+                if col in na_cols:
+                    if dataf[col].dtype != 'object':
+                        dataf[col] = dataf[col].fillna(dataf[col].mean()).round(0)
 
 
-        # Label Encoder
-        from sklearn.preprocessing import LabelEncoder
-        le = LabelEncoder()
+            # Label Encoder
+            from sklearn.preprocessing import LabelEncoder
+            le = LabelEncoder()
 
-        # Label encoding for columns with 2 or less unique
+            # Label encoding for columns with 2 or less unique
 
-        le_count = 0
-        for col in dataf.columns[1:]:
-            if dataf[col].dtype == 'object':
-                if len(list(dataf[col].unique())) <=2:
-                    le.fit(dataf[col])
-                    dataf[col] = le.transform(dataf[col])
-                    le_count +=1
-        print('{} columns label encoded'.format(le_count))
-
-
-        # Remove Account Number-Address
-        dataf2 = dataf.iloc[:,3:]
-        # Remove Reference Number
-        del dataf2['ref_no']
-        del dataf2['date_paid']
-        del dataf2['activation_date']
-        del dataf2['disconnection_date']
-        del dataf2['reactivation_date']
-
-        # independent variable - all columns aside from 'Churn'
-        X = dataf.iloc[:,:-1].values
-        X
-
-        # dependent variable - Churn
-        y = dataf.iloc[:,17]
-        y
-
-        # Remove customer ID
-        dataf2 = dataf.iloc[:,1:]
-
-        # Convert predictor variables in a binary numeric variable
-        dataf2['churn'].replace(to_replace='Yes', value=1, inplace=True)
-        dataf2['churn'].replace(to_replace='No', value=0, inplace=True)
-
-        # Converting categorical variables into dummy variables
-        dataf_dummies = pd.get_dummies(dataf2)
-        dataf_dummies.head()
-
-        from sklearn.preprocessing import StandardScaler
-        standardscaler = StandardScaler()
-        columns_for_fit_scaling = ['monthly', 'amount_paid']
-        dataf_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(dataf_dummies[columns_for_fit_scaling])
-
-        # Splitting Data into Train and Test
-        from sklearn.model_selection import train_test_split
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
-
-        y = dataf_dummies['churn'].values
-        X = dataf_dummies.drop(columns = ['churn'])
-
-        # Scaling all the variables to a range of 0 to 1
-        from sklearn.preprocessing import MinMaxScaler
-        features = X.columns.values
-        scaler = MinMaxScaler(feature_range = (0,1))
-        scaler.fit(X)
-        X = pd.DataFrame(scaler.transform(X))
-        X.columns = features
-
-        from sklearn.model_selection import train_test_split
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
-
-        # Running logistic regression model
-        from sklearn.linear_model import LogisticRegression
-        import sklearn.metrics as metrics
-        logmodel = LogisticRegression(random_state=50)
-        result = logmodel.fit(X_train, y_train)
-
-        Xnew = X_test.values
-        pred = logmodel.predict(X_test)
-
-        logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
-        print (logmodel_accuracy)
-
-        for i in range(len(Xnew)):
-            dataf['Churn Probability'] = proba[i]
-
-        for i in range(len(Xnew)):
-            dataf['Churn Probability'][i] = proba[i]
-            if i <= len(Xnew):
-                predd = dataf[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
-        cust = dataf['Churn Probability'].count()
+            le_count = 0
+            for col in dataf.columns[1:]:
+                if dataf[col].dtype == 'object':
+                    if len(list(dataf[col].unique())) <=2:
+                        le.fit(dataf[col])
+                        dataf[col] = le.transform(dataf[col])
+                        le_count +=1
+            print('{} columns label encoded'.format(le_count))
 
 
-    # ----------- Sample Data --------------------
+            # Remove Account Number-Address
+            dataf2 = dataf.iloc[:,3:]
+            # Remove Reference Number
+            del dataf2['ref_no']
+            del dataf2['date_paid']
+            del dataf2['activation_date']
+            del dataf2['disconnection_date']
+            del dataf2['reactivation_date']
 
+            # independent variable - all columns aside from 'Churn'
+            X = dataf.iloc[:,:-1].values
+            X
+
+            # dependent variable - Churn
+            y = dataf.iloc[:,17]
+            y
+
+            # Remove customer ID
+            dataf2 = dataf.iloc[:,1:]
+
+            # Convert predictor variables in a binary numeric variable
+            dataf2['churn'].replace(to_replace='Yes', value=1, inplace=True)
+            dataf2['churn'].replace(to_replace='No', value=0, inplace=True)
+
+            # Converting categorical variables into dummy variables
+            dataf_dummies = pd.get_dummies(dataf2)
+            dataf_dummies.head()
+
+            from sklearn.preprocessing import StandardScaler
+            standardscaler = StandardScaler()
+            columns_for_fit_scaling = ['monthly', 'amount_paid']
+            dataf_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(dataf_dummies[columns_for_fit_scaling])
+
+            # Splitting Data into Train and Test
+            from sklearn.model_selection import train_test_split
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+
+            y = dataf_dummies['churn'].values
+            X = dataf_dummies.drop(columns = ['churn'])
+
+            # Scaling all the variables to a range of 0 to 1
+            from sklearn.preprocessing import MinMaxScaler
+            features = X.columns.values
+            scaler = MinMaxScaler(feature_range = (0,1))
+            scaler.fit(X)
+            X = pd.DataFrame(scaler.transform(X))
+            X.columns = features
+
+            from sklearn.model_selection import train_test_split
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
+
+            # Running logistic regression model
+            from sklearn.linear_model import LogisticRegression
+            import sklearn.metrics as metrics
+            logmodel = LogisticRegression(random_state=50)
+            result = logmodel.fit(X_train, y_train)
+
+            Xnew = X_test.values
+            pred = logmodel.predict(X_test)
+
+            logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
+            print (logmodel_accuracy)
+
+            for i in range(len(Xnew)):
+                dataf['Churn Probability'] = proba[i]
+
+            for i in range(len(Xnew)):
+                dataf['Churn Probability'][i] = proba[i]
+                if i <= len(Xnew):
+                    predd = dataf[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
+            cust = dataf['Churn Probability'].count()
+            image_file = url_for('static', filename='images/' + current_user.image_file)
+            return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust
     elif current_user.explore == "sample":
         df = pd.read_sql_table('sampledata', con=cnx)
 
@@ -1171,187 +1162,11 @@ def churnanalytics():
             if i <= len(Xnew):
                 predd = df[['customerID' ,'Churn Probability']].values.tolist()
         cust = df['Churn Probability'].count()
-
-
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
     image_file = url_for('static', filename='images/' + current_user.image_file)
-
     return render_template("churn-analysis.html", user= current_user, image_file=image_file)
-    '''elif current_user.explore == "customer":
-        if current_user.cname == "Kalibo Cable":
-            kctn = pd.read_sql_table('data', con=cnx)
-            kctn.head()
-
-            # Convert dates to datetype
-            kctn.activation_date = pd.to_datetime(kctn.activation_date)
-            kctn.disconnection_date = pd.to_datetime(kctn.disconnection_date)
-            kctn.reactivation_date = pd.to_datetime(kctn.reactivation_date)
-            kctn.date_paid = pd.to_datetime(kctn.date_paid)
-
-            kctn['disconnection_date'] = kctn['disconnection_date'].dt.strftime('%m-%d-%Y')
-            kctn['reactivation_date'] = kctn['reactivation_date'].dt.strftime('%m-%d-%Y')
-            kctn['activation_date'] = kctn['activation_date'].dt.strftime('%m-%d-%Y')
-            kctn['date_paid'] = kctn['date_paid'].dt.strftime('%m-%d-%Y')
-
-            # Remove Account Number-Address
-            kctn2 = kctn.iloc[:,3:]
-            # Remove Reference Number
-            del kctn2['ref_no']
-            del kctn2['date_paid']
-            del kctn2['activation_date']
-            del kctn2['disconnection_date']
-            del kctn2['reactivation_date']
-
-            # independent variable - all columns aside from 'Churn'
-            X = kctn2.iloc[:,:-1].values
-            # dependent variable - Churn
-            y = kctn2.iloc[:,7]
-
-            # Convert predictor variables in a binary numeric variable
-            kctn2['status'].replace(to_replace='Active', value=1, inplace=True)
-            kctn2['status'].replace(to_replace='Disconnected', value=0, inplace=True)
-
-            # Converting categorical variables into dummy variables
-            kctn_dummies = pd.get_dummies(kctn2)
-            kctn_dummies.head()
-
-            from sklearn.preprocessing import StandardScaler
-            standardscaler = StandardScaler()
-            columns_for_fit_scaling = ['monthly', 'amount_paid']
-            kctn_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(kctn_dummies[columns_for_fit_scaling])
-
-            # Splitting Data into Train and Test
-            from sklearn.model_selection import train_test_split
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,  random_state=101)
-
-            print("Number transactions X_train dataset: ", X_train.shape)
-            print("Number transactions X_train dataset: ", y_train.shape)
-            print("Number transactions X_train dataset: ", X_test.shape)
-            print("Number transactions X_train dataset: ", y_test.shape)
-
-            y = kctn_dummies['churn'].values
-            X = kctn_dummies.drop(columns = ['churn'])
-
-            # Scaling all the variables to a range of 0 to 1
-            from sklearn.preprocessing import MinMaxScaler
-            features = X.columns.values
-            scaler = MinMaxScaler(feature_range = (0,1))
-            scaler.fit(X)
-            X = pd.DataFrame(scaler.transform(X))
-            X.columns = features
-
-            from sklearn.model_selection import train_test_split
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
-
-            # Running logistic regression model
-            from sklearn.linear_model import LogisticRegression
-            import sklearn.metrics as metrics
-            logmodel = LogisticRegression(random_state=50)
-            result = logmodel.fit(X_train, y_train)
-
-            Xnew = X_test.values
-            pred = logmodel.predict(X_test)
-
-            logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
-            print (logmodel_accuracy)
-
-            proba = logmodel.predict_proba(Xnew)[:,1]
-
-            for i in range(len(Xnew)):
-                kctn['Churn Probability'] = proba[i]
-
-            # Create a Dataframe showcasing probability of Churn of each customer
-            kctn[['account_no','Churn Probability']]
-            image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("churn-analysis.html", user= current_user, image_file=image_file)
-        else:
-            kctn = pd.read_sql_table('otherdata', con=cnx)
-            kctn.head()
-
-            # Convert dates to datetype
-            kctn.activation_date = pd.to_datetime(kctn.activation_date)
-            kctn.disconnection_date = pd.to_datetime(kctn.disconnection_date)
-            kctn.reactivation_date = pd.to_datetime(kctn.reactivation_date)
-            kctn.date_paid = pd.to_datetime(kctn.date_paid)
-
-            kctn['disconnection_date'] = kctn['disconnection_date'].dt.strftime('%m-%d-%Y')
-            kctn['reactivation_date'] = kctn['reactivation_date'].dt.strftime('%m-%d-%Y')
-            kctn['activation_date'] = kctn['activation_date'].dt.strftime('%m-%d-%Y')
-            kctn['date_paid'] = kctn['date_paid'].dt.strftime('%m-%d-%Y')
-
-            # Remove Account Number-Address
-            kctn2 = kctn.iloc[:,3:]
-            # Remove Reference Number
-            del kctn2['ref_no']
-            del kctn2['date_paid']
-            del kctn2['activation_date']
-            del kctn2['disconnection_date']
-            del kctn2['reactivation_date']
-
-            # independent variable - all columns aside from 'Churn'
-            X = kctn2.iloc[:,:-1].values
-            # dependent variable - Churn
-            y = kctn2.iloc[:,7]
-
-            # Convert predictor variables in a binary numeric variable
-            kctn2['status'].replace(to_replace='Active', value=1, inplace=True)
-            kctn2['status'].replace(to_replace='Disconnected', value=0, inplace=True)
-
-            # Converting categorical variables into dummy variables
-            kctn_dummies = pd.get_dummies(kctn2)
-            kctn_dummies.head()
-
-            from sklearn.preprocessing import StandardScaler
-            standardscaler = StandardScaler()
-            columns_for_fit_scaling = ['monthly', 'amount_paid']
-            kctn_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(kctn_dummies[columns_for_fit_scaling])
-
-            # Splitting Data into Train and Test
-            from sklearn.model_selection import train_test_split
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,  random_state=101)
-
-            print("Number transactions X_train dataset: ", X_train.shape)
-            print("Number transactions X_train dataset: ", y_train.shape)
-            print("Number transactions X_train dataset: ", X_test.shape)
-            print("Number transactions X_train dataset: ", y_test.shape)
-
-            y = kctn_dummies['churn'].values
-            X = kctn_dummies.drop(columns = ['churn'])
-
-            # Scaling all the variables to a range of 0 to 1
-            from sklearn.preprocessing import MinMaxScaler
-            features = X.columns.values
-            scaler = MinMaxScaler(feature_range = (0,1))
-            scaler.fit(X)
-            X = pd.DataFrame(scaler.transform(X))
-            X.columns = features
-
-            from sklearn.model_selection import train_test_split
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
-
-            # Running logistic regression model
-            from sklearn.linear_model import LogisticRegression
-            import sklearn.metrics as metrics
-            logmodel = LogisticRegression(random_state=50)
-            result = logmodel.fit(X_train, y_train)
-
-            Xnew = X_test.values
-            pred = logmodel.predict(X_test)
-
-            logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
-            print (logmodel_accuracy)
-
-            proba = logmodel.predict_proba(Xnew)[:,1]
-
-            for i in range(len(Xnew)):
-                kctn['Churn Probability'] = proba[i]
-
-            # Create a Dataframe showcasing probability of Churn of each customer
-            kctn[['account_no','Churn Probability']]
-            image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("churn-analysis.html", user= current_user, image_file=image_file)'''
-
+    
 @views.route('/home/dashboard-name/edit', methods=["GET", "POST"])
 @login_required
 def dashname():
