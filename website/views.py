@@ -1048,7 +1048,7 @@ def churnanalytics():
                     predd = dataf[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
             cust = dataf['Churn Probability'].count()
             image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust
+            return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
     elif current_user.explore == "sample":
         df = pd.read_sql_table('sampledata', con=cnx)
 
