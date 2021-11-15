@@ -43,9 +43,7 @@
                 <table class="table table-data2" id="mytable">
                     <thead>
                         <tr>
-                            <th>Account No.</th>
-                            <th>Amount Paid</th>
-                            <th>Monthly</th>
+                            <th>Customer ID</th>
                             <th>Churn Probability</th>
 			    <th>Churn Score</th>
                             <th>Description</th>
@@ -53,12 +51,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for account_no, amount_paid, monthly, proba in my_list %}
+                        {% for cust_id , proba in my_list %}
                         <tr class="tr-shadow">
 
-                            	<td>{{account_no}}</td>
-				<td>{{amount_paid}}</td>
-				<td>{{monthly}}</td>
+                            	<td>{{cust_id}}</td>
 				<td>{{proba}}</td>
 				<td>
 				{% if proba <= 0.50 and proba >= 0.0 %}
