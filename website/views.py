@@ -1077,21 +1077,6 @@ def churnanalytics():
                     le_count +=1
         print('{} columns label encoded'.format(le_count))
 
-        df2 = df[['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'tenure', 'PhoneService', 'PaperlessBilling', 'MonthlyCharges', 'TotalCharges']]
-        fig = plt.figure(figsize=(15, 10))
-
-        for i in range(df2.shape[1]):
-            plt.subplot(6, 3, i+1)
-            f=plt.gca()
-            f.set_title(df2.columns.values[i])
-
-        vals = np.size(df2.iloc[:, i].unique())
-        if vals >= 100:
-            vals = 100
-
-        plt.hist(df2.iloc[:, i], bins=vals, color = '#f39519')
-        plt.tight_layout()
-
         # independent variable - all columns aside from 'Churn'
         X = df.iloc[:,:-1].values
         X
