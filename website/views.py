@@ -922,7 +922,7 @@ def churnanalytics():
                 
             for i in range(len(Xnew)):
                 kctn['Churn Probability'][i] = proba[i]
-                if i <= range(len(Xnew):
+                if i <= range(len(Xnew)):
                     predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
             cust = len(Xnew)
             image_file = url_for('static', filename='images/' + current_user.image_file)
