@@ -281,7 +281,6 @@ def insert():
             services = request.form['services']
             monthly = request.form['monthly']
             collector = request.form['collector']
-            status = request.form['status']
             amount_paid = request.form['amount_paid']
             ref_no = request.form['ref_no']
             date_paid = request.form['date_paid']
@@ -289,6 +288,20 @@ def insert():
             activation_date = request.form['activation_date']
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
+            
+            if activation_date != None and disconnection_date == None:
+                status = "Active"
+            elif activation_date != None and disconnection_date != None:
+                status = "Disconnected"
+            elif disconnection_date != None:
+                status = "Disconnected"
+            elif disconnected_date == None:
+                status = "Active"
+            elif activation_date != None and disconnection_date != None and reactivation_date != None:
+                status = "Active"
+            elif activation_date != None and disconnection_date != None and reactivation_date == None:
+                status = "Disconnected"  
+                
             if disconnection_date == None:
                 churn = 0
             else:
@@ -322,7 +335,6 @@ def insert():
             province = request.form['province']
             services = request.form['services']
             monthly = request.form['monthly']
-            status = request.form['status']
             amount_paid = request.form['amount_paid']
             ref_no = request.form['ref_no']
             date_paid = request.form['date_paid']
@@ -330,9 +342,23 @@ def insert():
             activation_date = request.form['activation_date']
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
-            if status == "Active":
+            
+            if activation_date != None and disconnection_date == None:
+                status = "Active"
+            elif activation_date != None and disconnection_date != None:
+                status = "Disconnected"
+            elif disconnection_date != None:
+                status = "Disconnected"
+            elif disconnected_date == None:
+                status = "Active"
+            elif activation_date != None and disconnection_date != None and reactivation_date != None:
+                status = "Active"
+            elif activation_date != None and disconnection_date != None and reactivation_date == None:
+                status = "Disconnected" 
+            
+            if disconnection_date == None:
                 churn = 0
-            elif status == "Disconnected":
+            else:
                 churn = 1
                 
             if sd <= 10:
