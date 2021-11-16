@@ -527,8 +527,18 @@
                         {% for row in sampledatas %}
                         <tr class="tr-shadow">
                                 <td>{{row.customerID}}</td>
-				<td>{{row.gender}}</td>
-				<td>{{row.SeniorCitizen}}</td>
+				<td> {% if row.gender== 0 %}
+					Female
+					{% else %}
+					Male
+					{% endif %}
+				</td>
+				<td> {% if row.SeniorCitizen == 0 %}
+					Not Senior Citizen
+					{% else %}
+					Senior Citizen
+					{% endif %}
+				</td>
 				<td>{{row.Partner}}</td>
 				<td>{{row.Dependents}}</td>
 				<td>{{row.tenure}}</td>
