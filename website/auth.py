@@ -227,17 +227,6 @@ def sidebarpic():
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template("base.html", user= current_user, image_file = image_file)
 
- #Dashboard edit
-@auth.route('/home/dashboard/edit', methods=["GET", "POST"]) 
-@login_required
-def dashname():
-   if request.method == 'POST':
-      current_user.dname = request.form['dname']
-      db.session.commit()
-
-      flash("Dashboard Name Updated Successfully")
-      return redirect(url_for('views.home'))
-
 # Customer Management
 @auth.route('/customer-management', methods=["GET", "POST"]) 
 @login_required
@@ -270,7 +259,6 @@ def custman():
                 activation_date = request.form['activation_date']
                 disconnection_date = request.form['disconnection_date']
                 reactivation_date = request.form['reactivation_date']
-                churn = request.form['churn']
 
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
@@ -301,7 +289,10 @@ def insert():
             activation_date = request.form['activation_date']
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
-            churn = request.form['churn']
+            if status == "active":
+                churn = 1
+            elif status == "disconnected":
+                churn = 0
             row = Data.query.count()
             count = Data.query.filter(Data.id >= row).count()
             if count >= 1:
@@ -339,8 +330,11 @@ def insert():
             activation_date = request.form['activation_date']
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
-            churn = request.form['churn']
-            
+            if status == "active":
+                churn = 1
+            elif status == "disconnected":
+                churn = 0
+                
             if sd <= 10:
                 sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
 						status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
@@ -370,14 +364,13 @@ def update(id):
             datas.activation_date = request.form['activation_date']
             datas.disconnection_date = request.form['disconnection_date']
             datas.reactivation_date = request.form['reactivation_date']
-            datas.churn = request.form['churn']
-            
+
             db.session.commit()
             
             flash("Customer Record Updated Successfully")
      
             return redirect(url_for('auth.custman'))
-            return redirect(url_for('auth.custman'))
+        return redirect(url_for('auth.custman'))
     else:
         if request.method == 'POST':
             odatas = Otherdata.query.get(request.form.get('id'))
@@ -390,8 +383,7 @@ def update(id):
             odatas.activation_date = request.form['activation_date']
             odatas.disconnection_date = request.form['disconnection_date']
             odatas.reactivation_date = request.form['reactivation_date']
-            odatas.churn = request.form['churn']
-            
+
             db.session.commit()
             
             flash("Customer Record Updated Successfully")
