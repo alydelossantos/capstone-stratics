@@ -916,15 +916,12 @@ def churnanalytics():
 
             Xnew = X_test.values
 
-            proba = logmodel.predict_proba(X_test)[:,1]
-
-            for i in range(len(X_test)):
-                kctn['Churn Probability'] = proba[i]
-
-            for i in range(len(X_test)):
+            proba = logmodel.predict_proba(Xnew)[:,1]
+            
+            for i in range(len(Xnew)):
                 kctn['Churn Probability'][i] = proba[i]
                 predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
-            cust = kctn['Churn Probability'].count()
+            cust = X_test.count()
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
         else:
