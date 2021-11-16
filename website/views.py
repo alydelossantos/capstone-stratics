@@ -855,7 +855,7 @@ def churnanalytics():
             disconnected = Data \
                 .query \
                 .filter(Data.status == "Disconnected").count()
-            rate = (disconnected/active) * 100
+            rate = round(((disconnected/active) * 100), 2)
             kctn = pd.read_sql_table('data', con=cnx)
             kctn.head()
 
