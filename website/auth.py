@@ -476,12 +476,10 @@ def profile():
         
 @login_required
 def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
+    picture_fn = _ + f_ext
     picture_path = os.path.join(auth.root_path, 'static/images', picture_fn)
     form_picture.save(picture_path)
-    
     output_size = (250, 250)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
