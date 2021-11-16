@@ -298,14 +298,14 @@ def insert():
                 status = "Active"
             elif activation_date != None and disconnection_date != None:
                 status = "Disconnected"
-            elif disconnection_date != None:
+            elif activation_date == None and disconnection_date == None:
                 status = "Disconnected"
-            elif disconnected_date == None:
-                status = "Active"
+            elif activation_date == None and disconnected_date != None:
+                status = "Disconnected"
             elif activation_date != None and disconnection_date != None and reactivation_date != None:
                 status = "Active"
             elif activation_date != None and disconnection_date != None and reactivation_date == None:
-                status = "Disconnected"  
+                status = "Disconnected" 
                 
             if disconnection_date == None:
                 churn = 0
@@ -353,10 +353,10 @@ def insert():
                 status = "Active"
             elif activation_date != None and disconnection_date != None:
                 status = "Disconnected"
-            elif disconnection_date != None:
+            elif activation_date == None and disconnection_date == None:
                 status = "Disconnected"
-            elif disconnected_date == None:
-                status = "Active"
+            elif activation_date == None and disconnected_date != None:
+                status = "Disconnected"
             elif activation_date != None and disconnection_date != None and reactivation_date != None:
                 status = "Active"
             elif activation_date != None and disconnection_date != None and reactivation_date == None:
@@ -389,7 +389,6 @@ def update(id):
             datas = Data.query.get(request.form.get('id'))
             datas.services = request.form['services']
             datas.monthly = request.form['monthly']
-            datas.status = request.form['status']
             datas.amount_paid = request.form['amount_paid']
             datas.date_paid = request.form['date_paid']
             datas.category = request.form['category']
@@ -408,7 +407,6 @@ def update(id):
             odatas = Otherdata.query.get(request.form.get('id'))
             odatas.services = request.form['services']
             odatas.monthly = request.form['monthly']
-            odatas.status = request.form['status']
             odatas.amount_paid = request.form['amount_paid']
             odatas.date_paid = request.form['date_paid']
             odatas.category = request.form['category']
