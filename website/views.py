@@ -917,6 +917,7 @@ def churnanalytics():
             Xnew = X_test.values
             
             proba = logmodel.predict_proba(Xnew)[:,1]
+            
             for i in range(len(Xnew)):
                 kctn['Churn Probability'] = proba[i]
                 
@@ -1142,17 +1143,17 @@ def churnanalytics():
         Xnew = X_test.values
         pred = logmodel.predict(X_test)
         proba = logmodel.predict_proba(Xnew)[:,1]
-        logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
-        print (logmodel_accuracy)
-    
+        custid = df.iloc[2:,]
         for i in range(len(Xnew)):
             df['Churn Probability'] = proba[i]
+            df['Customer No'] = custid[i]           
 
         for i in range(len(Xnew)):
             df['Churn Probability'][i] = proba[i]
-            if i <= len(Xnew):
-                predd = df[['customerID' ,'Churn Probability']].values.tolist()
-        cust = df['Churn Probability'].count()
+            df['Customer No'][i] = custid[i] 
+        
+        predd = df[['Customer No' ,'Churn Probability']].values.tolist()
+        cust = len(Xnew)
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
     image_file = url_for('static', filename='images/' + current_user.image_file)
