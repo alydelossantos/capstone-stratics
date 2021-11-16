@@ -134,7 +134,7 @@
 										  <label>Status</label>
 										  <select name="status" class="custom-select">
 											<option value="0">Please Select Status</option>
-											<option value="pending">Pending</option>
+											<!-- <option value="pending">Pending</option> -->
 											<option value="ongoing">Ongoing</option>
 											<option value="complete">Complete</option>
 										  </select>
@@ -223,8 +223,8 @@
 										<li style = list-style-type:none; class="block-complete">Complete</li>
 										{% else %}
 										<li style = list-style-type:none; class="block-ongoing">Ongoing</li>
-										{% else %}
-										<li style = list-style-type:none; class="block-pending">Pending</li>
+										<!-- {% else %}
+										<li style = list-style-type:none; class="block-pending">Pending</li> -->
 										{% endif %}    
 									</td>
 									<td>
@@ -459,7 +459,7 @@
                                   <label>Status</label>
                                   <select name="status" class="custom-select">
                                     <option value="0">Please Select Status</option>
-									<option class="" value="pending">Pending</option>
+									<!-- <option class="" value="pending">Pending</option> -->
                                     <option class="" value="ongoing">Ongoing</option>
                                     <option class="" value="complete">Complete</option>
                                   </select>
@@ -548,8 +548,8 @@
                                 <li style = list-style-type:none; class="block-complete">Complete</li>
                                 {% else %}
                                 <li style = list-style-type:none; class="block-ongoing">Ongoing</li>
-								{% else %}
-								<li style = list-style-type:none; class="block-pending">Pending</li>
+								<!-- {% else %}
+								<li style = list-style-type:none; class="block-pending">Pending</li> -->
                                 {% endif %}    
                             </td>
                             <td>
@@ -592,7 +592,7 @@
                                                     <label>Activity Type</label>
                                                     <select name="act" class="form-control" name="act" value="{{row.act}}">
                                                         <!-- <option value="0">Please Select Activity Type</option> -->
-														<option value="pending">Pending</option>
+														<!-- <option value="pending">Pending</option> -->
                                                         <option value="campaign">Campaign</option>
                                                         <option value="activity">Activity</option>
                                                         <option value="others">Others</option>
@@ -615,7 +615,7 @@
                                                     <label>Status</label>
                                                     <select class="form-control" name="status" value="{{row.status}}">
                                                       <!-- <option value="0">Please Select Status</option> -->
-													  <option value="pending">Pending</option>
+													  <!-- <option value="pending">Pending</option> -->
                                                       <option value="ongoing">Ongoing</option>
                                                       <option value="complete">Complete</option>
                                                     </select>
