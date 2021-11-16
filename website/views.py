@@ -851,10 +851,10 @@ def churnanalytics():
         if current_user.cname == "Kalibo Cable":
             active = Data \
                 .query \
-                .filter(Data.disconnection_date == None).count()
+                .filter(Data.status == "Active").count()
             disconnected = Data \
                 .query \
-                .filter(Data.disconnection_date != None).count()
+                .filter(Data.status == "Disconnected").count()
             rate = round(((disconnected/active) * 100), 2)
             kctn = pd.read_sql_table('data', con=cnx)
             kctn.head()
