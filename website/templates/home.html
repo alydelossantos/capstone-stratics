@@ -367,7 +367,7 @@
 						  <div class="col-sm-4">
 							<div id='charts6'></div>
 						  </div>
-						  <div class="col-sm-8">
+						  <div class="col-sm-7">
 							<div id='charts7'></div>
 						  </div>
 						</div>
@@ -376,7 +376,7 @@
 					  
 					  <div class="container-fluid" style = "padding-bottom: 20px">
 						<div class="row">
-						  <div class="col-sm-8">
+						  <div class="col-sm-7">
 							<div id='charts8'></div>
 						  </div>					  
 						  <div class="col-sm-4">
@@ -493,10 +493,10 @@
 			<div class="container-fluid" style = "padding-bottom: 20px">
 				<div class="row">
 				<div class="col-sm-4">
-					<div id='chart5'></div>
+					<div id='chart7'></div>
 				</div>
 				<div class="col-sm-8">
-					<div id='chart6'></div>
+					<div id='chart8'></div>
 				</div>
 				</div>
 			</div>
@@ -517,8 +517,8 @@
 				var graph5 = {{graph5JSON | safe}};
 				Plotly.plot('chart5',graph5,{});
 
-				// var graph6 = {{graph6JSON | safe}};
-				// Plotly.plot('chart6',graph6,{});
+				var graph6 = {{graph6JSON | safe}};
+				Plotly.plot('chart6',graph6,{});
 
 				var graph7 = {{graph7JSON | safe}};
 				Plotly.plot('chart7',graph7,{});
