@@ -922,7 +922,9 @@ def churnanalytics():
                 
             for i in range(len(Xnew)):
                 kctn['Churn Probability'][i] = proba[i]
-            for j in range(kctn['account_no'].count()):
+            
+            accnt = kctn['account_no'].values
+            for j in range(len(accnt)):
                 if j <= len(Xnew):
                     predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
             cust = 100
@@ -1146,7 +1148,7 @@ def churnanalytics():
         proba = logmodel.predict_proba(Xnew)[:,1]
         logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
         print (logmodel_accuracy)
-
+    
         for i in range(len(Xnew)):
             df['Churn Probability'] = proba[i]
 
