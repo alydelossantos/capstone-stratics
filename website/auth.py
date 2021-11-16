@@ -289,9 +289,9 @@ def insert():
             activation_date = request.form['activation_date']
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
-            if status == "Active":
+            if disconnection_date == NULL:
                 churn = 0
-            elif status == "Disconnected":
+            else:
                 churn = 1
             row = Data.query.count()
             count = Data.query.filter(Data.id >= row).count()
