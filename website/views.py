@@ -1039,6 +1039,7 @@ def churnanalytics():
                 Xnew = X_test.values
                 pred = logmodel.predict(X_test)
 
+                proba = logmodel.predict_proba(Xnew)[:,1]
                 logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
                 print (logmodel_accuracy)
 
@@ -1147,7 +1148,7 @@ def churnanalytics():
 
         Xnew = X_test.values
         pred = logmodel.predict(X_test)
-
+        proba = logmodel.predict_proba(Xnew)[:,1]
         logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
         print (logmodel_accuracy)
 
