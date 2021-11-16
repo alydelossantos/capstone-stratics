@@ -169,9 +169,9 @@ def signup():
         elif len(password) < 8:
             flash("Password must contain 8 characters.", category="error")
         elif len(fname) < 2:
-            flash("Please input valid name.", category="error")
+            flash("Please input a valid name.", category="error")
         elif len(lname) < 2:
-            flash("Please input valid name.", category="error")
+            flash("Please input a valid name.", category="error")
         else:
             new_user = User(fname=fname, lname=lname, uname=uname, email=email, cname=cname, password=password, user_type=user_type)
             db.session.add(new_user)
@@ -289,10 +289,10 @@ def insert():
             activation_date = request.form['activation_date']
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
-            if status == "active":
-                churn = 1
-            elif status == "disconnected":
+            if disconnection_date == "":
                 churn = 0
+            else:
+                churn = 1
             row = Data.query.count()
             count = Data.query.filter(Data.id >= row).count()
             if count >= 1:
@@ -330,10 +330,10 @@ def insert():
             activation_date = request.form['activation_date']
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
-            if status == "active":
-                churn = 1
-            elif status == "disconnected":
+            if status == "Active":
                 churn = 0
+            elif status == "Disconnected":
+                churn = 1
                 
             if sd <= 10:
                 sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
