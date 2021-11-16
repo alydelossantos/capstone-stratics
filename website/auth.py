@@ -253,7 +253,7 @@ def custman():
                 province = request.form['province']
                 services = request.form['services']
                 monthly = request.form['monthly']
-                status = request.form['status']
+                #status = request.form['status']
                 amount_paid = request.form['amount_paid']
                 ref_no = request.form['ref_no']
                 date_paid = request.form['date_paid']
@@ -276,7 +276,7 @@ def custman():
 def insert():
     if current_user.cname == "Kalibo Cable":
         if request.method == 'POST':
-            #account_no = request.form['account_no']
+            account_no = request.form['account_no']
             subscriber = request.form['subscriber']
             address = request.form['address']
             zone = request.form['zone']
@@ -291,8 +291,8 @@ def insert():
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
             
-            l = 11
-            ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
+            #l = 11
+            #ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
 
             if activation_date != None and disconnection_date == None:
                 status = "Active"
@@ -325,7 +325,7 @@ def insert():
             flash("Customer Record Added Successfully")
             
             return redirect(url_for('auth.custman'))
-            return render_template(ran=ran)
+            #return render_template(ran=ran)
 			
     else:
         sd = Otherdata \
