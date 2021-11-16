@@ -289,7 +289,7 @@ def insert():
             activation_date = request.form['activation_date']
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
-            if disconnection_date == "":
+            if disconnection_date == None:
                 churn = 0
             else:
                 churn = 1
