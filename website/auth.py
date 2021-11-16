@@ -169,9 +169,9 @@ def signup():
         elif len(password) < 8:
             flash("Password must contain 8 characters.", category="error")
         elif len(fname) < 2:
-            flash("Please input valid name.", category="error")
+            flash("Please input a valid name.", category="error")
         elif len(lname) < 2:
-            flash("Please input valid name.", category="error")
+            flash("Please input a valid name.", category="error")
         else:
             new_user = User(fname=fname, lname=lname, uname=uname, email=email, cname=cname, password=password, user_type=user_type)
             db.session.add(new_user)
