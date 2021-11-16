@@ -451,6 +451,7 @@ def edit():
             if request.files['image_file']:
                 picture_file = save_picture(request.files['image_file'])
                 current_user.image_file = picture_file
+            current_user.image_file = picture_file
             current_user.fname = request.form['fname']
             current_user.lname = request.form['lname']
             current_user.cp = request.form['cp']
