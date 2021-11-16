@@ -292,7 +292,7 @@ def insert():
             reactivation_date = request.form['reactivation_date']
             
             l = 11
-            ran = ''.join(random.choices(string.ascii_uppercase + string.digits, k=l))
+            ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
 
             if activation_date != None and disconnection_date == None:
                 status = "Active"
