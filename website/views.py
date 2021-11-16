@@ -848,10 +848,10 @@ def home():
 @login_required
 def churnanalytics():
     if current_user.explore == "customer":
-    active = Data \
+        active = Data \
         .query \
         .filter(Data.status == "Active").count()
-    disconnected = Data \
+        disconnected = Data \
         .query \
         .filter(Data.status == "Disconnected").count()
         if current_user.cname == "Kalibo Cable":
