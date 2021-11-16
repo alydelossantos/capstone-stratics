@@ -1,3 +1,5 @@
+import string
+import random
 import os
 import secrets
 import smtplib
@@ -274,7 +276,7 @@ def custman():
 def insert():
     if current_user.cname == "Kalibo Cable":
         if request.method == 'POST':
-            account_no = request.form['account_no']
+            #account_no = request.form['account_no']
             subscriber = request.form['subscriber']
             address = request.form['address']
             zone = request.form['zone']
@@ -289,6 +291,9 @@ def insert():
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
             
+            l = 11
+            ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
+
             if activation_date != None and disconnection_date == None:
                 status = "Active"
             elif activation_date != None and disconnection_date != None:
@@ -320,6 +325,7 @@ def insert():
             flash("Customer Record Added Successfully")
             
             return redirect(url_for('auth.custman'))
+            return render_template(ran=ran)
 			
     else:
         sd = Otherdata \
