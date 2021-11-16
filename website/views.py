@@ -915,20 +915,16 @@ def churnanalytics():
             result = logmodel.fit(X_train, y_train)
 
             Xnew = X_test.values
-            pred = logmodel.predict(X_test)
 
-            logmodel_accuracy = round(metrics.accuracy_score(y_test, pred)*100, 2)
-            print(logmodel_accuracy)
+            proba = logmodel.predict_proba(X_test)[:,1]
 
-            proba = logmodel.predict_proba(Xnew)[:,1]
-
-            for i in range(len(Xnew)):
+            for i in range(len(X_test)):
                 kctn['Churn Probability'] = proba[i]
 
-            for i in range(len(Xnew)):
+            for i in range(len(X_test)):
                 kctn['Churn Probability'][i] = proba[i]
                 predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
-                cust = kctn['Churn Probability'].count()
+            cust = kctn['Churn Probability'].count()
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
         else:
