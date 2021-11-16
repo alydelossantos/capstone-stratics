@@ -848,6 +848,12 @@ def home():
 @login_required
 def churnanalytics():
     if current_user.explore == "customer":
+    active = Data \
+        .query \
+        .filter(Data.status == "Active").count()
+    disconnected = Data \
+        .query \
+        .filter(Data.status == "Disconnected").count()
         if current_user.cname == "Kalibo Cable":
             kctn = pd.read_sql_table('data', con=cnx)
             kctn.head()
@@ -927,7 +933,7 @@ def churnanalytics():
             predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
             cust = kctn['account_no'].count()
             image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
+            return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust, active=active, disconnected=disconnected)
         else:
             df = pd.read_sql_table('otherdata', con=cnx)
             dataf = df.loc[df['odata_id'] == current_user.id]
