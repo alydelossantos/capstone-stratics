@@ -906,7 +906,7 @@ def churnanalytics():
             X.columns = features
 
             from sklearn.model_selection import train_test_split
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8, random_state=101)
 
             # Running logistic regression model
             from sklearn.linear_model import LogisticRegression
@@ -923,14 +923,9 @@ def churnanalytics():
                 
             for i in range(len(Xnew)):
                 kctn['Churn Probability'][i] = proba[i]
-            
-            for i in range(len(Xnew)):
-                kctn['account_no'][i]
-                kctn['amount_paid'][i]
-                kctn['monthly'][i]
                 
             predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
-            cust = len(Xnew)
+            cust = kctn['account_no'].count()
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
         else:
@@ -1157,7 +1152,7 @@ def churnanalytics():
             df['Churn Probability'][i] = proba[i]
         
         predd = df[['customerID' ,'Churn Probability']].values.tolist()
-        cust = len(Xnew)
+        cust = df['customerID'].count()
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("churn-analysis.html", user= current_user, image_file=image_file, my_list=predd, cust=cust)
     image_file = url_for('static', filename='images/' + current_user.image_file)
