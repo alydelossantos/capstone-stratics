@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
     bday = db.Column(db.String(50), default='mm/dd/yyyy')
     about = db.Column(db.String(500), default='Describe Yourself')
     password = db.Column(db.String(50))
-    image_file = db.Column(db.String(20), default='default.png') 
+    image_file = db.Column(db.String(225), default='default.png') 
     dname = db.Column(db.String(100), nullable=False, default='Dashboard Name')
     explore = db.Column(db.String(50), nullable=False, default='empty')
     email_confirmation_sent_on = db.Column(db.DateTime, nullable=True)
@@ -48,9 +48,9 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
     
 class Data(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    account_no = db.Column(db.String(100))
-    subscriber = db.Column(db.String(100))
+    id = db.Column(db.Integer, primary_key = True, unique =True, autoincrement = True)
+    account_no = db.Column(db.String(100), unique=True)
+    subscriber = db.Column(db.String(225))
     address = db.Column(db.String(225))
     zone = db.Column(db.String(50))
     services = db.Column(db.String(100))
@@ -69,8 +69,8 @@ class Data(db.Model):
 class Otherdata(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     odata_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    account_no = db.Column(db.String(100))
-    subscriber = db.Column(db.String(100))
+    account_no = db.Column(db.String(100), unique=True)
+    subscriber = db.Column(db.String(225))
     gender = db.Column(db.String(20))
     address = db.Column(db.String(225))
     province = db.Column(db.String(100))
@@ -144,7 +144,7 @@ class Samplestrategies(db.Model):
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100))
-    email = db.Column(db.String(100), unique=True)
+    email = db.Column(db.String(100))
     message = db.Column(db.String(225))
     
 class Task(db.Model):
@@ -157,6 +157,3 @@ class Task(db.Model):
 
     def __repr__(self):
         return '<Content %s>' % self.content
-
-
-
