@@ -4743,6 +4743,18 @@ section {
     padding: 0 14px;
 }
 
+.block-pending {
+    font-size: 14px;
+    color: #134B93;
+    display: inline-block;
+    background: #6DCFFF;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    line-height: 30px;
+    padding: 0 14px;
+}
+
 .block-active {
     font-size: 14px;
     color: #1B9B17;

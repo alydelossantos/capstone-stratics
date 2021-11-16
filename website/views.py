@@ -520,7 +520,7 @@ def home():
                             plot_bgcolor = "white",
                             paper_bgcolor = "white",))
                 figs6 = go.Figure(data = data,layout = layout)
-                graphs6JSON = json.dumps(figs5, cls=plotly.utils.PlotlyJSONEncoder)
+                graphs6JSON = json.dumps(figs6, cls=plotly.utils.PlotlyJSONEncoder)
 
 
                 # Churn Rate by Services
