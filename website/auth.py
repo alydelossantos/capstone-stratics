@@ -306,6 +306,8 @@ def insert():
                 status = "Active"
             elif activation_date != None and disconnection_date != None and reactivation_date == None:
                 status = "Disconnected" 
+            elif activation_date != None:
+                status = "Active"
                 
             if disconnection_date == None:
                 churn = 0
@@ -360,7 +362,9 @@ def insert():
             elif activation_date != None and disconnection_date != None and reactivation_date != None:
                 status = "Active"
             elif activation_date != None and disconnection_date != None and reactivation_date == None:
-                status = "Disconnected" 
+                status = "Disconnected"
+            elif activation_date != None:
+                status = "Active"
             
             if disconnection_date == None:
                 churn = 0
