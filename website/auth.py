@@ -309,7 +309,7 @@ def insert():
             elif activation_date != None:
                 status = "Active"
                 
-            if disconnection_date == None:
+            if disconnection_date != None:
                 churn = 0
             else:
                 churn = 1
