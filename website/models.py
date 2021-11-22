@@ -58,12 +58,12 @@ class Data(db.Model):
     collector = db.Column(db.String(50))
     status = db.Column(db.String(50))
     amount_paid = db.Column(db.Numeric)
-    ref_no = db.Column(db.String(100), nullable=True)
-    date_paid = db.Column(db.String(50), nullable=True)
+    ref_no = db.Column(db.String(100), nullable=True, default=None)
+    date_paid = db.Column(db.String(50), nullable=True, default=None)
     category = db.Column(db.String(50))
     activation_date = db.Column(db.String(100))
-    disconnection_date = db.Column(db.String(100), nullable=True)
-    reactivation_date = db.Column(db.String(100), nullable=True)
+    disconnection_date = db.Column(db.String(100), nullable=True, default=None)
+    reactivation_date = db.Column(db.String(100), nullable=True, default=None)
     churn = db.Column(db.Numeric)
     
 class Otherdata(db.Model):
@@ -78,12 +78,12 @@ class Otherdata(db.Model):
     monthly = db.Column(db.Numeric)
     status = db.Column(db.String(50))
     amount_paid = db.Column(db.Numeric)
-    ref_no = db.Column(db.String(100), nullable=True)
-    date_paid = db.Column(db.String(50), nullable=True)
+    ref_no = db.Column(db.String(100), nullable=True, default=None)
+    date_paid = db.Column(db.String(50), nullable=True, default=None)
     category = db.Column(db.String(50))
     activation_date = db.Column(db.String(100))
-    disconnection_date = db.Column(db.String(100), nullable=True)
-    reactivation_date = db.Column(db.String(100), nullable=True)
+    disconnection_date = db.Column(db.String(100), nullable=True, default=None)
+    reactivation_date = db.Column(db.String(100), nullable=True, default=None)
     churn = db.Column(db.Numeric)
     
 class Sampledata(db.Model):
