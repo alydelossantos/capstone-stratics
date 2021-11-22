@@ -682,7 +682,9 @@ def newstrat():
             #status = request.form['status']
             description = request.form['description']
             
-            if startdate == enddate:
+            today = date.today()
+            dates = today.strftime("%Y/%m/%d")
+            if dates == enddate:
                 status = "complete"
             else:
                 status = "ongoing"
