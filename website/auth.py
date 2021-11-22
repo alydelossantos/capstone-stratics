@@ -317,9 +317,8 @@ def insert():
             if count >= 1:
                 id = row + count
             
-            paid = amount_paid
             total_paid = 0
-            total_paid = paid + total_paid
+            total_paid = amount_paid + total_paid
             
             datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
 					collector=collector, status=status, amount_paid=amount_paid, total_paid=total_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
@@ -722,7 +721,9 @@ def newstrat():
             #status = request.form['status']
             description = request.form['description']
             
-            if startdate == enddate:
+            today = date.today()
+            dates = today.strftime("%Y-%m-%d")
+            if dates == enddate:
                 status = "complete"
             else:
                 status = "ongoing"
