@@ -129,10 +129,16 @@
 										<label>Platform</label>
 										<input type="text" class="form-control" name="platform" required="1" placeholder="Platform"> 
 										</div>
+									
 										<div class="col-sm-6">
-										</div>
+										  <label>Status</label>
+										  <select name="status" class="custom-select">
+											<option value="0">Please Select Status</option>
 										
-	
+											<option value="ongoing">Ongoing</option>
+											<option value="complete">Complete</option>
+										  </select>
+										</div>
 									</div> 
 									
 									<div class="form-group row">
@@ -278,7 +284,13 @@
 														</div>
 
 														<div class="col-sm-6">
-										</div>
+															<label>Status</label>
+															<select class="form-control" name="status" value="{{row.status}}">
+															  <!-- <option value="0">Please Select Status</option> -->
+															  <option class="yellowBg" value="ongoing">Ongoing</option>
+															  <option class="greenBg" value="complete">Complete</option>
+															</select>
+														</div>
 													</div>
 
 													<div class="form-group row">
