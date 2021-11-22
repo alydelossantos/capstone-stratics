@@ -674,8 +674,14 @@ def newstrat():
             platform = request.form['platform']
             startdate = request.form['startdate']
             enddate = request.form['enddate']
-            status = request.form['status']
+            #status = request.form['status']
             description = request.form['description']
+            
+            if startdate == enddate:
+                status = "complete"
+            else:
+                status = "ongoing"
+            
             row = Samplestrategies.query.count()
             count = Samplestrategies.query.filter(Samplestrategies.id >= row).count()
             if count >= 1:
