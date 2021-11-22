@@ -316,9 +316,13 @@ def insert():
             count = Data.query.filter(Data.id >= row).count()
             if count >= 1:
                 id = row + count
-
+            
+            paid = amount_paid
+            total_paid = 0
+            total_paid = paid + total_paid
+            
             datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
-					collector=collector, status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+					collector=collector, status=status, amount_paid=amount_paid, total_paid=total_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
 					disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn)
             db.session.add(datas)
             db.session.commit()
@@ -369,10 +373,14 @@ def insert():
                 churn = 0
             else:
                 churn = 1
-                
+            
+            paid = amount_paid
+            total_paid = 0
+            total_paid = amount_paid + total_paid
+            
             if sd <= 10:
                 sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
-						status=status, amount_paid=amount_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
+						status=status, amount_paid=amount_paid, total_paid=total_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
 						disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn, odata_id=current_user.id)
                 db.session.add(sdatas)
                 db.session.commit()   
@@ -799,7 +807,6 @@ def updatestrat(id):
             my_strat.platform = request.form['platform']
             my_strat.startdate = request.form['startdate']
             my_strat.enddate = request.form['enddate']
-            my_strat.status = request.form['status']
             my_strat.description = request.form['description']
             
             db.session.commit()
