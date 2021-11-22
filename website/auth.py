@@ -677,7 +677,7 @@ def newstrat():
             #status = request.form['status']
             description = request.form['description']
             
-            if startdate == enddate:
+            if datetime(startdate) == datetime(enddate):
                 status = "complete"
             else:
                 status = "ongoing"
@@ -687,6 +687,7 @@ def newstrat():
             if count >= 1:
                 id = row + count
                 my_strat = Samplestrategies(id=id)
+		
             my_strat = Samplestrategies(name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
