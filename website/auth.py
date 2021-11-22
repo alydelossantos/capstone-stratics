@@ -389,7 +389,6 @@ def update(id):
             datas.amount_paid = request.form['amount_paid']
             datas.date_paid = request.form['date_paid']
             datas.category = request.form['category']
-            datas.activation_date = request.form['activation_date']
             datas.disconnection_date = request.form['disconnection_date']
             datas.reactivation_date = request.form['reactivation_date']
 
