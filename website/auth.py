@@ -294,14 +294,18 @@ def insert():
             #l = 11
             #ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
 
-            if activation_date is not None and disconnection_date is None:
+            if activation_date != None:
                 status = "Active"
-            elif activation_date is not None and disconnection_date is not None:
+            elif disconnection_date != None:
                 status = "Disconnected"
-            elif activation_date is not None and disconnection_date is not None and reactivation_date is not None:
+            elif disconnection_date == None:
+                status = "Active"
+            elif reactivation_date != None:
                 status = "Disconnected"
-                
-            if disconnection_date is None:
+            elif reactivation_date == None:
+                status = "Active"
+
+            if disconnection_date == None:
                 churn = 0
             else:
                 churn = 1
@@ -703,8 +707,14 @@ def newstrat():
             platform = request.form['platform']
             startdate = request.form['startdate']
             enddate = request.form['enddate']
-            status = request.form['status']
+            #status = request.form['status']
             description = request.form['description']
+            
+            if startdate == enddate:
+                status = "complete"
+            else:
+                status = "ongoing"
+            
             row = Strategies.query.count()
             count = Strategies.query.filter(Strategies.id >= row).count()
             if count >= 1:
