@@ -305,7 +305,7 @@ def insert():
                 churn = 0
             else:
                 churn = 1
-		
+		        
             row = Data.query.count()
             count = Data.query.filter(Data.id >= row).count()
             if count >= 1:
@@ -676,7 +676,7 @@ def newstrat():
             #status = request.form['status']
             description = request.form['description']
             
-            if datetime(startdate) == datetime(enddate):
+            if startdate == enddate:
                 status = "complete"
             else:
                 status = "ongoing"
