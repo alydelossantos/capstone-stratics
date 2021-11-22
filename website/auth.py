@@ -294,14 +294,14 @@ def insert():
             #l = 11
             #ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
 
-            if activation_date != Null and disconnection_date == Null:
+            if activation_date is not None and disconnection_date is None:
                 status = "Active"
-            elif activation_date != Null and disconnection_date != Null:
+            elif activation_date is not None and disconnection_date is not None:
                 status = "Disconnected"
-            elif activation_date != Null and disconnection_date != Null and reactivation_date != Null:
+            elif activation_date is not None and disconnection_date is not None and reactivation_date is not None:
                 status = "Disconnected"
                 
-            if disconnection_date == "":
+            if disconnection_date is None:
                 churn = 0
             else:
                 churn = 1
