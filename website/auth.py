@@ -318,7 +318,7 @@ def insert():
                 id = row + count
             
             total_paid = 0
-            total_paid = amount_paid + total_paid
+            total_paid = amount_paid+total_paid
             
             print(disconnection_date)
             datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
