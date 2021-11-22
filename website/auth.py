@@ -294,25 +294,16 @@ def insert():
             #l = 11
             #ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
 
-            if activation_date != None and disconnection_date == None:
+            if activation_date != None or disconnection_date == None:
                 status = "Active"
-            elif activation_date != None and disconnection_date != None:
+            elif disconnection_date != None:
                 status = "Disconnected"
-            elif activation_date == None and disconnection_date == None:
-                status = "Disconnected"
-            elif activation_date == None and disconnected_date != None:
-                status = "Disconnected"
-            elif activation_date != None and disconnection_date != None and reactivation_date != None:
-                status = "Active"
-            elif activation_date != None and disconnection_date != None and reactivation_date == None:
-                status = "Disconnected" 
-            elif activation_date != None:
-                status = "Active"
                 
             if disconnection_date != None:
                 churn = 0
             else:
                 churn = 1
+		
             row = Data.query.count()
             count = Data.query.filter(Data.id >= row).count()
             if count >= 1:
