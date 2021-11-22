@@ -16,7 +16,7 @@ from .models import User, Data, Otherdata, Sampledata, Strategies, Otherstrategi
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 from website import mail
-from datetime import datetime
+from datetime import datetime, date
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
 from email.message import EmailMessage
