@@ -146,7 +146,7 @@
 								
 								<div class="col-sm-6">
 									<label>Activation Date</label>
-									<input type="date" class="form-control" name="activation_date" required="1" value="None">     
+									<input type="date" class="form-control" name="activation_date" required="1">     
 								</div>
 							</div>
 						
@@ -158,7 +158,7 @@
 								
 								<div class="col-sm-6">
 									<label>Disconnection Date</label>
-									<input type="date" class="form-control" name="disconnection_date" value="None">     
+									<input type="date" class="form-control" name="disconnection_date">     
 								</div>
 							</div>
 						
@@ -177,7 +177,7 @@
 								
 								<div class="col-sm-6">
 									<label>Reactivation Date</label>
-									<input type="date" class="form-control" name="reactivation_date" value="None">     
+									<input type="date" class="form-control" name="reactivation_date">     
 								</div>
 							</div>
 						
@@ -221,6 +221,7 @@
                             <th>Collector</th>
                             <th>Status</th>
                             <th>Amount Paid</th>
+			    <th>Total Paid</th>
 			    <th>Reference Number</th>
                             <th>Date Paid</th>
                             <th>Category</th>
@@ -254,6 +255,7 @@
 								{% endif %}
 							</td>
 							<td>Php {{row.amount_paid}}</td>
+							<td>Php {{row.total_paid}}</td>
 							<td>{{row.ref_no}}</td>
 							<td>{{row.date_paid}}</td>
 							<td>{{row.category}}</td>
@@ -268,9 +270,7 @@
 							</td>
                             <td>
                                 <div class="table-data-feature">
-                                    <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
-                                    <a href="/customer-management/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
-                                    
+                                    <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a> 
                                 </div>
                             </td>
                         </tr>
@@ -375,29 +375,7 @@
                                 </div>
 						    </div>
                         </div>
-                    
-                    <!-- Modal Delete Customer-->
-
-                    <div id="modaldelete{{row.id}}" class="modal fade">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-								<div class="modal-header">   
-									<h4 class="modal-title">Delete Customer</h4>
-								</div>
-								<div class="modal-body">
-									<form action="/customer-management/delete/{{row.id}}">
-										<div class="form-group">
-											<label>Are you sure you want to delete Customer {{row.accnt_num}}?</label>
-										</div>  
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-											<button class="btn btn-primary" type="submit">Delete Customer</button>
-										</div>
-									</form>
-								</div>    
-                            </div>
-						</div> 
-					</div>						
+                    					
                         {% endfor %}
                     </tbody>
 					<div class="col-md-12">
