@@ -297,6 +297,10 @@ def insert():
                 reactivation_date = None
             elif disconnection_date != "" and reactivation_date == "":
                 reactivation_date = None
+                disconnection_date = request.form['disconnection_date']
+            elif disconnection_date != "" and reactivation_date != "":
+                reactivation_date = request.form['reactivation_date']
+                disconnection_date = request.form['disconnection_date']
             
             if activation_date != None and disconnection_date == None:
                 status = "Active"
@@ -407,7 +411,10 @@ def update(id):
             elif datas.disconnection_date != "" and datas.reactivation_date == "":
                 datas.reactivation_date = None
                 datas.disconnection_date = request.form['disconnection_date']
-            
+            elif datas.disconnection_date != "" and datas.reactivation_date != "":
+                datas.reactivation_date = request.form['reactivation_date']
+                datas.disconnection_date = request.form['disconnection_date']
+                
             if datas.activation_date != None and datas.disconnection_date == None:
                 datas.status = "Active"
             elif datas.activation_date != None and datas.disconnection_date != None:
@@ -419,13 +426,15 @@ def update(id):
                 datas.churn = 0
             else:
                 datas.churn = 1
-                
-            datas.total_paid = datas.total_paid + datas.amount_paid
-            db.session.commit()
             
+            datas.amount_paid = float(request.form['amount_paid'])
+            datas.total_paid = float(datas.total_paid) + float(datas.amount_paid)
+            db.session.commit()
+            print(datas.amount_paid)
             flash("Customer Record Updated Successfully")
      
             return redirect(url_for('auth.custman'))
+        return redirect(url_for('auth.custman'))
     else:
         if request.method == 'POST':
             odatas = Otherdata.query.get(request.form.get('id'))
@@ -444,6 +453,7 @@ def update(id):
             elif odatas.disconnection_date != "" and odatas.reactivation_date == "":
                 odatas.reactivation_date = None
                 odatas.disconnection_date = request.form['disconnection_date']
+            
             
             if odatas.activation_date != None and odatas.disconnection_date == None:
                 odatas.status = "Active"
