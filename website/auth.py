@@ -644,6 +644,8 @@ def strat():
             .filter(Strategies.status == "ongoing").count()
 
         all_data = Strategies.query.all() 
+        print(dates)
+        print(end)
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
     
