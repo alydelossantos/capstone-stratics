@@ -406,6 +406,7 @@ def update(id):
                 datas.reactivation_date = None
             elif datas.disconnection_date != "" and datas.reactivation_date == "":
                 datas.reactivation_date = None
+                datas.disconnection_date = request.form['disconnection_date']
             
             if datas.activation_date != None and datas.disconnection_date == None:
                 datas.status = "Active"
@@ -443,6 +444,7 @@ def update(id):
                 odatas.reactivation_date = None
             elif odatas.disconnection_date != "" and odatas.reactivation_date == "":
                 odatas.reactivation_date = None
+                odatas.disconnection_date = request.form['disconnection_date']
             
             if odatas.activation_date != None and odatas.disconnection_date == None:
                 odatas.status = "Active"
