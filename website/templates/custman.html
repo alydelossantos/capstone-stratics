@@ -146,7 +146,7 @@
 								
 								<div class="col-sm-6">
 									<label>Activation Date</label>
-									<input type="date" class="form-control" name="activation_date" required="1" value="">     
+									<input type="date" class="form-control" name="activation_date" required="1">     
 								</div>
 							</div>
 						
@@ -158,7 +158,7 @@
 								
 								<div class="col-sm-6">
 									<label>Disconnection Date</label>
-									<input type="date" class="form-control" name="disconnection_date" value="">     
+									<input type="date" class="form-control" name="disconnection_date" value=None>     
 								</div>
 							</div>
 						
@@ -177,7 +177,7 @@
 								
 								<div class="col-sm-6">
 									<label>Reactivation Date</label>
-									<input type="date" class="form-control" name="reactivation_date" value="">     
+									<input type="date" class="form-control" name="reactivation_date" value=None>     
 								</div>
 							</div>
 						
@@ -250,7 +250,7 @@
 							<td>{{row.collector}}</td>
 							<td> {% if row.status == "Active" %}
 								<li style = list-style-type:none; class="block-active">Active</li>
-								{% else %}
+								{% elif row.status == "Disconnected" %}
 								<li style = list-style-type:none; class="block-inactive">Disconnected</li>
 								{% endif %}
 							</td>
@@ -293,7 +293,6 @@
                                                     <h1>{{row.subscriber}}</h1>
 							<input type="hidden"  name="id" value="{{row.id}}">
 							<h4 style="font-weight:500">Accnt. No. {{row.account_no}}</h4>
-							<h4 style="font-weight:500">Ref. No. {{row.ref_no}}</h4>
 							<p>{{row.address}}</p>
 							<p>Zone: {{row.zone}}</p>
 													
@@ -335,36 +334,45 @@
 						</div>
                                             </div>
 											
-																									<div class="form-group row">
+					<div class="form-group row">
    
-                                                                       <div class="col-sm-6">
-													<label>Collector</label>
-													<select name="collector" class="custom-select" value="{{row.collector}}">
-														<option value="Kalibo Office">Kalibo Office</option>
-														<option value="Cymore">Cymore</option>
-														<option value="Wilsol">Wilsol</option>
-														<option value="Arnel">Arnel</option>
-														<option value="Vincent">Vincent</option>
-													</select>    
-												</div>
-											 <div class="col-sm-6">
-													<label>Amount Paid</label>
-													<input type="text" class="form-control" name="amount_paid" value="{{row.amount_paid}}">     
-												</div>
+						<div class="col-sm-6">
+						<label>Collector</label>
+						<select name="collector" class="custom-select" value="{{row.collector}}">
+							<option value="Kalibo Office">Kalibo Office</option>
+							<option value="Cymore">Cymore</option>
+							<option value="Wilsol">Wilsol</option>
+							<option value="Arnel">Arnel</option>
+							<option value="Vincent">Vincent</option>
+						</select>    
+						</div>
+						<div class="col-sm-6">
+						<label>Amount Paid</label>
+						<input type="text" class="form-control" name="amount_paid" value="{{row.amount_paid}}">     
+						</div>
                                             </div>
 											
-											<div class="form-group row">
-          
-		 											<div class="col-sm-6">
-													<label>Disconnection Date</label>
-													<input type="date" class="form-control" name="disconnection_date" value="{{row.disconnection_date}}">     
-												</div>
-                                                							<div class="col-sm-6">
-													<label>Reactivation Date</label>
-													<input type="date" class="form-control" name="reactivation_date" value="{{row.reactivation_date}}">     
-												</div>
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<label>Reference Number</label>
+							<input type="text" class="form-control" name="ref_no" value="{{row.ref_no}}">     
+						</div>
+						<div class="col-sm-6">
+							<label>Disconnection Date</label>
+							<input type="date" class="form-control" name="disconnection_date" value="{{row.disconnection_date}}">     
+						</div>						
+				    	</div>	
+						
+					<div class="form-group row">
+						<div class="col-sm-6">
+						</div>
+
+						<div class="col-sm-6">
+							<label>Reactivation Date</label>
+							<input type="date" class="form-control" name="reactivation_date" value="{{row.reactivation_date}}">     
+						</div>
 												
-                                            </div>					
+				    	</div>	
 											
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
