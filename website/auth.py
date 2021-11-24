@@ -334,7 +334,7 @@ def insert():
             flash("Customer Record Added Successfully")
             
             return redirect(url_for('auth.custman'))
-            return (ran=ran)
+            return render_template(ran=ran)
 			
     else:
         sd = Otherdata \
