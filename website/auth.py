@@ -420,16 +420,13 @@ def update(id):
             else:
                 datas.churn = 1
                 
-            datas.total_paid = float(datas.total_paid) + float(datas.amount_paid)
+            datas.total_paid = datas.total_paid + datas.amount_paid
             db.session.commit()
             
             flash("Customer Record Updated Successfully")
      
             return redirect(url_for('auth.custman'))
-        return redirect(url_for('auth.custman'))
-    else:
-        if request.method == 'POST':
-            odatas = Otherdata.query.get(request.form.get('id'))
+        return request.form.get('id'))
             odatas.services = request.form['services']
             odatas.monthly = request.form['monthly']
             odatas.amount_paid = request.form['amount_paid']
