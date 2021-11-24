@@ -729,11 +729,13 @@ def newstrat():
                 status = "ongoing"
             print(dates)
             print(end)
+            
             row = Strategies.query.count()
             count = Strategies.query.filter(Strategies.id >= row).count()
             if count >= 1:
                 id = row + count
                 my_strat = Strategies(id=id)
+                
             my_strat = Strategies(name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description)
             db.session.add(my_strat)
