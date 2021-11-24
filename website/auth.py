@@ -722,7 +722,7 @@ def newstrat():
             #status = request.form['status']
             description = request.form['description']
             
-            dates = datetime.today().strftime("%Y-%m-%d")
+            dates = date.today()
             start = datetime.strptime(startdate, "%Y-%m-%d")
             startdate = start.date()
             endd = datetime.strptime(enddate, "%Y-%m-%d")
