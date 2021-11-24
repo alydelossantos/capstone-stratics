@@ -691,11 +691,18 @@ def newstrat():
             #status = request.form['status']
             description = request.form['description']
 
-            dates = datetime.today().strftime("%Y/%m/%d")
-            if dates == enddate:
+            dates = date.today()
+            start = datetime.strptime(startdate, "%Y-%m-%d")
+            startdate = start.date()
+            endd = datetime.strptime(enddate, "%Y-%m-%d")
+            enddate = endd.date()
+            end = enddate
+            if end == dates:
                 status = "complete"
             else:
                 status = "ongoing"
+            print(dates)
+            print(end)
             
             row = Samplestrategies.query.count()
             count = Samplestrategies.query.filter(Samplestrategies.id >= row).count()
@@ -774,9 +781,20 @@ def newstrat():
             platform = request.form['platform']
             startdate = request.form['startdate']
             enddate = request.form['enddate']
-            status = request.form['status']
+            #status = request.form['status']
             description = request.form['description']
             
+            dates = date.today()
+            start = datetime.strptime(startdate, "%Y-%m-%d")
+            startdate = start.date()
+            endd = datetime.strptime(enddate, "%Y-%m-%d")
+            enddate = endd.date()
+            end = enddate
+            if end == dates:
+                status = "complete"
+            else:
+                status = "ongoing"
+
             if sd <= 10:
                 my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
                         enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
@@ -818,16 +836,17 @@ def updatestrat(id):
             my_strat.enddate = request.form['enddate']
             my_strat.description = request.form['description']
             
-            dates = datetime.today().strftime("%Y-%m-%d")
+            dates = date.today()
+            start = datetime.strptime(my_strat.startdate, "%Y-%m-%d")
+            my_strat.startdate = start.date()
             endd = datetime.strptime(my_strat.enddate, "%Y-%m-%d")
-            end = endd.date()
+            my_strat.enddate = endd.date()
+            end = enddate
             if end == dates:
                 my_strat.status = "complete"
             else:
                 my_strat.status = "ongoing"
-            print(dates)
-            print(end)
-            
+
             db.session.commit()
             flash("Strategy Updated Successfully", category="notlimit")
             return redirect(url_for('auth.strat')) 
