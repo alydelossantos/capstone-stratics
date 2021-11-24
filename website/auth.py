@@ -318,7 +318,7 @@ def insert():
                 id = row + count
             
             total_paid = 0
-            total_paid = amount_paid+total_paid
+            total_paid = float(amount_paid) + float(total_paid)
             
             print(disconnection_date)
             datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
@@ -723,8 +723,9 @@ def newstrat():
             description = request.form['description']
             
             today = date.today()
-            dates = today.strftime("%Y-%m-%d")
-            if dates == enddate:
+            dates = today.strptime("%Y-%m-%d")
+            end = datetime.strptime(enddate, "%Y-%m-%d")
+            if dates == end:
                 status = "complete"
             else:
                 status = "ongoing"
