@@ -236,9 +236,7 @@ def custman():
     if current_user.explore == "customer" or current_user.explore == "empty":
         if current_user.cname == "Kalibo Cable":
             all_data = Data.query.all()
-            l = 11
-            ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
-            print(ran)
+            
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
         else:
@@ -293,8 +291,9 @@ def insert():
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
             
-            #l = 11
-            #ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
+            l = 11
+            ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
+            
             if disconnection_date == "" and reactivation_date == "":
                 disconnection_date = None
                 reactivation_date = None
@@ -335,7 +334,7 @@ def insert():
             flash("Customer Record Added Successfully")
             
             return redirect(url_for('auth.custman'))
-            #return render_template(ran=ran)
+            return render_template(ran=ran)
 			
     else:
         sd = Otherdata \
