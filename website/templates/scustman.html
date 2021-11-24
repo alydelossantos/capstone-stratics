@@ -293,6 +293,7 @@
                             <th>Monthly Payment</th>
                             <th>Status</th>
                             <th>Amount Paid</th>
+                            <th>Total Paid</th>
 							<th>Reference Number</th>
                             <th>Date Paid</th>
                             <th>Category</th>
@@ -327,6 +328,7 @@
 								{% endif %}
 							</td>
 							<td>Php {{row.amount_paid}}</td>
+                            <td>Php {{row.total_paid}}</td>
 							<td>{{row.ref_no}}</td>
 							<td>{{row.date_paid}}</td>
 							<td>{{row.category}}</td>
@@ -341,9 +343,7 @@
 							</td>
                             <td>
                                 <div class="table-data-feature">
-                                    <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a>
-                                    <a href="/customer-management/delete/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Delete" data-target="#modaldelete{{row.id}}"><button id = "delete"><i class="zmdi zmdi-delete"></i></button></a>
-                                    
+                                    <a href="/customer-management/update/{{row.id}}" class="item" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit" data-target="#modaledit{{row.id}}"><button id = "edit"><i class="zmdi zmdi-edit"></i></button></a> 
                                 </div>
                             </td>
                         </tr>
@@ -363,17 +363,14 @@
                                         <form action="/customer-management/update/{{row.id}}" method="POST">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-							<input type="hidden"  name="id" value="{{row.id}}">
+							                        <input type="hidden"  name="id" value="{{row.id}}">
                                                     <h1>{{row.subscriber}}</h1>
-													<h4 style="font-weight:500">Accnt. No. {{row.account_no}}</h4>
-													<h4 style="font-weight:500">Ref. No. {{row.ref_no}}</h4>
 													<p>Gender: {{row.gender}}</p>
 													<p>{{row.address}}, {{row.province}}</p>
-													
                                                 </div>
-
                                                 <div class="col-sm-6">
-
+                                                    <h4 style="font-weight:500;text-align:right;">Accnt. No.<br>{{row.account_no}}</h4>
+                                                    <p style="text-align:right;">Total Paid:<br>Php {{row.total_paid}}</p>
                                                 </div>
                                             </div> 
 											
@@ -410,27 +407,34 @@
 					</div>
 											
 											<div class="form-group row">
-                                                												<div class="col-sm-6">
+                                                    <div class="col-sm-6">
 													<label>Amount Paid</label>
-													<input type="text" class="form-control" name="amount_paid" value="{{row.amount_paid}}">     
+													<input type="text" class="form-control" name="amount_paid" value="0.0">     
 												</div>
 											   <div class="col-sm-6">
 													<label>Activation Date</label>
 													<input type="date" class="form-control" name="activation_date" value="{{row.activation_date}}">     
 												</div>
                                             </div>
-											
+                                            
 											<div class="form-group row">
-
-												
+                                                    <div class="col-sm-6">
+													<label>Reference Number</label>
+													<input type="text" class="form-control" name="ref_no" value="{{row.ref_no}}">     
+												</div>
+											   <div class="col-sm-6">
+											        <label>Disconnection Date</label>
+													<input type="date" class="form-control" name="disconnection_date" value="{{row.disconnection_date}}">  
+												</div>
+                                            </div>
+											<div class="form-group row">
 												<div class="col-sm-6">
-													<label>Disconnection Date</label>
-													<input type="date" class="form-control" name="disconnection_date" value="{{row.disconnection_date}}">     
+													 <label>Reactivation Date</label>
+													<input type="date" class="form-control" name="reactivation_date" value="{{row.reactivation_date}}">  
 												</div>
 																								
 												<div class="col-sm-6">
-													<label>Reactivation Date</label>
-													<input type="date" class="form-control" name="reactivation_date" value="{{row.reactivation_date}}">     
+													     
 												</div>
 												
                                             </div>					
@@ -444,30 +448,7 @@
                                 </div>
 						    </div>
                         </div>
-                    
-                    <!-- Modal Delete Customer-->
-
-                    <div id="modaldelete{{row.id}}" class="modal fade">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-								<div class="modal-header">   
-									<h4 class="modal-title">Delete Customer</h4>
-								</div>
-								<div class="modal-body">
-									<form action="/customer-management/delete/{{row.id}}">
-										<div class="form-group">
-											<label>Are you sure you want to delete Customer {{row.aaccount_no}}?</label>
-										</div>  
-										<div class="modal-footer">
-											<button class="btn btn-primary" type="submit">Delete Customer</button>
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-										</div>
-									</form>
-								</div>    
-                            </div>
-						</div> 
-					</div>						
-                        {% endfor %}
+                   {% endfor %}
                     </tbody>
 					<div class="col-md-12">
 						<div class="table-data__tool-right" style="padding-bottom:15px;margin-top: 0.20rem;margin-left: -1rem;">
