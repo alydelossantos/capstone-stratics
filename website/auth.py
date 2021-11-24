@@ -722,7 +722,8 @@ def newstrat():
             description = request.form['description']
             
             dates = datetime.today().strftime("%Y-%m-%d")
-            end = datetime.strftime(enddate, "%Y-%m-%d")
+            endd = datetime.strptime(enddate, "%Y-%m-%d")
+            end = endd.date()
             if dates == end:
                 status = "complete"
             else:
