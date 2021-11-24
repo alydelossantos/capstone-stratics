@@ -725,7 +725,7 @@ def newstrat():
             dates = datetime.today().strftime("%Y-%m-%d")
             endd = datetime.strptime(enddate, "%Y-%m-%d")
             end = endd.date()
-            if dates == end:
+            if end == dates:
                 status = "complete"
             else:
                 status = "ongoing"
@@ -814,6 +814,16 @@ def updatestrat(id):
             my_strat.startdate = request.form['startdate']
             my_strat.enddate = request.form['enddate']
             my_strat.description = request.form['description']
+            
+            dates = datetime.today().strftime("%Y-%m-%d")
+            endd = datetime.strptime(my_strat.enddate, "%Y-%m-%d")
+            end = endd.date()
+            if end == dates:
+                my_strat.status = "complete"
+            else:
+                my_strat.status = "ongoing"
+            print(dates)
+            print(end)
             
             db.session.commit()
             flash("Strategy Updated Successfully", category="notlimit")
