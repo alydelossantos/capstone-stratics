@@ -426,7 +426,9 @@ def update(id):
             flash("Customer Record Updated Successfully")
      
             return redirect(url_for('auth.custman'))
-        return request.form.get('id'))
+    else:
+        if request.method == 'POST':
+            odatas = Otherdata.query.get(request.form.get('id'))
             odatas.services = request.form['services']
             odatas.monthly = request.form['monthly']
             odatas.amount_paid = request.form['amount_paid']
