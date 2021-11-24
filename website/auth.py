@@ -361,7 +361,10 @@ def insert():
                 reactivation_date = None
             elif disconnection_date != "" and reactivation_date == "":
                 reactivation_date = None
-            
+            elif disconnection_date != "" and reactivation_date != "":
+                reactivation_date = request.form['reactivation_date']
+                disconnection_date = request.form['disconnection_date']
+                
             if activation_date != None and disconnection_date == None:
                 status = "Active"
             elif activation_date != None and disconnection_date != None:
@@ -427,7 +430,6 @@ def update(id):
             else:
                 datas.churn = 1
             
-            datas.amount_paid = float(request.form['amount_paid'])
             datas.total_paid = float(datas.total_paid) + float(datas.amount_paid)
             db.session.commit()
             print(datas.amount_paid)
@@ -453,7 +455,9 @@ def update(id):
             elif odatas.disconnection_date != "" and odatas.reactivation_date == "":
                 odatas.reactivation_date = None
                 odatas.disconnection_date = request.form['disconnection_date']
-            
+            elif odatas.disconnection_date != "" and odatas.reactivation_date != "":
+                odatas.reactivation_date = request.form['reactivation_date']
+                odatas.disconnection_date = request.form['disconnection_date']
             
             if odatas.activation_date != None and odatas.disconnection_date == None:
                 odatas.status = "Active"
@@ -461,13 +465,13 @@ def update(id):
                 odatas.status = "Disconnected"
             elif odatas.activation_date != None and odatas.disconnection_date != None and odatas.reactivation_date != None:
                 odatas.status = "Disconnected"
-
+            
             if odatas.disconnection_date == None:
                 odatas.churn = 0
             else:
                 odatas.churn = 1
                 
-            odatas.total_paid = odatas.float(total_paid) + odatas.float(amount_paid)
+            odatas.total_paid = float(odatas.total_paid) + float(odatas.amount_paid)
             
             db.session.commit()
             
