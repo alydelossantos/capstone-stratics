@@ -236,6 +236,9 @@ def custman():
     if current_user.explore == "customer" or current_user.explore == "empty":
         if current_user.cname == "Kalibo Cable":
             all_data = Data.query.all()
+            l = 11
+            ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
+            print(ran)
             image_file = url_for('static', filename='images/' + current_user.image_file)
             return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
         else:
