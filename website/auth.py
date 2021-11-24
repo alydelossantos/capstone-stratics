@@ -405,7 +405,8 @@ def update(id):
             datas.category = request.form['category']
             datas.disconnection_date = request.form['disconnection_date']
             datas.reactivation_date = request.form['reactivation_date']
-
+            
+            datas.total_paid = float(datas.total_paid) + float(datas.amount_paid)
             db.session.commit()
             
             flash("Customer Record Updated Successfully")
@@ -727,7 +728,8 @@ def newstrat():
                 status = "complete"
             else:
                 status = "ongoing"
-            
+            print(dates)
+            print(end)
             row = Strategies.query.count()
             count = Strategies.query.filter(Strategies.id >= row).count()
             if count >= 1:
