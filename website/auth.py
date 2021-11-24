@@ -295,6 +295,8 @@ def insert():
             if disconnection_date == "" and reactivation_date == "":
                 disconnection_date = None
                 reactivation_date = None
+            elif disconnection_date != "" and reactivation_date == "":
+                reactivation_date = None
             
             if activation_date != None and disconnection_date == None:
                 status = "Active"
@@ -350,29 +352,26 @@ def insert():
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
             
+            if disconnection_date == "" and reactivation_date == "":
+                disconnection_date = None
+                reactivation_date = None
+            elif disconnection_date != "" and reactivation_date == "":
+                reactivation_date = None
+            
             if activation_date != None and disconnection_date == None:
                 status = "Active"
             elif activation_date != None and disconnection_date != None:
                 status = "Disconnected"
-            elif activation_date == None and disconnection_date == None:
-                status = "Disconnected"
-            elif activation_date == None and disconnected_date != None:
-                status = "Disconnected"
             elif activation_date != None and disconnection_date != None and reactivation_date != None:
-                status = "Active"
-            elif activation_date != None and disconnection_date != None and reactivation_date == None:
                 status = "Disconnected"
-            elif activation_date != None:
-                status = "Active"
-            
+
             if disconnection_date == None:
                 churn = 0
             else:
                 churn = 1
             
-            paid = amount_paid
             total_paid = 0
-            total_paid = amount_paid + total_paid
+            total_paid = float(amount_paid) + float(total_paid)
             
             if sd <= 10:
                 sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
@@ -402,6 +401,24 @@ def update(id):
             datas.disconnection_date = request.form['disconnection_date']
             datas.reactivation_date = request.form['reactivation_date']
             
+            if datas.disconnection_date == "" and datas.reactivation_date == "":
+                datas.disconnection_date = None
+                datas.reactivation_date = None
+            elif datas.disconnection_date != "" and datas.reactivation_date == "":
+                datas.reactivation_date = None
+            
+            if datas.activation_date != None and datas.disconnection_date == None:
+                datas.status = "Active"
+            elif datas.activation_date != None and datas.disconnection_date != None:
+                datas.status = "Disconnected"
+            elif datas.activation_date != None and datas.disconnection_date != None and datas.reactivation_date != None:
+                datas.status = "Disconnected"
+
+            if datas.disconnection_date == None:
+                datas.churn = 0
+            else:
+                datas.churn = 1
+                
             datas.total_paid = float(datas.total_paid) + float(datas.amount_paid)
             db.session.commit()
             
@@ -420,31 +437,32 @@ def update(id):
             odatas.activation_date = request.form['activation_date']
             odatas.disconnection_date = request.form['disconnection_date']
             odatas.reactivation_date = request.form['reactivation_date']
+            
+            if odatas.disconnection_date == "" and odatas.reactivation_date == "":
+                odatas.disconnection_date = None
+                odatas.reactivation_date = None
+            elif odatas.disconnection_date != "" and odatas.reactivation_date == "":
+                odatas.reactivation_date = None
+            
+            if odatas.activation_date != None and odatas.disconnection_date == None:
+                odatas.status = "Active"
+            elif odatas.activation_date != None and odatas.disconnection_date != None:
+                odatas.status = "Disconnected"
+            elif odatas.activation_date != None and odatas.disconnection_date != None and odatas.reactivation_date != None:
+                odatas.status = "Disconnected"
 
+            if odatas.disconnection_date == None:
+                odatas.churn = 0
+            else:
+                odatas.churn = 1
+                
+            odatas.total_paid = float(odatas.total_paid) + float(odatas.amount_paid)
+            
             db.session.commit()
             
             flash("Customer Record Updated Successfully")
      
             return redirect(url_for('auth.custman'))
-
-#This route is for deleting our customer
-@auth.route('/customer-management/delete/<id>/', methods = ['GET', 'POST'])
-@login_required
-def delete(id):
-    if current_user.cname == "Kalibo Cable":
-        my_data = Data.query.get(id)
-        db.session.delete(my_data)
-        db.session.commit()
-        flash("Customer Record Deleted Successfully")
-     
-        return redirect(url_for('auth.custman'))
-    else:
-        my_data = Otherdata.query.get(id)
-        db.session.delete(my_data)
-        db.session.commit()
-        flash("Customer Record Deleted Successfully")
-     
-        return redirect(url_for('auth.custman'))
  
 #This route is for deleting our customer in checkbox
 @auth.route('/customer-management/delete-selected', methods = ['GET', 'POST'])
@@ -819,6 +837,17 @@ def updatestrat(id):
             my_strat.status = request.form['status']
             my_strat.description = request.form['description']
             
+            dates = date.today()
+            start = datetime.strptime(my_strat.startdate, "%Y-%m-%d")
+            my_strat.startdate = start.date()
+            endd = datetime.strptime(my_strat.enddate, "%Y-%m-%d")
+            my_strat.enddate = endd.date()
+            end = my_strat.enddate
+            if end == dates:
+                my_strat.status = "complete"
+            else:
+                my_strat.status = "ongoing"
+            
             db.session.commit()
             flash("Strategy Updated Successfully", category="notlimit")
             return redirect(url_for('auth.strat'))
@@ -869,6 +898,17 @@ def updatestrat(id):
             my_strat.enddate = request.form['enddate']
             my_strat.status = request.form['status']
             my_strat.description = request.form['description']
+            
+            dates = date.today()
+            start = datetime.strptime(my_strat.startdate, "%Y-%m-%d")
+            my_strat.startdate = start.date()
+            endd = datetime.strptime(my_strat.enddate, "%Y-%m-%d")
+            my_strat.enddate = endd.date()
+            end = my_strat.enddate
+            if end == dates:
+                my_strat.status = "complete"
+            else:
+                my_strat.status = "ongoing"
             
             db.session.commit()
             flash("Strategy Updated Successfully", category="notlimit")
