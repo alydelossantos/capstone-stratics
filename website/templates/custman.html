@@ -298,6 +298,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <h4 style="font-weight:500; text-align:right;">Activation Date:<br>{{row.activation_date}}</h4>
+                                                    <p style="text-align:right;">Total Paid:<br>Php {{row.total_paid}}</p>
                                                 </div>
                                             </div> 
 											
@@ -347,7 +348,7 @@
                         </div>
                         <div class="col-sm-6">
                         <label>Amount Paid</label>
-                        <input type="text" class="form-control" name="amount_paid" placeholder="Php 0.00">     
+                        <input type="text" class="form-control" name="amount_paid" value="0.00">     
                         </div>
                     </div>
 											
@@ -439,16 +440,16 @@
                             <th>Dependents</th>
                             <thTenure</th>
                             <th>Phone Service</th>
-			    <th>Multiple Lines</th>
-			    <th>Internet Service</th>
+                            <th>Multiple Lines</th>
+                            <th>Internet Service</th>
                             <th>Online Security</th>
                             <th>Online Backup</th>
                             <th>Device Protection</th>
                             <th>Tech Support</th>
                             <th>Streaming TV</th>
                             <th>Streaming Movies/th>
-			    <th>Contract</th>
-			    <th>Paperles Billing</th>
+                            <th>Contract</th>
+                            <th>Paperles Billing</th>
                             <th>Payment Method</th>
                             <th>Monthly Charges</th>
                             <th>Total Charges</th>
