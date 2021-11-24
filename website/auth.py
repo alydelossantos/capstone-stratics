@@ -841,7 +841,7 @@ def updatestrat(id):
             my_strat.startdate = start.date()
             endd = datetime.strptime(my_strat.enddate, "%Y-%m-%d")
             my_strat.enddate = endd.date()
-            end = enddate
+            end = my_strat.enddate
             if end == dates:
                 my_strat.status = "complete"
             else:
