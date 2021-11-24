@@ -420,7 +420,7 @@ def update(id):
             else:
                 datas.churn = 1
                 
-            datas.total_paid = datas.float(total_paid) + datas.float(amount_paid)
+            datas.total_paid = datas.(float(total_paid)) + datas.(float(amount_paid))
             db.session.commit()
             
             flash("Customer Record Updated Successfully")
