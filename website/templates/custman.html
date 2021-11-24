@@ -54,7 +54,7 @@
             {% endif %}
             {% endwith %} 
     
-                    <!-- Modal Create Strategies--> 
+                    <!-- Modal Create Customer--> 
  
 	<div id="mymodal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
             aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -71,7 +71,7 @@
 							<div class="form-group row">
 								<div class="col-sm-6">
 									<label>Account Number</label>
-									<input type="text" class="form-control" name="account_no" required="1" placeholder=”Account Number”>     
+									<input type="text" class="form-control" name="account_no" required="1" placeholder="Account Number">     
 								</div>
 								
 								<div class="col-sm-6">
@@ -101,7 +101,7 @@
 								
 								<div class="col-sm-6">
 									<label>Date Paid</label>
-									<input type="date" class="form-control" name="date_paid" required="1">     
+									<input type="date" class="form-control" name="date_paid" required="1" placeholder="yyyy-mm-dd">     
 								</div>
 							</div> 
 						
@@ -146,7 +146,7 @@
 								
 								<div class="col-sm-6">
 									<label>Activation Date</label>
-									<input type="date" class="form-control" name="activation_date" required="1">     
+									<input type="date" class="form-control" name="activation_date" required="1" placeholder="yyyy-mm-dd">     
 								</div>
 							</div>
 						
@@ -158,7 +158,7 @@
 								
 								<div class="col-sm-6">
 									<label>Disconnection Date</label>
-									<input type="date" class="form-control" name="disconnection_date" value=None>     
+									<input type="date" class="form-control" name="disconnection_date" value="None" placeholder="yyyy-mm-dd">     
 								</div>
 							</div>
 						
@@ -177,7 +177,7 @@
 								
 								<div class="col-sm-6">
 									<label>Reactivation Date</label>
-									<input type="date" class="form-control" name="reactivation_date" value=None>     
+									<input type="date" class="form-control" name="reactivation_date" value="None" placeholder="yyyy-mm-dd">     
 								</div>
 							</div>
 						
@@ -221,14 +221,14 @@
                             <th>Collector</th>
                             <th>Status</th>
                             <th>Amount Paid</th>
-			    <th>Total Paid</th>
-			    <th>Reference Number</th>
+                            <th>Total Paid</th>
+                            <th>Reference Number</th>
                             <th>Date Paid</th>
                             <th>Category</th>
                             <th>Activation</th>
                             <th>Disconnection</th>
                             <th>Reactivation</th>
-			    <th>Churn</th>
+			                <th>Churn</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -291,66 +291,65 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <h1>{{row.subscriber}}</h1>
-							<input type="hidden"  name="id" value="{{row.id}}">
-							<h4 style="font-weight:500">Accnt. No. {{row.account_no}}</h4>
-							<p>{{row.address}}</p>
-							<p>Zone: {{row.zone}}</p>
-													
+                                                        <input type="hidden"  name="id" value="{{row.id}}">
+                                                        <h4 style="font-weight:500">Accnt. No. {{row.account_no}}</h4>
+                                                        <p>{{row.address}}</p>
+                                                        <p>Zone: {{row.zone}}</p>
                                                 </div>
-						<div class="col-sm-6">
-							<h4 style="font-weight:500">Activation Date: {{row.activation_date}}</h4>
-                                                </div>
-                                            </div> 
-											
-						<div class="form-group row">
-						<div class="col-sm-6">
-							<label>Services</label>
-							<select name="services" class="custom-select" value="{{row.services}}">
-								<option value="Digital HD">Digital HD</option>
-								<option value="Internet with HD">Internet with HD</option>
-								<option value="Internet Only">Internet Only</option>
-							</select>    
-						</div>
-
                                                 <div class="col-sm-6">
-							<label>Date Paid</label>
-							<input type="date" class="form-control" name="date_paid" value="{{row.date_paid}}">     
-						</div>
+                                                    <h4 style="font-weight:500; text-align:right;">Activation Date:<br>{{row.activation_date}}</h4>
+                                                </div>
                                             </div> 
 											
-					<div class="form-group row">
-					<div class="col-sm-6">
-							<label>Monthly Payment</label>
-							<input type="text" class="form-control" name="monthly" value="{{row.monthly}}">   
-						</div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label>Services</label>
+                                                    <select name="services" class="custom-select" value="{{row.services}}">
+                                                        <option value="Digital HD">Digital HD</option>
+                                                        <option value="Internet with HD">Internet with HD</option>
+                                                        <option value="Internet Only">Internet Only</option>
+                                                    </select>    
+                                                </div>
 
-					   <div class="col-sm-6">
-							<label>Category</label>
-							<select name="category" class="custom-select" value="{{row.category}}">
-								<option value="RS">RS</option>
-								<option value="GV">GV</option>
-								<option value="CS">CS</option>
-							</select>    
-						</div>
+                                                    <div class="col-sm-6">
+                                                        <label>Date Paid</label>
+                                                        <input type="date" class="form-control" name="date_paid" value="{{row.date_paid}}">     
+                                                    </div>
+                                            </div> 
+											
+                                        <div class="form-group row">
+                                        <div class="col-sm-6">
+                                                <label>Monthly Payment</label>
+                                                <input type="text" class="form-control" name="monthly" value="{{row.monthly}}">   
                                             </div>
+
+                                           <div class="col-sm-6">
+                                                <label>Category</label>
+                                                <select name="category" class="custom-select" value="{{row.category}}">
+                                                    <option value="RS">RS</option>
+                                                    <option value="GV">GV</option>
+                                                    <option value="CS">CS</option>
+                                                </select>    
+                                            </div>
+                                        </div>
 											
 					<div class="form-group row">
    
-						<div class="col-sm-6">
-						<label>Collector</label>
-						<select name="collector" class="custom-select" value="{{row.collector}}">
-							<option value="Kalibo Office">Kalibo Office</option>
-							<option value="Cymore">Cymore</option>
-							<option value="Wilsol">Wilsol</option>
-							<option value="Arnel">Arnel</option>
-							<option value="Vincent">Vincent</option>
-						</select>    
-						</div>
-						<div class="col-sm-6">
-						<label>Amount Paid</label>
-						<input type="text" class="form-control" name="amount_paid" value="{{row.amount_paid}}">     
-						</div>
-                                            </div>
+                        <div class="col-sm-6">
+                        <label>Collector</label>
+                        <select name="collector" class="custom-select" value="{{row.collector}}">
+                            <option value="Kalibo Office">Kalibo Office</option>
+                            <option value="Cymore">Cymore</option>
+                            <option value="Wilsol">Wilsol</option>
+                            <option value="Arnel">Arnel</option>
+                            <option value="Vincent">Vincent</option>
+                        </select>    
+                        </div>
+                        <div class="col-sm-6">
+                        <label>Amount Paid</label>
+                        <input type="text" class="form-control" name="amount_paid" placeholder="Php 0.00">     
+                        </div>
+                    </div>
 											
 					<div class="form-group row">
 						<div class="col-sm-6">
