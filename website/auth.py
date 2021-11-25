@@ -398,9 +398,9 @@ def insert():
             return redirect(url_for('auth.custman'))
             return render_template(sd=sd)
 
-@auth.route('/import', methods = ['POST'])
+@auth.route('/import', methods = ['GET','POST'])
 @login_required
-def import():
+def importcsv():
     if current_user.cname == "Kalibo Cable":
         if request.method == 'POST':
             current_user.csv = request.form['csv']
