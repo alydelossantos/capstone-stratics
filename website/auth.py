@@ -541,6 +541,7 @@ def profile():
         
 @login_required
 def save_picture(form_picture):
+    UPLOAD_FOLDER = "static/images"
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = _ + f_ext
     picture_path = os.path.join(UPLOAD_FOLDER, picture_fn)
