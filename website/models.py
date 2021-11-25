@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
     email_confirmed_on = db.Column(db.DateTime, nullable=True)
     user_type = db.Column(db.String(50))
     user_status = db.Column(db.Boolean, nullable=True, default=False)
+    csv = db.Column(db.String(225), nullable=True)
     position = db.Column(db.String(50), default="Position")
     dash = db.Column(db.String(20), default="none")
     ccode = db.Column(db.String(20))
