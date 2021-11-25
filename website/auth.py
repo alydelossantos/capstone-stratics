@@ -398,6 +398,31 @@ def insert():
             return redirect(url_for('auth.custman'))
             return render_template(sd=sd)
 
+@auth.route('/import', methods = ['POST'])
+@login_required
+def import():
+    if current_user.cname == "Kalibo Cable":
+        if request.method == 'POST':
+            current_user.csv = request.form['csv']
+            if current_user.csv.filename != "":
+                file_path = os.path.join(auth.root_path, 'static/files', current_user.csv)
+                current_user.csv.save(file_path)
+                
+            db.session.commit()
+            
+            flash("CSV File Added Successfully")
+            
+            return redirect(url_for('auth.custman'))
+        return redirect(url_for('auth.custman'))
+    else:
+        sd = Otherdata \
+            .query \
+            .join(User) \
+            .filter(User.id==current_user.id).count()
+
+            return redirect(url_for('auth.custman'))
+            return render_template(sd=sd)
+        
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
 def update(id):
