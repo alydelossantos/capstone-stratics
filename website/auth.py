@@ -1,6 +1,7 @@
 import string
 import random
 import os
+from os.path import join
 import secrets
 import smtplib
 import sqlalchemy 
@@ -542,7 +543,7 @@ def profile():
 def save_picture(form_picture):
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = _ + f_ext
-    picture_path = os.path.join(app.config['UPLOAD_FOLDER'], picture_fn)
+    picture_path = os.path.join(UPLOAD_FOLDER, picture_fn)
     form_picture.save(picture_path)
     output_size = (250, 250)
     i = Image.open(form_picture)
