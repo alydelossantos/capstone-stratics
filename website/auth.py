@@ -544,7 +544,7 @@ def save_picture(form_picture):
     UPLOAD_FOLDER = "https://github.com/alydelossantos/capstone-stratics/tree/main/website/static/images"
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = _ + f_ext
-    picture_path = os.path.join(UPLOAD_FOLDER, picture_fn)
+    picture_path = os.path.join(auth.rooth_path, UPLOAD_FOLDER, picture_fn)
     form_picture.save(picture_path)
     output_size = (250, 250)
     i = Image.open(form_picture)
