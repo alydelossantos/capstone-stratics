@@ -882,7 +882,7 @@ def churnanalytics():
             # independent variable - all columns aside from 'Churn'
             X = kctn2.iloc[:,:-1].values
             # dependent variable - Churn
-            y = kctn2.iloc[:,7]
+            y = kctn2.iloc[:,9]
 
             # Convert predictor variables in a binary numeric variable
             kctn2['status'].replace(to_replace='Active', value=1, inplace=True)
@@ -894,7 +894,7 @@ def churnanalytics():
 
             from sklearn.preprocessing import StandardScaler
             standardscaler = StandardScaler()
-            columns_for_fit_scaling = ['monthly', 'amount_paid']
+            columns_for_fit_scaling = ['monthly', 'amount_paid', 'total_paid']
             kctn_dummies[columns_for_fit_scaling] = standardscaler.fit_transform(kctn_dummies[columns_for_fit_scaling])
 
             # Splitting Data into Train and Test
