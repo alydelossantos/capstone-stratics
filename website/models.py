@@ -65,6 +65,7 @@ class Data(db.Model):
     activation_date = db.Column(db.String(100))
     disconnection_date = db.Column(db.String(100), nullable=True)
     reactivation_date = db.Column(db.String(100), nullable=True)
+    last_modified_on = db.Column(db.DateTime, nullable=True)
     churn = db.Column(db.Numeric)
     
 class Otherdata(db.Model):
