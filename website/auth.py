@@ -404,10 +404,6 @@ def importcsv():
     if current_user.cname == "Kalibo Cable":
         if request.method == 'POST':
             current_user.csv = request.form['csv']
-            if csv.filename != "":
-                file_path = os.path.join(auth.root_path, 'static/files', csv)
-                csv.save(file_path)
-                
             db.session.commit()
             
             flash("CSV File Added Successfully")
