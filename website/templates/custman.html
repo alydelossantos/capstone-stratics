@@ -375,6 +375,9 @@
 				    	</div>	
 											
                                             <div class="modal-footer">
+                                                <div class="col-sm-6">
+                                                    <p>Last Modified by: {{current_user.lname}}, {{current_user.fname}}-{{row.last_modified_on}}</p>
+                                                </div>
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button class="btn btn-primary" type="submit">Update Customer</button>
                                             </div>
