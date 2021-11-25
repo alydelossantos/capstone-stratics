@@ -17,4 +17,4 @@ SECRET_KEY = 'asdfghjkl'
 SQLALCHEMY_DATABASE_URI = uri
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-UPLOAD_FOLDER = "static/images/user_profile"
+UPLOAD_FOLDER = "static/images"
