@@ -382,11 +382,12 @@ def insert():
             
             total_paid = 0
             total_paid = float(amount_paid) + float(total_paid)
+            last_modified_on = datetime.now()
             
             if sd <= 10:
                 sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
 						status=status, amount_paid=amount_paid, total_paid=total_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
-						disconnection_date=disconnection_date, reactivation_date=reactivation_date, churn=churn, odata_id=current_user.id)
+						disconnection_date=disconnection_date, reactivation_date=reactivation_date, last_modified_on=last_modified_on, churn=churn, odata_id=current_user.id)
                 db.session.add(sdatas)
                 db.session.commit()   
                 flash("Customer Record Added Successfully", category="notlimit")
@@ -434,6 +435,7 @@ def update(id):
                 datas.churn = 1
             
             datas.total_paid = float(datas.total_paid) + float(datas.amount_paid)
+            datas.last_modified_on = datetime.now()
             db.session.commit()
             print(datas.amount_paid)
             flash("Customer Record Updated Successfully")
