@@ -420,8 +420,8 @@ def importcsv():
             .join(User) \
             .filter(User.id==current_user.id).count()
 
-            return redirect(url_for('auth.custman'))
-            return render_template(sd=sd)
+        return redirect(url_for('auth.custman'))
+        return render_template(sd=sd)
         
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
