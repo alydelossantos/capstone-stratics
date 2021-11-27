@@ -406,7 +406,7 @@ def insert():
 def importcsv():
     if current_user.cname == "Kalibo Cable":
         if request.method == 'POST':
-            if request.files['image_file']:
+            if request.files['csv']:
                 csv_file = save_file(request.files['csv'])
                 current_user.csv = csv_file
                 
