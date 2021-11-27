@@ -407,7 +407,7 @@ def importcsv():
     if current_user.cname == "Kalibo Cable":
         if request.method == 'POST':
             #if request.files['csv']:
-            csv_file = request.files['csv']
+            csv_file = request.form['csv']
             current_user.csv = csv_file
                 
             db.session.commit()
