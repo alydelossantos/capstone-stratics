@@ -413,7 +413,7 @@ def importcsv():
             
             col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid',
                    'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
-            records = pd.read_csv("https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/" + current_user.csv + "?token=AUEFNOB4EEOP35TGMANFKTLBUJXAQ", names=col, header=0)
+            records = pd.read_csv(r"https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/" + current_user.csv, names=col, header=0)
             
             for i, row in records.iterrows():
                 sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
