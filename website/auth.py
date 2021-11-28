@@ -417,7 +417,7 @@ def importcsv():
                    'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
 
             url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIGKURRUPXEETCSOFADBUPRVM"
-            CSV_FILE = requests.get(url).text
+            CSV_FILE = requests.get(url).content
             records = pd.read_csv(StringIO(CSV_FILE), header=0)
 
             for i, row in records.iterrows():
@@ -557,7 +557,7 @@ def deletecheck():
 # User Profile
 
 @auth.route('/user-profile/edit',methods = ['GET', 'POST']) # Edit User Profile
-@login_required
+@login_required!
 def edit():
         if request.method == 'POST':
             if request.files['image_file']:
