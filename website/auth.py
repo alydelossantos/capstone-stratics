@@ -46,6 +46,7 @@ abbrenoinc = "KCTN"
 
 cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
 conn = cnx.connect()
+cur = conn.cursor()
 
 # Landing Page
 #About Page
@@ -422,9 +423,9 @@ def importcsv():
                 sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
                 values = (row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'],
                         row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
-                conn.execute(sql, values, if_exists='append')
+                cur.execute(sql, values, if_exists='append')
                 conn.commit()
-            
+                print(row['account_no'])
             db.session.commit()
             flash("CSV File Added Successfully")
             
