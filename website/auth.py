@@ -46,7 +46,7 @@ knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
 conn = psycopg2.connect(dname='ympxkbvvsaslrc', password='45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58', host='ec2-54-160-35-196.compute-1.amazonaws.com', port='5432', database='dd3k0hhqki80nh')
-#conn = cnx.connect()
+conn = autocommit =True
 cur = conn.cursor()
 
 # Landing Page
