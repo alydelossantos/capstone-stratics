@@ -413,20 +413,21 @@ def importcsv():
                 csv_file = save_file(request.files['csv'])
                 current_user.csv = csv_file  
 
-            col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid',
-                   'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
-            
-            url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"
-            CSV_FILE = requests.get(url).content
-            records = pd.read_csv(io.StringIO(CSV_FILE.decode('utf-8')), names=col, header=0)
-            
-            for i, row in records.iterrows():
-                sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
-                values = (row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'],
-                        row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
-                cur.execute(sql, values, if_exists='append')
-                conn.commit()
-                print(row['account_no'])
+                col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid',
+                       'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
+
+                url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"
+                CSV_FILE = requests.get(url).content
+                records = pd.read_csv(io.StringIO(CSV_FILE.decode('utf-8')), names=col, header=0)
+
+                for i, row in records.iterrows():
+                    sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
+                    values = (row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'],
+                            row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
+                    cur.execute(sql, values, if_exists='append')
+                    conn.commit()
+                    print(row['account_no'])
+                    
             db.session.commit()
             flash("CSV File Added Successfully")
             
