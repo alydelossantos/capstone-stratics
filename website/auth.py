@@ -1,5 +1,5 @@
 import string
-import io import StringIO
+from io import StringIO
 import requests
 import psycopg2
 import pandas as pd
