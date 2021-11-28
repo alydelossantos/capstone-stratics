@@ -416,7 +416,7 @@ def importcsv():
             col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid',
                    'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
 
-            url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"
+            url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIGKURRUPXEETCSOFADBUPRVM"
             CSV_FILE = requests.get(url).text
             records = pd.read_csv(StringIO(CSV_FILE), header=0)
 
