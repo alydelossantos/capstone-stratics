@@ -411,6 +411,8 @@ def importcsv():
             csv_file = request.files['csv']
             current_user.csv = csv_file
                 
+            db.session.commit()
+            flash("CSV File Added Successfully")
             
             col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid',
                    'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
@@ -426,9 +428,6 @@ def importcsv():
                 conn.execute(sql, values, if_exists='append')
                 conn.commit()
             
-            db.session.commit()
-            
-            flash("CSV File Added Successfully")
             return redirect(url_for('auth.custman'))
         return redirect(url_for('auth.custman'))
     else:
