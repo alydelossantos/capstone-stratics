@@ -1,11 +1,12 @@
 import string
+import io
+import requests
 import pandas as pd
 import os
 from os.path import join
 import secrets
 import smtplib
 import sqlalchemy 
-from urllib.request import urlopen
 from PIL import Image
 from flask import Flask
 import base64
@@ -413,8 +414,10 @@ def importcsv():
             
             col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid',
                    'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
-            CSV_FILE = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AUEFNOCPKCT5HB3MO7SMGKDBUKZTE"
-            records = pd.read_csv(urlopen(CSV_FILE), header=0)
+            
+            url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"
+            CSV_FILE = requests.get(url).content
+            records = pd.read_csv(io.StringIO(CSV_FILE.decode('utf-8')), names=col, header=0)
             
             for i, row in records.iterrows():
                 sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
