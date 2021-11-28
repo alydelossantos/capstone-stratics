@@ -1,6 +1,7 @@
 import string
 import io
 import requests
+import psycopg2
 import pandas as pd
 import os
 from os.path import join
@@ -45,7 +46,7 @@ knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
 cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
-conn = cnx.connect()
+conn = cnx.raw_connection()
 cur = conn.cursor()
 
 # Landing Page
