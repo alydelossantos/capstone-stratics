@@ -426,6 +426,7 @@ def importcsv():
                     row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
             try:
                 cur.execute(sql, values, if_exists='append')
+                cur.execute('''SELECT * FROM data''')
                 #cur.copy_from(readcsv, 'data', sep=',')
                 conn.commit()
             except:
