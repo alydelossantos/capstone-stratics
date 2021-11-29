@@ -1,5 +1,5 @@
 import string
-import urllib2
+import urllib
 import requests
 import psycopg2
 import csv
@@ -424,7 +424,7 @@ def importcsv():
         CSV_FILE = requests.get(url).text
         records = pd.read_csv(url, names=col, header=0)
         print(records)
-        csv = urllib2.urlopen(url)
+        csv = urllib.request.urlopen(url)
         readcsv = csv.reader(csv)
         next(readcsv)
   	
