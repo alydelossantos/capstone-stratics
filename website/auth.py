@@ -414,7 +414,9 @@ def importcsv():
                 csv_file = save_import(request.files['csv'])
                 current_user.csv = csv_file  
             db.session.commit()
-            
+            for f in os.listdir(url_for('static', filename='file/')
+                print(f)
+            '''
             with open(url_for('static', filename='file/' + 'kalibo2018.csv'), newline='', encoding='utf8') as csvfile:
                 records =csv.reader(csvfile)
                 for row in records:
@@ -427,6 +429,7 @@ def importcsv():
                     except:
                         conn.rollback()
                 conn.close()
+            '''
             '''
             col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid',
                    'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
