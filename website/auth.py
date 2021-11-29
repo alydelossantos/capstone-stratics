@@ -1,5 +1,5 @@
 import string
-from io import StringIO 
+import urllib
 import requests
 import psycopg2
 import csv
@@ -424,7 +424,7 @@ def importcsv():
         CSV_FILE = requests.get(url).text
         records = pd.read_csv(url, names=col, header=0)
         print(records)
-        with open(url, 'r') as csvfile:
+        with urllib2.urlopen(url) as csvfile:
             next(csvfile)
             
         #for i, row in records.iterrows():
