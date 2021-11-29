@@ -410,11 +410,12 @@ def insert():
 def importcsv():
     if current_user.cname == "Kalibo Cable":
         if request.method == 'POST':
-            csv_file = request.files['csv']
-            current_user.csv = csv_file  
+            if request.files['csv']:
+                csv_file = save_import(request.files['csv'])
+                current_user.csv = csv_file  
             db.session.commit()
-
-            with open('.static/file/' + 'kalibo2018.csv', newline='', encoding='utf8') as csvfile:
+            
+            with open('.static/file/' + current_user.csv, newline='', encoding='utf8') as csvfile:
                 records =csv.reader(csvfile)
                 for row in records:
                     sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
@@ -592,7 +593,6 @@ def profile():
         
 @login_required
 def save_picture(form_picture):
-    #UPLOAD_FOLDER = "https://github.com/alydelossantos/capstone-stratics/tree/main/website/static/images"
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = _ + f_ext
     picture_path = os.path.join(auth.root_path, 'static/images', picture_fn)
@@ -613,6 +613,17 @@ def save_file(form_file):
     form_file.save(file_path)
     print (file_fn, 'xxx')
     return file_path
+
+#saving attachments to file folder
+def save_import(form_file):
+    print(form_file.filename)
+    _, f_ext = os.path.splitext(form_file.filename)
+    file_fn = _ + f_ext
+    file_path = os.path.join(auth.root_path, 'static/file',file_fn)
+    print(file_path,"kkk")
+    form_file.save(file_path)
+    print (file_fn, 'xxx')
+    return file_fn
     
 #send email
 @auth.route('/email-marketing', methods = ['GET','POST'])
