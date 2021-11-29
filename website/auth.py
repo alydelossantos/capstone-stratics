@@ -557,7 +557,7 @@ def deletecheck():
 # User Profile
 
 @auth.route('/user-profile/edit',methods = ['GET', 'POST']) # Edit User Profile
-@login_required!
+@login_required
 def edit():
         if request.method == 'POST':
             if request.files['image_file']:
