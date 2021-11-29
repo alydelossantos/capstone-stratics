@@ -1,5 +1,5 @@
 import string
-import urllib
+import urllib2
 import requests
 import psycopg2
 import csv
