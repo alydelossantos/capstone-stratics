@@ -415,7 +415,7 @@ def importcsv():
                 current_user.csv = csv_file  
             db.session.commit()
             
-            with open(r'.static/file/kalibo2018.csv', newline='', encoding='utf8') as csvfile:
+            with open('./static/file/kalibo2018.csv', newline='', encoding='utf8') as csvfile:
                 records =csv.reader(csvfile)
                 for row in records:
                     sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
