@@ -415,7 +415,7 @@ def importcsv():
                 current_user.csv = csv_file  
             db.session.commit()
             token = '?token=AWIUAIGKURRUPXEETCSOFADBUPRVM'
-            url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"
+            url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIGKURRUPXEETCSOFADBUPRVM"
             CSV_FILE = requests.get(url).text
             records = pd.read_csv(io.StringIO(CSV_FILE), header=0)
             print(records)
