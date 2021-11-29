@@ -424,21 +424,22 @@ def importcsv():
         CSV_FILE = requests.get(url).text
         records = pd.read_csv(url, names=col, header=0)
         print(records)
-        with urllib2.urlopen(url) as csvfile:
-            next(csvfile)
-            
+        csv = urllib2.urlopen(url)
+        readcsv = csv.reader(csv)
+        next(readcsv)
+  	
         #for i, row in records.iterrows():
             #sql = '''INSERT INTO data (id, account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)'''
             #values = (row['id'], row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'],
                     #row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
-            try:
-                #cur.execute(sql, values, if_exists='append')
-                cur.copy_from(csvfile, 'data', sep=',')
-                conn.commit()
-            except:
-                conn.rollback()
-            #conn.close()
-            #print(i, row['account_no'])
+        try:
+            #cur.execute(sql, values, if_exists='append')
+            cur.copy_from(readcsv, 'data', sep=',')
+            conn.commit()
+        except:
+            conn.rollback()
+        #conn.close()
+        #print(i, row['account_no'])
 
         #col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
 
