@@ -414,33 +414,34 @@ def importcsv():
                 csv_file = save_import(request.files['csv'])
                 current_user.csv = csv_file  
             db.session.commit()
-            #token = '?token=AWIUAIGKURRUPXEETCSOFADBUPRVM'
-            col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
-            url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIBWGPTZN6OYMESU6LDBUTN7Y"          
-            CSV_FILE = requests.get(url).text
-            records = pd.read_csv(url, names=col, header=0)
-            print(records)
-            for row in records.iterrows():
-                sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
-                values = (row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'],
-                        row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
-                try:
-                    cur.execute(sql, values)
-                    conn.commit()
-                except:
-                    conn.rollback()
-                conn.close()
-
-            
-            #col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
-
-            #url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIGKURRUPXEETCSOFADBUPRVM"
-            #CSV_FILE = requests.get(url).content
-            #records = pd.read_csv(StringIO(CSV_FILE), header=0)
             
             flash("CSV File Added Successfully")
             
             return redirect(url_for('auth.custman'))
+        #token = '?token=AWIUAIGKURRUPXEETCSOFADBUPRVM'
+        col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
+        url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIBWGPTZN6OYMESU6LDBUTN7Y"          
+        CSV_FILE = requests.get(url).text
+        records = pd.read_csv(url, names=col, header=0)
+        print(records)
+        for row in records.iterrows():
+            sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
+            values = (row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'],
+                    row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
+            try:
+                cur.execute(sql, values)
+                conn.commit()
+            except:
+                conn.rollback()
+            conn.close()
+
+
+        #col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
+
+        #url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIGKURRUPXEETCSOFADBUPRVM"
+        #CSV_FILE = requests.get(url).content
+        #records = pd.read_csv(StringIO(CSV_FILE), header=0)
+
         return redirect(url_for('auth.custman'))
     else:
         sd = Otherdata \
