@@ -2,6 +2,7 @@ import string
 from io import StringIO
 import requests
 import psycopg2
+import csv
 import pandas as pd
 import os
 from os.path import join
@@ -412,24 +413,29 @@ def importcsv():
             if request.files['csv']:
                 csv_file = save_file(request.files['csv'])
                 current_user.csv = csv_file  
+            db.session.commit()
 
-            col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid',
+            with open('.static/file/' + current_user.csv, newline='', encoding='utf8') as csvfile:
+                records =csv.reader(csvfile)
+                for row in records:
+            '''col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid',
                    'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
 
             url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIGKURRUPXEETCSOFADBUPRVM"
             CSV_FILE = requests.get(url).content
             records = pd.read_csv(StringIO(CSV_FILE), header=0)
 
-            for i, row in records.iterrows():
-                sql = '''INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)'''
-                values = (row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'],
-                        row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
-                cur.execute(sql, values, if_exists='append')
-                conn.commit()
-                cur.close()
-                print(row['account_no'])
-                    
-            db.session.commit()
+            for i, row in records.iterrows():'''
+                    sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
+                    values = (row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'],
+                            row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
+                    try:
+                        cur.execute(sql, values, if_exists='append')
+                        conn.commit()
+                    except:
+                        conn.rollback()
+                conn.close()
+
             flash("CSV File Added Successfully")
             
             return redirect(url_for('auth.custman'))
