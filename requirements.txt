@@ -4,6 +4,7 @@ backcall==0.2.0
 backports.entry-points-selectable==1.1.0
 bleach==4.1.0
 blinker==1.4
+cachetools==4.2.4
 certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.8
@@ -26,8 +27,14 @@ Flask-Login==0.5.0
 Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==1.0.0
+google-api-core==2.2.2
+google-api-python-client==2.31.0
+google-auth==2.3.3
+google-auth-httplib2==0.1.0
+googleapis-common-protos==1.53.0
 greenlet==1.1.2
 gunicorn==20.1.0
+httplib2==0.20.2
 idna==3.3
 ipykernel==6.5.0
 ipython==7.29.0
@@ -53,6 +60,7 @@ nbformat==5.1.3
 nest-asyncio==1.5.1
 notebook==6.4.5
 numpy==1.21.3
+oauth2client==4.1.3
 packaging==21.2
 pandas==1.3.4
 pandocfilters==1.5.0
@@ -63,10 +71,13 @@ platformdirs==2.4.0
 plotly==5.3.1
 prometheus-client==0.12.0
 prompt-toolkit==3.0.21
+protobuf==3.19.1
 psycopg2==2.9.1
 psycopg2-binary==2.9.1
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
 pycparser==2.20
-PyGithub==1.55
+PyDrive==1.3.1
 Pygments==2.10.0
 PyJWT==2.3.0
 PyMySQL==1.0.2
@@ -75,8 +86,10 @@ pyparsing==2.4.7
 pyrsistent==0.18.0
 python-dateutil==2.8.2
 pytz==2021.3
+PyYAML==6.0
 pyzmq==22.3.0
 requests==2.26.0
+rsa==4.8
 scikit-learn==1.0.1
 scipy==1.7.1
 Send2Trash==1.8.0
@@ -89,6 +102,7 @@ testpath==0.5.0
 threadpoolctl==3.0.0
 tornado==6.1
 traitlets==5.1.1
+uritemplate==4.1.1
 urllib3==1.26.7
 virtualenv==20.9.0
 wcwidth==0.2.5
