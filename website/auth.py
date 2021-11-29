@@ -414,7 +414,7 @@ def importcsv():
                 csv_file = save_import(request.files['csv'])
                 current_user.csv = csv_file  
             db.session.commit()
-            for f in os.listdir(url_for('static', filename='file/')
+            for f in os.listdir(url_for('static', filename='file/')):
                 print(f)
             '''
             with open(url_for('static', filename='file/' + 'kalibo2018.csv'), newline='', encoding='utf8') as csvfile:
