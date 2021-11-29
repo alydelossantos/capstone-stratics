@@ -13,8 +13,6 @@ from PIL import Image
 from flask import Flask
 import base64
 import mimetypes
-from pydrive.auth import GoogleAuth
-from pyrdrive.drive import Google Drive
 from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -420,7 +418,7 @@ def importcsv():
             col = ['account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
             url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIBWGPTZN6OYMESU6LDBUTN7Y"          
             CSV_FILE = requests.get(url).text
-            records = pd.read_csv(url, names=col, header=0)
+            records = pd.read_csv(io.StringIO(CSV_FILE), names=col, header=0)
             records.head()
             for row in records.iterrows():
                 sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
