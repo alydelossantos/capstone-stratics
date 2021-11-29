@@ -1,5 +1,5 @@
 import string
-from io import StringIO
+import io 
 import requests
 import psycopg2
 import csv
@@ -414,10 +414,10 @@ def importcsv():
                 csv_file = save_import(request.files['csv'])
                 current_user.csv = csv_file  
             db.session.commit()
-            
-            url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv?token=AWIUAIGKURRUPXEETCSOFADBUPRVM"
+            token = '?token=AWIUAIGKURRUPXEETCSOFADBUPRVM'
+            url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"
             CSV_FILE = requests.get(url).content
-            records = pd.read_csv(StringIO(CSV_FILE), header=0)
+            records = pd.read_csv(io.StringIO(CSV_FILE.decode('utf-8')), header=0)
             for row in records:
                 sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"
                 values = (row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'],
