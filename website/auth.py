@@ -425,7 +425,7 @@ def importcsv():
         records = pd.read_csv(url, names=col, header=0)
         print(records)
         csv = urllib.request.urlopen(url)
-        readcsv = csv.reader(csv)
+        readcsv = csv.read(csv)
         next(readcsv)
   	
         #for i, row in records.iterrows():
