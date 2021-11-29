@@ -410,9 +410,8 @@ def insert():
 def importcsv():
     if current_user.cname == "Kalibo Cable":
         if request.method == 'POST':
-            if request.files['csv']:
-                csv_file = save_file(request.files['csv'])
-                current_user.csv = csv_file  
+            csv_file = request.files['csv']
+            current_user.csv = csv_file  
             db.session.commit()
 
             with open('.static/file/' + current_user.csv, newline='', encoding='utf8') as csvfile:
