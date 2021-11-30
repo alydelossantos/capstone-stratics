@@ -47,11 +47,11 @@ knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
 db = urlparse("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh")
-username = url.username
-password = url.password
-database = url.path[1:]
-hostname = url.hostname
-port = url.port
+username = db.username
+password = db.password
+database = db.path[1:]
+hostname = db.hostname
+port = db.port
 
 conn = psycopg2.connect(
     database = database,
