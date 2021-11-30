@@ -4,6 +4,7 @@ import requests
 import psycopg2
 import csv
 import pandas as pd
+import numpy as np
 import os
 from os.path import join
 import secrets
