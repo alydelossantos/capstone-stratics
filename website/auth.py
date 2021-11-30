@@ -1,5 +1,5 @@
 import string
-import urllib
+from urllib.parse import urlparse
 import requests
 import psycopg2
 import csv
@@ -46,7 +46,21 @@ knotel = "Kalibo Cable"
 knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
-conn = psycopg2.connect("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh")
+db = urlparse("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh")
+username = url.username
+password = url.password
+database = url.path[1:]
+hostname = url.hostname
+port = url.port
+
+conn = psycopg2.connect(
+    database = database,
+    user = username,
+    password = password,
+    host = hostname,
+    port = port
+)
+
 conn.autocommit =True
 cur = conn.cursor()
 
