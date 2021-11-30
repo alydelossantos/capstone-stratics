@@ -420,7 +420,7 @@ def importcsv():
             url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"          
             records = pd.read_csv(url,index_col=0)
             print(records)
-            records['last_modified_on'].replace({None:datetime.now()}, inplace=True)
+            records['last_modified_on'].replace({np.nan:datetime.now()}, inplace=True)
             print(records['last_modified_on'])
             for i, row in records.iterrows():
                 sql = "INSERT INTO data (account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,to_timestamp(%s, 'YYYY-MM-DD HH24:MI:SS.msus'),%s)"
