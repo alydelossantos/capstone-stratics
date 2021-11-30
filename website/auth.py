@@ -429,9 +429,9 @@ def importcsv():
                 current_user.csv = csv_file  
             conn.commit()
 
-        #col = ['id','account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
+            col = ['id','account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
             url = "https://github.com/alydelossantos/capstone-stratics/blob/main/website/static/file/kalibo2018.csv"          
-            records = pd.read_csv(url)
+            records = pd.read_csv(url, sep='\t',names=col, header=0)
             print(records)
 
             for i, row in records.iterrows():
