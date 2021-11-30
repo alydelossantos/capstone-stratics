@@ -419,11 +419,11 @@ def importcsv():
 
             col = ['id','account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
             url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"          
-            records = pd.read_csv(url,index_col=0)
+            records = pd.read_csv(url,index_col=0, header=0)
             print(records)
             records['last_modified_on'].replace({np.nan:datetime.now()}, inplace=True)
             print(records['last_modified_on'])
-            for i, row in records.iterrows():
+            for row in records.iterrows():
                 print(i)
                 row = Data.query.count()
                 count = Data.query.filter(Data.id >= row).count()
