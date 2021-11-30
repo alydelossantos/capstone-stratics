@@ -46,20 +46,7 @@ knotel = "Kalibo Cable"
 knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
-db = urlparse("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh")
-username = db.username
-password = db.password
-database = db.path[1:]
-hostname = db.hostname
-port = db.port
-
-conn = psycopg2.connect(
-    database = database,
-    user = username,
-    password = password,
-    host = hostname,
-    port = port
-)
+conn = psycopg2.connect("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh")
 
 conn.autocommit =True
 cur = conn.cursor()
@@ -431,14 +418,14 @@ def importcsv():
 
             col = ['id','account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
             url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"          
-            records = pd.read_csv(url, header=0, index_col=0)
+            records = pd.read_csv(url, index_col=0)
             print(records)
 
             for i, row in records.iterrows():
                 sql = "INSERT INTO data (id, account_no, subscriber, address, zone, services, monthly, collector, status, amount_paid, total_paid, ref_no, date_paid, category, activation_date, disconnection_date, reactivation_date, last_modified_on, churn) VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
                 values = (row['id'], row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'], row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
             try:
-                cur.execute(sql, values, row, if_exists='append')
+                cur.execute(sql, values, i, if_exists='append')
                 cur.execute('''SELECT * FROM data;''')
                 #cur.copy_from(readcsv, 'data', sep=',')
                 conn.commit()
