@@ -425,13 +425,16 @@ def importcsv():
                 values = (row['id'], row['account_no'], row['subscriber'], row['address'], row['zone'], row['services'], row['monthly'], row['collector'], row['status'], row['amount_paid'], row['total_paid'], row['ref_no'], row['date_paid'], row['category'], row['activation_date'], row['disconnection_date'], row['reactivation_date'], row['last_modified_on'], row['churn'])
             try:
                 cur.execute(sql, values, if_exists='append')
-                cur.execute('''SELECT * FROM data''')
+                cur.execute('SELECT * FROM data')
                 #cur.copy_from(readcsv, 'data', sep=',')
                 conn.commit()
             except:
                 conn.rollback()
             flash("CSV File Added Successfully")
             return redirect(url_for('auth.custman'))
+        cur.execute('SELECT * FROM data')
+        #cur.copy_from(readcsv, 'data', sep=',')
+        conn.commit()
         return redirect(url_for('auth.custman'))
     else:
         sd = Otherdata \
