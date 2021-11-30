@@ -431,7 +431,7 @@ def importcsv():
 
             col = ['id','account_no', 'subscriber', 'address', 'zone', 'services', 'monthly', 'collector', 'status', 'amount_paid', 'total_paid', 'ref_no', 'date_paid', 'category', 'activation_date', 'disconnection_date', 'reactivation_date', 'last_modified_on', 'churn']
             url = "https://raw.githubusercontent.com/alydelossantos/capstone-stratics/main/website/static/file/kalibo2018.csv"          
-            records = pd.read_csv(url, header=None, sep=',', engine="python")
+            records = pd.read_csv(url, header=0, index_col=0)
             print(records)
 
             for i, row in records.iterrows():
