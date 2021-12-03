@@ -301,8 +301,8 @@ def insert():
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
             
-            l = 11
-            ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
+            #l = 11
+            #ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
             
             if disconnection_date == "" and reactivation_date == "":
                 disconnection_date = None
@@ -344,7 +344,7 @@ def insert():
             flash("Customer Record Added Successfully")
             
             return redirect(url_for('auth.custman'))
-            return render_template(ran=ran)
+            #return render_template(ran=ran)
 			
     else:
         sd = Otherdata \
