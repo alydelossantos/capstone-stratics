@@ -940,7 +940,7 @@ def churnanalytics():
                 kctn['Churn Probability'] = probaa[j]
                 
             for j in range(len(Xtnew)):
-                kctn['Churn Probability'][i] = probaa[j]
+                kctn['Churn Probability'][j] = probaa[j]
                 
             predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
             cust = kctn['account_no'].count()
