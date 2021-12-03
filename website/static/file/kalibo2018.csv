@@ -1,2 +1,2 @@
-﻿account_no,subscriber,address,zone,services,monthly,collector,status,amount_paid,total_paid,ref_no,date_paid,category,activation_date,disconnection_date,reactivation_date,last_modified_on,churn
-12347l,"Arguelles, Ellen Roberto","Cortes, Balete, Aklan",Balete,Digital HD,99,Kalibo Office,Active,200,200,126421,8/5/2021,RS,7/3/2018,,,,0
+﻿id,account_no,subscriber,address,zone,services,monthly,collector,status,amount_paid,total_paid,ref_no,date_paid,category,activation_date,disconnection_date,reactivation_date,last_modified_on,churn
+,1123lko,"Arguelles, Ellen Roberto","Cortes, Balete, Aklan",Balete,Digital HD,99,Kalibo Office,Active,200,200,126421,8/5/2021,RS,7/3/2018,,,,0
