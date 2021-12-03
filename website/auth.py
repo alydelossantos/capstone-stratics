@@ -423,7 +423,7 @@ def importcsv():
             print(records)
             records['last_modified_on'].replace({np.nan:datetime.now()}, inplace=True)
             print(records['last_modified_on'])
-            for row in records.iterrows():
+            for i, row in records.iterrows():
                 print(i)
                 row = Data.query.count()
                 count = Data.query.filter(Data.id >= row).count()
