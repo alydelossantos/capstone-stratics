@@ -864,11 +864,13 @@ def churnanalytics():
             kctn.disconnection_date = pd.to_datetime(kctn.disconnection_date)
             kctn.reactivation_date = pd.to_datetime(kctn.reactivation_date)
             kctn.date_paid = pd.to_datetime(kctn.date_paid)
+            kctn.last_modified_on = pd.to_datetime(kctn.last_modified_on)
 
             kctn['disconnection_date'] = kctn['disconnection_date'].dt.strftime('%m-%d-%Y')
             kctn['reactivation_date'] = kctn['reactivation_date'].dt.strftime('%m-%d-%Y')
             kctn['activation_date'] = kctn['activation_date'].dt.strftime('%m-%d-%Y')
             kctn['date_paid'] = kctn['date_paid'].dt.strftime('%m-%d-%Y')
+            kctn['last_modified_on'] = kctn['last_modified_on'].dt.strftime('%m-%d-%Y')
 
             # Remove Account Number-Address
             kctn2 = kctn.iloc[:,3:]
@@ -878,6 +880,7 @@ def churnanalytics():
             del kctn2['activation_date']
             del kctn2['disconnection_date']
             del kctn2['reactivation_date']
+            del kctn2['last_modified_on']
 
             # independent variable - all columns aside from 'Churn'
             X = kctn2.iloc[:,:-1].values
@@ -922,14 +925,22 @@ def churnanalytics():
             result = logmodel.fit(X_train, y_train)
 
             Xnew = X_test.values
+            Xtnew = X_train.values
             
             proba = logmodel.predict_proba(Xnew)[:,1]
+            probaa = logmodel.predict_proba(Xtnew)[:,1]
             
             for i in range(len(Xnew)):
                 kctn['Churn Probability'] = proba[i]
                 
             for i in range(len(Xnew)):
                 kctn['Churn Probability'][i] = proba[i]
+            
+            for j in range(len(Xtnew)):
+                kctn['Churn Probability'] = probaa[j]
+                
+            for j in range(len(Xtnew)):
+                kctn['Churn Probability'][i] = probaa[j]
                 
             predd = kctn[['account_no', 'amount_paid', 'monthly','Churn Probability']].values.tolist()
             cust = kctn['account_no'].count()
