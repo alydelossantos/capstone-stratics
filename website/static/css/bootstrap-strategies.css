@@ -112,6 +112,10 @@ td:last-child {text-align:center;}
     background-color: #fccc74;
 }
 
+  .red {
+    color: #FF3C2B;
+  }
+
   /* Responsive columns */
   @media screen and (max-width: 600px) {
     .strat-column {
