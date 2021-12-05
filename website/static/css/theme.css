@@ -485,13 +485,29 @@ section {
     cursor: pointer;
   }
   
-  .au-btn--green:hover {
+  .au-btn--yellow:hover {
     background: #F5E050;
   }
   
-  .au-btn--green {
+  .au-btn--yellow {
     background: #FEE185;
   }
+
+  .au-btn--green:hover {
+    background: #6DC222;
+  }
+
+  .au-btn--green {
+    background: #8CE22F;
+  }
+
+  .au-btn--blue:hover {
+      background: #2F9AD8;
+  }
+
+  .au-btn--blue {
+    background: #41C4FC;
+}
 
   .au-btn--red {
     background: #ff4b5a;
