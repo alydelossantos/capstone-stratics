@@ -290,16 +290,13 @@
                                                                                          
 												<form action="/strategies/update/{{row.id}}" method="POST">
 													<div class="form-group row">
-														<div class="col-sm-6">
+														<div class="col-sm-12">
 														<h1>{{row.name}}</h1>
 														<input type="hidden"  name="id" value="{{row.id}}">
 							
 														</div>       
 													
-														<div class="col-sm-6">
-															<p>Start Date : {{row.startdate}}</p>                    
-															
-														</div>
+														
 													</div>
 								
 													<div class="form-group row">     
@@ -307,23 +304,27 @@
 															<p>Activity Type : {{row.act}}</p>
 															
 														</div>    
-														
 														<div class="col-sm-6">
-															<p>End Date : {{row.enddate}}</p>                    
+															<p>Start Date : {{row.startdate}}</p>                    
 															
 														</div>
+														
 													</div>             
 													
 													<div class="form-group row"> 
 														<div class="col-sm-6">
 															<p>Platform : {{row.platform}}</p>
 														</div>
+                                                                                                                <div class="col-sm-6">
+															<p>End Date : {{row.enddate}}</p>                    
+															
+														</div>
 													</div>
 
 													<div class="form-group row">
 														<div class="col-12">
-														<p>Description :<br>
-														{{row.description}}</p>
+														<h4>Description :</h4><br>
+														<p>{{row.description}}</p>
 														</div>
 													</div>
                                                                                                         {% endif %}
