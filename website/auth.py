@@ -790,9 +790,9 @@ def newstrat():
             endd = datetime.strptime(enddate, "%Y-%m-%d")
             enddate = endd.date()
             end = enddate
-            if end == dates and end < dates and end > start:
+            if end == dates or dates > end:
                 status = "complete"
-            elif end < start and end != dates:
+            else:
                 status = "ongoing"
             print(dates)
             print(end)
@@ -828,7 +828,7 @@ def newstrat():
             endd = datetime.strptime(enddate, "%Y-%m-%d")
             enddate = endd.date()
             end = enddate
-            if end == dates:
+            if end == dates or dates > end:
                 status = "complete"
             else:
                 status = "ongoing"
@@ -883,7 +883,7 @@ def newstrat():
             endd = datetime.strptime(enddate, "%Y-%m-%d")
             enddate = endd.date()
             end = enddate
-            if end == dates:
+            if end == dates or dates > end:
                 status = "complete"
             else:
                 status = "ongoing"
@@ -921,7 +921,7 @@ def updatestrat(id):
             endd = datetime.strptime(my_strat.enddate, "%Y-%m-%d")
             my_strat.enddate = endd.date()
             end = my_strat.enddate
-            if end == dates:
+            if end == dates or dates > end:
                 my_strat.status = "complete"
             else:
                 my_strat.status = "ongoing"
@@ -946,7 +946,7 @@ def updatestrat(id):
             endd = datetime.strptime(my_strat.enddate, "%Y-%m-%d")
             my_strat.enddate = endd.date()
             end = my_strat.enddate
-            if end == dates:
+            if end == dates or dates > end:
                 my_strat.status = "complete"
             else:
                 my_strat.status = "ongoing"
@@ -983,7 +983,7 @@ def updatestrat(id):
             endd = datetime.strptime(my_strat.enddate, "%Y-%m-%d")
             my_strat.enddate = endd.date()
             end = my_strat.enddate
-            if end == dates:
+            if end == dates or dates > end:
                 my_strat.status = "complete"
             else:
                 my_strat.status = "ongoing"
