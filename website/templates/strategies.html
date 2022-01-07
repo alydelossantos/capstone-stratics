@@ -291,47 +291,39 @@
 												<form action="/strategies/update/{{row.id}}" method="POST">
 													<div class="form-group row">
 														<div class="col-sm-6">
-														<label>Strategy Name</label>
+														<h1>{{row.name}}</h1>
 														<input type="hidden"  name="id" value="{{row.id}}">
-														<input type="text" class="form-control" name="name" value="{{row.name}}">
+							
 														</div>       
 													
 														<div class="col-sm-6">
-															<label>Start Date</label>                    
-															<input type="date" class="form-control" name="startdate" value="{{row.startdate}}">
+															<p>Start Date : {{row.startdate}}</p>                    
+															
 														</div>
 													</div>
 								
 													<div class="form-group row">     
 														<div class="col-sm-6">
-															<label>Activity Type</label>
-															<select name="act" class="form-control" name="act" value="{{row.act}}">
-																<!-- <option value="0">Please Select Activity Type</option> -->
-																<option class="blueBg" value="campaign">Campaign</option>
-																<option class="yellowBg" value="activity">Activity</option>
-																<option value="others">Others</option>
-															</select>                   
+															<p>Activity Type : {{row.act}}</p>
+															
 														</div>    
 														
 														<div class="col-sm-6">
-															<label>End Date</label>                    
-															<input type="date" class="form-control" name="enddate" value="{{row.enddate}}">
+															<p>End Date : {{row.enddate}}</p>                    
+															
 														</div>
 													</div>             
 													
 													<div class="form-group row"> 
 														<div class="col-sm-6">
-															<label>Platform</label>                    
-															<input type="text" class="form-control" name="platform" value="{{row.platform}}">
+															<p>Platform : {{row.platform}}</p>
 														</div>
 													</div>
 
 													<div class="form-group row">
 														<div class="col-12">
-														<label>Description</label>
-														<textarea name="description" class="form-control"
-															class="input-field"
-															cols="60" rows="4" style="resize: none;" maxlength="200">{{row.description}}</textarea>
+														<p>Description :<br>
+														{{row.description}}</p>
 														</div>
 													</div>
                                                                                                         {% endif %}
