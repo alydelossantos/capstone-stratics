@@ -263,19 +263,14 @@
 																<option value="others">Others</option>
 															</select>                   
 														</div>    
-														
-														<div class="col-sm-6">
-															<label>End Date</label>                    
-															<input type="date" class="form-control" name="enddate" value="{{row.enddate}}">
-														</div>
-													</div>             
-													
-													<div class="form-group row"> 
 														<div class="col-sm-6">
 															<label>Platform</label>                    
 															<input type="text" class="form-control" name="platform" value="{{row.platform}}">
 														</div>
-													</div>
+														
+													</div>             
+													
+												
 
 													<div class="form-group row">
 														<div class="col-12">
@@ -585,85 +580,117 @@
                             </td>
                         </tr>
 			</form>
-                    <!-- Modal Edit User-->
+                    
+			<!-- Modal Edit User-->
+                                                        
 
-                    <div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-                        aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-dialog-centered">
-                            <div class="modal-content">
+							<div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+								aria-labelledby="myLargeModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-lg modal-dialog-centered">
+									<div class="modal-content">
 
-                                    <div class="modal-header">   
-                                        <h4 class="modal-title">Update Strategy</h4>
-                                    </div>
-    
-                                    <div class="modal-body">
-                                        <form action="/strategies/update/{{row.id}}" method="POST">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                <label>Strategy Name</label>
-												<input type="hidden"  name="id" value="{{row.id}}">
-                                                <input type="text" class="form-control" name="name" value="{{row.name}}">
-                                                </div>       
-                                            
-                                                <div class="col-sm-6">
-                                                    <label>Start Date</label>                    
-                                                    <input type="date" class="form-control" name="startdate" value="{{row.startdate}}">
-                                                </div>
-                                            </div>
-                        
-                                            <div class="form-group row">     
-                                                <div class="col-sm-6">
-                                                    <label>Activity Type</label>
-                                                    <select name="act" class="form-control" name="act" value="{{row.act}}">
-                                                        <!-- <option value="0">Please Select Activity Type</option> -->													
-                                                        <option value="campaign">Campaign</option>
-                                                        <option value="activity">Activity</option>
-                                                        <option value="others">Others</option>
-                                                    </select>                   
-                                                </div>    
-                                                
-                                                <div class="col-sm-6">
-                                                    <label>End Date</label>                    
-                                                    <input type="date" class="form-control" name="enddate" value="{{row.enddate}}">
-                                                </div>
-                                            </div>             
-                                            
-                                            <div class="form-group row"> 
-                                                <div class="col-sm-6">
-                                                    <label>Platform</label>                    
-                                                    <input type="text" class="form-control" name="platform" value="{{row.platform}}">
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <label>Status</label>
-                                                    <select class="form-control" name="status" value="{{row.status}}">
-                                                      <!-- <option value="0">Please Select Status</option> -->
+											<div class="modal-header">   
+												<h4 class="modal-title">Update Strategy</h4>
+											</div>
+			
+								{% if row.status == "ongoing" %}
+                                                                 <div class="modal-body">
+                                                                                         
+												<form action="/strategies/update/{{row.id}}" method="POST">
+													<div class="form-group row">
+														<div class="col-sm-6">
+														<label>Strategy Name</label>
+														<input type="hidden"  name="id" value="{{row.id}}">
+														<input type="text" class="form-control" name="name" value="{{row.name}}">
+														</div>       
+													
+														<div class="col-sm-6">
+															<label>Start Date</label>                    
+															<input type="date" class="form-control" name="startdate" value="{{row.startdate}}">
+														</div>
+													</div>
 								
-                                                      <option value="ongoing">Ongoing</option>
-                                                      <option value="complete">Complete</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+													<div class="form-group row">     
+														<div class="col-sm-6">
+															<label>Activity Type</label>
+															<select name="act" class="form-control" name="act" value="{{row.act}}">
+																<!-- <option value="0">Please Select Activity Type</option> -->
+																<option class="blueBg" value="campaign">Campaign</option>
+																<option class="yellowBg" value="activity">Activity</option>
+																<option value="others">Others</option>
+															</select>                   
+														</div>    
+														<div class="col-sm-6">
+															<label>Platform</label>                    
+															<input type="text" class="form-control" name="platform" value="{{row.platform}}">
+														</div>
+														
+													</div>             
+													
+												
 
-                                            <div class="form-group row">
-                                                <div class="col-12">
-                                                <label>Description</label>
-                                                <textarea name="description" class="form-control"
-                                                class="input-field"
-                                                cols="60" rows="4" style="resize: none;" maxlength="200">{{row.description}}</textarea>
-                                                </div>
-                                            </div> 
-    
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button class="btn btn-primary" type="submit">Update Strategy</button>
-                                            </div>
-                                        </form>
-                                </div>    
-                            </div>
-						</div>
-					</div>
-					
+													<div class="form-group row">
+														<div class="col-12">
+														<label>Description</label>
+														<textarea name="description" class="form-control"
+															class="input-field"
+															cols="60" rows="4" style="resize: none;" maxlength="200">{{row.description}}</textarea>
+														</div>
+													</div>
+                                                                                                        {% else %}
+                                                                                                     <div class="modal-body">
+                                                                                         
+												<form action="/strategies/update/{{row.id}}" method="POST">
+													<div class="form-group row">
+														<div class="col-sm-12">
+														<h1>{{row.name}}</h1>
+														<input type="hidden"  name="id" value="{{row.id}}">
+							
+														</div>       
+													
+														
+													</div>
+								
+													<div class="form-group row">     
+														<div class="col-sm-6">
+															<p>Activity Type : {{row.act}}</p>
+															
+														</div>    
+														<div class="col-sm-6">
+															<p>Start Date : {{row.startdate}}</p>                    
+															
+														</div>
+														
+													</div>             
+													
+													<div class="form-group row"> 
+														<div class="col-sm-6">
+															<p>Platform : {{row.platform}}</p>
+														</div>
+                                                                                                                <div class="col-sm-6">
+															<p>End Date : {{row.enddate}}</p>                    
+															
+														</div>
+													</div>
+
+													<div class="form-group row">
+														<div class="col-12">
+														<h4>Description :</h4><br>
+														<p>{{row.description}}</p>
+														</div>
+													</div>
+                                                                                                        {% endif %}
+
+			
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+														<button class="btn btn-primary" type="submit">Update Strategy</button>
+													</div>
+												</form>
+										</div>    
+									</div>
+								</div>
+							</div>		
 					 <!-- Modal Delete Strategy-->
 
 					    <div id="modaldelete{{row.id}}" class="modal fade">
