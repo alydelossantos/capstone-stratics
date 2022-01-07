@@ -225,6 +225,7 @@
 								</tr>
 					</form>
 							<!-- Modal Edit User-->
+                                                        
 
 							<div id="modaledit{{row.id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
 								aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -235,7 +236,9 @@
 												<h4 class="modal-title">Update Strategy</h4>
 											</div>
 			
-											<div class="modal-body">
+								{% if row.status == "ongoing" %}
+                                                                 <div class="modal-body">
+                                                                                         
 												<form action="/strategies/update/{{row.id}}" method="POST">
 													<div class="form-group row">
 														<div class="col-sm-6">
@@ -281,7 +284,58 @@
 															class="input-field"
 															cols="60" rows="4" style="resize: none;" maxlength="200">{{row.description}}</textarea>
 														</div>
-													</div> 
+													</div>
+                                                                                                        {% else %}
+                                                                                                     <div class="modal-body">
+                                                                                         
+												<form action="/strategies/update/{{row.id}}" method="POST">
+													<div class="form-group row">
+														<div class="col-sm-6">
+														<label>Strategy Name</label>
+														<input type="hidden"  name="id" value="{{row.id}}">
+														<input type="text" class="form-control" name="name" value="{{row.name}}">
+														</div>       
+													
+														<div class="col-sm-6">
+															<label>Start Date</label>                    
+															<input type="date" class="form-control" name="startdate" value="{{row.startdate}}">
+														</div>
+													</div>
+								
+													<div class="form-group row">     
+														<div class="col-sm-6">
+															<label>Activity Type</label>
+															<select name="act" class="form-control" name="act" value="{{row.act}}">
+																<!-- <option value="0">Please Select Activity Type</option> -->
+																<option class="blueBg" value="campaign">Campaign</option>
+																<option class="yellowBg" value="activity">Activity</option>
+																<option value="others">Others</option>
+															</select>                   
+														</div>    
+														
+														<div class="col-sm-6">
+															<label>End Date</label>                    
+															<input type="date" class="form-control" name="enddate" value="{{row.enddate}}">
+														</div>
+													</div>             
+													
+													<div class="form-group row"> 
+														<div class="col-sm-6">
+															<label>Platform</label>                    
+															<input type="text" class="form-control" name="platform" value="{{row.platform}}">
+														</div>
+													</div>
+
+													<div class="form-group row">
+														<div class="col-12">
+														<label>Description</label>
+														<textarea name="description" class="form-control"
+															class="input-field"
+															cols="60" rows="4" style="resize: none;" maxlength="200">{{row.description}}</textarea>
+														</div>
+													</div>
+                                                                                                        {% endif %}
+
 			
 													<div class="modal-footer">
 														<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
