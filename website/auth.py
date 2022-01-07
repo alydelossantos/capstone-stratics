@@ -790,9 +790,9 @@ def newstrat():
             endd = datetime.strptime(enddate, "%Y-%m-%d")
             enddate = endd.date()
             end = enddate
-            if end == dates:
+            if end == dates and end < dates and end > start:
                 status = "complete"
-            else:
+            elif end < start and end != dates:
                 status = "ongoing"
             print(dates)
             print(end)
