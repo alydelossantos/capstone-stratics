@@ -2,7 +2,7 @@ from flask import Flask
 
 from .command import create_tables
 from .extensions import db
-from .models import User, Data, Otherdata, Sampledata, Strategies, Otherstrategies, Samplestrategies, Contact, Task
+from .models import User, Data, Sampledata, Strategies, Samplestrategies, Contact, Task
 from flask_login import LoginManager
 from flask_mail import Mail
 
@@ -17,7 +17,7 @@ def create_app(config_file='configure.py'): #create database
     mail.init_app(app)
     
    
-    from .models import User, Data, Otherdata, Sampledata, Strategies, Otherstrategies, Samplestrategies, Contact, Task
+    from .models import User, Data, Sampledata, Strategies, Samplestrategies, Contact, Task
     
     from .views import views
     from .auth import auth
