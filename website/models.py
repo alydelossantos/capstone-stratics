@@ -32,8 +32,6 @@ class User(db.Model, UserMixin):
     position = db.Column(db.String(50), default="Position")
     dash = db.Column(db.String(20), default="none")
     ccode = db.Column(db.String(20))
-    other_data = db.relationship("Otherdata")
-    other_strategies = db.relationship("Otherstrategies")
     
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(SECRET_KEY, expires_sec)
