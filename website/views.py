@@ -8,7 +8,7 @@ from .extensions import db
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, create_engine
-from .models import User, Data, Sampledata, Otherdata, Strategies, Samplestrategies, Otherstrategies, Contact, Task
+from .models import User, Data, Sampledata, Strategies, Samplestrategies, Contact, Task
 from flask_login import login_user, login_required, logout_user, current_user
 from plotly.offline import init_notebook_mode,iplot
 import plotly.graph_objects as go
