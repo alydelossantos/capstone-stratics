@@ -69,27 +69,6 @@ class Data(db.Model):
     last_modified_on = db.Column(db.DateTime, nullable=True)
     churn = db.Column(db.Numeric)
     
-class Otherdata(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    odata_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    account_no = db.Column(db.String(100), unique=True)
-    subscriber = db.Column(db.String(225))
-    gender = db.Column(db.String(20))
-    address = db.Column(db.String(225))
-    province = db.Column(db.String(100))
-    services = db.Column(db.String(100))
-    monthly = db.Column(db.Numeric)
-    status = db.Column(db.String(50))
-    amount_paid = db.Column(db.Numeric)
-    total_paid = db.Column(db.Numeric)
-    ref_no = db.Column(db.String(100), nullable=True)
-    date_paid = db.Column(db.String(50), nullable=True)
-    category = db.Column(db.String(50))
-    activation_date = db.Column(db.String(100))
-    disconnection_date = db.Column(db.String(100), nullable=True)
-    reactivation_date = db.Column(db.String(100), nullable=True)
-    churn = db.Column(db.Numeric)
-    
 class Sampledata(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     customerID = db.Column(db.String(100))
@@ -123,18 +102,7 @@ class Strategies(db.Model):
     enddate = db.Column(db.String(50))
     status = db.Column(db.String(100))
     description = db.Column(db.String(225))
-    
-class Otherstrategies(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    ostrat_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    name = db.Column(db.String(100))
-    act = db.Column(db.String(100))
-    platform = db.Column(db.String(100))
-    startdate = db.Column(db.String(50))
-    enddate = db.Column(db.String(50))
-    status = db.Column(db.String(100))
-    description = db.Column(db.String(225))
-    
+     
 class Samplestrategies(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100))
