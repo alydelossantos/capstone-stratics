@@ -4,7 +4,7 @@ from flask.cli import with_appcontext
 
 from .extensions import db
 
-from .models import User, Data, Otherdata, Sampledata, Strategies, Otherstrategies, Samplestrategies, Contact, Task
+from .models import User, Data, Sampledata, Strategies, Samplestrategies, Contact, Task
 
 @click.command(name='create_tables')
 @with_appcontext
