@@ -248,33 +248,7 @@ def custman():
             all_data = Data.query.all()
             
             image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)
-        else:
-            sd = Otherdata \
-                .query \
-                .join(User) \
-                .filter(User.id==current_user.id).count()
-            print(sd)
-            if request.method == "POST":
-                account_no = request.form['account_no']
-                subscriber = request.form['subscriber']
-                gender = request.form['gender']
-                address = request.form['address']
-                province = request.form['province']
-                services = request.form['services']
-                monthly = request.form['monthly']
-                #status = request.form['status']
-                amount_paid = request.form['amount_paid']
-                ref_no = request.form['ref_no']
-                date_paid = request.form['date_paid']
-                category = request.form['category']
-                activation_date = request.form['activation_date']
-                disconnection_date = request.form['disconnection_date']
-                reactivation_date = request.form['reactivation_date']
-
-            image_file = url_for('static', filename='images/' + current_user.image_file)
-            return render_template("scustman.html", user= current_user, sd=sd, image_file = image_file)
-			
+            return render_template("custman.html", user= current_user, datas=all_data, image_file = image_file)		
     elif current_user.explore == "sample":
         all_data = Sampledata.query.all()
         
@@ -300,9 +274,6 @@ def insert():
             activation_date = request.form['activation_date']
             disconnection_date = request.form['disconnection_date']
             reactivation_date = request.form['reactivation_date']
-            
-            #l = 11
-            #ran = str(''.join(random.choices(string.ascii_uppercase + string.digits, k=l)))
             
             if disconnection_date == "" and reactivation_date == "":
                 disconnection_date = None
@@ -345,67 +316,6 @@ def insert():
             
             return redirect(url_for('auth.custman'))
             #return render_template(ran=ran)
-			
-    else:
-        sd = Otherdata \
-            .query \
-            .join(User) \
-            .filter(User.id==current_user.id).count()
-
-        if request.method == 'POST':
-            account_no = request.form['account_no']
-            subscriber = request.form['subscriber']
-            gender = request.form['gender']
-            address = request.form['address']
-            province = request.form['province']
-            services = request.form['services']
-            monthly = request.form['monthly']
-            amount_paid = request.form['amount_paid']
-            ref_no = request.form['ref_no']
-            date_paid = request.form['date_paid']
-            category = request.form['category']
-            activation_date = request.form['activation_date']
-            disconnection_date = request.form['disconnection_date']
-            reactivation_date = request.form['reactivation_date']
-            
-            if disconnection_date == "" and reactivation_date == "":
-                disconnection_date = None
-                reactivation_date = None
-            elif disconnection_date != "" and reactivation_date == "":
-                reactivation_date = None
-            elif disconnection_date != "" and reactivation_date != "":
-                reactivation_date = request.form['reactivation_date']
-                disconnection_date = request.form['disconnection_date']
-                
-            if activation_date != None and disconnection_date == None:
-                status = "Active"
-            elif activation_date != None and disconnection_date != None:
-                status = "Disconnected"
-            elif activation_date != None and disconnection_date != None and reactivation_date != None:
-                status = "Disconnected"
-
-            if disconnection_date == None:
-                churn = 0
-            else:
-                churn = 1
-            
-            total_paid = 0
-            total_paid = float(amount_paid) + float(total_paid)
-            last_modified_on = datetime.now()
-            
-            if sd <= 10:
-                sdatas = Otherdata(account_no=account_no, subscriber=subscriber, gender=gender, address=address, province=province, services=services, monthly=monthly,
-						status=status, amount_paid=amount_paid, total_paid=total_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
-						disconnection_date=disconnection_date, reactivation_date=reactivation_date, last_modified_on=last_modified_on, churn=churn, odata_id=current_user.id)
-                db.session.add(sdatas)
-                db.session.commit()   
-                flash("Customer Record Added Successfully", category="notlimit")
-            else:
-                db.session.commit()
-                flash("You have exceeded to the number of inputted customer records!", category="limit")
-            
-            return redirect(url_for('auth.custman'))
-            return render_template(sd=sd)
 
 @auth.route('/import', methods = ['GET','POST'])
 @login_required
@@ -436,14 +346,6 @@ def importcsv():
             return redirect(url_for('auth.custman'))
 
         return redirect(url_for('auth.custman'))
-    else:
-        sd = Otherdata \
-            .query \
-            .join(User) \
-            .filter(User.id==current_user.id).count()
-
-        return redirect(url_for('auth.custman'))
-        return render_template(sd=sd)
         
 @auth.route('/customer-management/update/<id>', methods = ['GET', 'POST'])
 @login_required
@@ -488,48 +390,8 @@ def update(id):
             flash("Customer Record Updated Successfully")
      
             return redirect(url_for('auth.custman'))
+
         return redirect(url_for('auth.custman'))
-    else:
-        if request.method == 'POST':
-            odatas = Otherdata.query.get(request.form.get('id'))
-            odatas.services = request.form['services']
-            odatas.monthly = request.form['monthly']
-            odatas.amount_paid = request.form['amount_paid']
-            odatas.date_paid = request.form['date_paid']
-            odatas.category = request.form['category']
-            odatas.activation_date = request.form['activation_date']
-            odatas.disconnection_date = request.form['disconnection_date']
-            odatas.reactivation_date = request.form['reactivation_date']
-            
-            if odatas.disconnection_date == "" and odatas.reactivation_date == "":
-                odatas.disconnection_date = None
-                odatas.reactivation_date = None
-            elif odatas.disconnection_date != "" and odatas.reactivation_date == "":
-                odatas.reactivation_date = None
-                odatas.disconnection_date = request.form['disconnection_date']
-            elif odatas.disconnection_date != "" and odatas.reactivation_date != "":
-                odatas.reactivation_date = request.form['reactivation_date']
-                odatas.disconnection_date = request.form['disconnection_date']
-            
-            if odatas.activation_date != None and odatas.disconnection_date == None:
-                odatas.status = "Active"
-            elif odatas.activation_date != None and odatas.disconnection_date != None:
-                odatas.status = "Disconnected"
-            elif odatas.activation_date != None and odatas.disconnection_date != None and odatas.reactivation_date != None:
-                odatas.status = "Disconnected"
-            
-            if odatas.disconnection_date == None:
-                odatas.churn = 0
-            else:
-                odatas.churn = 1
-                
-            odatas.total_paid = float(odatas.total_paid) + float(odatas.amount_paid)
-            
-            db.session.commit()
-            
-            flash("Customer Record Updated Successfully")
-     
-            return redirect(url_for('auth.custman'))
  
 #This route is for deleting our customer in checkbox
 @auth.route('/customer-management/delete-selected', methods = ['GET', 'POST'])
@@ -544,16 +406,6 @@ def deletecheck():
             flash("Customer Records Deleted Successfully")
                      
             return redirect(url_for('auth.custman'))
-    else:
-        if request.method == "POST":
-            for getid in request.form.getlist("mycheckbox"):
-                print(getid)
-                db.session.query(Otherdata).filter(Otherdata.id ==getid).delete()
-            db.session.commit()
-            flash("Customer Records Deleted Successfully")
-                     
-            return redirect(url_for('auth.custman'))
-  
 # End of Customer Management    
 
 # User Profile
@@ -740,36 +592,6 @@ def strat():
 
         image_file = url_for('static', filename='images/' + current_user.image_file)
         return render_template("strategies.html", user= current_user, strategiess=all_data, statss=statss, statc=statc, image_file = image_file)
-    
-    else:
-        sd = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(User.id==current_user.id).count()
-
-        statc = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "complete") \
-            .filter(User.id==current_user.id).count()
-
-        statss = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "ongoing") \
-            .filter(User.id==current_user.id).count()
-
-        if request.method == 'POST':
-            name = request.form['name']
-            act = request.form['act']
-            platform = request.form['platform']
-            startdate = request.form['startdate']
-            enddate = request.form['enddate']
-            status = request.form['status']
-            description = request.form['description']
-        
-        image_file = url_for('static', filename='images/' + current_user.image_file)
-        return render_template("sstrategies.html", user= current_user, statss=statss, statc=statc, image_file = image_file, sd=sd)
             
 @auth.route('/strategies/insert', methods = ['POST'])
 @login_required
@@ -849,57 +671,6 @@ def newstrat():
             flash("Strategy Added Successfully")
             
             return redirect(url_for('auth.strat'))
-		
-    else:
-        sd = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(User.id==current_user.id).count()
-
-        statc = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "complete") \
-            .filter(User.id==current_user.id).count()
-
-        statss = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "ongoing") \
-            .filter(User.id==current_user.id).count()
-
-        if request.method == 'POST':
-            name = request.form['name']
-            act = request.form['act']
-            platform = request.form['platform']
-            startdate = request.form['startdate']
-            enddate = request.form['enddate']
-            #status = request.form['status']
-            description = request.form['description']
-            
-            dates = date.today()
-            start = datetime.strptime(startdate, "%Y-%m-%d")
-            startdate = start.date()
-            endd = datetime.strptime(enddate, "%Y-%m-%d")
-            enddate = endd.date()
-            end = enddate
-            if end == dates or dates > end:
-                status = "complete"
-            else:
-                status = "ongoing"
-
-            if sd <= 10:
-                my_strat = Otherstrategies(name=name, act=act, platform=platform, startdate=startdate, 
-                        enddate=enddate, status=status, description=description, ostrat_id=current_user.id)
-                db.session.add(my_strat)
-                db.session.commit()   
-                flash("Strategy Added Successfully", category="notlimit")
-            else:
-                db.session.commit()
-                flash("You have exceeded to the number of inputted strategy records!", category="limit")
-            
-            return redirect(url_for('auth.strat'))
-            return render_template(sd=sd)
             
 @auth.route('/strategies/update/<id>', methods = ['GET', 'POST'])
 @login_required
@@ -954,44 +725,6 @@ def updatestrat(id):
             db.session.commit()
             flash("Strategy Updated Successfully", category="notlimit")
             return redirect(url_for('auth.strat')) 
-    else:
-        statc = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "complete") \
-            .filter(User.id==current_user.id).count()
-
-        statss = Otherstrategies \
-            .query \
-            .join(User) \
-            .filter(Otherstrategies.status == "ongoing") \
-            .filter(User.id==current_user.id).count()
-
-        if request.method == 'POST':
-            my_strat = Otherstrategies.query.get(request.form.get('id'))
-            my_strat.name = request.form['name']
-            my_strat.act = request.form['act']
-            my_strat.platform = request.form['platform']
-            my_strat.startdate = request.form['startdate']
-            my_strat.enddate = request.form['enddate']
-            my_strat.status = request.form['status']
-            my_strat.description = request.form['description']
-            
-            dates = date.today()
-            start = datetime.strptime(my_strat.startdate, "%Y-%m-%d")
-            my_strat.startdate = start.date()
-            endd = datetime.strptime(my_strat.enddate, "%Y-%m-%d")
-            my_strat.enddate = endd.date()
-            end = my_strat.enddate
-            if end == dates or dates > end:
-                my_strat.status = "complete"
-            else:
-                my_strat.status = "ongoing"
-            
-            db.session.commit()
-            flash("Strategy Updated Successfully", category="notlimit")
-            return redirect(url_for('auth.strat'))
- 
 
 #This route is for deleting our strat
 @auth.route('/strategies/delete/<id>/', methods = ['GET', 'POST'])
@@ -1007,14 +740,6 @@ def deletestrat(id):
 		
     if current_user.cname == "Kalibo Cable":
         my_data = Strategies.query.get(id)
-        db.session.delete(my_data)
-        db.session.commit()
-        flash("Strategy Deleted Successfully")
-        
-        return redirect(url_for('auth.strat'))
-		
-    else:
-        my_data = Otherstrategies.query.get(id)
         db.session.delete(my_data)
         db.session.commit()
         flash("Strategy Deleted Successfully")
@@ -1044,16 +769,7 @@ def deletestratcheck():
             flash("Strategy Deleted Successfully")
                      
             return redirect(url_for('auth.strat'))
-    else:
-        if request.method == "POST":
-            for getid in request.form.getlist("mycheckbox"):
-                print(getid)
-                db.session.query(Otherstrategies).filter(Otherstrategies.id ==getid).delete()
-            db.session.commit()
-            flash("Strategy Deleted Successfully")
-                     
-            return redirect(url_for('auth.strat'))
-    
+   
 # End of Strategies
 
 
