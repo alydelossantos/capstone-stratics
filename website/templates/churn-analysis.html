@@ -93,68 +93,6 @@
             <!-- END TABLE -->	
 		</div>
 	</div>
-    	{% else %}
-	    		<div class="strat-container-main">
-			<h3>Churn Prediction</b></h3>
-			<div class="strat-stat-container">
-				<div class="strat-row">
-					<div class="strat-column-head">
-					<div class="strat-card-head">
-						<h4>Customers</h4>
-						<p class='card-strat-large primary'>{{cust}}</p>
-					</div>
-					</div>
-				</div>
-			</div>
-		</div>           
-         
-		<div class="row">
-		<div class="table-responsive table-responsive-data2">
-                <table class="table table-data2" id="mytable">
-                    <thead>
-                        <tr>
-                            <th>Account No.</th>
-                            <th>Amount Paid</th>
-                            <th>Monthly</th>
-                            <th>Churn Probability</th>
-			    <th>Churn Score</th>
-                            <th>Description</th>
-				
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for account_no, amount_paid, monthly, proba in my_list %}
-                        <tr class="tr-shadow">
-
-                            	<td>{{account_no}}</td>
-				<td>{{amount_paid}}</td>
-				<td>{{monthly}}</td>
-				<td>{{proba}}</td>
-				<td>
-				{% if proba <= 0.50 and proba >= 0.0 %}
-					Low
-					{% elif proba <= 0.69 and proba >= 0.51  %}
-					Medium
-					{% elif proba <= 1 and proba >= 0.70  %}
-					High
-					{% endif %}
-					</td>
-				<td>
-				{% if proba <= 0.50 and proba >= 0.0 %}
-					<li style = list-style-type:none; class="block-complete">Active</li>
-					{% elif proba <= 0.69 and proba >= 0.51  %}
-					<li style = list-style-type:none; class="block-ongoing">Declining</li>
-					{% elif proba <= 1 and proba >= 0.70  %}
-					<li style = list-style-type:none; class="block-inactive">Churning</li>
-					{% endif %}
-					</td>
-                        </tr>			
-                        {% endfor %}
-                    </tbody>
-                </table>
-            <!-- END TABLE -->	
-		</div>
-	</div>
     	{% endif %}
     	{% elif current_user.explore == "sample" %}
 				<div class="strat-container-main">
