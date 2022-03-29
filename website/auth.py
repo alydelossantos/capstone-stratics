@@ -1,10 +1,5 @@
 import string
-from urllib.parse import urlparse
-import requests
-import psycopg2
-import csv
-import pandas as pd
-import numpy as np
+import random
 import os
 from os.path import join
 import secrets
@@ -158,7 +153,7 @@ def signout():
     return redirect(url_for("views.landing"))
 
 #SIGNUP page
-@auth.route('/sign-up', methods=["GET", "POST"])
+@auth.route('/sign-up', methods=["GET", "POST"]) 
 def signup():
     if request.method == "POST" :
         fname = request.form.get("fname")
@@ -189,7 +184,7 @@ def signup():
             flash("Thank you for registering! Please check your email to confirm your account.", category="success")
             return redirect(url_for("auth.signin"))
     return render_template("signup.html", user= current_user)
-
+ 
 def send_email(subject, recipients, html_body):
     msg = Message(subject, recipients=recipients)
     msg.html = html_body
@@ -228,6 +223,7 @@ def confirm_email(token):
     login_user(user, remember=True)   
     return redirect(url_for('auth.signin'))
     return render_template(user= current_user)
+
   
 # Home Page
 
