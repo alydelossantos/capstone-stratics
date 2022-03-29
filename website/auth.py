@@ -47,11 +47,6 @@ knotel = "Kalibo Cable"
 knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
-conn = psycopg2.connect("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh")
-
-conn.autocommit =True
-cur = conn.cursor()
-
 # Landing Page
 #About Page
 @auth.route('/about')
@@ -83,8 +78,9 @@ def fstrategies():
 @auth.route('/feature-email') #feature email marketing
 def femail():
     return render_template("feature-email.html", user= current_user)
-    
-@auth.route('/contact', methods=["GET", "POST"]) #contact page
+
+#CONTACT page
+@auth.route('/contact', methods=["GET", "POST"]) 
 def contact():
     if request.method == 'POST':
         name = request.form['name']
@@ -99,8 +95,8 @@ def contact():
         
     return render_template("contact.html", user= current_user)
 
-#signin page   
-@auth.route('/sign-in', methods=["GET", "POST"]) #signin page
+#SIGNIN page   
+@auth.route('/sign-in', methods=["GET", "POST"]) 
 def signin():  
     if request.method == "POST" :
         email = request.form.get("email")
@@ -134,9 +130,9 @@ def signin():
             flash("Email does not exists.", category="error")
         
     return render_template("signin.html", user= current_user)
-    
-#signin page   
-@auth.route('/sign-in/check-code', methods=["GET", "POST"]) #signin page
+
+#SIGNNIN CHECK CODE page   
+@auth.route('/sign-in/check-code', methods=["GET", "POST"])
 def checkcode():
     if request.method == "POST" :
         email = request.form.get("email")
@@ -161,7 +157,8 @@ def signout():
         logout_user()
     return redirect(url_for("views.landing"))
 
-@auth.route('/sign-up', methods=["GET", "POST"]) #signup page
+#SIGNUP page
+@auth.route('/sign-up', methods=["GET", "POST"])
 def signup():
     if request.method == "POST" :
         fname = request.form.get("fname")
@@ -192,7 +189,7 @@ def signup():
             flash("Thank you for registering! Please check your email to confirm your account.", category="success")
             return redirect(url_for("auth.signin"))
     return render_template("signup.html", user= current_user)
- 
+
 def send_email(subject, recipients, html_body):
     msg = Message(subject, recipients=recipients)
     msg.html = html_body
