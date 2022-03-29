@@ -2,12 +2,12 @@ import os
 import re
 
 MAIL_SERVER = 'smtp.gmail.com'
-MAIL_PORT = 465
-MAIL_USE_TLS = False
-MAIL_USE_SSL = True
-MAIL_USERNAME = 'pay3ee@gmail.com'
-MAIL_PASSWORD = 's4noope@cH'
-MAIL_DEFAULT_SENDER = 'pay3ee@gmail.com'
+MAIL_PORT = 587
+MAIL_USE_TLS = True
+MAIL_USE_SSL = False
+MAIL_USERNAME = 'horizonfeua@gmail.com'
+MAIL_PASSWORD = 'sleepdeprived'
+MAIL_DEFAULT_SENDER = 'horizonfeua@gmail.com'
 
 uri = os.getenv('DATABASE_URL')
 if uri and uri.startswith('postgres://'):
