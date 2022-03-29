@@ -475,7 +475,7 @@ def send():
     checker  =  Task.query.count()
     recepients = convert(tasks)
     EMAIL_ADDRESS = 'horizonfeua@gmail.com'
-    EMAIL_PASSWORD = 'sleepdeprived'
+    EMAIL_PASSWORD = 'sleepdeprived22'
     if request.method == "POST":
         if checker == 0:
             flash('Please specify at least one recipient.', category="error")
