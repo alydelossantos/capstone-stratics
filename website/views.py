@@ -36,7 +36,7 @@ knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
 
-cnx = create_engine("postgresql://ympxkbvvsaslrc:45cc51f6a20ea1519edcb35bd69cfdfda91968a390ef9fb2291fb8f3c020cf58@ec2-54-160-35-196.compute-1.amazonaws.com:5432/dd3k0hhqki80nh", echo=True)
+cnx = create_engine("postgresql://ogegtvpsnmnlhf:a96fbd418afd0730555278f2bafce6f7cbedeafe42bd3a8cc47e802e0a1c7916@ec2-52-21-136-176.compute-1.amazonaws.com:5432/db0j0m4lc1ku1u", echo=True)
 conn = cnx.connect()
 
 @views.route('/home', methods=["GET", "POST"])
