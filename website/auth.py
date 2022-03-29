@@ -198,7 +198,7 @@ def save_file(form_file):
 @login_required
 def emailmark(id):
     EMAIL_ADDRESS = 'horizonfeua@gmail.com'
-    EMAIL_PASSWORD = 'sleepdeprived'
+    EMAIL_PASSWORD = 'sleepdeprived22'
     if request.method == "POST":
       my_data = Contact.query.get(request.form.get('id'))
       msg = MIMEMultipart()
