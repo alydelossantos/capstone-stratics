@@ -153,7 +153,7 @@ def signout():
     return redirect(url_for("views.landing"))
 
 #SIGNUP page
-@auth.route('/sign-up', methods=["GET", "POST"]) 
+@auth.route('/sign-up', methods=["GET", "POST"]) #signup page
 def signup():
     if request.method == "POST" :
         fname = request.form.get("fname")
