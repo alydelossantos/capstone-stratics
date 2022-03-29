@@ -191,7 +191,7 @@ def send_email(subject, recipients, html_body):
     mail.send(msg)
       
 def send_confirmation_email(user_email):
-    confirm_serializer = URLSafeTimedSerializer(SECRET_KEY)
+    confirm_serializer = URLSafeTimedSerializer('asdfghjkl')
     
     confirm_url = url_for(
         'auth.confirm_email', 
