@@ -42,8 +42,10 @@ knotel = "Kalibo Cable"
 knocable = "Kalibo"
 abbrenoinc = "KCTN"
 
-cnx = create_engine("postgresql://ogegtvpsnmnlhf:a96fbd418afd0730555278f2bafce6f7cbedeafe42bd3a8cc47e802e0a1c7916@ec2-52-21-136-176.compute-1.amazonaws.com:5432/db0j0m4lc1ku1u", echo=True)
-conn = cnx.connect()
+
+conn = psycopg2.connect("postgresql://ogegtvpsnmnlhf:a96fbd418afd0730555278f2bafce6f7cbedeafe42bd3a8cc47e802e0a1c7916@ec2-52-21-136-176.compute-1.amazonaws.com:5432/db0j0m4lc1ku1u", echo=True)
+conn.autocommit =True
+cur = conn.cursor()
 
 # Landing Page
 #About Page
