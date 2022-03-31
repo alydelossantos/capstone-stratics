@@ -1,5 +1,6 @@
 import string
 import psycopg2
+import pandas as pd
 import random
 import os
 from os.path import join
