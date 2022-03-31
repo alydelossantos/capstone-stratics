@@ -300,12 +300,13 @@ def insert():
             count = Data.query.filter(Data.id >= row).count()
             if count >= 1:
                 id = row + count
+                datas = Data(id=id)
             
             total_paid = 0
             total_paid = float(amount_paid) + float(total_paid)
             last_modified_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             print(disconnection_date)
-            datas = Data(id=id, account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
+            datas = Data(account_no=account_no, subscriber=subscriber, address=address, zone=zone, services=services, monthly=monthly,
 					collector=collector, status=status, amount_paid=amount_paid, total_paid=total_paid, ref_no=ref_no, date_paid=date_paid, category=category, activation_date=activation_date,
 					disconnection_date=disconnection_date, reactivation_date=reactivation_date, last_modified_on=last_modified_on, churn=churn)
             db.session.add(datas)
