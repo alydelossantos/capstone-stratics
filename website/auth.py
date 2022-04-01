@@ -780,7 +780,7 @@ def send_reset_email(user):
     print(user)
     msg = EmailMessage()
     EMAIL_ADDRESS = 'horizonfeua@gmail.com'
-    EMAIL_PASSWORD = 'sleepdeprived'
+    EMAIL_PASSWORD = 'sleepdeprived22'
     token = user.get_reset_token()
     msg['To'] = [user.email]
     msg['Subject'] = 'Password Reset Request'
