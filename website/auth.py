@@ -484,7 +484,7 @@ def send():
     checker  =  Task.query.count()
     recepients = convert(tasks)
     EMAIL_ADDRESS = 'horizonfeua@gmail.com'
-    EMAIL_PASSWORD = 'sleepdeprived22'
+    EMAIL_PASSWORD = 'sleepdep2022'
     if request.method == "POST":
         if checker == 0:
             flash('Please specify at least one recipient.', category="error")
@@ -780,7 +780,7 @@ def send_reset_email(user):
     print(user)
     msg = EmailMessage()
     EMAIL_ADDRESS = 'horizonfeua@gmail.com'
-    EMAIL_PASSWORD = 'sleepdeprived22'
+    EMAIL_PASSWORD = 'sleepdep2022'
     token = user.get_reset_token()
     msg['To'] = [user.email]
     msg['Subject'] = 'Password Reset Request'
